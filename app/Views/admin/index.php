@@ -95,7 +95,7 @@
                       <tr>
                         <td>#<?= $row->invoice ?></td>
                         <td><?= $row->username ?></td>
-                        <td><a target="_blank" href="<?= SITE_UNDANGAN.'/'.$row->domain ?>"><?= $row->domain ?></a></td>
+                        <td><a target="_blank" href="<?= rtrim(SITE_UNDANGAN, '/') . '/' . $row->domain ?>"><?= $row->domain ?></a></td>
                          <?php 
                          $masa_aktif = $row->masa_aktif;
                          $durasi = '+'.$trial.' days';
