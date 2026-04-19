@@ -1,0 +1,70 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# CodeIgniter runtime
+/writable/cache/*
+!/writable/cache/index.html
+
+/writable/debugbar/*
+!/writable/debugbar/index.html
+
+/writable/logs/*
+!/writable/logs/index.html
+
+/writable/session/*
+!/writable/session/index.html
+
+/writable/uploads/*
+!/writable/uploads/index.html
+
+# User-generated uploads and private runtime assets
+/assets/users/*
+!/assets/users/.gitkeep
+
+/assets/bukti/*
+!/assets/bukti/.gitkeep
+
+# Temporary theme upload archives
+/assets/themes/*.zip
+
+# Database dumps and backups
+*.sql
+*.sql.gz
+*.dump
+*.bak
+*.backup
+
+# Keep the current reference dump only if it is intentionally tracked
+!database.sql
+
+# Composer local artifacts
+composer.phar
+
+# PHPUnit and coverage
+/.phpunit.result.cache
+/coverage/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# FTP/cPanel metadata
+.ftpquota
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+~$*
