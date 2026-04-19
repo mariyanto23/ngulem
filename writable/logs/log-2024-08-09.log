@@ -1,0 +1,28 @@
+CRITICAL - 2024-08-09 14:35:48 --> filter_var(): Passing null to parameter #3 ($options) of type array|int is deprecated
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(8192, 'filter_var(): P...', 'C:\\laragon\\www\\...', 429)
+#1 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\HTTP\Request.php(429): filter_var(2, 519, NULL)
+#2 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\HTTP\Request.php(297): CodeIgniter\HTTP\Request->fetchGlobal('server', 'argc', 519, NULL)
+#3 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\HTTP\CLIRequest.php(218): CodeIgniter\HTTP\Request->getServer('argc', 519)
+#4 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\HTTP\CLIRequest.php(96): CodeIgniter\HTTP\CLIRequest->parseCommand()
+#5 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\Config\Services.php(149): CodeIgniter\HTTP\CLIRequest->__construct(Object(Config\App))
+#6 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\Config\BaseService.php(123): CodeIgniter\Config\Services::clirequest(Object(Config\App), false)
+#7 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\Config\Services.php(141): CodeIgniter\Config\BaseService::getSharedInstance('clirequest', Object(Config\App))
+#8 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\CodeIgniter.php(555): CodeIgniter\Config\Services::clirequest(Object(Config\App))
+#9 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\CodeIgniter.php(280): CodeIgniter\CodeIgniter->getRequestObject()
+#10 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\system\CLI\Console.php(86): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\codeigniter 4\Koleksidigital_update\localhost\spark(57): CodeIgniter\CLI\Console->run()
+#12 {main}
+CRITICAL - 2024-08-09 14:40:39 --> filter_var(): Passing null to parameter #3 ($options) of type array|int is deprecated
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(8192, 'filter_var(): P...', 'C:\\laragon\\www\\...', 429)
+#1 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\HTTP\Request.php(429): filter_var(2, 519, NULL)
+#2 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\HTTP\Request.php(297): CodeIgniter\HTTP\Request->fetchGlobal('server', 'argc', 519, NULL)
+#3 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\HTTP\CLIRequest.php(218): CodeIgniter\HTTP\Request->getServer('argc', 519)
+#4 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\HTTP\CLIRequest.php(96): CodeIgniter\HTTP\CLIRequest->parseCommand()
+#5 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\Config\Services.php(149): CodeIgniter\HTTP\CLIRequest->__construct(Object(Config\App))
+#6 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\Config\BaseService.php(123): CodeIgniter\Config\Services::clirequest(Object(Config\App), false)
+#7 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\Config\Services.php(141): CodeIgniter\Config\BaseService::getSharedInstance('clirequest', Object(Config\App))
+#8 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\CodeIgniter.php(555): CodeIgniter\Config\Services::clirequest(Object(Config\App))
+#9 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\CodeIgniter.php(280): CodeIgniter\CodeIgniter->getRequestObject()
+#10 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\system\CLI\Console.php(86): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\codeigniter 4\Koleksidigital_update\nikahkuy.xyz\spark(57): CodeIgniter\CLI\Console->run()
+#12 {main}
