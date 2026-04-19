@@ -34,9 +34,9 @@ class Database extends \CodeIgniter\Database\Config
 	public $default = [
 		'DSN'      => '',
 		'hostname' => 'localhost',
-		'username' => 'diulemco_diulemco',
+		'username' => 'diulemco_ngulemind',
 		'password' => 'dMDhESEvmD3XOjVp',
-		'database' => 'diulemco_diulem',
+		'database' => 'diulemco_userngulem',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
