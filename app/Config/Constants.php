@@ -81,17 +81,17 @@ define('SITE_NAME', 'NikahKuy'); ///NAMA WEBSITE
 
 // =========== production mode ============
 // //LINK DOMAIN WITH URL
-define('SITE_UTAMA', 'https://nikahkuy.xyz/'); 
-define('SITE_UNDANGAN', 'https://undangan.nikahkuy.xyz/');
-define('SITE_ADMIN', 'https://admin.nikahkuy.xyz/');
-define('SITE_BUKUTAMU', 'https://bukutamu.nikahkuy.xyz/');
+define('SITE_UTAMA', 'https://diulem.com/'); 
+define('SITE_UNDANGAN', 'https://kamu.diulem.com/');
+define('SITE_ADMIN', 'https://admin.diulem.com/');
+define('SITE_BUKUTAMU', 'https://bukutamu.diulem.com/');
 
 //DOMAIN ONLY
-define('DOMAIN_UTAMA', 'nikahkuy.xyz');
-define('DOMAIN_UTAMA_WWW', 'www.nikahkuy.xyz'); //PAKE WWW
-define('DOMAIN_UNDANGAN', 'undangan.nikahkuy.xyz');
-define('DOMAIN_ADMIN', 'admin.nikahkuy.xyz');
-define('DOMAIN_BUKUTAMU', 'bukutamu.nikahkuy.xyz');
+define('DOMAIN_UTAMA', 'diulem.com');
+define('DOMAIN_UTAMA_WWW', 'www.diulem.com'); //PAKE WWW
+define('DOMAIN_UNDANGAN', 'kamu.diulem.com');
+define('DOMAIN_ADMIN', 'admin.diulem.com');
+define('DOMAIN_BUKUTAMU', 'bukutamu.diulem.com');
 
 //base url dinamis
 $base = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']) : 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']);
