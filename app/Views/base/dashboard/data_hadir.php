@@ -4,7 +4,7 @@
         <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
         <div>
         
-        <a href="<?= SITE_BUKUTAMU ?>/<?= $order[0]->domain ?>" target="_blank" class="btn btn-primary btn-sm">Lihat Website</a>
+        <a href="<?= rtrim(SITE_BUKUTAMU, '/') ?>/<?= $order[0]->domain ?>" target="_blank" class="btn btn-primary btn-sm">Lihat Website</a>
         
         </div>
     </div>
@@ -37,7 +37,7 @@
                       <tr>
                         <td><?= $row->nama_tamu ?></td>
                         <td><?= $row->alamat_tamu ?></td>
-                        <td><a href="<?= SITE_UNDANGAN ?>/<?= $row->domain ?>/<?= $row->id_tamu ?>" target="_blank"><?= DOMAIN_UNDANGAN ?>/<?= $row->domain ?>/<?= $row->id_tamu ?></a></td>
+                        <td><a href="<?= rtrim(SITE_UNDANGAN, '/') ?>/<?= $row->domain ?>/<?= $row->id_tamu ?>" target="_blank"><?= DOMAIN_UNDANGAN ?>/<?= $row->domain ?>/<?= $row->id_tamu ?></a></td>
                         <td><?= $row->waktu_hadir ?></td>
                         <td><img src="<?php echo base_url() ?>/assets/users/<?=$kunci?>/<?=$qrcode?>.png" height="120" width="160"></td>
                         <td>

@@ -3,7 +3,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
         <div>
-        <a href="<?= SITE_UNDANGAN ?>/<?= $order[0]->domain ?>" class="btn btn-primary btn-sm">Lihat Website</a>
+        <a href="<?= rtrim(SITE_UNDANGAN, '/') ?>/<?= $order[0]->domain ?>" class="btn btn-primary btn-sm">Lihat Website</a>
         </div>
     </div> 
 

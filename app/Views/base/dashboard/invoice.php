@@ -5,7 +5,7 @@
         <div>
         
         
-        <a href="<?= SITE_UNDANGAN ?>/<?= $order[0]->domain ?>" class="btn btn-primary btn-sm">Lihat Website</a>
+        <a href="<?= rtrim(SITE_UNDANGAN, '/') ?>/<?= $order[0]->domain ?>" class="btn btn-primary btn-sm">Lihat Website</a>
         
         </div>
     </div> 

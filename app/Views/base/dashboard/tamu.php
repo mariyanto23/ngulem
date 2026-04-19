@@ -49,7 +49,7 @@
                         <td><input type="checkbox" class="centangTamu" name="idTamu[]" value="<?= $row->id_tamu ?>"></td> 
                         <td><?= $row->nama_tamu ?></td>
                         <td><?= $row->no_wa ?></td>
-                        <td><a href="<?= SITE_UNDANGAN ?>/<?= $row->domain ?>/<?= $row->id_tamu ?>" target="_blank"><?= DOMAIN_UNDANGAN ?>/<?= $row->domain ?>/<?= $row->id_tamu ?></a></td>
+                        <td><a href="<?= rtrim(SITE_UNDANGAN, '/') ?>/<?= $row->domain ?>/<?= $row->id_tamu ?>" target="_blank"><?= DOMAIN_UNDANGAN ?>/<?= $row->domain ?>/<?= $row->id_tamu ?></a></td>
                         <td><?= $row->tgl_kirim ?></td>
                         <td><?= $row->status_kirim ?></td>
                         <td>
