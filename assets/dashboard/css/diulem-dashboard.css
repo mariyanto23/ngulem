@@ -512,6 +512,20 @@ body,
   flex: 0 0 auto;
 }
 
+.hadir-selfie {
+  border-radius: 8px;
+  line-height: 1;
+}
+
+.hadir-selfie:hover .avatar {
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.18);
+}
+
+.diulem-selfie-preview {
+  max-height: 75vh;
+  object-fit: contain;
+}
+
 @media (min-width: 992px) {
   body {
     --diulem-sidebar-active-width: var(--diulem-sidebar-width);

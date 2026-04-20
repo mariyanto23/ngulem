@@ -26,7 +26,6 @@
                         <tr>
                             <th>Nama Tamu</th>
                             <th>Alamat Tamu</th>
-                            <th>Domain Undangan</th>
                             <th>Waktu Kehadiran</th>
                             <th>Foto Selfi</th>
                             <th class="w-1">Aksi</th>
@@ -39,14 +38,12 @@
                             <tr>
                                 <td><?= esc($row->nama_tamu) ?></td>
                                 <td><?= esc($row->alamat_tamu) ?></td>
-                                <td>
-                                    <a href="<?= rtrim(SITE_UNDANGAN, '/') ?>/<?= esc($row->domain) ?>/<?= esc($row->id_tamu) ?>" target="_blank">
-                                        <?= esc(DOMAIN_UNDANGAN) ?>/<?= esc($row->domain) ?>/<?= esc($row->id_tamu) ?>
-                                    </a>
-                                </td>
                                 <td><?= esc($row->waktu_hadir) ?></td>
                                 <td>
-                                    <span class="avatar avatar-xl" style="background-image: url(<?= base_url() ?>/assets/users/<?= esc($kunci) ?>/<?= esc($qrcode) ?>.png)"></span>
+                                    <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $qrcode . '.png'; ?>
+                                    <button type="button" class="btn p-0 border-0 bg-transparent hadir-selfie" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>" data-toggle="modal" data-target="#modalSelfie" title="Lihat foto selfie">
+                                        <span class="avatar avatar-xl" style="background-image: url(<?= esc($selfieUrl) ?>)"></span>
+                                    </button>
                                 </td>
                                 <td>
                                     <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus data hadir" aria-label="Hapus data hadir">
@@ -71,11 +68,30 @@
     'confirmText' => 'Ya, Hapus',
 ]) ?>
 
+<div class="modal fade" id="modalSelfie" tabindex="-1" role="dialog" aria-labelledby="modalSelfieLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSelfieLabel">Foto Selfie</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" alt="Foto selfie tamu" class="img-fluid rounded diulem-selfie-preview" id="selfiePreview">
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 $(document).ready(function () {
     $('.hapus').on('click', function () {
         var idtamu = $(this).data('id');
         $('#modalHapus #idTamu').val(idtamu);
+    });
+
+    $('.hadir-selfie').on('click', function () {
+        $('#modalSelfieLabel').text('Foto Selfie - ' + $(this).data('name'));
+        $('#selfiePreview').attr('src', $(this).data('image'));
     });
 
     $('#pilihHapus').on('click', function(event) {
