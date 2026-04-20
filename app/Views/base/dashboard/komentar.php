@@ -61,8 +61,8 @@
                                 <td><?= esc($row->nama_komentar) ?></td>
                                 <td class="text-wrap"><?= esc($row->isi_komentar) ?></td>
                                 <td>
-                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger hapus" data-toggle="modal" data-target="#modalHapus">
-                                        Hapus
+                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus ucapan" aria-label="Hapus ucapan">
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                 </td>
                             </tr>

@@ -60,7 +60,9 @@
                                 <td>
                                     <div class="btn-list flex-nowrap">
                                         <?php if ($paket[0]->kirim_whatsapp == 1) { ?>
-                                            <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-success kirim" data-toggle="modal" data-target="#modalKirim">Kirim</button>
+                                            <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-success btn-icon kirim" data-toggle="modal" data-target="#modalKirim" title="Kirim undangan" aria-label="Kirim undangan">
+                                                <i class="ti ti-send"></i>
+                                            </button>
                                         <?php } ?>
                                         <button
                                             data-id="<?= esc($row->id_tamu) ?>"
@@ -68,10 +70,16 @@
                                             data-alamat="<?= esc($row->alamat_tamu) ?>"
                                             data-no="<?= esc($row->no_wa) ?>"
                                             data-tgl="<?= esc($row->tgl_kirim) ?>"
-                                            class="btn btn-sm btn-primary edit"
+                                            class="btn btn-sm btn-primary btn-icon edit"
                                             data-toggle="modal"
-                                            data-target="#modalEdit">Edit</button>
-                                        <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger hapus" data-toggle="modal" data-target="#modalHapus">Hapus</button>
+                                            data-target="#modalEdit"
+                                            title="Edit tamu"
+                                            aria-label="Edit tamu">
+                                            <i class="ti ti-pencil"></i>
+                                        </button>
+                                        <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus tamu" aria-label="Hapus tamu">
+                                            <i class="ti ti-trash"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

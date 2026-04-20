@@ -48,8 +48,8 @@
                                     <span class="avatar avatar-xl" style="background-image: url(<?= base_url() ?>/assets/users/<?= esc($kunci) ?>/<?= esc($qrcode) ?>.png)"></span>
                                 </td>
                                 <td>
-                                    <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger hapus" data-toggle="modal" data-target="#modalHapus">
-                                        Hapus
+                                    <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus data hadir" aria-label="Hapus data hadir">
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                 </td>
                             </tr>

@@ -80,8 +80,8 @@
                                 <td><?= esc(date('d M Y', strtotime($row->created_at))) ?></td>
                                 <td><?= esc($row->nama_pengunjung) ?></td>
                                 <td>
-                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger hapus" data-toggle="modal" data-target="#modalHapus">
-                                        Hapus
+                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus riwayat" aria-label="Hapus riwayat">
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                 </td>
                             </tr>
