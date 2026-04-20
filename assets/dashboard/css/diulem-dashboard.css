@@ -95,8 +95,8 @@ body,
 }
 
 .diulem-topbar {
-  background: #ffffff;
-  border-bottom: 1px solid var(--diulem-line);
+  background: transparent;
+  border-bottom: 0;
   box-shadow: none;
   min-height: 68px;
   transition: width 0.18s ease;
