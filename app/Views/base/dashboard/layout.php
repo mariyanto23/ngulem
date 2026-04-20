@@ -17,7 +17,7 @@
     <link href="<?= base_url('assets/dashboard/'); ?>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-    <link href="<?= base_url('assets/dashboard/'); ?>/css/diulem-dashboard.css" rel="stylesheet">
+    <link href="<?= base_url('assets/dashboard/'); ?>/css/diulem-dashboard.css?v=<?= filemtime(FCPATH . 'assets/dashboard/css/diulem-dashboard.css') ?>" rel="stylesheet">
 
     <link rel="stylesheet" href="<?= base_url() ?>/assets/base/css/croppie.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/base/css/pikaday.css">
