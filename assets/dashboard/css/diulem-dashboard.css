@@ -4,6 +4,7 @@
   --diulem-line: #e5e7eb;
   --diulem-soft: #f6f8fb;
   --diulem-ink: #17202a;
+  --diulem-sidebar-width: 15rem;
 }
 
 body,
@@ -71,6 +72,7 @@ body,
   border-bottom: 1px solid var(--diulem-line);
   box-shadow: none;
   min-height: 68px;
+  transition: width 0.18s ease;
 }
 
 .page-body {
@@ -133,6 +135,21 @@ body,
 }
 
 @media (min-width: 992px) {
+  .diulem-sidebar {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: var(--diulem-sidebar-width);
+    z-index: 1030;
+  }
+
+  .page-wrapper {
+    margin-left: var(--diulem-sidebar-width);
+    min-width: 0;
+    transition: margin-left 0.18s ease;
+  }
+
   body.diulem-sidebar-collapsed .diulem-sidebar {
     overflow: visible;
     width: 5rem;
