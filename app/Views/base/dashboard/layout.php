@@ -49,9 +49,12 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
                     <span><?= SITE_NAME; ?></span>
                 </a>
             </h1>
-            <button id="diulemSidebarMinimize" class="btn btn-icon btn-outline-primary d-none d-lg-inline-flex diulem-sidebar-minimize" type="button" aria-label="Minimize sidebar">
-                <i class="ti ti-layout-sidebar-left-collapse"></i>
-            </button>
+            <div class="diulem-sidebar-tools d-none d-lg-block">
+                <button id="diulemSidebarMinimize" class="btn btn-outline-primary btn-sm w-100" type="button" aria-label="Minimize sidebar">
+                    <i class="ti ti-layout-sidebar-left-collapse me-2"></i>
+                    <span>Ringkas sidebar</span>
+                </button>
+            </div>
             <div class="collapse navbar-collapse" id="sidebar-menu">
                 <ul class="navbar-nav pt-lg-3">
                     <li class="nav-item">

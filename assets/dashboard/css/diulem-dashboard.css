@@ -27,10 +27,6 @@ body,
   margin: 0;
 }
 
-.diulem-sidebar .container-fluid {
-  position: relative;
-}
-
 .diulem-sidebar .navbar-brand a {
   align-items: center;
   color: var(--diulem-ink);
@@ -57,11 +53,10 @@ body,
   color: #0f766e;
 }
 
-.diulem-sidebar-minimize {
-  position: absolute;
-  right: 1rem;
-  top: 0.85rem;
-  z-index: 4;
+.diulem-sidebar-tools {
+  border-bottom: 1px solid var(--diulem-line);
+  margin: 0 1rem 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .page-body {
@@ -138,9 +133,25 @@ body,
   }
 
   body.diulem-sidebar-collapsed .diulem-sidebar .navbar-brand span,
+  body.diulem-sidebar-collapsed .diulem-sidebar-tools span,
   body.diulem-sidebar-collapsed .diulem-sidebar .nav-link-title,
   body.diulem-sidebar-collapsed .diulem-sidebar .dropdown-toggle::after {
     display: none;
+  }
+
+  body.diulem-sidebar-collapsed .diulem-sidebar-tools {
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;
+  }
+
+  body.diulem-sidebar-collapsed .diulem-sidebar-tools .btn {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  body.diulem-sidebar-collapsed .diulem-sidebar-tools .ti {
+    margin-right: 0 !important;
   }
 
   body.diulem-sidebar-collapsed .diulem-sidebar .nav-link {
@@ -161,9 +172,6 @@ body,
     top: 0;
   }
 
-  body.diulem-sidebar-collapsed .diulem-sidebar-minimize {
-    right: -0.8rem;
-  }
 }
 
 @media (max-width: 991.98px) {
