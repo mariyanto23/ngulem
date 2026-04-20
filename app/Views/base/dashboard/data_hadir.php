@@ -18,6 +18,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Data Tamu Hadir</h3>
+                <div class="card-actions" id="hadirTamuExport"></div>
             </div>
             <div class="table-responsive">
                 <table class="table table-vcenter card-table table-striped" id="hadirTamu">

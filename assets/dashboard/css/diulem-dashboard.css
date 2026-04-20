@@ -349,11 +349,23 @@ body,
 }
 
 .dt-buttons .dt-button {
-  background: #ffffff !important;
-  border: 1px solid var(--diulem-line) !important;
   border-radius: 8px !important;
-  color: var(--diulem-ink) !important;
   padding: 0.45rem 0.75rem !important;
+}
+
+.card-actions .dt-buttons {
+  margin-bottom: 0;
+}
+
+.card-actions .dt-buttons .dt-button.btn-success {
+  background: #16a34a !important;
+  border: 1px solid #16a34a !important;
+  color: #ffffff !important;
+}
+
+.card-actions .dt-buttons .dt-button.btn-success:hover {
+  background: #15803d !important;
+  border-color: #15803d !important;
 }
 
 .dataTables_wrapper .row {

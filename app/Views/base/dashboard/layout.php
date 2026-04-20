@@ -233,12 +233,21 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
 $(document).ready(function () {
     $('#dataTable').DataTable();
     $('#dataTableHover').DataTable();
-    $('#hadirTamu').DataTable({
-        dom: 'Bfrtip',
+    var hadirTamuTable = $('#hadirTamu').DataTable({
+        dom: "<'diulem-table-toolbar'lf>rtipB",
         buttons: [
-            'excelHtml5',
+            {
+                extend: 'excelHtml5',
+                text: '<i class="ti ti-file-spreadsheet me-2"></i>Unduh Excel',
+                className: 'btn btn-success btn-sm',
+                titleAttr: 'Unduh Excel Data Tamu Hadir'
+            }
         ]
     });
+
+    if ($('#hadirTamuExport').length) {
+        hadirTamuTable.buttons().container().appendTo('#hadirTamuExport');
+    }
 });
 
 function copyToClipboard(element) {
