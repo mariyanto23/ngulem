@@ -42,7 +42,7 @@
                                 <td>
                                     <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $qrcode . '.png'; ?>
                                     <button type="button" class="btn p-0 border-0 bg-transparent hadir-selfie" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>" data-toggle="modal" data-target="#modalSelfie" title="Lihat foto selfie">
-                                        <span class="avatar avatar-xl" style="background-image: url(<?= esc($selfieUrl) ?>)"></span>
+                                        <img src="<?= esc($selfieUrl) ?>" alt="Foto selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb">
                                     </button>
                                 </td>
                                 <td>

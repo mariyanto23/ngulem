@@ -514,11 +514,28 @@ body,
 
 .hadir-selfie {
   border-radius: 8px;
+  display: inline-flex;
   line-height: 1;
+  padding: 2px !important;
+  position: relative;
 }
 
-.hadir-selfie:hover .avatar {
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.18);
+.hadir-selfie-thumb {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  display: block;
+  height: 58px;
+  object-fit: cover;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+  width: 78px;
+}
+
+.hadir-selfie:hover .hadir-selfie-thumb,
+.hadir-selfie:focus .hadir-selfie-thumb {
+  border-color: rgba(15, 118, 110, 0.45);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
+  transform: scale(1.02);
 }
 
 .diulem-selfie-preview {
