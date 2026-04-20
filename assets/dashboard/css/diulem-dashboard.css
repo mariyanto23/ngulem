@@ -53,10 +53,24 @@ body,
   color: #0f766e;
 }
 
+.diulem-mobile-profile {
+  align-items: center;
+  display: flex;
+  min-height: 56px;
+  margin-left: auto;
+}
+
 .diulem-sidebar-tools {
   border-bottom: 1px solid var(--diulem-line);
   margin: 0 1rem 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.diulem-topbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--diulem-line);
+  box-shadow: none;
+  min-height: 68px;
 }
 
 .page-body {
@@ -175,7 +189,18 @@ body,
 }
 
 @media (max-width: 991.98px) {
-  .diulem-sidebar .navbar-brand {
+  .diulem-sidebar .container-fluid {
+    align-items: center;
+    min-height: 56px;
+  }
+
+  .diulem-sidebar .navbar-brand,
+  .diulem-mobile-profile {
     height: 56px;
+  }
+
+  .diulem-mobile-profile .dropdown-menu {
+    right: 0;
+    left: auto;
   }
 }

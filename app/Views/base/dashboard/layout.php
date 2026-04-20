@@ -43,12 +43,25 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <h1 class="navbar-brand navbar-brand-autodark">
+            <h1 class="navbar-brand navbar-brand-autodark d-none d-lg-flex">
                 <a href="<?= base_url('user/dashboard'); ?>">
                     <img src="<?= base_url('assets/base'); ?>/img/logo2.png" width="34" height="34" alt="<?= SITE_NAME; ?>">
                     <span><?= SITE_NAME; ?></span>
                 </a>
             </h1>
+            <div class="nav-item dropdown d-lg-none diulem-mobile-profile">
+                <a href="#" class="nav-link d-flex align-items-center p-0" data-toggle="dropdown" aria-label="Open user menu">
+                    <span class="avatar avatar-sm" style="background-image: url(<?= base_url('assets/dashboard'); ?>/img/boy.png)"></span>
+                    <span class="ms-2 fw-bold"><?= esc($_SESSION['uname']) ?></span>
+                    <i class="ti ti-chevron-down ms-1"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <a class="dropdown-item" href="<?= base_url('user/profil') ?>"><i class="ti ti-user me-2"></i>Profil</a>
+                    <a class="dropdown-item" href="<?= base_url('user/invoice') ?>"><i class="ti ti-receipt me-2"></i>Tagihan</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="<?= base_url('user/logout') ?>"><i class="ti ti-logout me-2"></i>Logout</a>
+                </div>
+            </div>
             <div class="diulem-sidebar-tools d-none d-lg-block">
                 <button id="diulemSidebarMinimize" class="btn btn-outline-primary btn-sm w-100" type="button" aria-label="Minimize sidebar">
                     <i class="ti ti-layout-sidebar-left-collapse me-2"></i>
@@ -120,33 +133,37 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
                             <span class="nav-link-title">Hubungi Kami</span>
                         </a>
                     </li>
-                    <li class="nav-item mt-lg-3">
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $activeMenu === 'profil' ? 'active' : '' ?>" href="<?= base_url('user/profil') ?>">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-user"></i></span>
-                            <span class="nav-link-title">Profil</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $activeMenu === 'invoice' ? 'active' : '' ?>" href="<?= base_url('user/invoice') ?>">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-receipt"></i></span>
-                            <span class="nav-link-title">Tagihan</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-danger" href="<?= base_url('user/logout') ?>">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-logout"></i></span>
-                            <span class="nav-link-title">Logout</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
     </aside>
 
     <div class="page-wrapper">
+        <header class="navbar navbar-expand-md d-none d-lg-flex d-print-none diulem-topbar">
+            <div class="container-xl">
+                <div>
+                    <div class="text-secondary small">Dashboard Pengguna</div>
+                    <div class="h3 m-0"><?= esc($title) ?></div>
+                </div>
+                <div class="navbar-nav flex-row ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown" aria-label="Open user menu">
+                            <span class="avatar avatar-sm" style="background-image: url(<?= base_url('assets/dashboard'); ?>/img/boy.png)"></span>
+                            <div class="d-none d-xl-block ps-2">
+                                <div><?= esc($_SESSION['uname']) ?></div>
+                                <div class="mt-1 small text-secondary">Pengguna</div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a class="dropdown-item" href="<?= base_url('user/profil') ?>"><i class="ti ti-user me-2"></i>Profil</a>
+                            <a class="dropdown-item" href="<?= base_url('user/invoice') ?>"><i class="ti ti-receipt me-2"></i>Tagihan</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="<?= base_url('user/logout') ?>"><i class="ti ti-logout me-2"></i>Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
         <?php
         if (! function_exists('rupiah')) {
             function rupiah($angka)
