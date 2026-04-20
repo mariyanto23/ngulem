@@ -83,7 +83,7 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
                     <li class="nav-item dropdown <?= $isWebsiteMenu ? 'show' : '' ?>">
                         <a class="nav-link dropdown-toggle <?= $isWebsiteMenu ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="<?= $isWebsiteMenu ? 'true' : 'false' ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-browser"></i></span>
-                            <span class="nav-link-title">Website</span>
+                            <span class="nav-link-title">Undangan</span>
                         </a>
                         <div class="dropdown-menu <?= $isWebsiteMenu ? 'show' : '' ?>">
                             <a class="dropdown-item <?= $activeMenu === 'tampilan' ? 'active' : '' ?>" href="<?= base_url('user/tampilan'); ?>">Tampilan</a>
