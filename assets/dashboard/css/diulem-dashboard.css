@@ -300,6 +300,26 @@ body,
   color: #6d28d9;
 }
 
+.page-wrapper .form-check.form-switch {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  display: flex;
+  min-height: 44px;
+  padding: 0.55rem 0.75rem 0.55rem 2.75rem;
+}
+
+.page-wrapper .form-check-input {
+  cursor: pointer;
+}
+
+.page-wrapper .form-check-label {
+  color: #344256;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
 @media (min-width: 992px) {
   body {
     --diulem-sidebar-active-width: var(--diulem-sidebar-width);
@@ -432,5 +452,23 @@ body,
   .diulem-mobile-profile .dropdown-menu {
     right: 0;
     left: auto;
+  }
+
+  .page-header .row {
+    gap: 0.75rem;
+  }
+
+  .page-header .col-auto,
+  .page-header .btn,
+  .card-body > .btn {
+    width: 100%;
+  }
+
+  .btn-list {
+    gap: 0.5rem;
+  }
+
+  .btn-list .btn {
+    flex: 1 1 auto;
   }
 }
