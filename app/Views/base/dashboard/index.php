@@ -77,7 +77,7 @@ foreach ($total_mingguan as $row) {
                     <div class="col-lg">
                         <div class="badge mb-3">Dashboard Pengguna</div>
                         <h1 class="page-title mb-2"><?= esc($title) ?></h1>
-                        <p class="text-secondary mb-0"><?= esc($statusMessage) ?></p>
+                        <p class="text-secondary mb-0">Selamat datang, <?= esc($_SESSION['uname']) ?>!</p>
                     </div>
                     <div class="col-lg-auto mt-4 mt-lg-0">
                         <div class="btn-list">
