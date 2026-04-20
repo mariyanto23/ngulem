@@ -231,10 +231,32 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
 
 <script>
 $(document).ready(function () {
-    $('#dataTable').DataTable();
-    $('#dataTableHover').DataTable();
+    var diulemDataTableLanguage = {
+        lengthMenu: 'Tampilkan _MENU_ data',
+        search: '',
+        searchPlaceholder: 'Cari data...',
+        info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
+        infoEmpty: 'Belum ada data',
+        infoFiltered: '(difilter dari _MAX_ data)',
+        zeroRecords: 'Data tidak ditemukan',
+        emptyTable: 'Belum ada data',
+        paginate: {
+            first: 'Pertama',
+            last: 'Terakhir',
+            next: 'Selanjutnya',
+            previous: 'Sebelumnya'
+        }
+    };
+
+    $('#dataTable').DataTable({
+        language: diulemDataTableLanguage
+    });
+    $('#dataTableHover').DataTable({
+        language: diulemDataTableLanguage
+    });
     var hadirTamuTable = $('#hadirTamu').DataTable({
         dom: "<'diulem-table-toolbar'lf>rtipB",
+        language: diulemDataTableLanguage,
         buttons: [
             {
                 extend: 'excelHtml5',
