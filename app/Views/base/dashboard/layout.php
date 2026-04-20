@@ -141,10 +141,6 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
     <div class="page-wrapper">
         <header class="navbar navbar-expand-md d-none d-lg-flex d-print-none diulem-topbar">
             <div class="container-xl">
-                <div>
-                    <div class="text-secondary small">Dashboard Pengguna</div>
-                    <div class="h3 m-0"><?= esc($title) ?></div>
-                </div>
                 <div class="navbar-nav flex-row ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown" aria-label="Open user menu">
