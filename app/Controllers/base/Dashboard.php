@@ -834,28 +834,17 @@ class Dashboard extends Controller
         $data['username'] = $this->request->getPost('username');
         $data['email'] = $this->request->getPost('email');
         $data['hp'] = $this->request->getPost('hp');
-        $phone = $this->request->getPost('hp');
-        foreach ($this->DashboardModel->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
-            $token = $row->token_wa;
-        }
-        if($wa_gateway == 'nusagateway' && $this->cek_wa($token, $phone) == false){
-                $session = session();
-                $session->setFlashdata("error", "No HP tidak Terdaftar di Whatsapp");
-                echo 'gagal';
-            
-        }else{
-            $update = $this->DashboardModel->update_user($data);
-            if($update){
-                $session = session();
-                $this->session->set('uname', $data['username']);
-                $session->setFlashdata("success", "Data Profil Berhasil diupdate");
-            echo 'sukses';
-            }else{ 
+
+        $update = $this->DashboardModel->update_user($data);
+        if($update){
             $session = session();
-            $session->setFlashdata("error", "Data Profil Gagal diupdate");
-            echo 'gagal';
-            }
+            $this->session->set('uname', $data['username']);
+            $session->setFlashdata("success", "Data Profil Berhasil diupdate");
+        echo 'sukses';
+        }else{ 
+        $session = session();
+        $session->setFlashdata("error", "Data Profil Gagal diupdate");
+        echo 'gagal';
         }
     }
 
@@ -1027,16 +1016,7 @@ class Dashboard extends Controller
         $id = $this->request->getPost('id_tamu');
         $domain= $this->DashboardModel->get_order_by_id_user()[0]->domain;
         $data['qrcode'] = md5($domain.$data['nama_slug'].$data['alamat_slug']);
-        foreach ($this->DashboardModel->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
-            $token = $row->token_wa;
-        }
-		if($wa_gateway == 'nusagateway' && $this->cek_wa($token, $this->request->getPost('no_wa')) == false){
-                $session = session();
-                $session->setFlashdata("error", "No HP tidak Terdaftar di Whatsapp");
-                echo 'gagal';
-            
-        }else{
+
         $update = $this->DashboardModel->update_tamu($data, $id);
         if($update){
             $session = session();
@@ -1046,7 +1026,6 @@ class Dashboard extends Controller
             $session = session();
             $session->setFlashdata("error", "Data tamu Gagal diupdate");
             echo 'gagal';
-        }
         }
     }
     
@@ -1061,16 +1040,7 @@ class Dashboard extends Controller
         $data['tgl_kirim'] = $this->request->getPost('tgl_kirim');
         $domain= $this->DashboardModel->get_order_by_id_user()[0]->domain;
         $data['qrcode'] = md5($domain.$data['nama_slug'].$data['alamat_slug']);
-        $token = $this->DashboardModel->get_token();
-        foreach ($this->DashboardModel->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
-        }
-		if($wa_gateway == 'nusagateway' && $this->cek_wa($token, $this->request->getPost('no_wa')) == false){
-                $session = session();
-                $session->setFlashdata("error", "No HP tidak Terdaftar di Whatsapp");
-                echo 'gagal';
-            
-        }else{
+
          $save = $this->DashboardModel->save_tamu($data);
         if($save){
             $session = session();
@@ -1082,7 +1052,6 @@ class Dashboard extends Controller
             $session->setFlashdata("error", "Data tamu Gagal ditambahkan");
             echo 'gagal';
             
-        }
         }
     }
     public function do_hapus_tamu(){
