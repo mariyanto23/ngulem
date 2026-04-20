@@ -49,6 +49,9 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
                     <span><?= SITE_NAME; ?></span>
                 </a>
             </h1>
+            <button id="diulemSidebarMinimize" class="btn btn-icon btn-outline-primary d-none d-lg-inline-flex diulem-sidebar-minimize" type="button" aria-label="Minimize sidebar">
+                <i class="ti ti-layout-sidebar-left-collapse"></i>
+            </button>
             <div class="collapse navbar-collapse" id="sidebar-menu">
                 <ul class="navbar-nav pt-lg-3">
                     <li class="nav-item">
@@ -108,16 +111,31 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
                             <span class="nav-link-title">Testimonial</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $activeMenu === 'invoice' ? 'active' : '' ?>" href="<?= base_url('user/invoice'); ?>">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-receipt-2"></i></span>
-                            <span class="nav-link-title">Tagihan</span>
-                        </a>
-                    </li>
                     <li class="nav-item mt-lg-3">
                         <a class="nav-link" href="https://api.whatsapp.com/send?phone=<?= $_SESSION['no_wa'] ?>" target="_blank">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-brand-whatsapp"></i></span>
                             <span class="nav-link-title">Hubungi Kami</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-lg-3">
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $activeMenu === 'profil' ? 'active' : '' ?>" href="<?= base_url('user/profil') ?>">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-user"></i></span>
+                            <span class="nav-link-title">Profil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $activeMenu === 'invoice' ? 'active' : '' ?>" href="<?= base_url('user/invoice') ?>">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-receipt"></i></span>
+                            <span class="nav-link-title">Tagihan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="<?= base_url('user/logout') ?>">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-logout"></i></span>
+                            <span class="nav-link-title">Logout</span>
                         </a>
                     </li>
                 </ul>
@@ -126,37 +144,6 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
     </aside>
 
     <div class="page-wrapper">
-        <header class="navbar navbar-expand-md d-print-none diulem-topbar">
-            <div class="container-xl">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-nav flex-row order-md-last">
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown" aria-label="Open user menu">
-                            <span class="avatar avatar-sm" style="background-image: url(<?= base_url('assets/dashboard'); ?>/img/boy.png)"></span>
-                            <div class="d-none d-xl-block ps-2">
-                                <div><?= esc($_SESSION['uname']) ?></div>
-                                <div class="mt-1 small text-secondary">Pengguna</div>
-                            </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <a class="dropdown-item" href="<?= base_url('user/profil') ?>"><i class="ti ti-user me-2"></i>Profil</a>
-                            <a class="dropdown-item" href="<?= base_url('user/invoice') ?>"><i class="ti ti-receipt me-2"></i>Tagihan</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="<?= base_url('user/logout') ?>"><i class="ti ti-logout me-2"></i>Logout</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-menu">
-                    <div>
-                        <div class="text-secondary small">Dashboard Pengguna</div>
-                        <div class="h3 m-0"><?= esc($title) ?></div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
         <?php
         if (! function_exists('rupiah')) {
             function rupiah($angka)
@@ -214,7 +201,6 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/js/ruang-admin.js"></script>
 <script src="<?= base_url() ?>/assets/sweetalert/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/chart.js/Chart.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/js/demo/chart-area-demo.js"></script>
@@ -243,6 +229,13 @@ function copyToClipboard(element) {
     document.execCommand('copy');
     $temp.remove();
 }
+
+$('#diulemSidebarMinimize').on('click', function() {
+    $('body').toggleClass('diulem-sidebar-collapsed');
+    $(this).find('.ti')
+        .toggleClass('ti-layout-sidebar-left-collapse')
+        .toggleClass('ti-layout-sidebar-left-expand');
+});
 </script>
 <script>
 $(function() {
