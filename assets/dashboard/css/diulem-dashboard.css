@@ -316,6 +316,32 @@ body,
   .diulem-sidebar .container-fluid {
     align-items: center;
     min-height: 56px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .diulem-sidebar .navbar-toggler {
+    margin-left: 0;
+    min-height: 40px;
+    min-width: 40px;
+  }
+
+  .diulem-mobile-profile {
+    margin-left: auto;
+    max-width: calc(100% - 56px);
+  }
+
+  .diulem-mobile-profile .nav-link {
+    border-radius: 8px;
+    max-width: 100%;
+    padding: 0.35rem 0.45rem !important;
+  }
+
+  .diulem-mobile-profile .fw-bold {
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .diulem-sidebar .navbar-brand,
