@@ -58,7 +58,7 @@ if ($pembayaran[0]->status == 0) {
     $statusMessage = 'Sampai ' . $tglNonaktifFormated . '.';
     $billingLabel = 'Lunas';
     $billingClass = 'bg-success text-success-fg';
-    $billingMeta = 'Aktif sampai ' . $tglNonaktifFormated;
+    $billingMeta = 'Pembayaran sudah diterima';
 }
 
 foreach ($total_mingguan as $row) {
