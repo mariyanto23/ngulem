@@ -10,7 +10,7 @@ $today = strtotime('now');
 $tglBayar = $pembayaran[0]->tglBayar;
 $aktif = '+' . $masa_aktif . ' days';
 $tglNonaktif = strtotime($aktif, strtotime($tglBayar));
-$tglNonaktifFormated = date('d-m-Y H:i A', $tglNonaktif);
+$tglNonaktifFormated = date('d-m-Y H:i', $tglNonaktif) . ' WIB';
 $expiry = strtotime($pembayaran[0]->transaction_expired);
 $expiry_date = date('d-m-Y H:i A', $expiry);
 $undanganUrl = rtrim(SITE_UNDANGAN, '/') . '/' . $order[0]->domain;
@@ -55,7 +55,7 @@ if ($pembayaran[0]->status == 0) {
 } else {
     $statusLabel = 'Aktif';
     $statusClass = 'bg-success text-success-fg';
-    $statusMessage = 'Undangan anda aktif sampai tanggal ' . $tglNonaktifFormated . '.';
+    $statusMessage = 'Sampai ' . $tglNonaktifFormated . '.';
     $billingLabel = 'Lunas';
     $billingClass = 'bg-success text-success-fg';
     $billingMeta = 'Aktif sampai ' . $tglNonaktifFormated;
