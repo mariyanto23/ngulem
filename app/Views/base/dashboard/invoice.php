@@ -1,19 +1,23 @@
- <!-- Container Fluid-->
-<div class="container-fluid" id="container-wrapper">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
-        <div>
-        
-        
-        <a href="<?= rtrim(SITE_UNDANGAN, '/') ?>/<?= $order[0]->domain ?>" class="btn btn-primary btn-sm">Lihat Website</a>
-        
+<div class="page-body">
+<div class="container-xl">
+    <div class="page-header d-print-none mb-3">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="page-pretitle">Transaksi</div>
+                <h1 class="page-title"><?= esc($title); ?></h1>
+            </div>
+            <div class="col-auto">
+                <a href="<?= rtrim(SITE_UNDANGAN, '/') ?>/<?= esc($order[0]->domain) ?>" target="_blank" class="btn btn-primary">
+                    <i class="ti ti-external-link me-2"></i>Lihat Website
+                </a>
+            </div>
         </div>
-    </div> 
+    </div>
 
-    <div class="row mb-3">
-        <div class="col-xl-12 col-lg-12 mb-4">
+    <div class="row row-cards">
+        <div class="col-12">
             <div class="card">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div class="card-body">
                     <?php 
                     $metode_bayar = $setting_bayar[0]->metode_bayar;
                     $masa_aktif = $order[0]->masa_aktif;
@@ -31,28 +35,28 @@
                     $tglNonaktifFormated = date("d-m-Y H:i A", $tglNonaktif );
                     $instruction = json_decode($pembayaran[0]->instruction);
                     if($pembayaran[0]->status == 0){ ?>
-                    <h6 class="m-0 font-weight-bold " style="color:red">Invoice : Masa Trial Anda Akan Berakhir pada tanggal <?= $tglExpFormated ?>, Segera lakukan pembayaran</h6>
+                    <div class="alert alert-danger mb-0">Invoice: masa trial anda akan berakhir pada tanggal <?= esc($tglExpFormated) ?>. Segera lakukan pembayaran.</div>
                     <?php }else if($pembayaran[0]->status == 1){ 
                     if($metode_bayar == 'manual') {?>
-                    <h6 class="m-0 font-weight-bold " style="color:orange">Invoice : Pembayaran anda menunggu konfirmasi</h6>
+                    <div class="alert alert-warning mb-0">Invoice: pembayaran anda menunggu konfirmasi.</div>
                     <?php }else{ ?>
-                    <h6 class="m-0 font-weight-bold " style="color:orange">Invoice : Selesaikan Pembayaran anda sebelum <?= $expiry_date ?> </h6>
+                    <div class="alert alert-warning mb-0">Invoice: selesaikan pembayaran anda sebelum <?= esc($expiry_date) ?>.</div>
                     <?php }
                     } else if($pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ 
                     ?>
-                    <h6 class="m-0 font-weight-bold " style="color:red"> Masa Aktif Undangan sudah habis pada tanggal <?= $tglNonaktifFormated ?>, Silahkan lakukan pembayaran lagi untuk memperpanjang masa aktif undangan </h6>
+                    <div class="alert alert-danger mb-0">Masa aktif undangan sudah habis pada tanggal <?= esc($tglNonaktifFormated) ?>. Silahkan lakukan pembayaran lagi untuk memperpanjang masa aktif undangan.</div>
                     <?php }else{ ?>
-                    <h6 class="m-0 font-weight-bold " style="color:green">Undangan Anda aktif sampai tanggal <?= $tglNonaktifFormated ?></h6>
+                    <div class="alert alert-success mb-0">Undangan anda aktif sampai tanggal <?= esc($tglNonaktifFormated) ?>.</div>
                     <?php } ?>
                </div>
             </div>
         </div>
     
 
-        <div class="col-xl-6 col-lg-6 mb-4">
-            <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Tagihan Pembayaran</h6>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Tagihan Pembayaran</h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -125,10 +129,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 col-lg-6 mb-4" style="<?php if($metode_bayar == 'manual') { echo 'display:block'; } else { if($pembayaran[0]->status != 0){ echo 'display:block'; } else{ echo 'display:none'; } }?>">
-            <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Rekening Pembayaran </h6>
+        <div class="col-xl-6 col-lg-6" style="<?php if($metode_bayar == 'manual') { echo 'display:block'; } else { if($pembayaran[0]->status != 0){ echo 'display:block'; } else{ echo 'display:none'; } }?>">
+            <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Rekening Pembayaran</h3>
                 </div>
                 <div class="card-body">
                     <?php if($metode_bayar == 'manual') { ?>
@@ -185,7 +189,7 @@
             </div>
         </div>
     </div>
-    <!--Row-->
+</div>
 </div>
 
 <!-- Modal -->

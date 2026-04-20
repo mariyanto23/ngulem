@@ -36,6 +36,9 @@ $activeMenu = service('uri')->getSegment(2) ?: 'dashboard';
 $websiteMenus = ['tampilan', 'pengaturan', 'mempelai', 'acara', 'album', 'cerita', 'rekening'];
 $visitorMenus = ['riwayat', 'ucapan'];
 $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
+$isWebsiteMenu = in_array($activeMenu, $websiteMenus, true);
+$isVisitorMenu = in_array($activeMenu, $visitorMenus, true);
+$isGuestMenu = in_array($activeMenu, $guestMenus, true);
 ?>
 <div class="page">
     <aside class="navbar navbar-vertical navbar-expand-lg diulem-sidebar">
@@ -77,12 +80,12 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <?= in_array($activeMenu, $websiteMenus, true) ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <li class="nav-item dropdown <?= $isWebsiteMenu ? 'show' : '' ?>">
+                        <a class="nav-link dropdown-toggle <?= $isWebsiteMenu ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="<?= $isWebsiteMenu ? 'true' : 'false' ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-browser"></i></span>
                             <span class="nav-link-title">Website</span>
                         </a>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu <?= $isWebsiteMenu ? 'show' : '' ?>">
                             <a class="dropdown-item <?= $activeMenu === 'tampilan' ? 'active' : '' ?>" href="<?= base_url('user/tampilan'); ?>">Tampilan</a>
                             <a class="dropdown-item <?= $activeMenu === 'pengaturan' ? 'active' : '' ?>" href="<?= base_url('user/pengaturan'); ?>">Pengaturan</a>
                             <div class="dropdown-divider"></div>
@@ -96,24 +99,24 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
                         </div>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <?= in_array($activeMenu, $visitorMenus, true) ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <li class="nav-item dropdown <?= $isVisitorMenu ? 'show' : '' ?>">
+                        <a class="nav-link dropdown-toggle <?= $isVisitorMenu ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="<?= $isVisitorMenu ? 'true' : 'false' ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-chart-line"></i></span>
                             <span class="nav-link-title">Pengunjung</span>
                         </a>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu <?= $isVisitorMenu ? 'show' : '' ?>">
                             <a class="dropdown-item <?= $activeMenu === 'riwayat' ? 'active' : '' ?>" href="<?= base_url('user/riwayat'); ?>">Riwayat</a>
                             <a class="dropdown-item <?= $activeMenu === 'ucapan' ? 'active' : '' ?>" href="<?= base_url('user/ucapan'); ?>">Ucapan</a>
                         </div>
                     </li>
 
                     <?php if ($_SESSION['buku_tamu'] == 1) { ?>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle <?= in_array($activeMenu, $guestMenus, true) ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <li class="nav-item dropdown <?= $isGuestMenu ? 'show' : '' ?>">
+                            <a class="nav-link dropdown-toggle <?= $isGuestMenu ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="<?= $isGuestMenu ? 'true' : 'false' ?>">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-address-book"></i></span>
                                 <span class="nav-link-title">Buku Tamu</span>
                             </a>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu <?= $isGuestMenu ? 'show' : '' ?>">
                                 <a class="dropdown-item <?= $activeMenu === 'tamu' ? 'active' : '' ?>" href="<?= base_url('user/tamu'); ?>">Data Tamu</a>
                                 <a class="dropdown-item <?= $activeMenu === 'setting_bukutamu' ? 'active' : '' ?>" href="<?= base_url('user/setting_bukutamu'); ?>">Setting Buku Tamu</a>
                                 <a class="dropdown-item <?= $activeMenu === 'data_hadir' ? 'active' : '' ?>" href="<?= base_url('user/data_hadir'); ?>">Data Hadir</a>
@@ -219,7 +222,7 @@ $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url() ?>/assets/sweetalert/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/chart.js/Chart.min.js"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/js/demo/chart-area-demo.js"></script>
+<script src="<?= base_url('assets/dashboard'); ?>/js/demo/chart-area-demo.js?v=<?= filemtime(FCPATH . 'assets/dashboard/js/demo/chart-area-demo.js') ?>"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>

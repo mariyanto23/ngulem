@@ -14,32 +14,58 @@ $tglNonaktifFormated = date('d-m-Y H:i A', $tglNonaktif);
 $expiry = strtotime($pembayaran[0]->transaction_expired);
 $expiry_date = date('d-m-Y H:i A', $expiry);
 $undanganUrl = rtrim(SITE_UNDANGAN, '/') . '/' . $order[0]->domain;
+$hasWeeklyVisitors = false;
 
 $statusLabel = 'Trial';
 $statusClass = 'bg-warning text-warning-fg';
 $statusMessage = 'Selesaikan pembayaran anda sebelum ' . $tglExpFormated . ' untuk menikmati fiturnya.';
+$billingLabel = 'Belum Lunas';
+$billingClass = 'bg-warning text-warning-fg';
+$billingMeta = 'Trial sampai ' . $tglExpFormated;
 
 if ($pembayaran[0]->status == 0) {
     if ($today >= $tglExp) {
         $statusLabel = 'Tidak Aktif';
         $statusClass = 'bg-danger text-danger-fg';
+        $billingLabel = 'Trial Berakhir';
+        $billingClass = 'bg-danger text-danger-fg';
+        $billingMeta = 'Perlu pembayaran baru';
     }
 } else if ($pembayaran[0]->status == 1 && $metode_bayar == 'manual') {
     $statusLabel = $today < $tglExp ? 'Menunggu Konfirmasi' : 'Tidak Aktif';
     $statusClass = $today < $tglExp ? 'bg-warning text-warning-fg' : 'bg-danger text-danger-fg';
     $statusMessage = 'Pembayaran anda menunggu dikonfirmasi.';
+    $billingLabel = 'Menunggu Konfirmasi';
+    $billingClass = 'bg-warning text-warning-fg';
+    $billingMeta = 'Tim akan memverifikasi pembayaran';
 } else if ($pembayaran[0]->status == 1 && $metode_bayar != 'manual') {
     $statusLabel = $today < $tglExp ? 'Menunggu Pembayaran' : 'Tidak Aktif';
     $statusClass = $today < $tglExp ? 'bg-warning text-warning-fg' : 'bg-danger text-danger-fg';
     $statusMessage = 'Selesaikan pembayaran anda sebelum ' . $expiry_date . '.';
+    $billingLabel = 'Menunggu Pembayaran';
+    $billingClass = 'bg-warning text-warning-fg';
+    $billingMeta = 'Batas bayar ' . $expiry_date;
 } else if ($pembayaran[0]->status == 2 && $today >= $tglNonaktif) {
     $statusLabel = 'Tidak Aktif';
     $statusClass = 'bg-danger text-danger-fg';
     $statusMessage = 'Masa aktif undangan sudah habis pada tanggal ' . $tglNonaktifFormated . '.';
+    $billingLabel = 'Perlu Perpanjangan';
+    $billingClass = 'bg-danger text-danger-fg';
+    $billingMeta = 'Berakhir ' . $tglNonaktifFormated;
 } else {
     $statusLabel = 'Aktif';
     $statusClass = 'bg-success text-success-fg';
     $statusMessage = 'Undangan anda aktif sampai tanggal ' . $tglNonaktifFormated . '.';
+    $billingLabel = 'Lunas';
+    $billingClass = 'bg-success text-success-fg';
+    $billingMeta = 'Aktif sampai ' . $tglNonaktifFormated;
+}
+
+foreach ($total_mingguan as $row) {
+    if ((int) $row->jumlah > 0) {
+        $hasWeeklyVisitors = true;
+        break;
+    }
 }
 ?>
 
@@ -74,7 +100,8 @@ if ($pembayaran[0]->status == 0) {
                         <div class="row align-items-center">
                             <div class="col">
                                 <div class="text-secondary">Status Undangan</div>
-                                <div class="h2 mb-0"><span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span></div>
+                                <div class="h2 mb-2"><span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span></div>
+                                <div class="text-secondary small"><?= esc($statusMessage) ?></div>
                             </div>
                             <div class="col-auto">
                                 <span class="diulem-stat-icon"><i class="ti ti-shield-check"></i></span>
@@ -88,11 +115,12 @@ if ($pembayaran[0]->status == 0) {
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <div class="text-secondary">Total Pengunjung</div>
-                                <div class="h1 mb-0"><?= esc($total_pengunjung) ?></div>
+                                <div class="text-secondary">Status Tagihan</div>
+                                <div class="h2 mb-2"><span class="badge <?= $billingClass ?>"><?= esc($billingLabel) ?></span></div>
+                                <div class="text-secondary small"><?= esc($billingMeta) ?></div>
                             </div>
                             <div class="col-auto">
-                                <span class="diulem-stat-icon"><i class="ti ti-users"></i></span>
+                                <span class="diulem-stat-icon"><i class="ti ti-receipt-2"></i></span>
                             </div>
                         </div>
                     </div>
@@ -103,11 +131,12 @@ if ($pembayaran[0]->status == 0) {
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col">
-                                <div class="text-secondary">Total Ucapan</div>
-                                <div class="h1 mb-0"><?= esc($total_komentar) ?></div>
+                                <div class="text-secondary">Aktivitas</div>
+                                <div class="h1 mb-0"><?= esc($total_pengunjung) ?></div>
+                                <div class="text-secondary small"><?= esc($total_komentar) ?> ucapan masuk</div>
                             </div>
                             <div class="col-auto">
-                                <span class="diulem-stat-icon"><i class="ti ti-messages"></i></span>
+                                <span class="diulem-stat-icon"><i class="ti ti-users"></i></span>
                             </div>
                         </div>
                     </div>
@@ -122,9 +151,24 @@ if ($pembayaran[0]->status == 0) {
                         <h3 class="card-title">Pengunjung 7 Hari Terakhir</h3>
                     </div>
                     <div class="card-body">
-                        <div class="chart-area">
-                            <canvas id="myAreaChart"></canvas>
-                        </div>
+                        <?php if ($hasWeeklyVisitors) { ?>
+                            <div class="chart-area">
+                                <canvas id="myAreaChart"></canvas>
+                            </div>
+                        <?php } else { ?>
+                            <div class="empty">
+                                <div class="empty-icon">
+                                    <i class="ti ti-chart-line"></i>
+                                </div>
+                                <p class="empty-title">Belum ada data pengunjung minggu ini</p>
+                                <p class="empty-subtitle text-secondary">Bagikan link undangan untuk mulai melihat aktivitas kunjungan.</p>
+                                <div class="empty-action">
+                                    <a href="<?= $undanganUrl ?>" target="_blank" class="btn btn-primary">
+                                        <i class="ti ti-external-link me-2"></i>Lihat Website
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -135,11 +179,17 @@ if ($pembayaran[0]->status == 0) {
                         <h3 class="card-title">Aksi Cepat</h3>
                     </div>
                     <div class="list-group list-group-flush">
+                        <a href="<?= base_url('user/pengaturan') ?>" class="list-group-item list-group-item-action">
+                            <i class="ti ti-settings me-2 text-primary"></i>Pengaturan Website
+                        </a>
                         <a href="<?= base_url('user/mempelai') ?>" class="list-group-item list-group-item-action">
                             <i class="ti ti-heart me-2 text-primary"></i>Data Mempelai
                         </a>
                         <a href="<?= base_url('user/acara') ?>" class="list-group-item list-group-item-action">
                             <i class="ti ti-calendar-event me-2 text-primary"></i>Data Acara
+                        </a>
+                        <a href="<?= base_url('user/tampilan') ?>" class="list-group-item list-group-item-action">
+                            <i class="ti ti-palette me-2 text-primary"></i>Tampilan Undangan
                         </a>
                         <a href="<?= base_url('user/album') ?>" class="list-group-item list-group-item-action">
                             <i class="ti ti-photo me-2 text-primary"></i>Gallery
