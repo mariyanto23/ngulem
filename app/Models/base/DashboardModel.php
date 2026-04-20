@@ -138,7 +138,7 @@ class DashboardModel extends Model
     //mengambil semua data pada table themes
     public function get_all_themes(){
         $builder = $this->themes;
-        $builder->select('themes.*,tema_categories.name');
+        $builder->select('themes.*, tema_categories.id as category_id, tema_categories.name as category_name');
         $builder->join('tema_categories', 'themes.category_id = tema_categories.id', 'left');
         $builder->where('status', '1');
         $builder->orderBy('themes.nama_theme', 'ASC');

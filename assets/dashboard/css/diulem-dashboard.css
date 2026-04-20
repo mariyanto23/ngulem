@@ -41,17 +41,27 @@ body,
   border-radius: 8px;
   font-weight: 650;
   margin: 2px 10px;
+  position: relative;
 }
 
 .diulem-sidebar .navbar-nav .nav-link:hover,
-.diulem-sidebar .navbar-nav .nav-link:focus,
-.diulem-sidebar .navbar-nav .nav-link.active {
+.diulem-sidebar .navbar-nav .nav-link:focus {
   background: #e8f5f3;
   color: #0f766e;
 }
 
+.diulem-sidebar .navbar-nav .nav-link.active {
+  background: #0f766e;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.22);
+  color: #ffffff;
+}
+
 .diulem-sidebar .nav-link-icon {
   color: #0f766e;
+}
+
+.diulem-sidebar .navbar-nav .nav-link.active .nav-link-icon {
+  color: #ffffff;
 }
 
 .diulem-sidebar .navbar-nav .dropdown-menu.show {
@@ -71,14 +81,32 @@ body,
   border-radius: 8px;
   color: #526070;
   font-size: 0.9rem;
+  font-weight: 600;
   padding: 0.42rem 0.75rem;
+  position: relative;
 }
 
-.diulem-sidebar .navbar-nav .dropdown-item.active,
 .diulem-sidebar .navbar-nav .dropdown-item:active,
 .diulem-sidebar .navbar-nav .dropdown-item:hover {
   background: #e8f5f3;
   color: #0f766e;
+}
+
+.diulem-sidebar .navbar-nav .dropdown-item.active {
+  background: #d9f0ed;
+  color: #0f766e;
+  font-weight: 750;
+}
+
+.diulem-sidebar .navbar-nav .dropdown-item.active::before {
+  background: #0f766e;
+  border-radius: 999px;
+  bottom: 0.5rem;
+  content: "";
+  left: -0.35rem;
+  position: absolute;
+  top: 0.5rem;
+  width: 3px;
 }
 
 .diulem-mobile-profile {
@@ -218,6 +246,58 @@ body,
   border: 1px solid var(--diulem-line);
   border-radius: 8px;
   padding: 0.85rem;
+}
+
+.diulem-theme-card {
+  overflow: hidden;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.diulem-theme-card:hover {
+  border-color: rgba(15, 118, 110, 0.35);
+  box-shadow: 0 16px 34px rgba(17, 24, 39, 0.1);
+  transform: translateY(-2px);
+}
+
+.diulem-theme-card.is-active {
+  border-color: rgba(22, 163, 74, 0.45);
+}
+
+.diulem-theme-badge {
+  border-radius: 8px;
+  left: 0.75rem;
+  position: absolute;
+  top: 0.75rem;
+}
+
+.diulem-theme-badge-slide {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.diulem-theme-badge-scroll {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.diulem-theme-badge-mobile {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.diulem-theme-badge-video {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.diulem-theme-badge-premium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.diulem-theme-badge-default {
+  background: #ede9fe;
+  color: #6d28d9;
 }
 
 @media (min-width: 992px) {
