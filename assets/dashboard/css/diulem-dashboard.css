@@ -418,9 +418,175 @@ body,
 }
 
 .upload-area-bg {
-  border: 1px solid var(--diulem-line);
+  background: #f8fafc !important;
+  border: 1px dashed #cbd5e1;
   border-radius: 8px;
   padding: 0.85rem;
+}
+
+.upload-area-bg img,
+.upload-area img {
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px !important;
+  object-fit: cover;
+}
+
+.preview-uploads {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+}
+
+.preview-uploads-img,
+.preview-slider-img {
+  border-radius: 8px;
+  flex: 0 0 84px;
+  height: 64px;
+  overflow: hidden;
+}
+
+.preview-uploads-img img,
+.preview-slider-img img {
+  height: 100% !important;
+  object-fit: cover;
+  width: 100% !important;
+}
+
+.preview-uploads-name {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.preview-uploads-name p {
+  margin-bottom: 0;
+}
+
+.preview-uploads-delete {
+  flex: 0 0 auto;
+}
+
+.btn_remove {
+  align-items: center;
+  background: #dc2626 !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  font-size: 0.8rem !important;
+  font-weight: 700;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.65rem !important;
+  text-decoration: none !important;
+}
+
+.btn_remove:hover {
+  background: #b91c1c !important;
+}
+
+.diulem-repeat-item {
+  background: #ffffff;
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.diulem-repeat-number {
+  align-items: center;
+  background: #e8f5f3;
+  border-radius: 8px;
+  color: #0f766e;
+  display: inline-flex;
+  font-weight: 800;
+  min-height: 2rem;
+  padding: 0.25rem 0.65rem;
+}
+
+.diulem-invoice-box {
+  background: #f8fafc;
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  margin-top: 0.35rem;
+  min-height: 48px;
+  padding: 0.85rem 1rem;
+}
+
+.diulem-invoice-row {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.diulem-invoice-actions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.diulem-invoice-code,
+.diulem-invoice-value {
+  color: var(--diulem-ink);
+  display: inline-block;
+  font-weight: 750;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.diulem-invoice-total {
+  color: #0f766e;
+  display: inline-block;
+  font-size: 1.35rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.diulem-payment-steps {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.diulem-payment-step {
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.diulem-payment-step-title {
+  align-items: center;
+  color: var(--diulem-ink);
+  display: flex;
+  font-weight: 750;
+  gap: 0.75rem;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+}
+
+.diulem-payment-step-title:hover {
+  background: #f8fafc;
+  color: var(--diulem-primary);
+  text-decoration: none;
+}
+
+.diulem-payment-step-body {
+  background: #ffffff;
+  border-top: 1px solid var(--diulem-line);
+  color: #475569;
+  padding: 1rem;
+}
+
+.diulem-payment-step-body li + li {
+  margin-top: 0.5rem;
 }
 
 .diulem-theme-card {
@@ -766,5 +932,63 @@ body,
   .page-wrapper .dataTable tbody td {
     padding-left: 0.8rem;
     padding-right: 0.8rem;
+  }
+
+  .diulem-invoice-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .diulem-invoice-actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .diulem-invoice-box.d-flex {
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .diulem-invoice-box.d-flex .btn {
+    width: auto;
+  }
+
+  .upload-area-bg {
+    padding: 0.75rem;
+  }
+
+  .upload-area-bg .row {
+    gap: 0.75rem;
+  }
+
+  .upload-area-bg img,
+  .upload-area img {
+    height: auto !important;
+    max-width: 100%;
+  }
+
+  .preview-uploads {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .preview-uploads-name {
+    flex-basis: calc(100% - 102px);
+  }
+
+  .preview-uploads-delete {
+    margin-left: 96px;
+  }
+
+  .diulem-repeat-item {
+    padding: 0.85rem;
+  }
+
+  .modal-dialog.modal-lg,
+  .modal-dialog.modal-xl {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    max-width: calc(100% - 1rem);
   }
 }

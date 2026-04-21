@@ -1,15 +1,20 @@
-<!-- Container Fluid-->
-<div class="container-fluid" id="container-wrapper">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
-    </div> 
+<div class="page-body">
+    <div class="container-xl">
+        <div class="page-header d-print-none mb-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">Konten Undangan</div>
+                    <h1 class="page-title"><?= esc($title); ?></h1>
+                </div>
+            </div>
+        </div>
 
-    <div class="row mb-3">
+    <div class="row row-cards">
 
-        <div class="col-xl-6 col-lg-6 mb-4">
-            <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Gallery</h6>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Data Gallery</h3>
                 </div>
                 <div class="card-body">
 
@@ -68,10 +73,10 @@
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6 mb-4">
-            <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Video</h6>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Data Video</h3>
                 </div>
                 <div class="card-body">
                     <label>Youtube Link</label>
@@ -89,28 +94,17 @@
         </div>
 
     </div>
-    <!--Row-->
-</div>
-<!-- Modal -->
-<div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanVideo">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
-      </div>
     </div>
-  </div>
 </div>
+</div>
+
+<?= view('base/dashboard/components/confirm_modal', [
+    'modalId' => 'modalVideo',
+    'message' => 'Apakah kamu yakin ingin menyimpan video undangan?',
+    'confirmId' => 'simpanVideo',
+    'confirmText' => 'Ya, Simpan',
+    'confirmClass' => 'btn-primary',
+]) ?>
 
 <script src="<?php echo base_url() ?>/assets/base/js/dropzone.js"></script>
 <script>
@@ -176,8 +170,12 @@ $.ajax({
     async : true,
     dataType : 'html',
     success: function($hasil){
-        if($hasil == 'sukses'){
-            location.reload();
+        if($.trim($hasil) == 'sukses'){
+            Swal.fire({icon: 'success', title: 'Berhasil', text: 'Video berhasil disimpan.'}).then(function () {
+                location.reload();
+            });
+        } else {
+            Swal.fire({icon: 'error', title: 'Gagal', text: 'Video gagal disimpan.'});
         }
     }
 });

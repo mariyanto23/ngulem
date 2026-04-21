@@ -223,6 +223,7 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
 <script src="<?= base_url() ?>/assets/sweetalert/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/chart.js/Chart.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/js/demo/chart-area-demo.js?v=<?= filemtime(FCPATH . 'assets/dashboard/js/demo/chart-area-demo.js') ?>"></script>
+<script src="<?= base_url('assets/dashboard'); ?>/js/diulem-dashboard.js?v=<?= filemtime(FCPATH . 'assets/dashboard/js/diulem-dashboard.js') ?>"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>

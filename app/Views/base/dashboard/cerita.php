@@ -1,15 +1,20 @@
-<!-- Container Fluid-->
-<div class="container-fluid" id="container-wrapper">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
-    </div> 
+<div class="page-body">
+    <div class="container-xl">
+        <div class="page-header d-print-none mb-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">Konten Undangan</div>
+                    <h1 class="page-title"><?= esc($title); ?></h1>
+                </div>
+            </div>
+        </div>
 
-    <div class="row mb-3">
+    <div class="row row-cards">
 
-        <div class="col-xl-6 col-lg-6 mb-4">
-            <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Cerita</h6>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Data Cerita</h3>
                 </div>
                 <div class="card-body">
                    
@@ -21,13 +26,13 @@
                             for($i=0;$i < $jml_cerita;$i++){ 
                         ?>
 
-                            <div id="cerita<?php echo $i+1 ?>">
+                            <div id="cerita<?php echo $i+1 ?>" class="diulem-repeat-item cerita-item">
                                 <div class="row align-items-center mt-3">
                                     <div class="col-auto">
-                                        <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#<?php echo $i+1 ?></a>
+                                        <span class="diulem-repeat-number">#<?php echo $i+1 ?></span>
                                     </div>
                                     <div class="col">
-                                        <a id="<?php echo $i+1 ?>" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;color:#fff">Hapus</a>
+                                        <button type="button" id="<?php echo $i+1 ?>" class="btn btn-sm btn_remove">Hapus</button>
                                     </div>
                                 </div>
 
@@ -75,11 +80,11 @@
 
             </div>
         </div>
-        <div class="col-xl-6 col-lg-6 mb-4">
+        <div class="col-xl-6 col-lg-6">
               <!-- Form Basic -->
-              <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Quote Pernikahan</h6>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Quote Pernikahan</h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -95,27 +100,49 @@
             </div>
         </div>
     </div>
-    <!--Row-->
-</div>
-<div class="modal fade" id="modalQuote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanQuote">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
-      </div>
     </div>
-  </div>
 </div>
+</div>
+
+<?= view('base/dashboard/components/confirm_modal', [
+    'modalId' => 'modalQuote',
+    'message' => 'Apakah kamu yakin ingin menyimpan quote pernikahan?',
+    'confirmId' => 'simpanQuote',
+    'confirmText' => 'Ya, Simpan',
+    'confirmClass' => 'btn-primary',
+]) ?>
+
+<template id="ceritaTemplate">
+    <div class="diulem-repeat-item cerita-item" id="cerita__INDEX__">
+        <div class="row align-items-center mt-3">
+            <div class="col-auto">
+                <span class="diulem-repeat-number">#__INDEX__</span>
+            </div>
+            <div class="col">
+                <button type="button" id="__INDEX__" class="btn btn-sm btn_remove">Hapus</button>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col">
+                <label>Tanggal</label>
+                <input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020" required>
+            </div>
+        </div>
+        <div class="row align-items-center mt-3">
+            <div class="col">
+                <label>Judul</label>
+                <input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required>
+            </div>
+        </div>
+        <div class="row align-items-center mt-3">
+            <div class="col">
+                <label>Isi Cerita</label>
+                <textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea>
+            </div>
+        </div>
+    </div>
+</template>
+
 <script>
 
     var i = <?php echo $jml_cerita ?>;
@@ -136,7 +163,7 @@
 
       i++;  
 
-      $('#konten-cerita').append('<div id="cerita'+i+'"><div class="row align-items-center mt-3"><div class="col-auto"><a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#'+i+'</a></div><div class="col"><a id="'+i+'" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a></div></div><div class="row align-items-center"><div class="col"><label>Tanggal</label><input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020 " required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Judul</label><input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Isi Cerita</label><textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea></div></div></div>');  
+      $('#konten-cerita').append($('#ceritaTemplate').html().replace(/__INDEX__/g, i));  
         $(".form-control").prop('required',false);
     });
     
@@ -150,7 +177,13 @@
             async : true,
             dataType : 'html',
           success: function($hasil){
-                    location.reload();
+                    if($.trim($hasil) == 'sukses'){
+                        Swal.fire({icon: 'success', title: 'Berhasil', text: 'Quote berhasil disimpan.'}).then(function () {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({icon: 'error', title: 'Gagal', text: 'Quote gagal disimpan.'});
+                    }
                 
             }
       });
