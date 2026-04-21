@@ -369,8 +369,6 @@
             success: function(data) {
                 //location = data;
 
-                console.log('token = ' + data);
-
                 var resultType = document.getElementById('result-type');
                 var resultData = document.getElementById('result-data');
 
@@ -384,18 +382,14 @@
                 snap.pay(data, {
                     onSuccess: function(result) {
                         changeResult('success', result);
-                        console.log(result.status_message);
-                        console.log(result);
                         $("#payment-form").submit();
                     },
                     onPending: function(result) {
                         changeResult('pending', result);
-                        console.log(result.status_message);
                         $("#payment-form").submit();
                     },
                     onError: function(result) {
                         changeResult('error', result);
-                        console.log(result.status_message);
                         $("#payment-form").submit();
                     }
                 });
@@ -415,41 +409,21 @@
     $('#refresh').on('click', function(event) {
         event.preventDefault();
         var $button = $(this);
-        DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader"></i>');
-        $.ajax({
-            url : "<?= base_url('user/refresh_invoice') ?>",
-            method : "POST",
-            async : true,
-            dataType : 'html',
-            success: function($hasil){
-               DiulemDashboard.reloadAfterSuccess($hasil, 'Invoice berhasil diperbarui.', 'Invoice gagal diperbarui. Silahkan coba lagi.');
-            },
-            error: function() {
-               DiulemDashboard.notify('error', 'Gagal', 'Invoice gagal diperbarui. Silahkan coba lagi.');
-            },
-            complete: function() {
-               DiulemDashboard.setButtonLoading($button, false);
-            }
+        DiulemDashboard.post("<?= base_url('user/refresh_invoice') ?>", {}, {
+            button: $button,
+            loadingText: '<i class="ti ti-loader"></i>',
+            successMessage: 'Invoice berhasil diperbarui.',
+            errorMessage: 'Invoice gagal diperbarui. Silahkan coba lagi.'
         });
     });
     $('#re_order').on('click', function(event) {
         event.preventDefault();
         var $button = $(this);
-        DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader"></i>');
-        $.ajax({
-            url : "<?= base_url('user/re_order') ?>",
-            method : "POST",
-            async : true,
-            dataType : 'html',
-            success: function($hasil){
-               DiulemDashboard.reloadAfterSuccess($hasil, 'Invoice perpanjangan berhasil dibuat.', 'Invoice perpanjangan gagal dibuat. Silahkan coba lagi.');
-            },
-            error: function() {
-               DiulemDashboard.notify('error', 'Gagal', 'Invoice perpanjangan gagal dibuat. Silahkan coba lagi.');
-            },
-            complete: function() {
-               DiulemDashboard.setButtonLoading($button, false);
-            }
+        DiulemDashboard.post("<?= base_url('user/re_order') ?>", {}, {
+            button: $button,
+            loadingText: '<i class="ti ti-loader"></i>',
+            successMessage: 'Invoice perpanjangan berhasil dibuat.',
+            errorMessage: 'Invoice perpanjangan gagal dibuat. Silahkan coba lagi.'
         });
     });
 </script>

@@ -347,22 +347,16 @@ $(document).ready(function () {
         var nama_panggilan = $('#nama_panggilan_wanita').val();
         var nama_ayah = $('#nama_ayah_wanita').val();
         var nama_ibu = $('#nama_ibu_wanita').val();
-        DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-        $.ajax({
-            url : "<?= base_url('user/update_mempelai') ?>",
-            method : "POST",
-            data : {nama: nama,nama_panggilan: nama_panggilan, nama_ayah: nama_ayah, nama_ibu: nama_ibu, datanyaSiapa: datanyaSiapa},
-            async : true,
-            dataType : 'html',
-            success: function($hasil){
-                DiulemDashboard.reloadAfterSuccess($hasil, 'Data mempelai wanita berhasil disimpan.', 'Data mempelai wanita gagal disimpan.');
-            },
-            error: function() {
-                DiulemDashboard.notify('error', 'Gagal', 'Data mempelai wanita gagal disimpan.');
-            },
-            complete: function() {
-                DiulemDashboard.setButtonLoading($button, false);
-            }
+        DiulemDashboard.post("<?= base_url('user/update_mempelai') ?>", {
+            nama: nama,
+            nama_panggilan: nama_panggilan,
+            nama_ayah: nama_ayah,
+            nama_ibu: nama_ibu,
+            datanyaSiapa: datanyaSiapa
+        }, {
+            button: $button,
+            successMessage: 'Data mempelai wanita berhasil disimpan.',
+            errorMessage: 'Data mempelai wanita gagal disimpan.'
         });
 
     });
@@ -376,23 +370,16 @@ $(document).ready(function () {
         var nama_ayah = $('#nama_ayah_pria').val();
         var nama_ibu = $('#nama_ibu_pria').val();
 
-        DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-
-        $.ajax({
-            url : "<?= base_url('user/update_mempelai') ?>",
-            method : "POST",
-            data : {nama: nama,nama_panggilan: nama_panggilan, nama_ayah: nama_ayah, nama_ibu: nama_ibu, datanyaSiapa: datanyaSiapa},
-            async : true,
-            dataType : 'html',
-            success: function($hasil){
-                DiulemDashboard.reloadAfterSuccess($hasil, 'Data mempelai pria berhasil disimpan.', 'Data mempelai pria gagal disimpan.');
-            },
-            error: function() {
-                DiulemDashboard.notify('error', 'Gagal', 'Data mempelai pria gagal disimpan.');
-            },
-            complete: function() {
-                DiulemDashboard.setButtonLoading($button, false);
-            }
+        DiulemDashboard.post("<?= base_url('user/update_mempelai') ?>", {
+            nama: nama,
+            nama_panggilan: nama_panggilan,
+            nama_ayah: nama_ayah,
+            nama_ibu: nama_ibu,
+            datanyaSiapa: datanyaSiapa
+        }, {
+            button: $button,
+            successMessage: 'Data mempelai pria berhasil disimpan.',
+            errorMessage: 'Data mempelai pria gagal disimpan.'
         });
 
     });

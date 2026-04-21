@@ -56,6 +56,11 @@
           return;
         }
 
+        if (typeof settings.onSuccess === 'function') {
+          settings.onSuccess(result);
+          return;
+        }
+
         if (DiulemDashboard.isSuccess(result)) {
           DiulemDashboard.notify('success', 'Berhasil', settings.successMessage);
           return;

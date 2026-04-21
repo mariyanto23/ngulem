@@ -267,15 +267,13 @@ $('#simpanDomain').on('click', function() {
     var $button = $(this);
     var domain = $('#domain').val();
 
-    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-
-    $.ajax({
-        url : "<?= base_url('user/update_domain') ?>",
-        method : 'POST',
-        data : {domain: domain},
-        async : true,
-        dataType : 'html',
-        success: function(result) {
+    DiulemDashboard.post("<?= base_url('user/update_domain') ?>", {
+        domain: domain
+    }, {
+        button: $button,
+        reload: false,
+        errorMessage: 'Domain gagal diupdate.',
+        onSuccess: function(result) {
             result = $.trim(result);
 
             if (result === 'sukses') {
@@ -285,12 +283,6 @@ $('#simpanDomain').on('click', function() {
 
             $('#modalDomain').modal('hide');
             $('#modalGagal').modal('show');
-        },
-        error: function() {
-            DiulemDashboard.notify('error', 'Gagal', 'Domain gagal diupdate.');
-        },
-        complete: function() {
-            DiulemDashboard.setButtonLoading($button, false);
         }
     });
 });

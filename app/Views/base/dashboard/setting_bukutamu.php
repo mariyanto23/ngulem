@@ -34,11 +34,11 @@
                                         <i class="lni-cloud-download"></i>
                                     </div>
                                     <h3 class="upload-area-caption">
-                                        <span>Drag and drop files here</span>
+                                        <span>Upload Slider Buku Tamu</span>
                                     </h3>
-                                    <p>or</p>
+                                    <p>Drag file ke sini atau pilih dari perangkat. Maksimal 10 foto, 2MB per foto.</p>
                                     <button class="upload-area-button btn diulem-upload-button">
-                                        <span>Browse files</span>
+                                        <span>Pilih Foto</span>
                                     </button>
                                 </div>
                             </div>
@@ -49,11 +49,14 @@
                         </div>
 
                         <div id="previewss">
-                            <?php for ($a = 1; $a <= 10; $a++) {
+                            <?php
+                            $hasSlider = false;
+                            for ($a = 1; $a <= 10; $a++) {
                                 $pathName = 'assets/users/'.$kunci.'/slider'.$a.'.png';
                                 if (! file_exists($pathName)) {
                                     continue;
                                 }
+                                $hasSlider = true;
                             ?>
                             <div class="preview-uploads" id="preview<?= $a ?>">
                                 <div class="preview-slider-img">
@@ -67,10 +70,19 @@
                                     <p class="size text-secondary">-</p>
                                 </div>
                                 <div class="preview-uploads-delete">
-                                    <button id="<?= $a ?>" data-dz-remove class="btn btn-danger delete btnhehe">Hapus</button>
+                                    <button id="<?= $a ?>" data-dz-remove class="btn btn-danger btn-sm btn-icon delete btnhehe" title="Hapus slider" aria-label="Hapus slider">
+                                        <i class="ti ti-trash"></i>
+                                    </button>
                                 </div>
                             </div>
                             <?php } ?>
+                            <div id="sliderEmptyState" class="diulem-empty-state <?= $hasSlider ? 'd-none' : '' ?>">
+                                <i class="ti ti-photo-off"></i>
+                                <div>
+                                    <strong>Belum ada slider</strong>
+                                    <p>Upload foto pertama untuk tampilan buku tamu.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,6 +106,9 @@
                                     <div class="btn btn-primary">
                                         <input type="file" class="file-upload" id="bg-bukutamu" name="bg-bukutamu" accept="image/*" onchange="preview_image(event)"> Upload Foto
                                     </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-hint mt-2">Ukuran ideal 1200 x 800 px, format JPG/PNG, maksimal 2MB.</div>
                                 </div>
                                 <div class="col-12 mt-3">
                                     <button class="btn btn-primary w-100" type="submit">Simpan</button>
@@ -139,7 +154,8 @@ myDropzone.on("success", function(file, response) {
       DiulemDashboard.notify('warning', 'Batas Upload', 'Maksimal 10 foto slider buku tamu.');
     } else {
       var aql = JSON.parse(response);
-      $("#previewss").prepend('<div id="preview'+aql.no+'" class="file-row preview-uploads"><div class="preview-slider-img"><span class="preview"><img id="img3" src="<?= base_url() ?>/assets/users/'+aql.kunci+'/slider'+aql.no+'.png" alt="slider'+aql.no+'" /></span></div><div class="preview-uploads-name"><p class="name fw-bold" data-dz-name>slider'+aql.no+'</p><strong class="error text-danger"></strong><p class="size text-secondary">-</p></div><div class="preview-uploads-delete"><button id="'+aql.no+'" class="btn btn-danger delete btnhehe">Hapus</button></div></div>');
+      $('#sliderEmptyState').addClass('d-none');
+      $("#previewss").prepend('<div id="preview'+aql.no+'" class="file-row preview-uploads"><div class="preview-slider-img"><span class="preview"><img id="img3" src="<?= base_url() ?>/assets/users/'+aql.kunci+'/slider'+aql.no+'.png" alt="slider'+aql.no+'" /></span></div><div class="preview-uploads-name"><p class="name fw-bold" data-dz-name>slider'+aql.no+'</p><strong class="error text-danger"></strong><p class="size text-secondary">-</p></div><div class="preview-uploads-delete"><button id="'+aql.no+'" class="btn btn-danger btn-sm btn-icon delete btnhehe" title="Hapus slider" aria-label="Hapus slider"><i class="ti ti-trash"></i></button></div></div>');
     }
 
     $('#loading').hide();
@@ -162,15 +178,18 @@ $(document).on('click', '.btnhehe', function() {
   var button_id = $(this).attr("id");
   var kunci = "<?= $kunci ?>";
 
-  $.ajax({
-     type: 'POST',
-     url: '<?= base_url('user/del_slider_bukutamu') ?>',
-     data: {id: button_id, kunci: kunci},
-     success: function() {
+  DiulemDashboard.post('<?= base_url('user/del_slider_bukutamu') ?>', {
+     id: button_id,
+     kunci: kunci
+  }, {
+     button: $(this),
+     reload: false,
+     errorMessage: 'Slider gagal dihapus.',
+     onSuccess: function() {
         $('#preview'+button_id).remove();
-     },
-     error: function() {
-        DiulemDashboard.notify('error', 'Gagal', 'Slider gagal dihapus.');
+        if ($('#previewss .preview-uploads').length === 0) {
+            $('#sliderEmptyState').removeClass('d-none');
+        }
      }
   });
 });

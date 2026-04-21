@@ -25,11 +25,11 @@
                                     <i class="lni-cloud-download"></i>
                                 </div>
                                 <h3 class="upload-area-caption">
-                                    <span>Drag and drop files here</span>
+                                    <span>Upload Foto Gallery</span>
                                 </h3>
-                                <p>or</p>
+                                <p>Drag file ke sini atau pilih dari perangkat. Maksimal 10 foto, 2MB per foto.</p>
                                 <button class="upload-area-button btn diulem-upload-button">
-                                    <span>Browse files</span>
+                                    <span>Pilih Foto</span>
                                 </button>
                             </div>
                         </div>
@@ -149,15 +149,15 @@ $(document).on('click', '.btnhehe', function(){
 
   var button_id = $(this).attr("id");
   var kunci = "<?= $kunci ?>";
-  $.ajax({
-     type: 'POST',
-     url: '<?= base_url('user/del_gallery') ?>',
-     data: {id: button_id,kunci: kunci},
-     success: function(data){
+  DiulemDashboard.post('<?= base_url('user/del_gallery') ?>', {
+     id: button_id,
+     kunci: kunci
+  }, {
+     button: $(this),
+     reload: false,
+     errorMessage: 'Foto gagal dihapus.',
+     onSuccess: function() {
         $('#preview'+button_id).remove();
-     },
-     error: function() {
-        DiulemDashboard.notify('error', 'Gagal', 'Foto gagal dihapus.');
      }
   });
    
