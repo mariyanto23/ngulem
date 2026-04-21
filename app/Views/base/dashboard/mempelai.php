@@ -242,10 +242,29 @@ $(document).ready(function () {
         }
         var fotonyasiapa = '';
         $(".file-upload").on("change", function(event) {
-            $("#myModal").modal();
+            var file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            if (!file.type.match(/^image\//)) {
+                DiulemDashboard.notify('error', 'Upload Gagal', 'File harus berupa gambar.');
+                $(this).val('');
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                DiulemDashboard.notify('error', 'Upload Gagal', 'Ukuran foto maksimal 2MB.');
+                $(this).val('');
+                return;
+            }
+
             fotonyasiapa = $(this).attr("id");
-            console.log("foto_"+fotonyasiapa);
+            $("#myModal").modal();
             /* Initailize croppie instance and assign it to global variable */
+            if (croppie) {
+                croppie.destroy();
+            }
             croppie = new Croppie(el, {
                     viewport: {
                         width: 300,
@@ -263,9 +282,10 @@ $(document).ready(function () {
         });
 
         $("#upload").on("click", function() {
+            var $button = $(this);
+            DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Upload...');
             croppie.result('base64').then(function(base64) {
                 $("#myModal").modal("hide"); 
-                $("#profile-pic").attr("src","/images/ajax-loader.gif");
 
                 var url = "<?php echo base_url('user/update_foto_mempelai') ?>";
                 var formData = new FormData();
@@ -280,7 +300,6 @@ $(document).ready(function () {
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                    console.log(data);
                         if (data == "uploadedbride") {
                             $("#profile-pic-bride").attr("src", base64); 
                         } else if(data == "uploadedgroom"){
@@ -288,13 +307,14 @@ $(document).ready(function () {
                         } else if(data == "uploadedsampul"){
                             $("#profile-pic-sampul").attr("src", base64); 
                         } else {
-                            $("#profile-pic").attr("src","/images/icon-cam.png"); 
-                            console.log(data['profile_picture']);
+                            DiulemDashboard.notify('error', 'Upload Gagal', 'Foto gagal diupload.');
                         }
                     },
-                    error: function(error) {
-                        console.log(error);
-                        $("#profile-pic").attr("src","/images/icon-cam.png"); 
+                    error: function() {
+                        DiulemDashboard.notify('error', 'Upload Gagal', 'Foto gagal diupload.');
+                    },
+                    complete: function() {
+                        DiulemDashboard.setButtonLoading($button, false);
                     }
                 });
             });
@@ -308,7 +328,12 @@ $(document).ready(function () {
         $('#myModal').on('hidden.bs.modal', function (e) {
             /* This function will call immediately after model close */
             /* To ensure that old croppie instance is destroyed on every model close */
-            setTimeout(function() { croppie.destroy(); }, 100);
+            setTimeout(function() {
+                if (croppie) {
+                    croppie.destroy();
+                    croppie = null;
+                }
+            }, 100);
         });
 
 });

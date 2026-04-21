@@ -62,9 +62,9 @@
                                      <div class="col">
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                                                <div class="upload-area" style="height: 100%;padding: 5px 5px;">
+                                                <div class="upload-area diulem-mempelai-upload">
                                            
-                                                <img  <?php if(!empty($rekening[$i]->qrcode_bank)) { ?> src="<?= base_url() ?>/assets/users/<?= $kunci ?>/rekening/<?= $rekening[$i]->qrcode_bank ?>" <?php } ?> id="img_qrcode<?= $i+1 ?>" style='border-radius: 5px;height: 200px;width: 200px;'> 
+                                                <img class="diulem-mempelai-photo" <?php if(!empty($rekening[$i]->qrcode_bank)) { ?> src="<?= base_url() ?>/assets/users/<?= $kunci ?>/rekening/<?= $rekening[$i]->qrcode_bank ?>" <?php } ?> id="img_qrcode<?= $i+1 ?>" alt="QR rekening"> 
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
@@ -86,7 +86,7 @@
 
                     <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addRekening" class="btn btn-primary btn-order btn-order-secondary btn-block" style="color:#fff">Tambah Rekening</a>
+                            <a id="addRekening" class="btn btn-primary btn-order btn-order-secondary btn-block">Tambah Rekening</a>
                         </div>
                     </div>
 
@@ -137,8 +137,8 @@
             <div class="col">
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                        <div class="upload-area" style="height: 100%;padding: 5px 5px;">
-                            <img id="img_qrcode__INDEX__" style="border-radius: 5px;height: 200px;width: 200px;">
+                        <div class="upload-area diulem-mempelai-upload">
+                            <img class="diulem-mempelai-photo" id="img_qrcode__INDEX__" alt="QR rekening">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">

@@ -236,10 +236,6 @@ function nospaces(t) {
     }
 }
 
-function handleDashboardAjaxResult(result, successMessage, errorMessage) {
-    DiulemDashboard.reloadAfterSuccess(result, successMessage, errorMessage);
-}
-
 $('#simpanFitur').on('click', function() {
     var $button = $(this);
     var ucapan = $('#setUcapan').is(':checked') ? 1 : 0;
@@ -251,23 +247,19 @@ $('#simpanFitur').on('click', function() {
     var hadiah = $('#setHadiah').is(':checked') ? 1 : 0;
     var quote = $('#setQuote').is(':checked') ? 1 : 0;
 
-    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-
-    $.ajax({
-        url : "<?= base_url('user/update_fitur') ?>",
-        method : 'POST',
-        data : {ucapan: ucapan, album: album, cerita: cerita, lokasi: lokasi, prokes: prokes, qrcode: qrcode, hadiah: hadiah, quote: quote},
-        async : true,
-        dataType : 'html',
-        success: function(result) {
-            handleDashboardAjaxResult(result, 'Data fitur berhasil diupdate.', 'Data fitur gagal diupdate.');
-        },
-        error: function() {
-            DiulemDashboard.notify('error', 'Gagal', 'Data fitur gagal diupdate.');
-        },
-        complete: function() {
-            DiulemDashboard.setButtonLoading($button, false);
-        }
+    DiulemDashboard.post("<?= base_url('user/update_fitur') ?>", {
+        ucapan: ucapan,
+        album: album,
+        cerita: cerita,
+        lokasi: lokasi,
+        prokes: prokes,
+        qrcode: qrcode,
+        hadiah: hadiah,
+        quote: quote
+    }, {
+        button: $button,
+        successMessage: 'Data fitur berhasil diupdate.',
+        errorMessage: 'Data fitur gagal diupdate.'
     });
 });
 
@@ -287,7 +279,7 @@ $('#simpanDomain').on('click', function() {
             result = $.trim(result);
 
             if (result === 'sukses') {
-                handleDashboardAjaxResult(result, 'Domain berhasil diupdate.', 'Domain gagal diupdate.');
+                DiulemDashboard.reloadAfterSuccess(result, 'Domain berhasil diupdate.', 'Domain gagal diupdate.');
                 return;
             }
 
@@ -307,23 +299,12 @@ $('#simpanToken').on('click', function() {
     var $button = $(this);
     var token_wa = $('#token_wa').val();
 
-    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-
-    $.ajax({
-        url : "<?= base_url('user/update_wa') ?>",
-        method : 'POST',
-        data : {token_wa: token_wa},
-        async : true,
-        dataType : 'html',
-        success: function(result) {
-            handleDashboardAjaxResult(result, 'Token Whatsapp Gateway berhasil diupdate.', 'Token Whatsapp Gateway gagal diupdate.');
-        },
-        error: function() {
-            DiulemDashboard.notify('error', 'Gagal', 'Token Whatsapp Gateway gagal diupdate.');
-        },
-        complete: function() {
-            DiulemDashboard.setButtonLoading($button, false);
-        }
+    DiulemDashboard.post("<?= base_url('user/update_wa') ?>", {
+        token_wa: token_wa
+    }, {
+        button: $button,
+        successMessage: 'Token Whatsapp Gateway berhasil diupdate.',
+        errorMessage: 'Token Whatsapp Gateway gagal diupdate.'
     });
 });
 
@@ -333,23 +314,14 @@ $('#simpanSalam').on('click', function() {
     var salam_wa_atas = $('#salam_wa_atas').val();
     var salam_wa_bawah = $('#salam_wa_bawah').val();
 
-    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-
-    $.ajax({
-        url : "<?= base_url('user/update_salam') ?>",
-        method : 'POST',
-        data : {salam_pembuka: salam_pembuka, salam_wa_atas: salam_wa_atas, salam_wa_bawah: salam_wa_bawah},
-        async : true,
-        dataType : 'html',
-        success: function(result) {
-            handleDashboardAjaxResult(result, 'Salam pembuka berhasil diupdate.', 'Salam pembuka gagal diupdate.');
-        },
-        error: function() {
-            DiulemDashboard.notify('error', 'Gagal', 'Salam pembuka gagal diupdate.');
-        },
-        complete: function() {
-            DiulemDashboard.setButtonLoading($button, false);
-        }
+    DiulemDashboard.post("<?= base_url('user/update_salam') ?>", {
+        salam_pembuka: salam_pembuka,
+        salam_wa_atas: salam_wa_atas,
+        salam_wa_bawah: salam_wa_bawah
+    }, {
+        button: $button,
+        successMessage: 'Salam pembuka berhasil diupdate.',
+        errorMessage: 'Salam pembuka gagal diupdate.'
     });
 });
 </script>

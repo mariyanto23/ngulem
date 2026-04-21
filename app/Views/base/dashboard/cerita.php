@@ -171,22 +171,13 @@
       var $button = $(this);
       var quote = $('#quote').val();
       var sumber_quote = $('#sumber_quote').val();     
-      DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-      $.ajax({
-          url : "<?= base_url('user/act_quote') ?>",
-          method : "POST",
-          data : {quote: quote, sumber_quote:sumber_quote},
-            async : true,
-            dataType : 'html',
-          success: function($hasil){
-                    DiulemDashboard.reloadAfterSuccess($hasil, 'Quote berhasil disimpan.', 'Quote gagal disimpan.');
-            },
-            error: function() {
-                    DiulemDashboard.notify('error', 'Gagal', 'Quote gagal disimpan.');
-            },
-            complete: function() {
-                    DiulemDashboard.setButtonLoading($button, false);
-            }
+      DiulemDashboard.post("<?= base_url('user/act_quote') ?>", {
+          quote: quote,
+          sumber_quote: sumber_quote
+      }, {
+          button: $button,
+          successMessage: 'Quote berhasil disimpan.',
+          errorMessage: 'Quote gagal disimpan.'
       });
 
     });

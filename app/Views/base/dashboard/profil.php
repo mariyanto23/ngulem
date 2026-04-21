@@ -82,23 +82,15 @@ $('#simpanUser').on('click', function() {
     var password = $('#password').val();
     var email = $('#email').val();
 
-    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-
-    $.ajax({
-        url : "<?= base_url('user/update_user') ?>",
-        method : 'POST',
-        data : {username: username, password: password, hp: hp, email: email},
-        async : true,
-        dataType : 'html',
-        success: function(result) {
-            DiulemDashboard.reloadAfterSuccess(result, 'Profil berhasil diupdate.', 'Profil gagal diupdate.');
-        },
-        error: function() {
-            DiulemDashboard.notify('error', 'Gagal', 'Profil gagal diupdate.');
-        },
-        complete: function() {
-            DiulemDashboard.setButtonLoading($button, false);
-        }
+    DiulemDashboard.post("<?= base_url('user/update_user') ?>", {
+        username: username,
+        password: password,
+        hp: hp,
+        email: email
+    }, {
+        button: $button,
+        successMessage: 'Profil berhasil diupdate.',
+        errorMessage: 'Profil gagal diupdate.'
     });
 });
 </script>

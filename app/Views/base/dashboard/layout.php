@@ -185,16 +185,27 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
 </div>
 
 <div class="modal" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Foto Mempelai</h4>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="resizer"></div>
-                <hr>
-                <button class="btn btn-dark w-100" id="upload">Upload</button>
+                <div class="diulem-crop-area">
+                    <div id="resizer"></div>
+                </div>
+                <div class="btn-list mt-3">
+                    <button type="button" class="btn btn-outline-secondary rotate" data-deg="-90">
+                        <i class="ti ti-rotate-2 me-2"></i>Putar Kiri
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary rotate" data-deg="90">
+                        <i class="ti ti-rotate-clockwise-2 me-2"></i>Putar Kanan
+                    </button>
+                    <button class="btn btn-primary ms-auto" id="upload">
+                        <i class="ti ti-upload me-2"></i>Upload
+                    </button>
+                </div>
             </div>
         </div>
     </div>

@@ -445,6 +445,33 @@ body,
   width: 200px;
 }
 
+.diulem-bukutamu-bg-upload {
+  height: 100%;
+  padding: 5px;
+}
+
+.diulem-bukutamu-bg {
+  height: 130px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.diulem-crop-area {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  min-height: 380px;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.diulem-crop-area .cr-boundary {
+  max-width: 100%;
+}
+
 .preview-uploads {
   align-items: center;
   background: #ffffff;
@@ -1026,6 +1053,25 @@ body,
   .upload-area-bg img,
   .upload-area img {
     height: auto !important;
+    max-width: 100%;
+  }
+
+  .diulem-mempelai-photo {
+    height: 180px !important;
+    width: 180px !important;
+  }
+
+  .diulem-bukutamu-bg {
+    height: auto !important;
+    max-height: 180px;
+  }
+
+  .diulem-crop-area {
+    min-height: 320px;
+    padding: 0.5rem;
+  }
+
+  .diulem-crop-area .croppie-container {
     max-width: 100%;
   }
 

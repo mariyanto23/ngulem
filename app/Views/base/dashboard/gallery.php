@@ -119,13 +119,13 @@ var myDropzone = new Dropzone(document.body, {
 });
 
 myDropzone.on("success", function(file,response){
+    $('.dz-preview').remove();
+
     if(response == ""){
-      $('.dz-preview').remove();
-      alert('Batas Upload 10 Foto!');
+      DiulemDashboard.notify('warning', 'Batas Upload', 'Maksimal 10 foto gallery.');
 
     }else{
       var aql = JSON.parse(response);
-      $('.dz-preview').remove();
       $("#previewss").prepend('<div id="preview'+aql.no+'" class="file-row preview-uploads"><div class="preview-uploads-img"><span class="preview"><img id="img3" src="<?= base_url() ?>/assets/users/'+aql.kunci+'/album'+aql.no+'.png" alt="album'+aql.no+'" /></span></div><div class="preview-uploads-name"><p class="name fw-bold" data-dz-name>album'+aql.no+'</p><strong class="error text-danger"></strong><p class="size text-secondary">-</p></div><div class="preview-uploads-delete"><button id="'+aql.no+'" class="btn btn-danger delete btnhehe">Hapus</button></div></div>');
     }
     $('#loading').hide();
@@ -140,8 +140,9 @@ myDropzone.on("sending", function(file, xhr, formData) {
 
 myDropzone.on("error", function(file, response) {
   $('.dz-preview').remove();
-  alert('Maximal File = 2MB!');
   $('#loading').hide();
+  var message = typeof response === 'string' ? response : 'Maksimal file 2MB dan harus berupa gambar.';
+  DiulemDashboard.notify('error', 'Upload Gagal', message);
 });
 
 $(document).on('click', '.btnhehe', function(){  
@@ -165,22 +166,12 @@ $(document).on('click', '.btnhehe', function(){
 $('#simpanVideo').on('click', function(event) {
     var $button = $(this);
     var video = $('#video').val();
-    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
-    $.ajax({
-        url : "<?= base_url('user/update_video') ?>",
-        method : "POST",
-        data : {video: video},
-        async : true,
-        dataType : 'html',
-        success: function($hasil){
-            DiulemDashboard.reloadAfterSuccess($hasil, 'Video berhasil disimpan.', 'Video gagal disimpan.');
-        },
-        error: function() {
-            DiulemDashboard.notify('error', 'Gagal', 'Video gagal disimpan.');
-        },
-        complete: function() {
-            DiulemDashboard.setButtonLoading($button, false);
-        }
+    DiulemDashboard.post("<?= base_url('user/update_video') ?>", {
+        video: video
+    }, {
+        button: $button,
+        successMessage: 'Video berhasil disimpan.',
+        errorMessage: 'Video gagal disimpan.'
     });
 
 });
