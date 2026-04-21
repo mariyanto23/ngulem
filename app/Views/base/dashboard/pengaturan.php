@@ -237,27 +237,11 @@ function nospaces(t) {
 }
 
 function handleDashboardAjaxResult(result, successMessage, errorMessage) {
-    result = $.trim(result);
-
-    if (result === 'sukses') {
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: successMessage
-        }).then(function () {
-            location.reload();
-        });
-        return;
-    }
-
-    Swal.fire({
-        icon: 'error',
-        title: 'Gagal',
-        text: errorMessage
-    });
+    DiulemDashboard.reloadAfterSuccess(result, successMessage, errorMessage);
 }
 
 $('#simpanFitur').on('click', function() {
+    var $button = $(this);
     var ucapan = $('#setUcapan').is(':checked') ? 1 : 0;
     var album = $('#setAlbum').is(':checked') ? 1 : 0;
     var cerita = $('#setCerita').is(':checked') ? 1 : 0;
@@ -267,6 +251,8 @@ $('#simpanFitur').on('click', function() {
     var hadiah = $('#setHadiah').is(':checked') ? 1 : 0;
     var quote = $('#setQuote').is(':checked') ? 1 : 0;
 
+    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
+
     $.ajax({
         url : "<?= base_url('user/update_fitur') ?>",
         method : 'POST',
@@ -275,12 +261,21 @@ $('#simpanFitur').on('click', function() {
         dataType : 'html',
         success: function(result) {
             handleDashboardAjaxResult(result, 'Data fitur berhasil diupdate.', 'Data fitur gagal diupdate.');
+        },
+        error: function() {
+            DiulemDashboard.notify('error', 'Gagal', 'Data fitur gagal diupdate.');
+        },
+        complete: function() {
+            DiulemDashboard.setButtonLoading($button, false);
         }
     });
 });
 
 $('#simpanDomain').on('click', function() {
+    var $button = $(this);
     var domain = $('#domain').val();
+
+    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
 
     $.ajax({
         url : "<?= base_url('user/update_domain') ?>",
@@ -298,12 +293,21 @@ $('#simpanDomain').on('click', function() {
 
             $('#modalDomain').modal('hide');
             $('#modalGagal').modal('show');
+        },
+        error: function() {
+            DiulemDashboard.notify('error', 'Gagal', 'Domain gagal diupdate.');
+        },
+        complete: function() {
+            DiulemDashboard.setButtonLoading($button, false);
         }
     });
 });
 
 $('#simpanToken').on('click', function() {
+    var $button = $(this);
     var token_wa = $('#token_wa').val();
+
+    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
 
     $.ajax({
         url : "<?= base_url('user/update_wa') ?>",
@@ -313,14 +317,23 @@ $('#simpanToken').on('click', function() {
         dataType : 'html',
         success: function(result) {
             handleDashboardAjaxResult(result, 'Token Whatsapp Gateway berhasil diupdate.', 'Token Whatsapp Gateway gagal diupdate.');
+        },
+        error: function() {
+            DiulemDashboard.notify('error', 'Gagal', 'Token Whatsapp Gateway gagal diupdate.');
+        },
+        complete: function() {
+            DiulemDashboard.setButtonLoading($button, false);
         }
     });
 });
 
 $('#simpanSalam').on('click', function() {
+    var $button = $(this);
     var salam_pembuka = $('#salam_pembuka').val();
     var salam_wa_atas = $('#salam_wa_atas').val();
     var salam_wa_bawah = $('#salam_wa_bawah').val();
+
+    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
 
     $.ajax({
         url : "<?= base_url('user/update_salam') ?>",
@@ -330,6 +343,12 @@ $('#simpanSalam').on('click', function() {
         dataType : 'html',
         success: function(result) {
             handleDashboardAjaxResult(result, 'Salam pembuka berhasil diupdate.', 'Salam pembuka gagal diupdate.');
+        },
+        error: function() {
+            DiulemDashboard.notify('error', 'Gagal', 'Salam pembuka gagal diupdate.');
+        },
+        complete: function() {
+            DiulemDashboard.setButtonLoading($button, false);
         }
     });
 });

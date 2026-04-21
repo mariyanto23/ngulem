@@ -53,7 +53,9 @@
             <div class="col-lg-5">
                 <div class="card">
                     <div class="card-body text-center">
-                        <span class="avatar avatar-xl mb-3" style="background-image: url(<?= base_url('assets/dashboard'); ?>/img/boy.png)"></span>
+                        <span class="avatar avatar-xl mb-3 diulem-profile-avatar">
+                            <img src="<?= base_url('assets/dashboard'); ?>/img/boy.png" alt="Foto profil">
+                        </span>
                         <h3 class="card-title mb-1"><?= esc($user[0]->username) ?></h3>
                         <div class="text-secondary mb-3"><?= esc($user[0]->email) ?></div>
                         <div class="text-secondary">Profil ini digunakan untuk akses dashboard pengguna.</div>
@@ -74,10 +76,13 @@
 
 <script>
 $('#simpanUser').on('click', function() {
+    var $button = $(this);
     var username = $('#username').val();
     var hp = $('#hp').val();
     var password = $('#password').val();
     var email = $('#email').val();
+
+    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
 
     $.ajax({
         url : "<?= base_url('user/update_user') ?>",
@@ -86,24 +91,13 @@ $('#simpanUser').on('click', function() {
         async : true,
         dataType : 'html',
         success: function(result) {
-            result = $.trim(result);
-
-            if (result === 'sukses') {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: 'Profil berhasil diupdate.'
-                }).then(function () {
-                    location.reload();
-                });
-                return;
-            }
-
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
-                text: 'Profil gagal diupdate.'
-            });
+            DiulemDashboard.reloadAfterSuccess(result, 'Profil berhasil diupdate.', 'Profil gagal diupdate.');
+        },
+        error: function() {
+            DiulemDashboard.notify('error', 'Gagal', 'Profil gagal diupdate.');
+        },
+        complete: function() {
+            DiulemDashboard.setButtonLoading($button, false);
         }
     });
 });

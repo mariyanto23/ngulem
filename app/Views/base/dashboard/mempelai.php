@@ -25,12 +25,12 @@
                 </div>
                 <div class="card-body">
                     <!-- CONTENT DISINI -->
-                    <div class="upload-area-bg" style="text-align: center;">
+                    <div class="upload-area-bg diulem-upload-center">
                         <div class="col">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                                    <div class="upload-area" style="height: 100%;padding: 5px 5px;">
-                                    <img src="<?php echo base_url() ?><?= $fotogroom ?>" id="profile-pic-groom" style='border-radius: 5px;height: 200px;width: 200px;'>
+                                    <div class="upload-area diulem-mempelai-upload">
+                                    <img class="diulem-mempelai-photo" src="<?php echo base_url() ?><?= $fotogroom ?>" id="profile-pic-groom" alt="Foto mempelai pria">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
@@ -75,12 +75,12 @@
                 </div>
                 <div class="card-body">
                     <!-- CONTENT DISINI -->
-                    <div class="upload-area-bg" style="text-align: center;">
+                    <div class="upload-area-bg diulem-upload-center">
                         <div class="col">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                                    <div class="upload-area" style="height: 100%;padding: 5px 5px;">
-                                    <img src="<?php echo base_url() ?><?= $fotobride ?>" id="profile-pic-bride" style='border-radius: 5px;height: 200px;width: 200px;'>
+                                    <div class="upload-area diulem-mempelai-upload">
+                                    <img class="diulem-mempelai-photo" src="<?php echo base_url() ?><?= $fotobride ?>" id="profile-pic-bride" alt="Foto mempelai wanita">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
@@ -127,12 +127,12 @@
                 </div>
                 <div class="card-body">
                     <!-- CONTENT DISINI -->
-                    <div class="upload-area-bg" style="text-align: center;">
+                    <div class="upload-area-bg diulem-upload-center">
                         <div class="col">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                                    <div class="upload-area" style="height: 100%;padding: 5px 5px;">
-                                    <img src="<?= base_url() ?><?= $fotosampul ?>" id="profile-pic-sampul" style='border-radius: 5px;height: 200px;width: 200px;'>
+                                    <div class="upload-area diulem-mempelai-upload">
+                                    <img class="diulem-mempelai-photo" src="<?= base_url() ?><?= $fotosampul ?>" id="profile-pic-sampul" alt="Foto sampul">
                                     </div>
 
                                 </div>
@@ -316,12 +316,13 @@ $(document).ready(function () {
 
     $('#simpanWanita').on('click', function(event) {
 
+        var $button = $(this);
         var datanyaSiapa = 'wanita';
         var nama = $('#nama_lengkap_wanita').val();
         var nama_panggilan = $('#nama_panggilan_wanita').val();
         var nama_ayah = $('#nama_ayah_wanita').val();
         var nama_ibu = $('#nama_ibu_wanita').val();
-        console.log(nama);
+        DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
         $.ajax({
             url : "<?= base_url('user/update_mempelai') ?>",
             method : "POST",
@@ -329,13 +330,13 @@ $(document).ready(function () {
             async : true,
             dataType : 'html',
             success: function($hasil){
-                if($.trim($hasil) == 'sukses'){
-                    Swal.fire({icon: 'success', title: 'Berhasil', text: 'Data mempelai wanita berhasil disimpan.'}).then(function () {
-                        location.reload();
-                    });
-                } else {
-                    Swal.fire({icon: 'error', title: 'Gagal', text: 'Data mempelai wanita gagal disimpan.'});
-                }
+                DiulemDashboard.reloadAfterSuccess($hasil, 'Data mempelai wanita berhasil disimpan.', 'Data mempelai wanita gagal disimpan.');
+            },
+            error: function() {
+                DiulemDashboard.notify('error', 'Gagal', 'Data mempelai wanita gagal disimpan.');
+            },
+            complete: function() {
+                DiulemDashboard.setButtonLoading($button, false);
             }
         });
 
@@ -343,11 +344,14 @@ $(document).ready(function () {
 
     $('#simpanPria').on('click', function(event) {
 
+        var $button = $(this);
         var datanyaSiapa = 'pria';
         var nama = $('#nama_lengkap_pria').val();
         var nama_panggilan = $('#nama_panggilan_pria').val();
         var nama_ayah = $('#nama_ayah_pria').val();
         var nama_ibu = $('#nama_ibu_pria').val();
+
+        DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
 
         $.ajax({
             url : "<?= base_url('user/update_mempelai') ?>",
@@ -356,13 +360,13 @@ $(document).ready(function () {
             async : true,
             dataType : 'html',
             success: function($hasil){
-                if($.trim($hasil) == 'sukses'){
-                    Swal.fire({icon: 'success', title: 'Berhasil', text: 'Data mempelai pria berhasil disimpan.'}).then(function () {
-                        location.reload();
-                    });
-                } else {
-                    Swal.fire({icon: 'error', title: 'Gagal', text: 'Data mempelai pria gagal disimpan.'});
-                }
+                DiulemDashboard.reloadAfterSuccess($hasil, 'Data mempelai pria berhasil disimpan.', 'Data mempelai pria gagal disimpan.');
+            },
+            error: function() {
+                DiulemDashboard.notify('error', 'Gagal', 'Data mempelai pria gagal disimpan.');
+            },
+            complete: function() {
+                DiulemDashboard.setButtonLoading($button, false);
             }
         });
 

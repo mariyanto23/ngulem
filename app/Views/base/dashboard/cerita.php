@@ -66,7 +66,7 @@
 
                     <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addCerita" class="btn btn-primary btn-order btn-order-secondary btn-block" style="color:#fff">Tambah Cerita</a>
+                            <a id="addCerita" class="btn btn-primary btn-order btn-order-secondary btn-block">Tambah Cerita</a>
                         </div>
                     </div>
 
@@ -168,8 +168,10 @@
     });
     
     $('#simpanQuote').on('click', function(event) {
+      var $button = $(this);
       var quote = $('#quote').val();
       var sumber_quote = $('#sumber_quote').val();     
+      DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
       $.ajax({
           url : "<?= base_url('user/act_quote') ?>",
           method : "POST",
@@ -177,14 +179,13 @@
             async : true,
             dataType : 'html',
           success: function($hasil){
-                    if($.trim($hasil) == 'sukses'){
-                        Swal.fire({icon: 'success', title: 'Berhasil', text: 'Quote berhasil disimpan.'}).then(function () {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({icon: 'error', title: 'Gagal', text: 'Quote gagal disimpan.'});
-                    }
-                
+                    DiulemDashboard.reloadAfterSuccess($hasil, 'Quote berhasil disimpan.', 'Quote gagal disimpan.');
+            },
+            error: function() {
+                    DiulemDashboard.notify('error', 'Gagal', 'Quote gagal disimpan.');
+            },
+            complete: function() {
+                    DiulemDashboard.setButtonLoading($button, false);
             }
       });
 

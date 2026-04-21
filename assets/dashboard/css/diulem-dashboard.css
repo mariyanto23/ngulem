@@ -431,6 +431,20 @@ body,
   object-fit: cover;
 }
 
+.diulem-upload-center {
+  text-align: center;
+}
+
+.diulem-mempelai-upload {
+  height: 100%;
+  padding: 5px;
+}
+
+.diulem-mempelai-photo {
+  height: 200px;
+  width: 200px;
+}
+
 .preview-uploads {
   align-items: center;
   background: #ffffff;
@@ -466,8 +480,48 @@ body,
   margin-bottom: 0;
 }
 
+.preview-uploads-name .name,
+.preview-uploads-name .size,
+.preview-uploads-name .error {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .preview-uploads-delete {
   flex: 0 0 auto;
+}
+
+.diulem-upload-button {
+  position: relative;
+  z-index: 2;
+}
+
+.diulem-upload-button span {
+  color: #ffffff;
+}
+
+.diulem-loading-wrap {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.diulem-loading-img {
+  display: none;
+  height: 30px;
+  width: 30px;
+}
+
+.diulem-help-link {
+  color: #0f766e;
+  display: inline-flex;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+  text-decoration: none;
+}
+
+.diulem-help-link:hover {
+  color: #115e59;
+  text-decoration: underline;
 }
 
 .btn_remove {
@@ -707,6 +761,13 @@ body,
 .diulem-selfie-preview {
   max-height: 75vh;
   object-fit: contain;
+}
+
+.diulem-profile-avatar img {
+  border-radius: inherit;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 @media (min-width: 992px) {
@@ -969,16 +1030,23 @@ body,
   }
 
   .preview-uploads {
-    align-items: flex-start;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-wrap: nowrap;
   }
 
   .preview-uploads-name {
-    flex-basis: calc(100% - 102px);
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .preview-uploads-delete {
-    margin-left: 96px;
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .preview-uploads-delete .btn {
+    white-space: nowrap;
+    width: auto;
   }
 
   .diulem-repeat-item {

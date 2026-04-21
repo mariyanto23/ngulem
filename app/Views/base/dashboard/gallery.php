@@ -28,15 +28,15 @@
                                     <span>Drag and drop files here</span>
                                 </h3>
                                 <p>or</p>
-                                <button class="upload-area-button btn " style="z-index:9999;">
-                                    <span style="color:#fff">Browse files</span>
+                                <button class="upload-area-button btn diulem-upload-button">
+                                    <span>Browse files</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div style="text-align: center;">
-                        <img id="loading" src="<?= base_url() ?>/assets/base/img/loading.svg"  style="height: 30px;width: 30px; display: none;" />
+                    <div class="diulem-loading-wrap">
+                        <img id="loading" class="diulem-loading-img" src="<?= base_url() ?>/assets/base/img/loading.svg" alt="Memuat" />
                     </div>
                     <div id="previewss">
                         <?php 
@@ -49,13 +49,13 @@
                         <div class="preview-uploads" id="preview<?= $a ?>">
                             <div class="preview-uploads-img">
                                 <span class="preview">
-                                <img id="img<?= $a ?>" src="<?= base_url() ?>/assets/users/<?= $kunci ?>/album<?= $a ?>.png"  style="height: 100%;object-position: center;object-fit: cover;width: 100%;"  />
+                                <img id="img<?= $a ?>" src="<?= base_url() ?>/assets/users/<?= $kunci ?>/album<?= $a ?>.png" alt="album<?= $a ?>" />
                                 </span>
                             </div>
                             <div class="preview-uploads-name">
-                            <b><p class="name" style="line-height: revert;font-size: 12px;" >album<?= $a; ?></p></b>
-                            <strong class="error text-danger" style="line-height: revert;font-size: 12px;"  data-dz-errormessage></strong>
-                            <p class="size" style="line-height: revert;font-size: 12px;"  >-</p>     
+                            <p class="name fw-bold">album<?= $a; ?></p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                            <p class="size text-secondary">-</p>     
                             </div>
                             <div  class="preview-uploads-delete">
                             <button id="<?= $a ?>" data-dz-remove class="btn btn-danger delete btnhehe">
@@ -83,7 +83,7 @@
                     <textarea id="video" type="text" class="form-control" placeholder="Contoh : https://youtu.be/zlKzyYnhu-s" required><?= $data[0]->video ?></textarea>
                     <div class="mt-1">
                     <label class="form-check-label ">
-                      <a href="<?php echo base_url('youtube'); ?>" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Video</a>
+                      <a class="diulem-help-link" href="<?php echo base_url('youtube'); ?>"><i class="lni-question-circle"></i>&nbsp Cara Menambahkan Video</a>
                     </label>
                     </div>
                     <div class="col mt-3">
@@ -126,7 +126,7 @@ myDropzone.on("success", function(file,response){
     }else{
       var aql = JSON.parse(response);
       $('.dz-preview').remove();
-      $("#previewss").prepend('<div id="preview'+aql.no+'" class="file-row preview-uploads"><div class="preview-uploads-img"><span class="preview"><img id="img3" src="<?= base_url() ?>/assets/users/'+aql.kunci+'/album'+aql.no+'.png"  style="height: 100%;object-position: center;object-fit: cover;width: 100%;" /></span></div><div class="preview-uploads-name"><p class="name" style="line-height: revert;font-size: 12px;" data-dz-name>album'+aql.no+'</p><strong class="error text-danger" style="line-height: revert;font-size: 12px;"  ></strong><p class="size" style="line-height: revert;font-size: 12px;" >-</p></div><div  class="preview-uploads-delete"><button id="'+aql.no+'" class="btn btn-danger delete btnhehe">Hapus</button></div></div>');
+      $("#previewss").prepend('<div id="preview'+aql.no+'" class="file-row preview-uploads"><div class="preview-uploads-img"><span class="preview"><img id="img3" src="<?= base_url() ?>/assets/users/'+aql.kunci+'/album'+aql.no+'.png" alt="album'+aql.no+'" /></span></div><div class="preview-uploads-name"><p class="name fw-bold" data-dz-name>album'+aql.no+'</p><strong class="error text-danger"></strong><p class="size text-secondary">-</p></div><div class="preview-uploads-delete"><button id="'+aql.no+'" class="btn btn-danger delete btnhehe">Hapus</button></div></div>');
     }
     $('#loading').hide();
 });
@@ -153,32 +153,35 @@ $(document).on('click', '.btnhehe', function(){
      url: '<?= base_url('user/del_gallery') ?>',
      data: {id: button_id,kunci: kunci},
      success: function(data){
-        console.log('success: ' + data);
         $('#preview'+button_id).remove();
+     },
+     error: function() {
+        DiulemDashboard.notify('error', 'Gagal', 'Foto gagal dihapus.');
      }
   });
    
 });
 
 $('#simpanVideo').on('click', function(event) {
-
-var video = $('#video').val();
-$.ajax({
-    url : "<?= base_url('user/update_video') ?>",
-    method : "POST",
-    data : {video: video},
-    async : true,
-    dataType : 'html',
-    success: function($hasil){
-        if($.trim($hasil) == 'sukses'){
-            Swal.fire({icon: 'success', title: 'Berhasil', text: 'Video berhasil disimpan.'}).then(function () {
-                location.reload();
-            });
-        } else {
-            Swal.fire({icon: 'error', title: 'Gagal', text: 'Video gagal disimpan.'});
+    var $button = $(this);
+    var video = $('#video').val();
+    DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Menyimpan...');
+    $.ajax({
+        url : "<?= base_url('user/update_video') ?>",
+        method : "POST",
+        data : {video: video},
+        async : true,
+        dataType : 'html',
+        success: function($hasil){
+            DiulemDashboard.reloadAfterSuccess($hasil, 'Video berhasil disimpan.', 'Video gagal disimpan.');
+        },
+        error: function() {
+            DiulemDashboard.notify('error', 'Gagal', 'Video gagal disimpan.');
+        },
+        complete: function() {
+            DiulemDashboard.setButtonLoading($button, false);
         }
-    }
-});
+    });
 
 });
 
