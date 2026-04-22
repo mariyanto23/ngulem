@@ -66,7 +66,7 @@
 
                     <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addCerita" class="btn btn-primary btn-order btn-order-secondary btn-block">Tambah Cerita</a>
+                            <a id="addCerita" class="btn btn-primary w-100">Tambah Cerita</a>
                         </div>
                     </div>
 

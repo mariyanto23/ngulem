@@ -117,22 +117,22 @@
                         <input type="hidden" name="result_data" id="result-data" value="">
                     </form>
                     <?php if($pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ ?>
-                    <button class="btn btn-primary btn-block" id="pay-button"><i class="ti ti-credit-card me-2"></i>Perpanjangan</button>
+                    <button class="btn btn-primary w-100" id="pay-button"><i class="ti ti-credit-card me-2"></i>Perpanjangan</button>
                     <?php }else if($pembayaran[0]->status == 2){ ?>
-                        <button class="btn btn-primary btn-block" id="pay-button" disabled><i class="ti ti-circle-check me-2"></i>Lunas</button>
+                        <button class="btn btn-primary w-100" id="pay-button" disabled><i class="ti ti-circle-check me-2"></i>Lunas</button>
                     <?php }else if($pembayaran[0]->status == 1){ 
                             if($metode_bayar == 'manual') {?> 
-                        <button class="btn btn-primary btn-block" disabled><i class="ti ti-clock me-2"></i>Menunggu Konfirmasi</button>
+                        <button class="btn btn-primary w-100" disabled><i class="ti ti-clock me-2"></i>Menunggu Konfirmasi</button>
                         <?php }else{ ?>
-                        <button class="btn btn-primary btn-block" id="pay-button" disabled><i class="ti ti-clock me-2"></i>Menunggu Pembayaran</button>
+                        <button class="btn btn-primary w-100" id="pay-button" disabled><i class="ti ti-clock me-2"></i>Menunggu Pembayaran</button>
                     <?php }
                     }else if($pembayaran[0]->status == 0){ 
                             if($metode_bayar == 'manual') {?>
-                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalKonfirmasi"><i class="ti ti-upload me-2"></i>Konfirmasi</button>
+                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#modalKonfirmasi"><i class="ti ti-upload me-2"></i>Konfirmasi</button>
                         <?php }else if ($metode_bayar == 'midtrans'){ ?>
-                        <button class="btn btn-primary btn-block" id="pay-button"><i class="ti ti-credit-card me-2"></i>Pembayaran</button>
+                        <button class="btn btn-primary w-100" id="pay-button"><i class="ti ti-credit-card me-2"></i>Pembayaran</button>
                     <?php } else{ ?>
-                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalTripay"><i class="ti ti-credit-card me-2"></i>Pembayaran Tagihan</button>
+                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#modalTripay"><i class="ti ti-credit-card me-2"></i>Pembayaran Tagihan</button>
                     <?php }
                     }?>
                 </div>
@@ -191,7 +191,7 @@
                         </div>
                     </div>
                     <?php } if($metode_bayar == 'tripay' && !empty($instruction)){ ?>
-                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalPembayaran">Cara Pembayaran</button>
+                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#modalPembayaran">Cara Pembayaran</button>
                     <?php } ?>
                 </div>
                

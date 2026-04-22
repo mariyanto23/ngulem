@@ -19,6 +19,35 @@
       return $.Deferred().resolve().promise();
     },
 
+    confirm: function (options) {
+      var settings = $.extend({
+        title: 'Konfirmasi',
+        text: 'Apakah kamu yakin?',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal',
+        icon: 'warning'
+      }, options || {});
+
+      if (window.Swal) {
+        return Swal.fire({
+          title: settings.title,
+          text: settings.text,
+          icon: settings.icon,
+          showCancelButton: true,
+          confirmButtonColor: '#0f766e',
+          cancelButtonColor: '#dc2626',
+          confirmButtonText: settings.confirmButtonText,
+          cancelButtonText: settings.cancelButtonText
+        });
+      }
+
+      return $.Deferred().resolve({ value: confirm(settings.text) }).promise();
+    },
+
+    reload: function () {
+      location.reload();
+    },
+
     reloadAfterSuccess: function (result, successMessage, errorMessage) {
       if (this.isSuccess(result)) {
         this.notify('success', 'Berhasil', successMessage).then(function () {

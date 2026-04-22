@@ -97,19 +97,17 @@
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Data Tamu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="col mt-2">
                         <label>Nama Tamu Undangan</label>
                         <input id="id_user" type="hidden" class="form-control" value="<?=$_SESSION['id'] ?>">
-                        <input id="nama_tamu" type="text" class="form-control" placeholder="Contoh : Agus Sukamto" style='text-transform:capitalize' required>
+                        <input id="nama_tamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Agus Sukamto" required>
                     </div>
                     <div class="col mt-2">
                         <label>Alamat Tamu Undangan</label>
-                        <input id="alamat_tamu" type="text" class="form-control" placeholder="Contoh : Medan Merdeka" style='text-transform:capitalize' required>
+                        <input id="alamat_tamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Medan Merdeka" required>
                     </div>
 
                     <div class="col mt-2">
@@ -119,7 +117,7 @@
 
                     <div class="col mt-2">
                         <label>Tanggal </label>
-                        <input name="datepicker" type="text" class="form-control" placeholder="Tanggal" id="datepicker" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" required>
+                        <input name="datepicker" type="text" class="form-control diulem-datepicker-input" placeholder="Tanggal" id="datepicker" readonly="readonly" required>
                         <input type="hidden" id="tgl_kirim">
                     </div>
             </div>
@@ -136,9 +134,7 @@
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Import Data Tamu (Excel)</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="<?php echo base_url('user/prosesExcel'); ?>" enctype="multipart/form-data">
             <div class="modal-body">
@@ -148,7 +144,7 @@
 				<input type="file" name="fileexcel" class="form-control" id="file" required accept=".xls, .xlsx" /></p>
 			</div>
 		    <label class="form-check-label ">
-                <a href="<?php echo base_url('import_tamu'); ?>" target="_blank" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Susunan Data Untuk File Data Tamu (Excel)</a>
+                <a class="diulem-help-link" href="<?php echo base_url('import_tamu'); ?>" target="_blank"><i class="lni-question-circle"></i>&nbsp Susunan Data Untuk File Data Tamu (Excel)</a>
             </label>
             </div>
             <div class="modal-footer">
@@ -167,18 +163,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Data Tamu</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="col mt-2">
                         <label>Nama Tamu Undangan</label>
-                        <input id="namaTamu" type="text" class="form-control" placeholder="Contoh : Agus Sukamto" style='text-transform:capitalize' required>
+                        <input id="namaTamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Agus Sukamto" required>
                     </div>
                     <div class="col mt-2">
                         <label>Alamat Tamu Undangan</label>
-                        <input id="alamatTamu" type="text" placeholder="Contoh : Tlogosari, Semarang" class="form-control" style='text-transform:capitalize' required>
+                        <input id="alamatTamu" type="text" placeholder="Contoh : Tlogosari, Semarang" class="form-control diulem-text-capitalize" required>
                     </div>
 
                     <div class="col mt-2">
@@ -188,7 +182,7 @@
 
                     <div class="col mt-2">
                         <label>Tanggal </label>
-                        <input name="datepicker2" type="text" class="form-control" placeholder="Tanggal" id="datepicker2" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" required>
+                        <input name="datepicker2" type="text" class="form-control diulem-datepicker-input" placeholder="Tanggal" id="datepicker2" readonly="readonly" required>
                         <input type="hidden" id="tglKirim">
                     </div>
         <input type="hidden" id="idTamunya" >
@@ -252,22 +246,16 @@ $(document).ready(function () {
         var alamat_tamu = $('#alamat_tamu').val();
         var id_user = $('#id_user').val();
 
-        $.ajax({
-            url : "<?= base_url('user/save_tamu') ?>",
-            method : "POST",
-            data : {tgl_kirim: tgl_kirim,no_wa: no_wa, nama_tamu: nama_tamu, alamat_tamu: alamat_tamu, id_user: id_user},
-            async : true,
-            dataType : 'html',
-            success: function(result){
-
-                    $('#tgl_kirim').val("");
-                    $('#no_wa').val("");
-                    $('#nama_tamu').val("");
-                    $('#alamat_tamu').val("");
-                    location.reload();
-
-                
-            }
+        DiulemDashboard.post("<?= base_url('user/save_tamu') ?>", {
+            tgl_kirim: tgl_kirim,
+            no_wa: no_wa,
+            nama_tamu: nama_tamu,
+            alamat_tamu: alamat_tamu,
+            id_user: id_user
+        }, {
+            button: $(this),
+            successMessage: 'Data tamu berhasil disimpan.',
+            errorMessage: 'Data tamu gagal disimpan.'
         });
 
     });
@@ -283,16 +271,12 @@ $(document).ready(function () {
 
         var id_tamu = $('#idTamu').val();
 
-        $.ajax({
-            url : "<?= base_url('user/hapus_tamu') ?>",
-            method : "POST",
-            data : {id_tamu: id_tamu},
-            async : true,
-            dataType : 'html',
-            success: function(result){
-                 location.reload();
-               
-            }
+        DiulemDashboard.post("<?= base_url('user/hapus_tamu') ?>", {
+            id_tamu: id_tamu
+        }, {
+            button: $(this),
+            successMessage: 'Data tamu berhasil dihapus.',
+            errorMessage: 'Data tamu gagal dihapus.'
         });
     });
     $('.kirim').on('click', function (event) {
@@ -306,15 +290,12 @@ $(document).ready(function () {
 
         var id_tamu = $('#idTamu').val();
 
-        $.ajax({
-            url : "<?= base_url('user/kirim_undangan') ?>",
-            method : "POST",
-            data : {id_tamu: id_tamu},
-            async : true,
-            dataType : 'html',
-            success: function(result){
-                 location.reload();
-            }
+        DiulemDashboard.post("<?= base_url('user/kirim_undangan') ?>", {
+            id_tamu: id_tamu
+        }, {
+            button: $(this),
+            successMessage: 'Undangan berhasil dikirim.',
+            errorMessage: 'Undangan gagal dikirim.'
         });
     });
     
@@ -346,17 +327,16 @@ var alamat_tamu = $('#alamatTamu').val();
 var no_wa = $('#noWa').val();
 var tgl_kirim = $('#tglKirim').val();
 
-$.ajax({
-    url : "<?= base_url('user/update_tamu') ?>",
-    method : "POST",
-    data : {id_tamu: id_tamu, nama_tamu:nama_tamu, alamat_tamu:alamat_tamu, no_wa: no_wa, tgl_kirim: tgl_kirim},
-    async : true,
-    dataType : 'html',
-    success: function(result){
-        location.reload();
-               
-    }
-
+DiulemDashboard.post("<?= base_url('user/update_tamu') ?>", {
+    id_tamu: id_tamu,
+    nama_tamu: nama_tamu,
+    alamat_tamu: alamat_tamu,
+    no_wa: no_wa,
+    tgl_kirim: tgl_kirim
+}, {
+    button: $(this),
+    successMessage: 'Data tamu berhasil diupdate.',
+    errorMessage: 'Data tamu gagal diupdate.'
 });
 
 
@@ -381,33 +361,20 @@ $('#centangSemua').click(function(e){
         if(jmldata.length === 0){
             return false;
         }else {
-            Swal.fire({
+            DiulemDashboard.confirm({
               title: 'Hapus Banyak Data',
               text: `Yakin data Tamu dihapus sebanyak ${jmldata.length} data ?`,
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
               confirmButtonText: 'Ya, Hapus Data Tamu!'
             }).then((result) => {
                 if(result.value) {
-              $.ajax({
-                  type: "post",
-                  url: $(this).attr('action'),
-                  data: $(this).serialize(),
-                  dataType: "json",
-                  success: function(response){
+              DiulemDashboard.post($(this).attr('action'), $(this).serialize(), {
+                  dataType: 'json',
+                  reload: false,
+                  errorMessage: 'Data tamu gagal dihapus.',
+                  onSuccess: function(response){
                       if(response.sukses){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.sukses
-                        });
-                        location.reload();
+                        DiulemDashboard.notify('success', 'Berhasil', response.sukses).then(DiulemDashboard.reload);
                       }
-                  },
-                  error: function(xhr, ajaxOptions, thrownError){
-                      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
                   }
               });
                 }

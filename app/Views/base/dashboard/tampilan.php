@@ -70,7 +70,7 @@ $categoryBadgeClass = static function ($categoryName) {
         <div class="row row-cards" id="themeGrid">
             <div class="col-sm-6 col-lg-3 theme-item" data-category="active">
                 <div class="card h-100 diulem-theme-card is-active">
-                    <div class="img-responsive img-responsive-4x3 card-img-top" style="background-image: url(<?= base_url() ?>/assets/themes/<?= esc($order[0]->nama_theme) ?>/preview.png)"></div>
+                    <img class="diulem-theme-preview card-img-top" src="<?= base_url() ?>/assets/themes/<?= esc($order[0]->nama_theme) ?>/preview.png" alt="<?= esc($order[0]->nama_theme) ?>">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
                             <h3 class="card-title mb-0"><?= esc($order[0]->nama_theme) ?></h3>
@@ -92,7 +92,7 @@ $categoryBadgeClass = static function ($categoryName) {
                 <div class="col-sm-6 col-lg-3 theme-item" data-category="<?= esc($categoryId) ?>">
                     <div class="card h-100 diulem-theme-card">
                         <div class="position-relative">
-                            <div class="img-responsive img-responsive-4x3 card-img-top" style="background-image: url(<?= base_url() ?>/assets/themes/<?= esc($row->nama_theme) ?>/preview.png)"></div>
+                            <img class="diulem-theme-preview card-img-top" src="<?= base_url() ?>/assets/themes/<?= esc($row->nama_theme) ?>/preview.png" alt="<?= esc($row->nama_theme) ?>">
                             <span class="badge diulem-theme-badge <?= esc($categoryBadgeClass($categoryName)) ?>"><?= esc($categoryName) ?></span>
                         </div>
                         <div class="card-body">
@@ -137,17 +137,12 @@ $('.pilih').on('click', function () {
 $('#pilihBtn').on('click', function() {
     var idtema = $('#idTema').val();
 
-    $.ajax({
-        url : "<?= base_url('user/ganti_tema') ?>",
-        method : "POST",
-        data : {id: idtema},
-        async : true,
-        dataType : 'html',
-        success: function($hasil){
-           if($hasil == 'sukses'){
-            location.reload();
-           }
-        }
+    DiulemDashboard.post("<?= base_url('user/ganti_tema') ?>", {
+        id: idtema
+    }, {
+        button: $(this),
+        successMessage: 'Tema berhasil diganti.',
+        errorMessage: 'Tema gagal diganti.'
     });
 });
 

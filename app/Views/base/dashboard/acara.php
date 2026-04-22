@@ -66,7 +66,7 @@
                         </div>
                         <div class="col mt-2">
                             <label>Tanggal </label>
-                            <input type="text" class="form-control" id="datepicker<?= $i+1?>" placeholder="Tanggal" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" value="Jumat, 17 Januari 2020" required>
+                            <input type="text" class="form-control diulem-datepicker-input" id="datepicker<?= $i+1?>" placeholder="Tanggal" readonly="readonly" value="Jumat, 17 Januari 2020" required>
                             <input type="hidden" name="tgl_acara[]" id="tgl_acara<?= $i +1 ?>" value="<?= $acara[$i]->tgl_acara ?>">
                         </div>
         
@@ -97,7 +97,7 @@
                             <textarea id="maps" name="maps[]" type="text" class="form-control"><?= $acara[$i]->maps ?></textarea>
                             <div class="mt-1">
                             <label class="form-check-label ">
-                            <a href="<?php echo base_url('maps'); ?>" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Maps</a>
+                            <a class="diulem-help-link" href="<?php echo base_url('maps'); ?>"><i class="lni-question-circle"></i>&nbsp Cara Menambahkan Maps</a>
                             </label>
                                 
                         </div>
@@ -109,7 +109,7 @@
                 </div>
            <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addAcara" class="btn btn-primary btn-order btn-order-secondary btn-block" style="color:#fff">Tambah Acara</a>
+                            <a id="addAcara" class="btn btn-primary w-100">Tambah Acara</a>
                         </div>
                     </div>
 
@@ -140,7 +140,7 @@
         </div>
         <div class="col mt-2">
             <label>Tanggal</label>
-            <input type="text" class="form-control" id="datepicker__INDEX__" placeholder="Tanggal" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" required>
+            <input type="text" class="form-control diulem-datepicker-input" id="datepicker__INDEX__" placeholder="Tanggal" readonly="readonly" required>
             <input type="hidden" name="tgl_acara[]" id="tgl_acara__INDEX__" value="__DATE__">
         </div>
         <div class="col mt-2">
@@ -168,7 +168,7 @@
             <textarea id="maps" name="maps[]" type="text" class="form-control" required></textarea>
             <div class="mt-1">
                 <label class="form-check-label">
-                    <a href="<?= base_url('maps'); ?>"><i class="lni-question-circle"></i>&nbsp Cara Menambahkan Maps</a>
+                    <a class="diulem-help-link" href="<?= base_url('maps'); ?>"><i class="lni-question-circle"></i>&nbsp Cara Menambahkan Maps</a>
                 </label>
             </div>
         </div>

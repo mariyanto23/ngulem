@@ -97,17 +97,12 @@ $(document).ready(function () {
     $('#pilihHapus').on('click', function(event) {
         var idtamu = $('#idTamu').val();
 
-        $.ajax({
-            url : "<?= base_url('user/hapus_hadir') ?>",
-            method : "POST",
-            data : {id: idtamu},
-            async : true,
-            dataType : 'html',
-            success: function($hasil){
-               if($hasil == 'sukses'){
-                location.reload();
-               }
-            }
+        DiulemDashboard.post("<?= base_url('user/hapus_hadir') ?>", {
+            id: idtamu
+        }, {
+            button: $(this),
+            successMessage: 'Data hadir berhasil dihapus.',
+            errorMessage: 'Data hadir gagal dihapus.'
         });
     });
 });

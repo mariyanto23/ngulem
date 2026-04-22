@@ -124,17 +124,12 @@ $(document).ready(function () {
     $('#hapusBtn').on('click', function() {
         var id_pengunjung = $('#idPengunjung').val();
 
-        $.ajax({
-            url : "<?= base_url('user/hapus_riwayat') ?>",
-            method : "POST",
-            data : {id : id_pengunjung},
-            async : true,
-            dataType : 'html',
-            success: function($hasil){
-               if($hasil == 'sukses'){
-                location.reload();
-               }
-            }
+        DiulemDashboard.post("<?= base_url('user/hapus_riwayat') ?>", {
+            id: id_pengunjung
+        }, {
+            button: $(this),
+            successMessage: 'Riwayat pengunjung berhasil dihapus.',
+            errorMessage: 'Riwayat pengunjung gagal dihapus.'
         });
     });
 
@@ -150,33 +145,20 @@ $(document).ready(function () {
             return false;
         }
 
-        Swal.fire({
+        DiulemDashboard.confirm({
             title: 'Hapus Banyak Data',
             text: `Yakin data Pengunjung dihapus sebanyak ${jmldata.length} data ?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, Hapus Data Pengunjung!'
         }).then((result) => {
             if (result.value) {
-                $.ajax({
-                    type: 'post',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
+                DiulemDashboard.post($(this).attr('action'), $(this).serialize(), {
                     dataType: 'json',
-                    success: function(response) {
+                    reload: false,
+                    errorMessage: 'Data pengunjung gagal dihapus.',
+                    onSuccess: function(response) {
                         if (response.sukses) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: response.sukses
-                            });
-                            location.reload();
+                            DiulemDashboard.notify('success', 'Berhasil', response.sukses).then(DiulemDashboard.reload);
                         }
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
                     }
                 });
             }

@@ -86,7 +86,7 @@
 
                     <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addRekening" class="btn btn-primary btn-order btn-order-secondary btn-block">Tambah Rekening</a>
+                            <a id="addRekening" class="btn btn-primary w-100">Tambah Rekening</a>
                         </div>
                     </div>
 

@@ -89,17 +89,12 @@ $('.hapus').on('click', function () {
 $('#hapusBtn').on('click', function() {
     var idkomentar = $('#idKomentar').val();
 
-    $.ajax({
-        url : "<?= base_url('user/hapus_komentar') ?>",
-        method : "POST",
-        data : {id: idkomentar},
-        async : true,
-        dataType : 'html',
-        success: function($hasil){
-           if($hasil == 'sukses'){
-            location.reload();
-           }
-        }
+    DiulemDashboard.post("<?= base_url('user/hapus_komentar') ?>", {
+        id: idkomentar
+    }, {
+        button: $(this),
+        successMessage: 'Ucapan berhasil dihapus.',
+        errorMessage: 'Ucapan gagal dihapus.'
     });
 });
 </script>

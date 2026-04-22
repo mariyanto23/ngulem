@@ -42,7 +42,7 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
 ?>
 <div class="page">
     <aside class="navbar navbar-vertical navbar-expand-lg diulem-sidebar">
-        <div class="container-fluid">
+        <div class="diulem-sidebar-container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -54,7 +54,9 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
             </h1>
             <div class="nav-item dropdown d-lg-none diulem-mobile-profile">
                 <a href="#" class="nav-link d-flex align-items-center p-0" data-toggle="dropdown" aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(<?= base_url('assets/dashboard'); ?>/img/boy.png)"></span>
+                    <span class="avatar avatar-sm diulem-profile-avatar">
+                        <img src="<?= base_url('assets/dashboard'); ?>/img/boy.png" alt="Foto profil">
+                    </span>
                     <span class="ms-2 fw-bold"><?= esc($_SESSION['uname']) ?></span>
                     <i class="ti ti-chevron-down ms-1"></i>
                 </a>
@@ -147,7 +149,9 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
                 <div class="navbar-nav flex-row ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown" aria-label="Open user menu">
-                            <span class="avatar avatar-sm" style="background-image: url(<?= base_url('assets/dashboard'); ?>/img/boy.png)"></span>
+                            <span class="avatar avatar-sm diulem-profile-avatar">
+                                <img src="<?= base_url('assets/dashboard'); ?>/img/boy.png" alt="Foto profil">
+                            </span>
                             <div class="d-none d-xl-block ps-2">
                                 <div><?= esc($_SESSION['uname']) ?></div>
                                 <div class="mt-1 small text-secondary">Pengguna</div>
@@ -302,32 +306,16 @@ $('#diulemSidebarMinimize').on('click', function() {
 <script>
 $(function() {
     <?php if (session()->has('success')) { ?>
-        Swal.fire({
-            icon: 'success',
-            title: 'Great!',
-            text: '<?= session('success') ?>'
-        })
+        DiulemDashboard.notify('success', 'Berhasil', '<?= session('success') ?>');
     <?php } ?>
     <?php if (session()->has('deleted')) { ?>
-        Swal.fire({
-            icon: 'warning',
-            title: 'Great!',
-            text: '<?= session('deleted') ?>'
-        })
+        DiulemDashboard.notify('warning', 'Berhasil', '<?= session('deleted') ?>');
     <?php } ?>
     <?php if (session()->has('updated')) { ?>
-        Swal.fire({
-            icon: 'success',
-            title: 'Great!',
-            text: '<?= session('updated') ?>'
-        })
+        DiulemDashboard.notify('success', 'Berhasil', '<?= session('updated') ?>');
     <?php } ?>
     <?php if (session()->has('error')) { ?>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '<?= session('error') ?>'
-        })
+        DiulemDashboard.notify('error', 'Gagal', '<?= session('error') ?>');
     <?php } ?>
 });
 </script>
