@@ -191,6 +191,29 @@ app/Views/bukutamu/           Buku tamu digital
 
 Theme undangan adalah file PHP di `app/Views/undangan/themes/{kode_theme}.php`, sedangkan asset theme berada di `assets/themes/{kode_theme}`.
 
+### 8.1 Design System Dashboard
+
+Dashboard pengguna memakai Tabler sebagai design system utama. Pola yang dijadikan standar:
+
+- `page-body`, `container-xl`, `page-header`, `row row-cards`.
+- `card`, `card-header`, `card-title`.
+- `table table-vcenter card-table`.
+- `btn`, `badge`, `alert`, `modal`, `form-control`, `form-switch`.
+
+Custom CSS dashboard dibatasi pada branding dan helper project:
+
+- warna utama dan active state sidebar/topbar,
+- radius/shadow yang konsisten,
+- styling DataTables agar menyatu dengan card Tabler,
+- helper upload, preview foto, empty state, dan tombol icon-only.
+
+Helper dan partial penting:
+
+- `assets/dashboard/js/diulem-dashboard.js` untuk AJAX, loading state, SweetAlert notification, confirm dialog, dan reload.
+- `app/Views/base/dashboard/components/confirm_modal.php` untuk modal konfirmasi reusable.
+
+Panel admin memakai pendekatan migrasi yang sama secara bertahap. Batch awal difokuskan pada layout admin, tabel pembayaran, tabel pengguna, modal konfirmasi, DataTables, dan feedback AJAX.
+
 ## 9. Asset Dan Upload
 
 | Folder | Fungsi |
@@ -208,6 +231,17 @@ Theme undangan adalah file PHP di `app/Views/undangan/themes/{kode_theme}.php`, 
 | `writable/cache` | Cache runtime |
 
 `kunci` umumnya dibuat dari kombinasi data user/domain, lalu dipakai sebagai nama folder asset user.
+
+Asset lama yang masih dipakai sementara:
+
+- Bootstrap lama untuk kompatibilitas modal/dropdown lama.
+- Ruang Admin CSS/JS untuk halaman yang belum selesai dimigrasi penuh.
+- FontAwesome dan LineIcons untuk ikon lama di beberapa halaman.
+- Croppie untuk crop foto mempelai.
+- Dropzone untuk upload gallery dan slider buku tamu.
+- DataTables Bootstrap untuk tabel lama.
+
+Penghapusan asset lama sebaiknya dilakukan setelah dashboard admin selesai dimigrasi agar dependency yang tersisa bisa diaudit akurat.
 
 ## 10. Auth Dan Session
 

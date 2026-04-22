@@ -1,241 +1,194 @@
-<!-- Container Fluid-->
-<div class="container-fluid" id="container-wrapper">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
-    </div>
-
-    <div class="row mb-3">
-
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Total Keuntungan</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?= rupiah($totalKeuntungan) ?></div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-primary"></i>
-                    </div>
-                  </div>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="page-header d-print-none mb-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">Admin</div>
+                    <h1 class="page-title"><?= esc($title); ?></h1>
                 </div>
-              </div>
             </div>
-            <!-- New User Card Example -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Total Pengguna</div>
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= count($join) ?></div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-users fa-2x text-info"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $totalPending; ?></div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-warning"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Invoice Example -->
-            <div class="col-xl-12 col-lg-12 mb-4">
-              <div class="card">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Invoice</h6>
-                  <a class="m-0 float-right btn btn-danger btn-sm" href="<?= base_url('admin/pembayaran') ?>">Lihat Lebih <i
-                      class="fas fa-chevron-right"></i></a>
-                </div>
-                <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                      <tr>
-                        <th>No Invoice</th>
-                        <th>Pengguna</th>
-                        <th>Domain</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    <?php 
-                    foreach($setting as $set){
-                        $trial = $set->trial;
-                    }
-                    foreach($setting_bayar as $bayar){
-                        $metode_bayar = $bayar->metode_bayar;
-                    }
-                    $limit = 0;
-                    foreach($join as $row){ 
-                        $limit++;
-                        if($limit > 4){ //limit 4 
-                            break;
-                        }
-                
-                    ?>
-
-                      <tr>
-                        <td>#<?= $row->invoice ?></td>
-                        <td><?= $row->username ?></td>
-                        <td><a target="_blank" href="<?= rtrim(SITE_UNDANGAN, '/') . '/' . $row->domain ?>"><?= $row->domain ?></a></td>
-                         <?php 
-                         $masa_aktif = $row->masa_aktif;
-                         $durasi = '+'.$trial.' days';
-                          $tglDaftar = $row->tgl_daftar;
-                          $tglExp = strtotime($durasi, strtotime($tglDaftar));
-                          $tglExpFormated = date("d-m-Y H:i A",$tglExp);
-                          $today = strtotime('now');
-                          $tglBayar = $row->tgl_bayar;
-                          $aktif = '+'.$masa_aktif.' days';
-                          $tglNonaktif= strtotime($aktif, strtotime($tglBayar));
-                          $tglNonaktifFormated = date("d-m-Y H:i A",$tglNonaktif);
-                        ?>
-
-                        <?php if($row->statusPembayaran == '1'){ ?>    
-                        <td><span class="badge badge-warning">Menunggu Konfirmasi</span></td>
-                        <?php }else if($row->statusPembayaran == 2 && $today >= $tglNonaktif){ ?>    
-                        <td><span class="badge badge-danger">Expired</span></span></td>
-                        <?php }else if($row->statusPembayaran == 0 ){ ?>    
-                        <td><span class="badge badge-secondary">Belum Lunas</span></td>
-                        <?php }else{ ?>
-                        <td><span class="badge badge-primary">Lunas</span></td>
-                        <?php } ?>
-                        <?php if($metode_bayar=='manual'){ ?>
-                            <td><div class="btn-group mb-1">
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Aksi
-                                </button>
-                                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                <a href="#" class="dropdown-item" 
-                                data-nama="<?= $row->nama_lengkap ?>"
-                                data-bank="<?= $row->nama_bank ?>"
-                                data-invoice="<?= $row->invoice ?>"
-                                data-toggle="modal" 
-                                data-target="#modalData">Lihat</a>
-                                <a href="#" class="dropdown-item konfirmasiBtn" 
-                                data-id="<?= $row->id_user ?>"
-                                data-toggle="modal" 
-                                data-target="#modalKonfirmasi">Konfirmasi & Aktifkan</a>
-                            </div></td>
-                        <?php }else{ ?>
-                        <td><a href="#" class="btn btn-primary btn-sm konfirmasiBtn" data-id="<?= $row->id_user ?>" data-toggle="modal" data-target="#modalKonfirmasi">Konfirmasi</a>
-                        </td>
-                        <?php } ?>
-                      </tr>
-                    <?php } ?>  
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-    </div>
-    <!--Row-->
-
-<!---Container Fluid-->
-<!-- Modal -->
-<div class="modal fade" id="modalKonfirmasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin mengkonfirmasi pengguna ?
-        <input type="hidden" value="" id="iduser">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="konfirmasi">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="col mt-2">
-            <label>Nama Lengkap</label>
-            <input id="nama_lengkap" type="text" class="form-control" placeholder="Contoh : Dinda Rahma" value="" required>
         </div>
-        <div class="col mt-2">
-            <label>Nama Bank</label>
-            <input id="nama_bank" type="text" class="form-control" placeholder="Contoh : BRI Syariah " value="" required>
-        </div>        
-        <div class="col mt-2 mb-2">
-            <label>Bukti Transfer</label><br>
-            <img id="bukti" src="" height="250px">
+
+        <?php
+        foreach ($setting as $set) {
+            $trial = $set->trial;
+        }
+        foreach ($setting_bayar as $bayar) {
+            $metode_bayar = $bayar->metode_bayar;
+        }
+        ?>
+
+        <div class="row row-cards mb-4">
+            <div class="col-sm-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-secondary">Total Keuntungan</div>
+                            <div class="h2 mb-0"><?= rupiah($totalKeuntungan) ?></div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-wallet"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-secondary">Total Pengguna</div>
+                            <div class="h2 mb-0"><?= count($join) ?></div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-users"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-secondary">Menunggu Konfirmasi</div>
+                            <div class="h2 mb-0"><?= esc($totalPending); ?></div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-clock"></i></span>
+                    </div>
+                </div>
+            </div>
         </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-      </div>
+
+        <div class="row row-cards">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Invoice Terbaru</h3>
+                        <div class="card-actions">
+                            <a class="btn btn-primary btn-sm" href="<?= base_url('admin/pembayaran') ?>">
+                                Lihat Semua <i class="ti ti-chevron-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-vcenter card-table">
+                            <thead>
+                                <tr>
+                                    <th>No Invoice</th>
+                                    <th>Pengguna</th>
+                                    <th>Domain</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $limit = 0;
+                            foreach ($join as $row) {
+                                $limit++;
+                                if ($limit > 4) {
+                                    break;
+                                }
+
+                                $masa_aktif = $row->masa_aktif;
+                                $durasi = '+'.$trial.' days';
+                                $tglExp = strtotime($durasi, strtotime($row->tgl_daftar));
+                                $today = strtotime('now');
+                                $tglNonaktif = strtotime('+'.$masa_aktif.' days', strtotime($row->tgl_bayar));
+                            ?>
+                                <tr>
+                                    <td>#<?= esc($row->invoice) ?></td>
+                                    <td><?= esc($row->username) ?></td>
+                                    <td><a target="_blank" href="<?= rtrim(SITE_UNDANGAN, '/') . '/' . esc($row->domain) ?>"><?= esc($row->domain) ?></a></td>
+                                    <?php if ($row->statusPembayaran == '1') { ?>
+                                        <td><span class="badge bg-warning text-warning-fg">Menunggu Konfirmasi</span></td>
+                                    <?php } elseif ($row->statusPembayaran == 2 && $today >= $tglNonaktif) { ?>
+                                        <td><span class="badge bg-danger text-danger-fg">Expired</span></td>
+                                    <?php } elseif ($row->statusPembayaran == 0) { ?>
+                                        <td><span class="badge bg-secondary text-secondary-fg">Belum Lunas</span></td>
+                                    <?php } else { ?>
+                                        <td><span class="badge bg-success text-success-fg">Lunas</span></td>
+                                    <?php } ?>
+                                    <td class="text-end">
+                                        <div class="btn-list justify-content-end flex-nowrap">
+                                            <?php if ($metode_bayar == 'manual') { ?>
+                                                <button type="button" class="btn btn-info btn-sm btn-icon lihatBukti" title="Lihat bukti" aria-label="Lihat bukti"
+                                                    data-nama="<?= esc($row->nama_lengkap) ?>"
+                                                    data-bank="<?= esc($row->nama_bank) ?>"
+                                                    data-invoice="<?= esc($row->invoice) ?>"
+                                                    data-toggle="modal"
+                                                    data-target="#modalData">
+                                                    <i class="ti ti-eye"></i>
+                                                </button>
+                                            <?php } ?>
+                                            <button type="button" class="btn btn-success btn-sm btn-icon konfirmasiBtn" title="Konfirmasi" aria-label="Konfirmasi" data-id="<?= esc($row->id_user) ?>" data-toggle="modal" data-target="#modalKonfirmasi">
+                                                <i class="ti ti-check"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
+<?= view('admin/components/confirm_modal', [
+    'modalId' => 'modalKonfirmasi',
+    'message' => 'Apakah kamu yakin ingin mengkonfirmasi pengguna?',
+    'hiddenName' => 'iduser',
+    'hiddenId' => 'iduser',
+    'confirmId' => 'konfirmasi',
+    'confirmText' => 'Ya, Konfirmasi',
+    'confirmClass' => 'btn-success',
+]) ?>
+
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-labelledby="modalDataLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDataLabel">Bukti Transfer</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Nama Lengkap</label>
+                    <input id="nama_lengkap" type="text" class="form-control" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nama Bank</label>
+                    <input id="nama_bank" type="text" class="form-control" readonly>
+                </div>
+                <div>
+                    <label class="form-label">Bukti Transfer</label>
+                    <img id="bukti" src="" class="diulem-admin-proof" alt="Bukti transfer">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <script>
-
-    //triggered when modal is about to be shown
 $('#modalData').on('show.bs.modal', function(e) {
-    var nama = $(e.relatedTarget).data('nama');
-    var bank = $(e.relatedTarget).data('bank');
-    var invoice = $(e.relatedTarget).data('invoice');
-    $('#nama_lengkap').val(nama);
-    $('#nama_bank').val(bank);
-    $('#bukti').attr('src','<?= base_url() ?>/assets/bukti/'+invoice+'.png');
+    var $button = $(e.relatedTarget);
+    $('#nama_lengkap').val($button.data('nama'));
+    $('#nama_bank').val($button.data('bank'));
+    $('#bukti').attr('src', '<?= base_url() ?>/assets/bukti/' + $button.data('invoice') + '.png');
 });
 
-    $('.konfirmasiBtn').on('click', function (event) {
-        var id = $(this).data('id');
-        $(".modal-body #iduser").val( id );
+$('.konfirmasiBtn').on('click', function () {
+    $('#modalKonfirmasi #iduser').val($(this).data('id'));
+});
+
+$('#konfirmasi').on('click', function() {
+    DiulemAdmin.post("<?= base_url('admin/konfirmasi') ?>", {
+        id: $('#iduser').val()
+    }, {
+        button: $(this),
+        successMessage: 'Pengguna berhasil dikonfirmasi.',
+        errorMessage: 'Pengguna gagal dikonfirmasi.'
     });
-
-    $('#konfirmasi').on('click', function(event) {
-
-        var id = $('#iduser').val();
-
-        $.ajax({
-            url : "<?= base_url('admin/konfirmasi') ?>",
-            method : "POST",
-            data : {id: id},
-            async : true,
-            dataType : 'html',
-            success: function($hasil){
-               if($hasil == 'sukses'){
-                location.reload();
-               }
-            }
-        });
-    });
-
+});
 </script>

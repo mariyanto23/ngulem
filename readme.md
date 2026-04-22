@@ -24,7 +24,7 @@ Aplikasi undangan digital berbasis CodeIgniter 4 untuk membuat, mengelola, dan m
 - Midtrans PHP SDK
 - Xendit PHP SDK
 - PHPExcel
-- jQuery, Bootstrap, DataTables, Select2, dan asset frontend lokal
+- jQuery, Bootstrap, DataTables, Select2, Tabler, dan asset frontend lokal
 
 ## Struktur Folder Penting
 
@@ -116,6 +116,18 @@ Routing project ini dipilih berdasarkan host/domain di `app/Config/Routes.php` d
 6. Undangan publik dibuka lewat subdomain `kamu.diulem.com/{domain}`.
 7. Buku tamu dibuka lewat `bukutamu.diulem.com/{domain}` bila paket mengaktifkan fitur buku tamu.
 8. Admin mengelola pembayaran, pengguna, paket, tema, testimoni, dan setting global.
+
+## Catatan UI Dashboard
+
+Dashboard pengguna sudah memakai Tabler sebagai design system utama untuk layout, card, table, button, badge, modal, dan form. File `assets/dashboard/css/diulem-dashboard.css` dipakai sebagai lapisan branding dan helper kecil, bukan untuk override besar-besaran komponen Tabler.
+
+Beberapa komponen pendukung dashboard pengguna:
+
+- `assets/dashboard/js/diulem-dashboard.js`: helper AJAX, loading button, SweetAlert notification, confirm dialog, dan reload.
+- `app/Views/base/dashboard/components/confirm_modal.php`: partial modal konfirmasi agar markup modal tidak berulang.
+- Bootstrap lama, DataTables Bootstrap, Croppie, Dropzone, FontAwesome, LineIcons, dan Ruang Admin masih ada sementara karena beberapa modal/plugin/upload lama masih bergantung ke asset tersebut.
+
+Panel admin sedang dibawa ke pola yang sama secara bertahap: layout admin, tabel transaksi/pengguna, modal konfirmasi, DataTables styling, dan feedback AJAX distandarkan terlebih dahulu. Audit penghapusan asset lama dilakukan setelah dashboard pengguna dan admin sama-sama stabil.
 
 ## Keamanan Dan Catatan Maintenance
 

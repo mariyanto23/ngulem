@@ -1,0 +1,297 @@
+:root {
+  --tblr-primary: #0f766e;
+  --tblr-primary-rgb: 15, 118, 110;
+  --diulem-admin-line: #e5e7eb;
+  --diulem-admin-soft: #f6f8fb;
+  --diulem-admin-ink: #17202a;
+  --diulem-admin-sidebar-width: 15rem;
+}
+
+body,
+.page {
+  background: var(--diulem-admin-soft);
+  color: var(--diulem-admin-ink);
+  letter-spacing: 0;
+}
+
+.diulem-admin-sidebar {
+  background: #ffffff;
+  border-right: 1px solid var(--diulem-admin-line);
+  bottom: 0;
+  box-shadow: none;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: var(--diulem-admin-sidebar-width);
+  z-index: 1030;
+}
+
+.diulem-admin-sidebar-container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  min-height: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+
+.diulem-admin-sidebar .navbar-brand {
+  align-items: center;
+  display: flex;
+  height: 64px;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.diulem-admin-sidebar .navbar-brand a {
+  align-items: center;
+  color: var(--diulem-admin-ink);
+  display: inline-flex;
+  font-weight: 800;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.diulem-admin-sidebar .navbar-nav .nav-link {
+  border-radius: 8px;
+  color: #344256;
+  font-weight: 650;
+  margin: 2px 10px;
+}
+
+.diulem-admin-sidebar .navbar-nav .nav-link:hover,
+.diulem-admin-sidebar .navbar-nav .nav-link:focus {
+  background: #e8f5f3;
+  color: #0f766e;
+}
+
+.diulem-admin-sidebar .navbar-nav .nav-link.active {
+  background: #0f766e;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.22);
+  color: #ffffff;
+}
+
+.diulem-admin-sidebar .nav-link-icon {
+  color: #0f766e;
+}
+
+.diulem-admin-sidebar .nav-link.active .nav-link-icon {
+  color: #ffffff;
+}
+
+.diulem-admin-sidebar .dropdown-menu.show {
+  display: block;
+  position: static !important;
+  transform: none !important;
+}
+
+.diulem-admin-sidebar .dropdown-menu {
+  border: 0;
+  box-shadow: none;
+  margin: 0 0 0.35rem;
+  padding: 0 0.75rem 0 2.35rem;
+}
+
+.diulem-admin-sidebar .dropdown-item {
+  border-radius: 8px;
+  color: #526070;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.42rem 0.75rem;
+}
+
+.diulem-admin-sidebar .dropdown-item:hover,
+.diulem-admin-sidebar .dropdown-item.active {
+  background: #e8f5f3;
+  color: #0f766e;
+}
+
+.diulem-admin-wrapper {
+  margin-left: var(--diulem-admin-sidebar-width);
+  min-height: 100vh;
+  width: calc(100% - var(--diulem-admin-sidebar-width));
+}
+
+.diulem-admin-topbar {
+  background: transparent;
+  border-bottom: 0;
+  box-shadow: none;
+  min-height: 68px;
+}
+
+.diulem-admin-topbar .dropdown-menu {
+  left: auto !important;
+  max-width: 14rem;
+  min-width: 11rem;
+  right: 0 !important;
+  transform: none !important;
+}
+
+.diulem-admin-topbar .dropdown-item {
+  align-items: center;
+  display: flex;
+  gap: 0.35rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diulem-admin-mobile-profile {
+  margin-left: auto;
+}
+
+.diulem-admin-mobile-profile .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+.page-wrapper .page-title,
+.diulem-admin-wrapper .page-title {
+  color: var(--diulem-admin-ink);
+  font-size: 1.45rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.diulem-admin-stat-icon {
+  align-items: center;
+  background: #e8f5f3;
+  border-radius: 8px;
+  color: #0f766e;
+  display: inline-flex;
+  height: 2.75rem;
+  justify-content: center;
+  width: 2.75rem;
+}
+
+.diulem-admin-wrapper .card {
+  border: 1px solid var(--diulem-admin-line);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.diulem-admin-wrapper .card-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--diulem-admin-line);
+}
+
+.diulem-admin-wrapper .card-title {
+  color: var(--diulem-admin-ink);
+  font-weight: 750;
+}
+
+.diulem-admin-wrapper .btn-primary,
+.diulem-admin-wrapper .btn-success,
+.diulem-admin-wrapper .btn-danger,
+.diulem-admin-wrapper .btn-warning {
+  color: #ffffff !important;
+}
+
+.diulem-admin-wrapper .btn-icon.btn-sm {
+  align-items: center;
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  padding: 0;
+  width: 2rem;
+}
+
+.diulem-admin-wrapper .table.card-table,
+.diulem-admin-wrapper .dataTable {
+  margin-bottom: 0 !important;
+}
+
+.diulem-admin-wrapper .table.card-table thead th,
+.diulem-admin-wrapper .dataTable thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.diulem-admin-wrapper .table.card-table tbody td,
+.diulem-admin-wrapper .dataTable tbody td {
+  color: #344256;
+  vertical-align: middle;
+}
+
+.diulem-admin-wrapper .table-responsive {
+  border-radius: 0 0 8px 8px;
+}
+
+.dataTables_wrapper {
+  padding: 1rem;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  margin-bottom: 0.85rem;
+}
+
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+  align-items: center;
+  color: #64748b;
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid var(--diulem-admin-line);
+  border-radius: 8px;
+  min-height: 2.25rem;
+}
+
+.diulem-admin-proof {
+  border: 1px solid var(--diulem-admin-line);
+  border-radius: 8px;
+  max-height: 260px;
+  object-fit: contain;
+  width: 100%;
+}
+
+@media (max-width: 991.98px) {
+  .diulem-admin-sidebar {
+    position: sticky;
+    width: 100%;
+  }
+
+  .diulem-admin-sidebar-container {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 56px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .diulem-admin-sidebar .navbar-collapse {
+    flex-basis: 100%;
+  }
+
+  .diulem-admin-wrapper {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .diulem-admin-sidebar .navbar-brand {
+    height: 56px;
+  }
+
+  .diulem-admin-wrapper .page-header .col-auto,
+  .diulem-admin-wrapper .page-header .btn {
+    width: 100%;
+  }
+
+  .diulem-admin-wrapper .table.card-table,
+  .diulem-admin-wrapper .dataTable {
+    min-width: 720px;
+  }
+}
