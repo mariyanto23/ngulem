@@ -140,6 +140,27 @@ body,
   transition: width 0.18s ease;
 }
 
+.diulem-topbar .dropdown-menu,
+.diulem-mobile-profile .dropdown-menu {
+  min-width: 11rem;
+  max-width: 14rem;
+}
+
+.diulem-topbar .dropdown-item,
+.diulem-mobile-profile .dropdown-item {
+  align-items: center;
+  display: flex;
+  gap: 0.35rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diulem-topbar .dropdown-item .ti,
+.diulem-mobile-profile .dropdown-item .ti {
+  flex: 0 0 auto;
+}
+
 .page-body {
   margin-top: 0;
 }
