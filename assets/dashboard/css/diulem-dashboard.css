@@ -168,6 +168,40 @@ body,
   font-weight: 650;
 }
 
+.page-wrapper .btn-primary,
+.page-wrapper .btn-success,
+.page-wrapper .btn-danger,
+.page-wrapper .btn-warning,
+.page-wrapper .diulem-file-button,
+.page-wrapper .diulem-upload-button {
+  color: #ffffff !important;
+}
+
+.page-wrapper .btn-primary .ti,
+.page-wrapper .btn-success .ti,
+.page-wrapper .btn-danger .ti,
+.page-wrapper .btn-warning .ti,
+.page-wrapper .diulem-file-button .ti,
+.page-wrapper .diulem-upload-button .ti {
+  color: currentColor;
+}
+
+.page-wrapper .btn-primary:hover,
+.page-wrapper .btn-primary:focus,
+.page-wrapper .btn-primary:active,
+.page-wrapper .btn-success:hover,
+.page-wrapper .btn-success:focus,
+.page-wrapper .btn-success:active,
+.page-wrapper .btn-danger:hover,
+.page-wrapper .btn-danger:focus,
+.page-wrapper .btn-danger:active,
+.page-wrapper .diulem-file-button:hover,
+.page-wrapper .diulem-file-button:focus,
+.page-wrapper .diulem-upload-button:hover,
+.page-wrapper .diulem-upload-button:focus {
+  color: #ffffff !important;
+}
+
 .diulem-hero {
   background:
     linear-gradient(135deg, rgba(15, 118, 110, 0.96), rgba(19, 78, 74, 0.96)),
@@ -529,19 +563,37 @@ body,
 }
 
 .diulem-upload-button {
+  background: var(--tblr-primary) !important;
+  border-color: var(--tblr-primary) !important;
   position: relative;
   z-index: 2;
 }
 
+.diulem-upload-button:hover,
+.diulem-upload-button:focus {
+  background: #115e59 !important;
+  border-color: #115e59 !important;
+}
+
 .diulem-upload-button span {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .diulem-file-button {
+  background: var(--tblr-primary) !important;
+  border-color: var(--tblr-primary) !important;
+  color: #ffffff !important;
   cursor: pointer;
   margin-bottom: 0;
   overflow: hidden;
   position: relative;
+}
+
+.diulem-file-button:hover,
+.diulem-file-button:focus {
+  background: #115e59 !important;
+  border-color: #115e59 !important;
+  color: #ffffff !important;
 }
 
 .diulem-file-button .file-upload {
