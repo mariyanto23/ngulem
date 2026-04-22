@@ -146,6 +146,12 @@ body,
   max-width: 14rem;
 }
 
+.diulem-topbar .dropdown-menu {
+  left: auto !important;
+  right: 0 !important;
+  transform: none !important;
+}
+
 .diulem-topbar .dropdown-item,
 .diulem-mobile-profile .dropdown-item {
   align-items: center;
