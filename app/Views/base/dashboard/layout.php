@@ -33,6 +33,7 @@
 <body>
 <?php
 $activeMenu = service('uri')->getSegment(2) ?: 'dashboard';
+$undanganUrl = isset($order[0]->domain) ? rtrim(SITE_UNDANGAN, '/') . '/' . $order[0]->domain : rtrim(SITE_UNDANGAN, '/');
 $websiteMenus = ['tampilan', 'pengaturan', 'mempelai', 'acara', 'album', 'cerita', 'rekening'];
 $visitorMenus = ['riwayat', 'ucapan'];
 $guestMenus = ['tamu', 'setting_bukutamu', 'data_hadir'];
@@ -63,6 +64,7 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a class="dropdown-item" href="<?= base_url('user/profil') ?>"><i class="ti ti-user me-2"></i>Profil</a>
                     <a class="dropdown-item" href="<?= base_url('user/invoice') ?>"><i class="ti ti-receipt me-2"></i>Tagihan</a>
+                    <a class="dropdown-item" href="<?= esc($undanganUrl) ?>" target="_blank"><i class="ti ti-external-link me-2"></i>Lihat Undangan</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="<?= base_url('user/logout') ?>"><i class="ti ti-logout me-2"></i>Logout</a>
                 </div>
@@ -160,6 +162,7 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                             <a class="dropdown-item" href="<?= base_url('user/profil') ?>"><i class="ti ti-user me-2"></i>Profil</a>
                             <a class="dropdown-item" href="<?= base_url('user/invoice') ?>"><i class="ti ti-receipt me-2"></i>Tagihan</a>
+                            <a class="dropdown-item" href="<?= esc($undanganUrl) ?>" target="_blank"><i class="ti ti-external-link me-2"></i>Lihat Undangan</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="<?= base_url('user/logout') ?>"><i class="ti ti-logout me-2"></i>Logout</a>
                         </div>

@@ -31,7 +31,11 @@
                             <input id="kota" type="text" class="form-control" placeholder="Contoh: Demak" value="<?= esc($testimoni[0]->kota) ?>" required>
                         </div>
 
-                        <input id="status" type="hidden" value="<?php if ($testimoni[0]->status == 0) { echo '1'; } else { echo esc($testimoni[0]->status); } ?>">
+                        <input id="status" type="hidden" value="<?php if ($testimoni[0]->status == 0) {
+                                                                    echo '1';
+                                                                } else {
+                                                                    echo esc($testimoni[0]->status);
+                                                                } ?>">
 
                         <div class="mb-3">
                             <label class="form-label">Provinsi</label>
@@ -44,7 +48,7 @@
                         </div>
 
                         <button class="btn btn-primary" data-toggle="modal" data-target="#modalUser">
-                            <i class="ti ti-device-floppy me-2"></i>Simpan
+                            <i class="ti ti-device-floppy me-2"></i>Kirim
                         </button>
                     </div>
                 </div>
@@ -62,17 +66,17 @@
 ]) ?>
 
 <script>
-$('#simpanTesti').on('click', function() {
-    DiulemDashboard.post("<?= base_url('user/update_testi') ?>", {
-        nama: $('#nama').val(),
-        kota: $('#kota').val(),
-        provinsi: $('#provinsi').val(),
-        ulasan: $('#ulasan').val(),
-        status: $('#status').val()
-    }, {
-        button: $(this),
-        successMessage: 'Testimonial berhasil disimpan.',
-        errorMessage: 'Testimonial gagal disimpan.'
+    $('#simpanTesti').on('click', function() {
+        DiulemDashboard.post("<?= base_url('user/update_testi') ?>", {
+            nama: $('#nama').val(),
+            kota: $('#kota').val(),
+            provinsi: $('#provinsi').val(),
+            ulasan: $('#ulasan').val(),
+            status: $('#status').val()
+        }, {
+            button: $(this),
+            successMessage: 'Testimonial berhasil disimpan.',
+            errorMessage: 'Testimonial gagal disimpan.'
+        });
     });
-});
 </script>
