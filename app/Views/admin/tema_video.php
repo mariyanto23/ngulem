@@ -7,7 +7,7 @@
                     <h2 class="page-title"><?= esc($title); ?></h2>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
                         <i class="ti ti-plus me-2"></i>Tambah Tema
                     </button>
                 </div>
@@ -34,7 +34,7 @@
                                 <button class="btn btn-warning btn-icon btn-update" data-id="<?= esc($row->id_theme) ?>" data-harga="<?= esc($row->harga) ?>" data-link="<?= htmlentities($row->url_video) ?>" data-nama="<?= esc($row->nama_tema) ?>" data-kategori="<?= esc($row->category_id) ?>" title="Edit tema">
                                     <i class="ti ti-pencil"></i>
                                 </button>
-                                <button class="btn btn-danger btn-icon hapus ms-auto" data-id="<?= esc($row->id_theme) ?>" data-nama="<?= esc($row->preview) ?>" data-toggle="modal" data-target="#modalHapus" title="Hapus tema">
+                                <button class="btn btn-danger btn-icon hapus ms-auto" data-id="<?= esc($row->id_theme) ?>" data-nama="<?= esc($row->preview) ?>" data-bs-toggle="modal" data-bs-target="#modalHapus" title="Hapus tema">
                                     <i class="ti ti-trash"></i>
                                 </button>
                             </div>
@@ -52,7 +52,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTambahLabel">Tambah Tema Video</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">
                         <i class="ti ti-device-floppy me-2"></i>Simpan
                     </button>
@@ -98,7 +98,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalUpdateLabel">Edit Tema Video</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">
                         <i class="ti ti-device-floppy me-2"></i>Simpan
                     </button>
@@ -158,7 +158,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalDemoLabel">Preview Video <span class="nama_tema"></span></h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="ratio ratio-16x9 diulem-admin-video-preview">
@@ -190,7 +190,7 @@ $(function () {
     $('.btn-demo').on('click', function () {
         $('.demo-video').html($(this).data('link'));
         $('.nama_tema').text($(this).data('nama'));
-        $('#sw-demo').modal('show');
+        DiulemAdmin.showModal('sw-demo');
     });
 
     $('#sw-demo').on('hide.bs.modal', function () {
@@ -204,7 +204,7 @@ $(function () {
         $('.kategoriTema').val($(this).data('kategori'));
         $('.urlTema').val($(this).data('link'));
         $('.hargaTema').val($(this).data('harga'));
-        $('#modalUpdate').modal('show');
+        DiulemAdmin.showModal('modalUpdate');
     });
 });
 </script>

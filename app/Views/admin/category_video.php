@@ -7,7 +7,7 @@
                     <h1 class="page-title"><?= esc($title); ?></h1>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
                         <i class="ti ti-plus me-2"></i>Tambah Kategori
                     </button>
                 </div>
@@ -27,7 +27,7 @@
                             <td class="text-end">
                                 <div class="btn-list justify-content-end flex-nowrap">
                                     <button class="btn btn-warning btn-sm btn-icon btn-update" data-id="<?= esc($row->id) ?>" data-nama="<?= esc($row->name) ?>" data-slug="<?= esc($row->slug) ?>" title="Edit" aria-label="Edit"><i class="ti ti-pencil"></i></button>
-                                    <button class="btn btn-danger btn-sm btn-icon hapus" data-id="<?= esc($row->id) ?>" data-toggle="modal" data-target="#modalHapus" title="Hapus" aria-label="Hapus"><i class="ti ti-trash"></i></button>
+                                    <button class="btn btn-danger btn-sm btn-icon hapus" data-id="<?= esc($row->id) ?>" data-bs-toggle="modal" data-bs-target="#modalHapus" title="Hapus" aria-label="Hapus"><i class="ti ti-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -42,12 +42,12 @@
 <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/add_categoryVideo'); ?>">
     <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="modalTambahLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"><div class="modal-content">
-            <div class="modal-header"><h5 class="modal-title" id="modalTambahLabel">Tambah Kategori</h5><button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-header"><h5 class="modal-title" id="modalTambahLabel">Tambah Kategori</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
                 <div class="mb-3"><label class="form-label">Nama Kategori</label><input type="text" class="form-control" name="nama" required></div>
                 <div class="mb-3"><label class="form-label">Slug Kategori</label><input type="text" class="form-control" name="slug" required></div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button><button type="submit" class="btn btn-primary">Simpan</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button><button type="submit" class="btn btn-primary">Simpan</button></div>
         </div></div>
     </div>
 </form>
@@ -55,13 +55,13 @@
 <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/update_categoryVideo'); ?>">
     <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
         <div class="modal-dialog" role="document"><div class="modal-content">
-            <div class="modal-header"><h5 class="modal-title" id="modalUpdateLabel">Update Kategori</h5><button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-header"><h5 class="modal-title" id="modalUpdateLabel">Update Kategori</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
                 <input type="hidden" class="idKategori" name="idKategori">
                 <div class="mb-3"><label class="form-label">Nama Kategori</label><input type="text" class="form-control namaKategori" name="namaKategori" required></div>
                 <div class="mb-3"><label class="form-label">Slug</label><input type="text" class="form-control slugKategori" name="slugKategori" required></div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button><button type="submit" class="btn btn-primary">Simpan</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button><button type="submit" class="btn btn-primary">Simpan</button></div>
         </div></div>
     </div>
 </form>
@@ -91,6 +91,6 @@ $('.btn-update').on('click', function() {
     $('.idKategori').val($(this).data('id'));
     $('.namaKategori').val($(this).data('nama'));
     $('.slugKategori').val($(this).data('slug'));
-    $('#modalUpdate').modal('show');
+    DiulemAdmin.showModal('modalUpdate');
 });
 </script>

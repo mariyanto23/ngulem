@@ -33,7 +33,7 @@
                             <label class="form-label">Nama Lengkap</label>
                             <input id="nama" type="text" class="form-control" placeholder="Contoh: Admin Diulem" value="<?= esc($admin[0]->nama_lengkap) ?>" required>
                         </div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdmin">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdmin">
                             <i class="ti ti-device-floppy me-2"></i>Simpan
                         </button>
                     </div>

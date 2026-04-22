@@ -68,7 +68,7 @@
                           <input id="nama_ibu_pria" type="text" class="form-control" placeholder="Nama Ibu" value="<?= $mempelai[0]->nama_ibu_pria ?>" required>
                       </div>
                       <div class="col mt-3">
-                          <button class="btn btn-primary" data-toggle="modal" data-target="#modalPria">Simpan</button>
+                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPria">Simpan</button>
                       </div>
                   </div>
               </div>
@@ -119,7 +119,7 @@
                       </div>
 
                       <div class="col mt-3">
-                          <button class="btn btn-primary" data-toggle="modal" data-target="#modalWanita">Simpan</button>
+                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalWanita">Simpan</button>
                       </div>
                   </div>
               </div>
@@ -171,7 +171,7 @@
                         </div>
                    </div>
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalDomain">Simpan</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDomain">Simpan</button>
                 </div>
               </div>
             </div>
@@ -414,7 +414,7 @@
                       </label>
                       </div>
                       <div class="col mt-3">
-                          <button class="btn btn-primary" data-toggle="modal" data-target="#modalVideo">Simpan</button>
+                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVideo">Simpan</button>
                       </div>
                   </div>
               </div>
@@ -498,7 +498,7 @@
                         <label class="form-check-label" for="setHadiah" >Halaman Kirim Hadiah</label>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalFitur">Simpan</button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFitur">Simpan</button>
                 </div>
             </div>
         </div>
@@ -531,7 +531,7 @@
                         <input id="hp" type="number" class="form-control" placeholder="Contoh : 6281234567890" value="<?= $user[0]->hp ?>" required>
                     </div>
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalUser">Simpan</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUser">Simpan</button>
                 </div>
             </div>
         </div>
@@ -547,16 +547,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin mengubah nama domain ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanDomain">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -569,16 +567,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanFitur">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -590,16 +586,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Gagal mengganti nama domain..
         Nama domain sudah dipakai!!
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
       </div>
     </div>
   </div>
@@ -611,16 +605,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanAkad">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -633,16 +625,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanResepsi">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -654,16 +644,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanMaps">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -675,16 +663,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanVideo">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -697,16 +683,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanWanita">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -718,16 +702,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanPria">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -740,16 +722,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah kamu yakin ingin menyimpan perubahan ?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary" id="simpanUser">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -951,7 +931,7 @@
         }
         var fotonyasiapa = '';
         $(".file-upload").on("change", function(event) {
-            $("#myModal").modal();
+            DiulemAdmin.showModal('myModal');
             fotonyasiapa = $(this).attr("id");
             /* Initailize croppie instance and assign it to global variable */
             croppie = new Croppie(el, {
@@ -971,7 +951,7 @@
 
         $("#upload").on("click", function() {
             croppie.result('base64').then(function(base64) {
-                $("#myModal").modal("hide"); 
+                DiulemAdmin.hideModal('myModal'); 
                 $("#profile-pic").attr("src","/images/ajax-loader.gif");
 
                 var url = "<?php echo base_url('admin/update_foto_mempelai') ?>";
@@ -1109,8 +1089,8 @@
               if($hasil == 'sukses'){
                   DiulemAdmin.reload();
               }else{
-                  $('#modalDomain').modal('hide'); 
-                  $('#modalGagal').modal('show'); 
+                  DiulemAdmin.hideModal('modalDomain'); 
+                  DiulemAdmin.showModal('modalGagal'); 
               }
           }
       });

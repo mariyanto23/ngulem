@@ -32,7 +32,7 @@
                             <label class="form-label">Salam Pembuka Whatsapp Bawah</label>
                             <textarea rows="4" id="salam_wa_bawah" class="form-control" required><?= esc($setting[0]->salam_wa_bawah) ?></textarea>
                         </div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalSetting2">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSetting2">
                             <i class="ti ti-device-floppy me-2"></i>Simpan
                         </button>
                     </div>
@@ -84,7 +84,7 @@
                             <label class="form-label">Pesan Whatsapp</label>
                             <textarea rows="4" id="pesan_wa" class="form-control" required><?= esc($setting[0]->pesan_wa) ?></textarea>
                         </div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalSetting1">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSetting1">
                             <i class="ti ti-device-floppy me-2"></i>Simpan
                         </button>
                     </div>

@@ -7,7 +7,7 @@
                     <h2 class="page-title"><?= esc($title); ?></h2>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
                         <i class="ti ti-plus me-2"></i>Tambah Tema
                     </button>
                 </div>
@@ -36,18 +36,18 @@
                         <div class="card-footer bg-transparent">
                             <div class="d-flex gap-2">
                                 <?php if (! $isActive) { ?>
-                                    <button class="btn btn-success btn-icon pilih" data-id="<?= esc($row->id) ?>" data-toggle="modal" data-target="#modalAktif" title="Aktifkan tema">
+                                    <button class="btn btn-success btn-icon pilih" data-id="<?= esc($row->id) ?>" data-bs-toggle="modal" data-bs-target="#modalAktif" title="Aktifkan tema">
                                         <i class="ti ti-check"></i>
                                     </button>
                                 <?php } else { ?>
-                                    <button class="btn btn-warning btn-icon pilih2" data-id="<?= esc($row->id) ?>" data-toggle="modal" data-target="#modalNonaktif" title="Nonaktifkan tema">
+                                    <button class="btn btn-warning btn-icon pilih2" data-id="<?= esc($row->id) ?>" data-bs-toggle="modal" data-bs-target="#modalNonaktif" title="Nonaktifkan tema">
                                         <i class="ti ti-ban"></i>
                                     </button>
                                 <?php } ?>
                                 <a href="<?= SITE_UTAMA . '/demo/' . $row->nama_theme ?>" target="_blank" class="btn btn-primary btn-icon" title="Lihat demo">
                                     <i class="ti ti-eye"></i>
                                 </a>
-                                <button class="btn btn-danger btn-icon hapus ms-auto" data-id="<?= esc($row->id) ?>" data-toggle="modal" data-target="#modalHapus" title="Hapus tema">
+                                <button class="btn btn-danger btn-icon hapus ms-auto" data-id="<?= esc($row->id) ?>" data-bs-toggle="modal" data-bs-target="#modalHapus" title="Hapus tema">
                                     <i class="ti ti-trash"></i>
                                 </button>
                             </div>
@@ -65,7 +65,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTambahLabel">Tambah Tema Website</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">
                         <i class="ti ti-device-floppy me-2"></i>Simpan
                     </button>

@@ -41,13 +41,13 @@
                             <?php } ?>
                             <td class="text-end">
                                 <div class="btn-list justify-content-end flex-nowrap">
-                                    <button type="button" class="btn btn-success btn-sm btn-icon aktifBtn" data-id="<?= esc($row->id_testi) ?>" data-toggle="modal" data-target="#modalAktif" title="Aktifkan" aria-label="Aktifkan">
+                                    <button type="button" class="btn btn-success btn-sm btn-icon aktifBtn" data-id="<?= esc($row->id_testi) ?>" data-bs-toggle="modal" data-bs-target="#modalAktif" title="Aktifkan" aria-label="Aktifkan">
                                         <i class="ti ti-check"></i>
                                     </button>
-                                    <button type="button" class="btn btn-warning btn-sm btn-icon nonaktifBtn" data-id="<?= esc($row->id_testi) ?>" data-toggle="modal" data-target="#modalNonaktif" title="Nonaktifkan" aria-label="Nonaktifkan">
+                                    <button type="button" class="btn btn-warning btn-sm btn-icon nonaktifBtn" data-id="<?= esc($row->id_testi) ?>" data-bs-toggle="modal" data-bs-target="#modalNonaktif" title="Nonaktifkan" aria-label="Nonaktifkan">
                                         <i class="ti ti-eye-off"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm btn-icon hapus" data-id="<?= esc($row->id_testi) ?>" data-toggle="modal" data-target="#modalHapus" title="Hapus" aria-label="Hapus">
+                                    <button type="button" class="btn btn-danger btn-sm btn-icon hapus" data-id="<?= esc($row->id_testi) ?>" data-bs-toggle="modal" data-bs-target="#modalHapus" title="Hapus" aria-label="Hapus">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </div>

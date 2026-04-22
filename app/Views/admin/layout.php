@@ -36,7 +36,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
 <div class="page">
     <aside class="navbar navbar-vertical navbar-expand-lg diulem-admin-sidebar">
         <div class="diulem-admin-sidebar-container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminSidebarMenu" aria-controls="adminSidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminSidebarMenu" aria-controls="adminSidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <h1 class="navbar-brand navbar-brand-autodark d-none d-lg-flex">
@@ -46,7 +46,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
                 </a>
             </h1>
             <div class="nav-item dropdown d-lg-none diulem-admin-mobile-profile">
-                <a href="#" class="nav-link d-flex align-items-center p-0" data-toggle="dropdown" aria-label="Open admin menu">
+                <a href="#" class="nav-link d-flex align-items-center p-0" data-bs-toggle="dropdown" aria-label="Open admin menu">
                     <span class="avatar avatar-sm">
                         <img src="<?= base_url('assets/dashboard'); ?>/img/boy.png" alt="Foto profil">
                     </span>
@@ -87,7 +87,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
                         </a>
                     </li>
                     <li class="nav-item dropdown <?= $isThemeMenu ? 'show' : '' ?>">
-                        <a class="nav-link dropdown-toggle <?= $isThemeMenu ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="<?= $isThemeMenu ? 'true' : 'false' ?>">
+                        <a class="nav-link dropdown-toggle <?= $isThemeMenu ? 'active' : '' ?>" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="<?= $isThemeMenu ? 'true' : 'false' ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-browser"></i></span>
                             <span class="nav-link-title">Undangan Website</span>
                         </a>
@@ -97,7 +97,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
                         </div>
                     </li>
                     <li class="nav-item dropdown <?= $isVideoMenu ? 'show' : '' ?>">
-                        <a class="nav-link dropdown-toggle <?= $isVideoMenu ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="<?= $isVideoMenu ? 'true' : 'false' ?>">
+                        <a class="nav-link dropdown-toggle <?= $isVideoMenu ? 'active' : '' ?>" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="<?= $isVideoMenu ? 'true' : 'false' ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-video"></i></span>
                             <span class="nav-link-title">Undangan Video</span>
                         </a>
@@ -107,7 +107,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
                         </div>
                     </li>
                     <li class="nav-item dropdown <?= $isSettingMenu ? 'show' : '' ?>">
-                        <a class="nav-link dropdown-toggle <?= $isSettingMenu ? 'active' : '' ?>" href="#" data-toggle="dropdown" role="button" aria-expanded="<?= $isSettingMenu ? 'true' : 'false' ?>">
+                        <a class="nav-link dropdown-toggle <?= $isSettingMenu ? 'active' : '' ?>" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="<?= $isSettingMenu ? 'true' : 'false' ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="ti ti-settings"></i></span>
                             <span class="nav-link-title">Setting</span>
                         </a>
@@ -127,7 +127,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
             <div class="container-xl">
                 <div class="navbar-nav flex-row ms-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown" aria-label="Open admin menu">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open admin menu">
                             <span class="avatar avatar-sm">
                                 <img src="<?= base_url('assets/dashboard'); ?>/img/boy.png" alt="Foto profil">
                             </span>
@@ -172,7 +172,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Foto Mempelai</h4>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div id="resizer"></div>
@@ -185,7 +185,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
     </div>
 </div>
 
-<script src="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/admin'); ?>/js/diulem-admin.js?v=<?= filemtime(FCPATH . 'assets/admin/js/diulem-admin.js') ?>"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/chart.js/Chart.min.js"></script>

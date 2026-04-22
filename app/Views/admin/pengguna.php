@@ -57,7 +57,7 @@
                                             <i class="ti ti-pencil"></i>
                                         </button>
                                     </form>
-                                    <button type="button" data-id="<?= esc($row->id_user) ?>" data-kunci="<?= esc($row->kunci) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus pengguna" aria-label="Hapus pengguna">
+                                    <button type="button" data-id="<?= esc($row->id_user) ?>" data-kunci="<?= esc($row->kunci) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-bs-toggle="modal" data-bs-target="#modalHapus" title="Hapus pengguna" aria-label="Hapus pengguna">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </div>
@@ -76,7 +76,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalHapusLabel">Peringatan</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 Apakah kamu yakin ingin menghapus pengguna ini?<br>
@@ -86,7 +86,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-danger" id="hapusBtn">Hapus</button>
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>

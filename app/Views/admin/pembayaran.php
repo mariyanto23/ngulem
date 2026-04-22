@@ -62,12 +62,12 @@
                                             data-nama="<?= esc($row->nama_lengkap) ?>"
                                             data-bank="<?= esc($row->nama_bank) ?>"
                                             data-invoice="<?= esc($row->invoice) ?>"
-                                            data-toggle="modal"
-                                            data-target="#modalData">
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalData">
                                             <i class="ti ti-eye"></i>
                                         </button>
                                     <?php } ?>
-                                    <button type="button" class="btn btn-success btn-sm btn-icon konfirmasiBtn" title="Konfirmasi" aria-label="Konfirmasi" data-id="<?= esc($row->id_user) ?>" data-toggle="modal" data-target="#modalKonfirmasi">
+                                    <button type="button" class="btn btn-success btn-sm btn-icon konfirmasiBtn" title="Konfirmasi" aria-label="Konfirmasi" data-id="<?= esc($row->id_user) ?>" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi">
                                         <i class="ti ti-check"></i>
                                     </button>
                                 </div>
@@ -96,7 +96,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalDataLabel">Bukti Transfer</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
