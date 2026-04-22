@@ -109,7 +109,7 @@
                 </div>
            <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addAcara" class="btn btn-primary w-100">Tambah Acara</a>
+                            <a id="addAcara" class="btn btn-primary w-100"><i class="ti ti-plus me-2"></i>Tambah Acara</a>
                         </div>
                     </div>
 

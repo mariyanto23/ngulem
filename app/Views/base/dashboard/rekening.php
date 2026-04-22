@@ -68,10 +68,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                                <div class="btn btn-primary">
+                                                <label class="btn btn-primary diulem-file-button">
+                                                    <i class="ti ti-upload me-2"></i>Upload QR
                                                     <input type="hidden" name="nama_qrcode[]" value="<?= $rekening[$i]->qrcode_bank ?>">
-                                                    <input type="file" class="file-upload" id="qrcode<?= $i+1 ?>"  name="qrcode_picture[]" accept="image/*" onchange="preview_image(event)" > Upload Foto
-                                                </div>
+                                                    <input type="file" class="file-upload" id="qrcode<?= $i+1 ?>" name="qrcode_picture[]" accept="image/*" onchange="preview_image(event)">
+                                                </label>
                                             </div>
                                         </div>   
                                     </div>
@@ -86,7 +87,7 @@
 
                     <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addRekening" class="btn btn-primary w-100">Tambah Rekening</a>
+                            <a id="addRekening" class="btn btn-primary w-100"><i class="ti ti-plus me-2"></i>Tambah Rekening</a>
                         </div>
                     </div>
 
@@ -142,10 +143,11 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                        <div class="btn btn-primary">
+                        <label class="btn btn-primary diulem-file-button">
+                            <i class="ti ti-upload me-2"></i>Upload QR
                             <input type="hidden" name="nama_qrcode[]">
-                            <input type="file" class="file-upload" id="qrcode__INDEX__" name="qrcode_picture[]" accept="image/*" onchange="preview_image(event)"> Upload Foto
-                        </div>
+                            <input type="file" class="file-upload" id="qrcode__INDEX__" name="qrcode_picture[]" accept="image/*" onchange="preview_image(event)">
+                        </label>
                     </div>
                 </div>
             </div>

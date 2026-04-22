@@ -34,9 +34,10 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                    <div class="btn btn-primary">
-                                        <input type="file" class="file-upload" id="groom"  name="profile_picture" accept="image/*"> Upload Foto
-                                    </div>
+                                    <label class="btn btn-primary diulem-file-button">
+                                        <i class="ti ti-upload me-2"></i>Upload Foto
+                                        <input type="file" class="file-upload" id="groom" name="profile_picture" accept="image/*">
+                                    </label>
                                 </div>
                             </div>   
                         </div>
@@ -84,9 +85,10 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                    <div class="btn btn-primary">
-                                        <input type="file" class="file-upload" id="bride"  name="profile_picture" accept="image/*"> Upload Foto
-                                    </div>
+                                    <label class="btn btn-primary diulem-file-button">
+                                        <i class="ti ti-upload me-2"></i>Upload Foto
+                                        <input type="file" class="file-upload" id="bride" name="profile_picture" accept="image/*">
+                                    </label>
                                 </div>
                             </div>   
                         </div>
@@ -137,9 +139,10 @@
 
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                    <div class="btn btn-dark">
-                                        <input type="file" class="file-upload" id="sampul"  name="profile_picture" accept="image/*"> Upload Foto
-                                    </div>
+                                    <label class="btn btn-primary diulem-file-button">
+                                        <i class="ti ti-upload me-2"></i>Upload Foto
+                                        <input type="file" class="file-upload" id="sampul" name="profile_picture" accept="image/*">
+                                    </label>
                                 </div>
                             </div>   
                         </div>

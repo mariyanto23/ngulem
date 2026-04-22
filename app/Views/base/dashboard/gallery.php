@@ -28,8 +28,8 @@
                                     <span>Upload Foto Gallery</span>
                                 </h3>
                                 <p>Drag file ke sini atau pilih dari perangkat. Maksimal 10 foto, 2MB per foto.</p>
-                                <button class="upload-area-button btn diulem-upload-button">
-                                    <span>Pilih Foto</span>
+                                <button class="upload-area-button btn btn-primary diulem-upload-button" type="button">
+                                    <i class="ti ti-upload me-2"></i><span>Pilih Foto</span>
                                 </button>
                             </div>
                         </div>

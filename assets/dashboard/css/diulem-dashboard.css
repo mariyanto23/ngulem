@@ -537,6 +537,21 @@ body,
   color: #ffffff;
 }
 
+.diulem-file-button {
+  cursor: pointer;
+  margin-bottom: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.diulem-file-button .file-upload {
+  cursor: pointer;
+  font-size: 100px;
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+}
+
 .diulem-loading-wrap {
   margin-top: 0.75rem;
   text-align: center;

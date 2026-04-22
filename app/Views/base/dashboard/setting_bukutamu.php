@@ -37,8 +37,8 @@
                                         <span>Upload Slider Buku Tamu</span>
                                     </h3>
                                     <p>Drag file ke sini atau pilih dari perangkat. Maksimal 10 foto, 2MB per foto.</p>
-                                    <button class="upload-area-button btn diulem-upload-button">
-                                        <span>Pilih Foto</span>
+                                    <button class="upload-area-button btn btn-primary diulem-upload-button" type="button">
+                                        <i class="ti ti-upload me-2"></i><span>Pilih Foto</span>
                                     </button>
                                 </div>
                             </div>
@@ -103,9 +103,10 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 d-flex align-items-center justify-content-center mt-3 mt-md-0">
-                                    <div class="btn btn-primary">
-                                        <input type="file" class="file-upload" id="bg-bukutamu" name="bg-bukutamu" accept="image/*" onchange="preview_image(event)"> Upload Foto
-                                    </div>
+                                    <label class="btn btn-primary diulem-file-button">
+                                        <i class="ti ti-upload me-2"></i>Upload Foto
+                                        <input type="file" class="file-upload" id="bg-bukutamu" name="bg-bukutamu" accept="image/*" onchange="preview_image(event)">
+                                    </label>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-hint mt-2">Ukuran ideal 1200 x 800 px, format JPG/PNG, maksimal 2MB.</div>
