@@ -1,11 +1,18 @@
-<!-- Container Fluid-->
-<div class="container-fluid" id="container-wrapper">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
-        <div>
-        <a href="<?= SITE_UNDANGAN ?>/<?= $order[0]->domain ?>" class="btn btn-primary btn-sm">Lihat Website</a>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="page-header d-print-none">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">Data Pengguna</div>
+                    <h2 class="page-title"><?= $title; ?></h2>
+                </div>
+                <div class="col-auto ms-auto d-print-none">
+                    <a href="<?= SITE_UNDANGAN ?>/<?= $order[0]->domain ?>" target="_blank" class="btn btn-primary">
+                        <i class="ti ti-eye me-2"></i>Lihat Undangan
+                    </a>
+                </div>
+            </div>
         </div>
-    </div> 
 
     <div class="row mb-3">
 
@@ -19,17 +26,17 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 mb-4">
               <div class="card mb-4">
-                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <h6 class="m-0 font-weight-bold text-primary">Data Mempelai Pria</h6>
+                  <div class="card-header">
+                      <h3 class="card-title">Data Mempelai Pria</h3>
                   </div>
                   <div class="card-body">
                       <!-- CONTENT DISINI -->
-                      <div class="upload-area-bg" style="text-align: center;">
+                      <div class="diulem-admin-upload-box">
                           <div class="col">
                               <div class="row">
                                   <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                                      <div class="upload-area" style="height: 100%;padding: 5px 5px;">
-                                      <img src="<?php echo base_url() ?><?= $fotogroom ?>" id="profile-pic-groom" style='border-radius: 5px;height: 200px;width: 200px;'>
+                                      <div class="diulem-admin-upload-preview">
+                                      <img src="<?php echo base_url() ?><?= $fotogroom ?>" id="profile-pic-groom" class="diulem-admin-couple-photo" alt="Foto mempelai pria">
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
@@ -69,17 +76,17 @@
 
           <div class="col-xl-6 col-lg-6 mb-4">
               <div class="card mb-4">
-                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <h6 class="m-0 font-weight-bold text-primary">Data Mempelai Wanita</h6>
+                  <div class="card-header">
+                      <h3 class="card-title">Data Mempelai Wanita</h3>
                   </div>
                   <div class="card-body">
                       <!-- CONTENT DISINI -->
-                      <div class="upload-area-bg" style="text-align: center;">
+                      <div class="diulem-admin-upload-box">
                           <div class="col">
                               <div class="row">
                                   <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                                      <div class="upload-area" style="height: 100%;padding: 5px 5px;">
-                                      <img src="<?php echo base_url() ?><?= $fotobride ?>" id="profile-pic-bride" style='border-radius: 5px;height: 200px;width: 200px;'>
+                                      <div class="diulem-admin-upload-preview">
+                                      <img src="<?php echo base_url() ?><?= $fotobride ?>" id="profile-pic-bride" class="diulem-admin-couple-photo" alt="Foto mempelai wanita">
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
@@ -120,22 +127,22 @@
 
           <div class="col-xl-6 col-lg-6 mb-4">
               <div class="card mb-4">
-                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <h6 class="m-0 font-weight-bold text-primary">Data Foto Sampul</h6>
+                  <div class="card-header">
+                      <h3 class="card-title">Data Foto Sampul</h3>
                   </div>
                   <div class="card-body">
                       <!-- CONTENT DISINI -->
-                      <div class="upload-area-bg" style="text-align: center;">
+                      <div class="diulem-admin-upload-box">
                           <div class="col">
                               <div class="row">
                                   <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center">
-                                      <div class="upload-area" style="height: 100%;padding: 5px 5px;">
-                                      <img src="<?= base_url() ?><?= $fotosampul ?>" id="profile-pic-sampul" style='border-radius: 5px;height: 200px;width: 200px;'>
+                                      <div class="diulem-admin-upload-preview">
+                                      <img src="<?= base_url() ?><?= $fotosampul ?>" id="profile-pic-sampul" class="diulem-admin-couple-photo" alt="Foto sampul">
                                       </div>
 
                                   </div>
                                   <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center justify-content-center mt-3">
-                                      <div class="btn btn-dark">
+                                      <div class="btn btn-primary diulem-admin-file-button">
                                           <input type="file" class="file-upload" id="sampul"  name="profile_picture" accept="image/*"> Upload Foto
                                       </div>
                                   </div>
@@ -150,11 +157,11 @@
         <div class="col-xl-6 col-lg-6 mb-4">
               <!-- Form Basic -->
               <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Pengaturan Undangan</h6>
+                <div class="card-header">
+                  <h3 class="card-title">Pengaturan Undangan</h3>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
+                    <div class="mb-3">
                     <label>Nama Domain / URL Undangan</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
@@ -173,8 +180,8 @@
         <!-- ========== ACARA ========== -->
         <div class="col-xl-6 col-lg-6 mb-4">
             <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Acara</h6>
+                <div class="card-header">
+                    <h3 class="card-title">Data Acara</h3>
                 </div>
                 <div class="card-body">
                    
@@ -188,10 +195,10 @@
                     <div id="acara<?php echo $i+1 ?>">
                         <div class="row align-items-center mt-3">
                             <div class="col-auto">
-                                <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#<?php echo $i+1 ?></a>
+                                <span class="badge bg-primary-lt text-primary">#<?php echo $i+1 ?></span>
                             </div>
                             <div class="col">
-                                <a id="<?php echo $i+1 ?>" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;color:#fff">Hapus</a>
+                                <a id="<?php echo $i+1 ?>" class="btn btn-danger btn-sm btn_remove">Hapus</a>
                             </div>
                         </div>
                     <!-- CONTENT DISINI -->
@@ -201,7 +208,7 @@
                         </div>
                         <div class="col mt-2">
                             <label>Tanggal </label>
-                            <input type="text" class="form-control" id="datepicker<?= $i+1 ?>"  placeholder="Tanggal" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" required>
+                            <input type="text" class="form-control" id="datepicker<?= $i+1 ?>"  placeholder="Tanggal" readonly="readonly" data-picker="date" required>
                             <input type="hidden" name="tgl_acara[]" id="tgl_acara<?= $i+1 ?>" value="<?= $acara[$i]->tgl_acara ?>">
                         </div>
         
@@ -232,7 +239,7 @@
                             <textarea id="maps" name="maps[]" type="text" class="form-control"><?= $acara[$i]->maps ?></textarea>
                             <div class="mt-1">
                             <label class="form-check-label ">
-                            <a target="_blank" href="<?= SITE_UTAMA ?>/maps" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Maps</a>
+                            <a target="_blank" href="<?= SITE_UTAMA ?>/maps" class="text-primary"><i class="ti ti-help-circle me-1"></i>Cara Menambahkan Maps</a>
                             </label>
                                 
                             </div>
@@ -244,7 +251,7 @@
                 </div>
            <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addAcara" class="btn btn-primary btn-order btn-order-secondary btn-block" style="color:#fff">Tambah Acara</a>
+                            <a id="addAcara" class="btn btn-primary w-100" >Tambah Acara</a>
                         </div>
                     </div>
 
@@ -261,8 +268,8 @@
         <!-- ========== CERITA ========== -->
         <div class="col-xl-6 col-lg-6 mb-4">
             <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Cerita</h6>
+                <div class="card-header">
+                    <h3 class="card-title">Data Cerita</h3>
                 </div>
                 <div class="card-body">
                    
@@ -277,10 +284,10 @@
                             <div id="cerita<?php echo $i+1 ?>">
                                 <div class="row align-items-center mt-3">
                                     <div class="col-auto">
-                                        <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#<?php echo $i+1 ?></a>
+                                        <span class="badge bg-primary-lt text-primary">#<?php echo $i+1 ?></span>
                                     </div>
                                     <div class="col">
-                                        <a id="<?php echo $i+1 ?>" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;color:#fff">Hapus</a>
+                                        <a id="<?php echo $i+1 ?>" class="btn btn-danger btn-sm btn_remove">Hapus</a>
                                     </div>
                                 </div>
 
@@ -314,7 +321,7 @@
 
                     <div class="row mt-2" >
                         <div class="col text-center">
-                            <a id="addCerita" class="btn btn-primary btn-order btn-order-secondary btn-block" style="color:#fff">Tambah Cerita</a>
+                            <a id="addCerita" class="btn btn-primary w-100" >Tambah Cerita</a>
                         </div>
                     </div>
 
@@ -332,30 +339,30 @@
         <!-- ========== GALLERY ========== -->
         <div class="col-xl-6 col-lg-6 mb-4">
             <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Gallery</h6>
+                <div class="card-header">
+                    <h3 class="card-title">Data Gallery</h3>
                 </div>
                 <div class="card-body">
 
-                    <div class="upload-area-bg">
-                        <div class="upload-area do-add-btn">
+                    <div class="diulem-admin-upload-box">
+                        <div class="diulem-admin-dropzone do-add-btn">
                             <div class="upload-area-inner">
                                 <div class="upload-area-icon-main">
-                                    <i class="lni-cloud-download"></i>
+                                    <i class="ti ti-cloud-upload"></i>
                                 </div>
                                 <h3 class="upload-area-caption">
                                     <span>Drag and drop files here</span>
                                 </h3>
                                 <p>or</p>
-                                <button class="upload-area-button btn " style="z-index:9999;">
-                                    <span style="color:#fff">Browse files</span>
+                                <button class="btn btn-primary">
+                                    <i class="ti ti-photo-plus me-2"></i>Pilih Foto
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div style="text-align: center;">
-                        <img id="loading" src="<?= base_url() ?>/assets/base/img/loading.svg"  style="height: 30px;width: 30px; display: none;" />
+                    <div class="text-center">
+                        <img id="loading" src="<?= base_url() ?>/assets/base/img/loading.svg" class="diulem-admin-loading" alt="Loading" />
                     </div>
                     <div id="previewss">
                         <?php 
@@ -368,13 +375,13 @@
                         <div class="preview-uploads" id="preview<?= $a ?>">
                             <div class="preview-uploads-img">
                                 <span class="preview">
-                                <img id="img<?= $a ?>" src="<?= base_url() ?>/assets/users/<?= $kunci ?>/album<?= $a ?>.png"  style="height: 100%;object-position: center;object-fit: cover;width: 100%;"  />
+                                <img id="img<?= $a ?>" src="<?= base_url() ?>/assets/users/<?= $kunci ?>/album<?= $a ?>.png" class="diulem-admin-gallery-photo" alt="Album <?= $a ?>" />
                                 </span>
                             </div>
                             <div class="preview-uploads-name">
-                            <b><p class="name" style="line-height: revert;font-size: 12px;" >album<?= $a; ?></p></b>
-                            <strong class="error text-danger" style="line-height: revert;font-size: 12px;"  data-dz-errormessage></strong>
-                            <p class="size" style="line-height: revert;font-size: 12px;"  >-</p>     
+                            <p class="name fw-bold small mb-1">album<?= $a; ?></p>
+                            <strong class="error text-danger small" data-dz-errormessage></strong>
+                            <p class="size text-secondary small mb-0">-</p>     
                             </div>
                             <div  class="preview-uploads-delete">
                             <button id="<?= $a ?>" data-dz-remove class="btn btn-danger delete btnhehe">
@@ -395,15 +402,15 @@
         <!-- ========== VIDEO  ==========-->
           <div class="col-xl-6 col-lg-6 mb-4">
               <div class="card mb-4">
-                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <h6 class="m-0 font-weight-bold text-primary">Data Video</h6>
+                  <div class="card-header">
+                      <h3 class="card-title">Data Video</h3>
                   </div>
                   <div class="card-body">
                       <label>Youtube Link</label>
                       <textarea id="video" type="text" class="form-control" placeholder="Contoh : https://youtu.be/zlKzyYnhu-s" required><?= $data[0]->video ?></textarea>
                       <div class="mt-1">
                       <label class="form-check-label ">
-                        <a href="<?= SITE_UTAMA ?>/youtube" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Video</a>
+                        <a href="<?= SITE_UTAMA ?>/youtube" class="text-primary"><i class="ti ti-help-circle me-1"></i>Cara Menambahkan Video</a>
                       </label>
                       </div>
                       <div class="col mt-3">
@@ -417,14 +424,14 @@
               <!-- Form Basic -->
               <form method="post" enctype="multipart/form-data" action="<?php echo base_url('admin/update_musik'); ?>">
               <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Musik</h6>
+                <div class="card-header">
+                  <h3 class="card-title">Musik</h3>
                 </div>
                 <div class="card-body">
 
                     <label>Musik Latar (max 2MB)</label>
-                    <div class="form-group">
-                      <div class="custom-file">
+                    <div class="mb-3">
+                      <div class="diulem-admin-file">
                         <input type="file" name="musik" id="musik" accept=".mp3">
                       </div>
                     </div>
@@ -438,57 +445,57 @@
         <div class="col-xl-6 col-lg-6 mb-4">
          <!-- Form Basic -->
             <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Fitur Undangan</h6>
+                <div class="card-header">
+                  <h3 class="card-title">Fitur Undangan</h3>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                      <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" disabled checked id="setSampul">
-                        <label class="custom-control-label" for="setSampul" >Halaman Sampul</label>
+                    <div class="mb-3">
+                      <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" disabled checked id="setSampul">
+                        <label class="form-check-label" for="setSampul" >Halaman Sampul</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" disabled checked id="setMempelai">
-                        <label class="custom-control-label" for="setMempelai" >Halaman Mempelai</label>
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" disabled checked id="setMempelai">
+                        <label class="form-check-label" for="setMempelai" >Halaman Mempelai</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" disabled checked id="setAcara">
-                        <label class="custom-control-label" for="setAcara" >Halaman Acara</label>
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" disabled checked id="setAcara">
+                        <label class="form-check-label" for="setAcara" >Halaman Acara</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" id="setUcapan" 
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="setUcapan" 
                         <?php if($fitur[0]->komen == '1') echo 'checked'; ?>>
-                        <label class="custom-control-label" for="setUcapan" >Halaman Ucapan</label>
+                        <label class="form-check-label" for="setUcapan" >Halaman Ucapan</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" id="setAlbum"
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="setAlbum"
                         <?php if($fitur[0]->gallery == '1') echo 'checked'; ?>>
-                        <label class="custom-control-label" for="setAlbum" >Halaman Gallery/Album</label>
+                        <label class="form-check-label" for="setAlbum" >Halaman Gallery/Album</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" id="setCerita"
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="setCerita"
                         <?php if($fitur[0]->cerita == '1') echo 'checked'; ?>>
-                        <label class="custom-control-label" for="setCerita">Halaman Cerita</label>
+                        <label class="form-check-label" for="setCerita">Halaman Cerita</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" id="setLokasi"
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="setLokasi"
                         <?php if($fitur[0]->lokasi == '1') echo 'checked'; ?>>
-                        <label class="custom-control-label" for="setLokasi" >Halaman Lokasi</label>
+                        <label class="form-check-label" for="setLokasi" >Halaman Lokasi</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" id="setQrcode"
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="setQrcode"
                         <?php if($fitur[0]->qrcode == '1') echo 'checked'; ?>>
-                        <label class="custom-control-label" for="setQrcode" >Halaman QrCode</label>
+                        <label class="form-check-label" for="setQrcode" >Halaman QrCode</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" id="setProkes"
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="setProkes"
                         <?php if($fitur[0]->prokes == '1') echo 'checked'; ?>>
-                        <label class="custom-control-label" for="setProkes" >Halaman Prokes</label>
+                        <label class="form-check-label" for="setProkes" >Halaman Prokes</label>
                       </div>
-                      <div class="custom-control custom-switch mt-2">
-                        <input type="checkbox" class="custom-control-input" id="setHadiah"
+                      <div class="form-check form-switch mt-2">
+                        <input type="checkbox" class="form-check-input" id="setHadiah"
                         <?php if($fitur[0]->hadiah == '1') echo 'checked'; ?>>
-                        <label class="custom-control-label" for="setHadiah" >Halaman Kirim Hadiah</label>
+                        <label class="form-check-label" for="setHadiah" >Halaman Kirim Hadiah</label>
                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalFitur">Simpan</button>
@@ -499,27 +506,27 @@
         <!-- ========= PROFIL ========= -->
         <div class="col-xl-6 col-lg-6 mb-4">
             <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Profil Pengguna</h6>
+                <div class="card-header">
+                  <h3 class="card-title">Profil Pengguna</h3>
                 </div>
                 <div class="card-body">
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Username</label>
                         <input id="username" type="text" class="form-control" placeholder="Contoh : reydinda" value="<?= $user[0]->username ?>" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Password</label>
                         <input id="password" type="password" class="form-control" placeholder="********" value="" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Email</label>
                         <input id="email" type="email" class="form-control" placeholder="Contoh : reydinda" value="<?= $user[0]->email ?>" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Nomor Hp</label>
                         <input id="hp" type="number" class="form-control" placeholder="Contoh : 6281234567890" value="<?= $user[0]->hp ?>" required>
                     </div>
@@ -529,8 +536,8 @@
             </div>
         </div>
 
+        </div>
     </div>
-    <!--Row-->
 </div>
 
 
@@ -540,8 +547,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -562,8 +569,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -583,8 +590,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -604,8 +611,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -626,8 +633,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -647,8 +654,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -668,8 +675,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -690,8 +697,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -711,8 +718,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -733,8 +740,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          
         </button>
       </div>
       <div class="modal-body">
@@ -775,7 +782,7 @@
 
       i++;  
 
-      $('#konten-cerita').append('<div id="cerita'+i+'"><div class="row align-items-center mt-3"><div class="col-auto"><a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#'+i+'</a></div><div class="col"><a id="'+i+'" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a></div></div><div class="row align-items-center"><div class="col"><label>Tanggal</label><input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020 " required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Judul</label><input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Isi Cerita</label><textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea></div></div></div>');  
+      $('#konten-cerita').append('<div id="cerita'+i+'"><div class="row align-items-center mt-3"><div class="col-auto"><span class="badge bg-primary-lt text-primary">#'+i+'</span></div><div class="col"><a id="'+i+'" class="btn btn-danger btn-sm btn_remove">Hapus</a></div></div><div class="row align-items-center"><div class="col"><label>Tanggal</label><input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020 " required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Judul</label><input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Isi Cerita</label><textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea></div></div></div>');  
         $(".form-control").prop('required',false);
     });
 
@@ -813,7 +820,7 @@
       j++;
       var d = new Date();
         var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-      $('#konten-acara').append('<div id="acara'+j+'"><div class="row align-items-center mt-3"><div class="col-auto"><a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#'+j+'</a></div><div class="col"><a id="'+j+'" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;color:#fff">Hapus</a></div></div><div class="col mt-2"><label>Nama Acara</label><input name="nama_acara[]" type="text" class="form-control" placeholder="Contoh : Akad Nikah" required></div><div class="col mt-2"><label>Tanggal </label><input type="text" class="form-control" id="datepicker'+j+'" placeholder="Tanggal" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" value="Jumat, 17 Januari 2020" required><input type="hidden" name="tgl_acara[]" id="tgl_acara'+j+'" value="'+strDate+'"></div><div class="col mt-2"><div class="form-row"><div class="col-md-6"><label>Waktu / Jam </label><input name="waktu_mulai[]" type="time" class="form-control" placeholder="Contoh : 10.00 " required></div><div class="col-md-6"><label>Waktu / Jam </label><input name="waktu_akhir[]" type="time" class="form-control" placeholder="Contoh : 10.00" required></div></div></div><div class="col mt-2"><label>Tempat / Lokasi</label><input name="tempat_acara[]" type="text" class="form-control" placeholder="Contoh : Kediaman Mempelai Wanita" required></div><div class="col mt-2"><label>Alamat</label><textarea name="alamat_acara[]" type="text" class="form-control" placeholder="Contoh : JL. Ahmad Yani No.1"></textarea></div><div class="col mt-2"><label>Google Maps Link</label><textarea id="maps"  name="maps[]" type="text" class="form-control" required></textarea><div class="mt-1"><label class="form-check-label "><a target="_blank" href="<?= SITE_UTAMA ?>/maps" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Maps</a></label></div></div></div>');
+      $('#konten-acara').append('<div id="acara'+j+'"><div class="row align-items-center mt-3"><div class="col-auto"><span class="badge bg-primary-lt text-primary">#'+j+'</span></div><div class="col"><a id="'+j+'" class="btn btn-danger btn-sm btn_remove">Hapus</a></div></div><div class="col mt-2"><label>Nama Acara</label><input name="nama_acara[]" type="text" class="form-control" placeholder="Contoh : Akad Nikah" required></div><div class="col mt-2"><label>Tanggal </label><input type="text" class="form-control" id="datepicker'+j+'" placeholder="Tanggal" readonly="readonly" data-picker="date" value="Jumat, 17 Januari 2020" required><input type="hidden" name="tgl_acara[]" id="tgl_acara'+j+'" value="'+strDate+'"></div><div class="col mt-2"><div class="form-row"><div class="col-md-6"><label>Waktu / Jam </label><input name="waktu_mulai[]" type="time" class="form-control" placeholder="Contoh : 10.00 " required></div><div class="col-md-6"><label>Waktu / Jam </label><input name="waktu_akhir[]" type="time" class="form-control" placeholder="Contoh : 10.00" required></div></div></div><div class="col mt-2"><label>Tempat / Lokasi</label><input name="tempat_acara[]" type="text" class="form-control" placeholder="Contoh : Kediaman Mempelai Wanita" required></div><div class="col mt-2"><label>Alamat</label><textarea name="alamat_acara[]" type="text" class="form-control" placeholder="Contoh : JL. Ahmad Yani No.1"></textarea></div><div class="col mt-2"><label>Google Maps Link</label><textarea id="maps"  name="maps[]" type="text" class="form-control" required></textarea><div class="mt-1"><label class="form-check-label "><a target="_blank" href="<?= SITE_UTAMA ?>/maps" class="text-primary"><i class="ti ti-help-circle me-1"></i>Cara Menambahkan Maps</a></label></div></div></div>');
             var tgl = $('#tgl_acara'+j+'').val();
             moment.locale('id');
           $('#datepicker'+j+'').val(moment(tgl).format('dddd, Do MMMM YYYY'));
@@ -843,12 +850,12 @@
     myDropzone.on("success", function(file,response){
         if(response == ""){
         $('.dz-preview').remove();
-        alert('Batas Upload 10 Foto!');
+        DiulemAdmin.notify('warning', 'Batas upload', 'Maksimal 10 foto.');
 
         }else{
         var aql = JSON.parse(response);
         $('.dz-preview').remove();
-        $("#previewss").prepend('<div id="preview'+aql.no+'" class="file-row preview-uploads"><div class="preview-uploads-img"><span class="preview"><img id="img3" src="<?= base_url() ?>/assets/users/'+aql.kunci+'/album'+aql.no+'.png"  style="height: 100%;object-position: center;object-fit: cover;width: 100%;" /></span></div><div class="preview-uploads-name"><p class="name" style="line-height: revert;font-size: 12px;" data-dz-name>album'+aql.no+'</p><strong class="error text-danger" style="line-height: revert;font-size: 12px;"  ></strong><p class="size" style="line-height: revert;font-size: 12px;" >-</p></div><div  class="preview-uploads-delete"><button id="'+aql.no+'" class="btn btn-danger delete btnhehe">Hapus</button></div></div>');
+        $("#previewss").prepend('<div id="preview'+aql.no+'" class="file-row preview-uploads"><div class="preview-uploads-img"><span class="preview"><img id="img3" src="<?= base_url() ?>/assets/users/'+aql.kunci+'/album'+aql.no+'.png" class="diulem-admin-gallery-photo" /></span></div><div class="preview-uploads-name"><p class="name fw-bold small mb-1" data-dz-name>album'+aql.no+'</p><strong class="error text-danger small"></strong><p class="size text-secondary small mb-0">-</p></div><div  class="preview-uploads-delete"><button id="'+aql.no+'" class="btn btn-danger delete btnhehe">Hapus</button></div></div>');
         }
         $('#loading').hide();
     });
@@ -862,7 +869,7 @@
 
     myDropzone.on("error", function(file, response) {
     $('.dz-preview').remove();
-    alert('Maximal File = 2MB!');
+    DiulemAdmin.notify('warning', 'File terlalu besar', 'Maksimal file 2MB.');
     $('#loading').hide();
     });
 
@@ -875,7 +882,6 @@
         url: '<?= base_url('admin/del_gallery') ?>',
         data: {id: button_id,kunci: kunci},
         success: function(data){
-            console.log('success: ' + data);
             $('#preview'+button_id).remove();
         }
     });
@@ -893,7 +899,7 @@
             dataType : 'html',
             success: function($hasil){
                 if($hasil == 'sukses'){
-                    location.reload();
+                    DiulemAdmin.reload();
                 }
             }
         });
@@ -947,7 +953,6 @@
         $(".file-upload").on("change", function(event) {
             $("#myModal").modal();
             fotonyasiapa = $(this).attr("id");
-            console.log("foto_"+fotonyasiapa);
             /* Initailize croppie instance and assign it to global variable */
             croppie = new Croppie(el, {
                     viewport: {
@@ -982,7 +987,6 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                    console.log(data);
                         if (data == "uploadedbride") {
                             $("#profile-pic-bride").attr("src", base64); 
                         } else if(data == "uploadedgroom"){
@@ -990,12 +994,10 @@
                         } else if(data == "uploadedsampul"){
                             $("#profile-pic-sampul").attr("src", base64); 
                         } else {
-                            $("#profile-pic").attr("src","/images/icon-cam.png"); 
-                            console.log(data['profile_picture']);
+                            $("#profile-pic").attr("src","/images/icon-cam.png");
                         }
                     },
                     error: function(error) {
-                        console.log(error);
                         $("#profile-pic").attr("src","/images/icon-cam.png"); 
                     }
                 });
@@ -1022,7 +1024,6 @@
         var nama_panggilan = $('#nama_panggilan_wanita').val();
         var nama_ayah = $('#nama_ayah_wanita').val();
         var nama_ibu = $('#nama_ibu_wanita').val();
-        console.log(nama);
         $.ajax({
             url : "<?= base_url('admin/update_mempelai') ?>",
             method : "POST",
@@ -1031,7 +1032,7 @@
             dataType : 'html',
             success: function($hasil){
                 if($hasil == 'sukses'){
-                    location.reload();
+                    DiulemAdmin.reload();
                 }
             }
         });
@@ -1054,7 +1055,7 @@
           dataType : 'html',
           success: function($hasil){
               if($hasil == 'sukses'){
-                  location.reload();
+                  DiulemAdmin.reload();
               }
           }
       });
@@ -1078,7 +1079,6 @@
         var prokes = $('#setProkes').is(":checked") ? 1 : 0;
         var qrcode = $('#setQrcode').is(":checked") ? 1 : 0;
         var hadiah = $('#setHadiah').is(":checked") ? 1 : 0;
-        console.log(ucapan);
 
         $.ajax({
             url : "<?= base_url('admin/update_fitur') ?>",
@@ -1088,7 +1088,7 @@
             dataType : 'html',
             success: function($hasil){
                 if($hasil == 'sukses'){
-                    location.reload();
+                    DiulemAdmin.reload();
                 }
             }
         });
@@ -1107,13 +1107,11 @@
             dataType : 'html',
           success: function($hasil){
               if($hasil == 'sukses'){
-                  location.reload();
+                  DiulemAdmin.reload();
               }else{
                   $('#modalDomain').modal('hide'); 
                   $('#modalGagal').modal('show'); 
               }
-
-              console.log($hasil);
           }
       });
 
@@ -1135,7 +1133,7 @@
             dataType : 'html',
             success: function($hasil){
                 if($hasil == 'sukses'){
-                    location.reload();
+                    DiulemAdmin.reload();
                 }
             }
         });

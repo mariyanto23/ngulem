@@ -11,10 +11,6 @@
     <link href="<?= base_url('assets/base'); ?>/img/favicon.ico" rel="icon">
     <title><?= SITE_NAME; ?> - <?= $title; ?></title>
 
-    <link href="<?= base_url('assets/admin/'); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url('assets/admin/'); ?>/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url('assets/admin/'); ?>/css/ruang-admin.css" rel="stylesheet">
-    <link href="<?= base_url('assets/admin/'); ?>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/base/css/croppie.min.css">
@@ -190,9 +186,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
 </div>
 
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url('assets/admin'); ?>/js/diulem-admin.js?v=<?= filemtime(FCPATH . 'assets/admin/js/diulem-admin.js') ?>"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/chart.js/Chart.min.js"></script>
 <script src="<?= base_url('assets/admin'); ?>/js/demo/chart-area-demo.js"></script>

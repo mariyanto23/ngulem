@@ -7,25 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="theme-color" content="#0f766e">
     <link href="<?= base_url('assets/base'); ?>/img/favicon.ico" rel="icon">
     <title><?= $title ?></title>
-    <link href="<?= base_url('assets/admin'); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url('assets/admin'); ?>/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url('assets/admin'); ?>/css/ruang-admin.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+    <link href="<?= base_url('assets/admin/'); ?>/css/diulem-admin.css?v=<?= filemtime(FCPATH . 'assets/admin/css/diulem-admin.css') ?>" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-login">
+<body>
 <?php 
  echo view($view);
 ?>
-<script src="<?= base_url('assets/admin'); ?>/vendor/jquery/jquery.min.js"></script>
-<script src="<?= base_url('assets/admin'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url('assets/admin'); ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="<?= base_url('assets/admin'); ?>/js/ruang-admin.min.js"></script>
+<script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
+<script src="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
-setTimeout("$('#ikierror').hide();", 2000);
+setTimeout(function () {
+    $('#ikierror').hide();
+}, 2500);
+
+function myFunction() {
+    var password = document.getElementById('password');
+    if (!password) {
+        return;
+    }
+    password.type = password.type === 'password' ? 'text' : 'password';
+}
 </script>
 
 </html>

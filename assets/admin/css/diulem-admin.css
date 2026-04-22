@@ -256,6 +256,123 @@ body,
   width: 100%;
 }
 
+.diulem-admin-theme-card {
+  overflow: hidden;
+}
+
+.diulem-admin-theme-card.is-muted {
+  opacity: 0.68;
+}
+
+.diulem-admin-theme-preview {
+  aspect-ratio: 4 / 3;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--diulem-admin-line);
+  overflow: hidden;
+  position: relative;
+}
+
+.diulem-admin-theme-preview img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.diulem-admin-theme-status {
+  border-radius: 8px;
+  left: 0.75rem;
+  position: absolute;
+  top: 0.75rem;
+}
+
+.diulem-admin-video-preview {
+  background: #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.diulem-admin-video-preview iframe,
+.diulem-admin-video-preview video {
+  height: 100%;
+  width: 100%;
+}
+
+.diulem-admin-upload-box,
+.diulem-admin-dropzone {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.diulem-admin-upload-preview {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.diulem-admin-couple-photo {
+  aspect-ratio: 1;
+  border: 1px solid var(--diulem-admin-line);
+  border-radius: 8px;
+  height: 200px;
+  object-fit: cover;
+  width: 200px;
+}
+
+.diulem-admin-gallery-photo {
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+
+.diulem-admin-loading {
+  display: none;
+  height: 30px;
+  width: 30px;
+}
+
+.diulem-admin-file,
+.diulem-admin-file-button,
+.diulem-admin-wrapper .btn:has(.file-upload) {
+  overflow: hidden;
+  position: relative;
+}
+
+.diulem-admin-file input[type='file'],
+.diulem-admin-file-button input[type='file'],
+.diulem-admin-wrapper .btn .file-upload {
+  cursor: pointer;
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+}
+
+.diulem-admin-wrapper .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.diulem-admin-wrapper .form-row > [class*='col-'] {
+  flex: 1 1 0;
+}
+
+.diulem-admin-login-page {
+  align-items: center;
+  background: linear-gradient(180deg, #f6f8fb 0%, #e8f5f3 100%);
+  display: flex;
+  min-height: 100vh;
+  padding: 1.25rem;
+}
+
+.diulem-admin-login-card {
+  max-width: 420px;
+  width: 100%;
+}
+
 @media (max-width: 991.98px) {
   .diulem-admin-sidebar {
     position: sticky;
