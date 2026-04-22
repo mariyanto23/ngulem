@@ -19,12 +19,14 @@
 <?php 
  echo view($view);
 ?>
-<script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
 </body>
 <script>
 setTimeout(function () {
-    $('#ikierror').hide();
+    var error = document.getElementById('ikierror');
+    if (error) {
+        error.hidden = true;
+    }
 }, 2500);
 
 function myFunction() {

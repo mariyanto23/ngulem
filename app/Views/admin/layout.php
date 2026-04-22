@@ -186,40 +186,15 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/admin'); ?>/js/diulem-admin.js?v=<?= filemtime(FCPATH . 'assets/admin/js/diulem-admin.js') ?>"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/vendor/chart.js/Chart.min.js"></script>
-<script src="<?= base_url('assets/admin'); ?>/js/demo/chart-area-demo.js"></script>
 
 <script>
-$(document).ready(function () {
-    var diulemAdminDataTableLanguage = {
-        lengthMenu: 'Tampilkan _MENU_ data',
-        search: '',
-        searchPlaceholder: 'Cari data...',
-        info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',
-        infoEmpty: 'Belum ada data',
-        infoFiltered: '(difilter dari _MAX_ data)',
-        zeroRecords: 'Data tidak ditemukan',
-        emptyTable: 'Belum ada data',
-        paginate: {
-            first: 'Pertama',
-            last: 'Terakhir',
-            next: 'Selanjutnya',
-            previous: 'Sebelumnya'
-        }
-    };
-
-    $('#dataTable').DataTable({
-        language: diulemAdminDataTableLanguage
-    });
-    $('#dataTableHover').DataTable({
-        language: diulemAdminDataTableLanguage
-    });
+document.addEventListener('DOMContentLoaded', function () {
+    DiulemAdmin.enhanceTables(['#dataTable', '#dataTableHover']);
 });
 </script>
 <script>
-$(function(){
+document.addEventListener('DOMContentLoaded', function () {
     <?php if(session()->has("success")) { ?>
         DiulemAdmin.notify('success', 'Berhasil', '<?= session("success") ?>');
     <?php } ?>

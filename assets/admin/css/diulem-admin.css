@@ -224,28 +224,38 @@ body,
   border-radius: 0 0 8px 8px;
 }
 
-.dataTables_wrapper {
+.diulem-admin-table-toolbar,
+.diulem-admin-table-footer {
+  align-items: center;
+  display: flex;
+  gap: 0.85rem;
+  justify-content: space-between;
   padding: 1rem;
 }
 
-.dataTables_wrapper .dataTables_length,
-.dataTables_wrapper .dataTables_filter {
-  margin-bottom: 0.85rem;
+.diulem-admin-table-toolbar {
+  border-bottom: 1px solid var(--diulem-admin-line);
 }
 
-.dataTables_wrapper .dataTables_length label,
-.dataTables_wrapper .dataTables_filter label {
+.diulem-admin-table-footer {
+  border-top: 1px solid var(--diulem-admin-line);
+}
+
+.diulem-admin-table-length {
   align-items: center;
   color: #64748b;
   display: inline-flex;
   gap: 0.5rem;
+  margin: 0;
 }
 
-.dataTables_wrapper .dataTables_length select,
-.dataTables_wrapper .dataTables_filter input {
-  border: 1px solid var(--diulem-admin-line);
-  border-radius: 8px;
-  min-height: 2.25rem;
+.diulem-admin-table-length .form-select {
+  width: 5rem;
+}
+
+.diulem-admin-table-search {
+  max-width: 18rem;
+  width: 100%;
 }
 
 .diulem-admin-proof {
@@ -410,5 +420,15 @@ body,
   .diulem-admin-wrapper .table.card-table,
   .diulem-admin-wrapper .dataTable {
     min-width: 720px;
+  }
+
+  .diulem-admin-table-toolbar,
+  .diulem-admin-table-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .diulem-admin-table-search {
+    max-width: 100%;
   }
 }

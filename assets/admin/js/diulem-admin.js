@@ -80,6 +80,126 @@
       bootstrap.Modal.getOrCreateInstance(element).hide();
     },
 
+    enhanceTables: function (selectors) {
+      var tableSelectors = Array.isArray(selectors) ? selectors : [selectors];
+
+      tableSelectors.forEach(function (selector) {
+        var table = document.querySelector(selector);
+
+        if (!table || table.dataset.diulemEnhanced === 'true') {
+          return;
+        }
+
+        var tbody = table.tBodies[0];
+        if (!tbody) {
+          return;
+        }
+
+        table.dataset.diulemEnhanced = 'true';
+
+        var rows = Array.prototype.slice.call(tbody.rows);
+        var state = {
+          page: 1,
+          perPage: 10,
+          query: ''
+        };
+
+        var toolbar = document.createElement('div');
+        toolbar.className = 'diulem-admin-table-toolbar';
+        toolbar.innerHTML = [
+          '<label class="diulem-admin-table-length">Tampilkan',
+          '<select class="form-select form-select-sm" aria-label="Jumlah data">',
+          '<option value="10">10</option>',
+          '<option value="25">25</option>',
+          '<option value="50">50</option>',
+          '<option value="100">100</option>',
+          '</select>',
+          '<span>data</span>',
+          '</label>',
+          '<div class="input-icon diulem-admin-table-search">',
+          '<span class="input-icon-addon"><i class="ti ti-search"></i></span>',
+          '<input type="search" class="form-control form-control-sm" placeholder="Cari data..." aria-label="Cari data">',
+          '</div>'
+        ].join('');
+
+        var footer = document.createElement('div');
+        footer.className = 'diulem-admin-table-footer';
+        footer.innerHTML = [
+          '<div class="text-secondary small diulem-admin-table-info"></div>',
+          '<div class="btn-list diulem-admin-table-pagination">',
+          '<button type="button" class="btn btn-sm btn-outline-secondary" data-page="prev">Sebelumnya</button>',
+          '<button type="button" class="btn btn-sm btn-outline-secondary" data-page="next">Selanjutnya</button>',
+          '</div>'
+        ].join('');
+
+        var tableContainer = table.closest('.table-responsive') || table.parentNode;
+        tableContainer.parentNode.insertBefore(toolbar, tableContainer);
+        tableContainer.parentNode.insertBefore(footer, tableContainer.nextSibling);
+
+        var lengthSelect = toolbar.querySelector('select');
+        var searchInput = toolbar.querySelector('input');
+        var info = footer.querySelector('.diulem-admin-table-info');
+        var prevButton = footer.querySelector('[data-page="prev"]');
+        var nextButton = footer.querySelector('[data-page="next"]');
+
+        function render() {
+          var filteredRows = rows.filter(function (row) {
+            return row.textContent.toLowerCase().indexOf(state.query) !== -1;
+          });
+          var total = filteredRows.length;
+          var totalPages = Math.max(1, Math.ceil(total / state.perPage));
+
+          if (state.page > totalPages) {
+            state.page = totalPages;
+          }
+
+          var start = total === 0 ? 0 : (state.page - 1) * state.perPage + 1;
+          var end = Math.min(state.page * state.perPage, total);
+
+          rows.forEach(function (row) {
+            row.hidden = true;
+          });
+
+          filteredRows.slice(start ? start - 1 : 0, end).forEach(function (row) {
+            row.hidden = false;
+          });
+
+          info.textContent = total === 0
+            ? 'Belum ada data'
+            : 'Menampilkan ' + start + ' sampai ' + end + ' dari ' + total + ' data';
+
+          prevButton.disabled = state.page <= 1;
+          nextButton.disabled = state.page >= totalPages;
+        }
+
+        lengthSelect.addEventListener('change', function () {
+          state.perPage = parseInt(this.value, 10) || 10;
+          state.page = 1;
+          render();
+        });
+
+        searchInput.addEventListener('input', function () {
+          state.query = this.value.trim().toLowerCase();
+          state.page = 1;
+          render();
+        });
+
+        prevButton.addEventListener('click', function () {
+          if (state.page > 1) {
+            state.page -= 1;
+            render();
+          }
+        });
+
+        nextButton.addEventListener('click', function () {
+          state.page += 1;
+          render();
+        });
+
+        render();
+      });
+    },
+
     reloadAfterSuccess: function (result, successMessage, errorMessage) {
       if (this.isSuccess(result)) {
         this.notify('success', 'Berhasil', successMessage).then(this.reload);
