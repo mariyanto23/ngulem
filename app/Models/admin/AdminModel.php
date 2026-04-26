@@ -460,6 +460,26 @@ class AdminModel extends Model
         return $builder->update($data);
     }
 
+    public function add_paket($data){
+        return $this->paket->insert($data);
+    }
+
+    public function delete_paket($id){
+        $builder = $this->paket;
+        $builder->where('id_paket', $id);
+        return $builder->delete();
+    }
+
+    public function count_paket_usage($id){
+        $builder = $this->order;
+        $builder->where('id_paket', $id);
+        return $builder->countAllResults();
+    }
+
+    public function count_all_paket(){
+        return $this->paket->countAllResults();
+    }
+
     public function get_admin($data){
         $builder = $this->admin;
         $builder->where($data);

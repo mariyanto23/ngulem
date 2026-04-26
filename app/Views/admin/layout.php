@@ -196,13 +196,21 @@ document.addEventListener('DOMContentLoaded', function () {
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     <?php if(session()->has("success")) { ?>
-        DiulemAdmin.notify('success', 'Berhasil', '<?= session("success") ?>');
+        if (DiulemAdmin.shouldShowFlash('success', '<?= session("success") ?>')) {
+            DiulemAdmin.notify('success', 'Berhasil', '<?= session("success") ?>');
+        }
     <?php } elseif(session()->has("deleted")) { ?>
-        DiulemAdmin.notify('warning', 'Dihapus', '<?= session("deleted") ?>');
+        if (DiulemAdmin.shouldShowFlash('warning', '<?= session("deleted") ?>')) {
+            DiulemAdmin.notify('warning', 'Dihapus', '<?= session("deleted") ?>');
+        }
     <?php } elseif(session()->has("updated")) { ?>
-        DiulemAdmin.notify('success', 'Berhasil', '<?= session("updated") ?>');
+        if (DiulemAdmin.shouldShowFlash('success', '<?= session("updated") ?>')) {
+            DiulemAdmin.notify('success', 'Berhasil', '<?= session("updated") ?>');
+        }
     <?php } elseif(session()->has("error")) { ?>
-        DiulemAdmin.notify('error', 'Gagal', '<?= session("error") ?>');
+        if (DiulemAdmin.shouldShowFlash('error', '<?= session("error") ?>')) {
+            DiulemAdmin.notify('error', 'Gagal', '<?= session("error") ?>');
+        }
     <?php } ?>
 });
 </script>

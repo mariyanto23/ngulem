@@ -65,6 +65,37 @@
       location.reload();
     },
 
+    suppressNextFlash: function (type, text) {
+      if (!window.sessionStorage) {
+        return;
+      }
+
+      sessionStorage.setItem('diulemAdminSuppressFlash', JSON.stringify({
+        type: type || '',
+        text: text || ''
+      }));
+    },
+
+    shouldShowFlash: function (type, text) {
+      if (!window.sessionStorage) {
+        return true;
+      }
+
+      var raw = sessionStorage.getItem('diulemAdminSuppressFlash');
+      if (!raw) {
+        return true;
+      }
+
+      sessionStorage.removeItem('diulemAdminSuppressFlash');
+
+      try {
+        var saved = JSON.parse(raw);
+        return !(saved.type === (type || '') && saved.text === (text || ''));
+      } catch (error) {
+        return true;
+      }
+    },
+
     getElement: function (target) {
       if (!target) {
         return null;
@@ -219,7 +250,10 @@
 
     reloadAfterSuccess: function (result, successMessage, errorMessage) {
       if (this.isSuccess(result)) {
-        this.notify('success', 'Berhasil', successMessage).then(this.reload);
+        this.notify('success', 'Berhasil', successMessage).then(function () {
+          DiulemAdmin.suppressNextFlash('success', successMessage);
+          DiulemAdmin.reload();
+        });
         return true;
       }
 

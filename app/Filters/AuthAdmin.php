@@ -11,7 +11,7 @@ class AuthAdmin implements FilterInterface
         // Do something here
         if(!session()->has('masukAdmin'))
         {
-        	return redirect()->to(base_url('login'));
+        	return redirect()->to(rtrim(SITE_ADMIN, '/') . '/login');
         }
         
     }

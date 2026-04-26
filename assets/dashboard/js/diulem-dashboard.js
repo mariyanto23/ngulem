@@ -65,6 +65,37 @@
       location.reload();
     },
 
+    suppressNextFlash: function (type, text) {
+      if (!window.sessionStorage) {
+        return;
+      }
+
+      sessionStorage.setItem('diulemDashboardSuppressFlash', JSON.stringify({
+        type: type || '',
+        text: text || ''
+      }));
+    },
+
+    shouldShowFlash: function (type, text) {
+      if (!window.sessionStorage) {
+        return true;
+      }
+
+      var raw = sessionStorage.getItem('diulemDashboardSuppressFlash');
+      if (!raw) {
+        return true;
+      }
+
+      sessionStorage.removeItem('diulemDashboardSuppressFlash');
+
+      try {
+        var saved = JSON.parse(raw);
+        return !(saved.type === (type || '') && saved.text === (text || ''));
+      } catch (error) {
+        return true;
+      }
+    },
+
     getElement: function (target) {
       if (!target) {
         return null;
@@ -100,6 +131,7 @@
     reloadAfterSuccess: function (result, successMessage, errorMessage) {
       if (this.isSuccess(result)) {
         this.notify('success', 'Berhasil', successMessage).then(function () {
+          DiulemDashboard.suppressNextFlash('success', successMessage);
           location.reload();
         });
         return true;

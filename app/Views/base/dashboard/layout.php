@@ -308,13 +308,21 @@ $('#diulemSidebarMinimize').on('click', function() {
 <script>
 $(function() {
     <?php if (session()->has('success')) { ?>
-        DiulemDashboard.notify('success', 'Berhasil', '<?= session('success') ?>');
+        if (DiulemDashboard.shouldShowFlash('success', '<?= session('success') ?>')) {
+            DiulemDashboard.notify('success', 'Berhasil', '<?= session('success') ?>');
+        }
     <?php } elseif (session()->has('deleted')) { ?>
-        DiulemDashboard.notify('warning', 'Dihapus', '<?= session('deleted') ?>');
+        if (DiulemDashboard.shouldShowFlash('warning', '<?= session('deleted') ?>')) {
+            DiulemDashboard.notify('warning', 'Dihapus', '<?= session('deleted') ?>');
+        }
     <?php } elseif (session()->has('updated')) { ?>
-        DiulemDashboard.notify('success', 'Berhasil', '<?= session('updated') ?>');
+        if (DiulemDashboard.shouldShowFlash('success', '<?= session('updated') ?>')) {
+            DiulemDashboard.notify('success', 'Berhasil', '<?= session('updated') ?>');
+        }
     <?php } elseif (session()->has('error')) { ?>
-        DiulemDashboard.notify('error', 'Gagal', '<?= session('error') ?>');
+        if (DiulemDashboard.shouldShowFlash('error', '<?= session('error') ?>')) {
+            DiulemDashboard.notify('error', 'Gagal', '<?= session('error') ?>');
+        }
     <?php } ?>
 });
 </script>

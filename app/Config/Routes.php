@@ -30,6 +30,7 @@ if(isset($_SERVER['HTTP_HOST'])){
 
 	$routes->setDefaultNamespace('App\Controllers\admin');
 	$routes->setDefaultController('Admin');
+	$routes->get('/', 'Admin::index');
 	$routes->add('admin', 'Admin::dashboard');
 	$routes->add('admin/dashboard', 'Admin::dashboard');
 	$routes->add('admin/pembayaran', 'Admin::pembayaran');
@@ -53,7 +54,9 @@ if(isset($_SERVER['HTTP_HOST'])){
 	$routes->post('admin/update_setting2', 'Admin::do_update_setting_2');
 	$routes->post('admin/update_setting_pembayaran_1', 'Admin::do_update_setting_pembayaran_1');
 	$routes->post('admin/update_setting_pembayaran_2', 'Admin::do_update_setting_pembayaran_2');
+	$routes->post('admin/add_paket', 'Admin::add_paket');
 	$routes->post('admin/update_paket', 'Admin::do_update_paket');
+	$routes->post('admin/delete_paket', 'Admin::delete_paket');
 	$routes->post('admin/update_admin', 'Admin::do_update_admin');
 	$routes->post('admin/konfirmasi', 'Admin::do_konfirmasi');
 	$routes->post('admin/hapus_user', 'Admin::do_hapus_user');

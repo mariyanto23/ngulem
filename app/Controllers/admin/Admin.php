@@ -17,7 +17,11 @@ class Admin extends Controller
 
     public function index()
     {
-        echo 'Tidak ada apapun disini';
+        if (session()->has('masukAdmin')) {
+            return redirect()->to(base_url('admin/dashboard'));
+        }
+
+        return redirect()->to(rtrim(SITE_ADMIN, '/') . '/login');
     }
 
     public function do_auth(){
@@ -380,14 +384,7 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     
     public function do_update_paket(){
         $id = $this->request->getPost('id_paket');
-        $data['nama_paket'] = $this->request->getPost('nama_paket');
-        $data['harga_paket'] = $this->request->getPost('harga_paket');
-        $data['masa_aktif'] = $this->request->getPost('masa_aktif');
-        $data['buku_tamu'] = (!empty($this->request->getPost('setTamu'))) ? 1:0;
-        $data['kirim_whatsapp'] = (!empty($this->request->getPost('setKirim'))) ? 1:0;
-        $data['tema_bebas'] = (!empty($this->request->getPost('setTema'))) ? 1:0;
-        $data['kirim_hadiah'] = (!empty($this->request->getPost('setHadiah'))) ? 1:0;
-        $data['import_datatamu'] = (!empty($this->request->getPost('setImport'))) ? 1:0;
+        $data = $this->buildPaketPayload();
         
         $update = $this->AdminModel->update_paket($id, $data);
         if($update){
@@ -402,6 +399,44 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
             return redirect()->to(base_url('admin/setting_paket'));
         }
 
+    }
+
+    public function add_paket(){
+        $data = $this->buildPaketPayload();
+
+        $save = $this->AdminModel->add_paket($data);
+        if($save){
+            $session = session();
+            $session->setFlashdata("success", "Paket undangan berhasil ditambahkan");
+        }else{
+            $session = session();
+            $session->setFlashdata("error", "Paket undangan gagal ditambahkan");
+        }
+
+        return redirect()->to(base_url('admin/setting_paket'));
+    }
+
+    public function delete_paket(){
+        $id = (int) $this->request->getPost('id');
+
+        if($this->AdminModel->count_all_paket() <= 1){
+            echo 'terakhir';
+            return;
+        }
+
+        if($this->AdminModel->count_paket_usage($id) > 0){
+            echo 'dipakai';
+            return;
+        }
+
+        $delete = $this->AdminModel->delete_paket($id);
+        if($delete){
+            $session = session();
+            $session->setFlashdata("success", "Paket undangan berhasil dihapus");
+            echo 'sukses';
+        }else{
+            echo 'gagal';
+        }
     }
     
     public function edit_pengguna(){
@@ -1152,6 +1187,19 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     private function buildWaTokenValue($token, $enabled){
         $cleanToken = $this->parseWaTokenValue((string) $token);
         return $enabled ? $cleanToken : '__disabled__:' . $cleanToken;
+    }
+
+    private function buildPaketPayload(){
+        return [
+            'nama_paket' => $this->request->getPost('nama_paket'),
+            'harga_paket' => $this->request->getPost('harga_paket'),
+            'masa_aktif' => $this->request->getPost('masa_aktif'),
+            'buku_tamu' => !empty($this->request->getPost('setTamu')) ? 1 : 0,
+            'kirim_whatsapp' => !empty($this->request->getPost('setKirim')) ? 1 : 0,
+            'tema_bebas' => !empty($this->request->getPost('setTema')) ? 1 : 0,
+            'kirim_hadiah' => !empty($this->request->getPost('setHadiah')) ? 1 : 0,
+            'import_datatamu' => !empty($this->request->getPost('setImport')) ? 1 : 0,
+        ];
     }
 
     private function send_wa($token, $phone, $message){
