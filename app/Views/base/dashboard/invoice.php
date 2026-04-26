@@ -109,8 +109,8 @@
                                         <i class="ti ti-refresh"></i>
                                     </button>
                                     <?php } ?>
-                                    <button id="paket" class="btn btn-primary btn-sm btn-icon" title="Ubah paket" aria-label="Ubah paket" data-toggle="modal" data-target="#modalPaket">
-                                        <i class="ti ti-package"></i>
+                                    <button id="paket" class="btn btn-primary btn-sm" title="Ubah paket" aria-label="Ubah paket" data-toggle="modal" data-target="#modalPaket">
+                                        <i class="ti ti-package me-1"></i>Ubah Paket
                                     </button>
                                 </div>
                             </div>
