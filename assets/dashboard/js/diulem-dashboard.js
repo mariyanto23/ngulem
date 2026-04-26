@@ -1,13 +1,30 @@
 (function (window, $) {
   'use strict';
 
+  var lastNotificationKey = null;
+  var lastNotificationAt = 0;
+
   window.DiulemDashboard = {
     isSuccess: function (result) {
       return $.trim(result) === 'sukses';
     },
 
     notify: function (type, title, text) {
+      var notificationKey = [type || '', title || '', text || ''].join('|');
+      var now = Date.now();
+
+      if (lastNotificationKey === notificationKey && now - lastNotificationAt < 1500) {
+        return $.Deferred().resolve().promise();
+      }
+
+      lastNotificationKey = notificationKey;
+      lastNotificationAt = now;
+
       if (window.Swal) {
+        if (Swal.isVisible()) {
+          Swal.close();
+        }
+
         return Swal.fire({
           icon: type,
           title: title,

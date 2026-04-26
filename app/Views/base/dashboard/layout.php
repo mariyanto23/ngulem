@@ -238,7 +238,6 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="<?= base_url() ?>/assets/sweetalert/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/chart.js/Chart.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/js/demo/chart-area-demo.js?v=<?= filemtime(FCPATH . 'assets/dashboard/js/demo/chart-area-demo.js') ?>"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/js/diulem-dashboard.js?v=<?= filemtime(FCPATH . 'assets/dashboard/js/diulem-dashboard.js') ?>"></script>
@@ -310,14 +309,11 @@ $('#diulemSidebarMinimize').on('click', function() {
 $(function() {
     <?php if (session()->has('success')) { ?>
         DiulemDashboard.notify('success', 'Berhasil', '<?= session('success') ?>');
-    <?php } ?>
-    <?php if (session()->has('deleted')) { ?>
-        DiulemDashboard.notify('warning', 'Berhasil', '<?= session('deleted') ?>');
-    <?php } ?>
-    <?php if (session()->has('updated')) { ?>
+    <?php } elseif (session()->has('deleted')) { ?>
+        DiulemDashboard.notify('warning', 'Dihapus', '<?= session('deleted') ?>');
+    <?php } elseif (session()->has('updated')) { ?>
         DiulemDashboard.notify('success', 'Berhasil', '<?= session('updated') ?>');
-    <?php } ?>
-    <?php if (session()->has('error')) { ?>
+    <?php } elseif (session()->has('error')) { ?>
         DiulemDashboard.notify('error', 'Gagal', '<?= session('error') ?>');
     <?php } ?>
 });

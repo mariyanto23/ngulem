@@ -197,14 +197,11 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
     <?php if(session()->has("success")) { ?>
         DiulemAdmin.notify('success', 'Berhasil', '<?= session("success") ?>');
-    <?php } ?>
-    <?php if(session()->has("deleted")) { ?>
-        DiulemAdmin.notify('warning', 'Berhasil', '<?= session("deleted") ?>');
-    <?php } ?>
-    <?php if(session()->has("updated")) { ?>
+    <?php } elseif(session()->has("deleted")) { ?>
+        DiulemAdmin.notify('warning', 'Dihapus', '<?= session("deleted") ?>');
+    <?php } elseif(session()->has("updated")) { ?>
         DiulemAdmin.notify('success', 'Berhasil', '<?= session("updated") ?>');
-    <?php } ?>
-     <?php if(session()->has("error")) { ?>
+    <?php } elseif(session()->has("error")) { ?>
         DiulemAdmin.notify('error', 'Gagal', '<?= session("error") ?>');
     <?php } ?>
 });
