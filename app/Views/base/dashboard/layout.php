@@ -227,8 +227,10 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
             </div>
             <div class="modal-body">
                 <div id="resizer2"></div>
-                <hr>
-                <button class="btn btn-dark w-100" id="upload2">Upload</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button class="btn btn-primary" id="upload2">Upload</button>
             </div>
         </div>
     </div>

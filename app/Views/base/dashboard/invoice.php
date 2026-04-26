@@ -246,7 +246,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalMenunggu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
@@ -256,13 +256,13 @@
        Pembayaran anda sudah kami terima.<br>Mohon tunggu tim kami sedang melakukan verifikasi..
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
       </div>
     </div>
   </div>
 </div>
 <div class="modal fade" id="modalKonfirmasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
@@ -270,23 +270,23 @@
       </div> 
       <form method="POST" enctype="multipart/form-data"  action="<?php echo base_url('user/konfirmasi'); ?>">
       <div class="modal-body">
-        <div class="col mt-2">
+        <div class="form-group">
             <label>Nama Lengkap</label>
             <input name="nama_lengkap" type="text" class="form-control" placeholder="Contoh : Dinda Rahma" value="" required>
         </div>
-        <div class="col mt-2">
+        <div class="form-group">
             <label>Bank / E-Wallet / Sumber Dana</label>
             <input name="nama_bank" type="text" class="form-control" placeholder="Contoh : BRI / DANA / GoPay" value="" required>
-        </div>        
-        <div class="col mt-2 mb-2">
+        </div>
+        <div class="form-group mb-0">
             <label>Bukti Pembayaran (max 2MB)</label>
             <input type="file" class="form-control" id="bukti" name="bukti">
         </div>
         <input type="hidden"  value="<?= $pembayaran[0]->invoice ?>" name="invoice">
         </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-sm btn-primary" id="simpanKonfimasi">Konfirmasi</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-primary" id="simpanKonfimasi">Kirim Konfirmasi</button>
       </div>
       
       </form>
@@ -294,7 +294,7 @@
   </div>
 </div>
 <div class="modal fade" id="modalTripay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Pilih Metode Pembayaran</h5>
@@ -302,7 +302,7 @@
       </div> 
       <form method="POST" enctype="multipart/form-data"  action="<?php echo base_url('user/pembayaran_tripay'); ?>">
       <div class="modal-body">
-        <div class="col mt-2">
+        <div class="form-group mb-0">
             <select class="form-control" id="metode_bayar" name="metode_bayar" required>
                 <option value=''>Pilih metode pembayaran</option>
                 <option value='PERMATAVA'>Permata Virtual Account</option>
@@ -317,8 +317,8 @@
         </div>
         </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-sm btn-primary">Pembayaran</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-primary">Lanjut Pembayaran</button>
       </div>
  
       </form>
@@ -326,7 +326,7 @@
   </div>
 </div>
 <div class="modal fade" id="modalPembayaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Cara Pembayaran <?= $pembayaran[0]->nama_bank ?></h5>
@@ -362,13 +362,13 @@
       </div>
         </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
       </div>
     </div>
   </div>
 </div>
 <div class="modal fade" id="modalPaket" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ubah Paket Undangan</h5>
@@ -376,7 +376,7 @@
       </div> 
       <form method="POST" enctype="multipart/form-data"  action="<?php echo base_url('user/update_paket'); ?>">
       <div class="modal-body">
-        <div class="col mt-2">
+        <div class="form-group mb-0">
             <label>Paket Undangan</label>
                 <select class="form-control" id="id_paket" name="id_paket" required>
                     <option value=''>Pilih paket undangan</option>
@@ -388,8 +388,8 @@
         </div>
         </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-sm btn-primary">Pilih Paket</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-primary">Pilih Paket</button>
       </div>
  
       </form>

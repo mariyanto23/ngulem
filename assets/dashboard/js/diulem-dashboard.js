@@ -111,21 +111,35 @@
     showModal: function (target) {
       var element = this.getElement(target);
 
-      if (!element || !window.bootstrap) {
+      if (!element) {
         return;
       }
 
-      bootstrap.Modal.getOrCreateInstance(element).show();
+      if (window.bootstrap && window.bootstrap.Modal) {
+        bootstrap.Modal.getOrCreateInstance(element).show();
+        return;
+      }
+
+      if (window.jQuery && typeof window.jQuery(element).modal === 'function') {
+        window.jQuery(element).modal('show');
+      }
     },
 
     hideModal: function (target) {
       var element = this.getElement(target);
 
-      if (!element || !window.bootstrap) {
+      if (!element) {
         return;
       }
 
-      bootstrap.Modal.getOrCreateInstance(element).hide();
+      if (window.bootstrap && window.bootstrap.Modal) {
+        bootstrap.Modal.getOrCreateInstance(element).hide();
+        return;
+      }
+
+      if (window.jQuery && typeof window.jQuery(element).modal === 'function') {
+        window.jQuery(element).modal('hide');
+      }
     },
 
     reloadAfterSuccess: function (result, successMessage, errorMessage) {

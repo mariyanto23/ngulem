@@ -194,6 +194,33 @@ body,
   color: var(--diulem-ink);
 }
 
+.page-wrapper .card {
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.page-wrapper .card-header {
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid var(--diulem-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+}
+
+.page-wrapper .card-body,
+.page-wrapper .card-footer {
+  padding: 1.25rem;
+}
+
+.page-wrapper .card-footer {
+  background: transparent;
+  border-top: 1px solid var(--diulem-line);
+}
+
 .page-wrapper .text-secondary,
 .page-wrapper .text-muted {
   color: #64748b !important;
@@ -204,6 +231,43 @@ body,
   color: #344256;
   font-size: 0.95rem;
   font-weight: 650;
+}
+
+.page-wrapper .form-group {
+  margin-bottom: 1rem;
+}
+
+.page-wrapper .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.page-wrapper .form-control,
+.page-wrapper .form-select,
+.page-wrapper .custom-select {
+  border: 1px solid #d7dee7;
+  border-radius: 8px;
+  color: var(--diulem-ink);
+  min-height: 42px;
+  padding: 0.55rem 0.8rem;
+}
+
+.page-wrapper textarea.form-control {
+  min-height: 120px;
+}
+
+.page-wrapper .form-control:focus,
+.page-wrapper .form-select:focus,
+.page-wrapper .custom-select:focus {
+  border-color: rgba(15, 118, 110, 0.55);
+  box-shadow: 0 0 0 0.18rem rgba(15, 118, 110, 0.12);
+}
+
+.page-wrapper .form-text,
+.page-wrapper .form-hint {
+  color: #64748b;
+  display: block;
+  font-size: 0.82rem;
+  margin-top: 0.45rem;
 }
 
 .page-wrapper .btn-primary,
@@ -238,6 +302,25 @@ body,
 .page-wrapper .diulem-upload-button:hover,
 .page-wrapper .diulem-upload-button:focus {
   color: #ffffff !important;
+}
+
+.page-wrapper .btn {
+  border-radius: 8px;
+  font-weight: 650;
+}
+
+.page-wrapper .btn-secondary,
+.page-wrapper .btn-outline-secondary {
+  color: #344256;
+}
+
+.page-wrapper .btn-secondary:hover,
+.page-wrapper .btn-outline-secondary:hover {
+  color: #344256;
+}
+
+.page-wrapper .btn-list {
+  gap: 0.5rem;
 }
 
 .diulem-hero {
@@ -308,6 +391,40 @@ body,
   background: #eff6ff;
   border-color: #bfdbfe;
   color: #1d4ed8;
+}
+
+.modal-content {
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.16);
+}
+
+.modal-header,
+.modal-footer {
+  border-color: var(--diulem-line);
+  padding: 1rem 1.25rem;
+}
+
+.modal-header {
+  align-items: center;
+}
+
+.modal-title {
+  color: var(--diulem-ink);
+  font-size: 1.05rem;
+  font-weight: 750;
+}
+
+.modal-body {
+  padding: 1.25rem;
+}
+
+.modal-footer {
+  gap: 0.5rem;
+}
+
+.modal-footer > * {
+  margin: 0;
 }
 
 .diulem-stat-icon {
@@ -559,7 +676,7 @@ body,
   background: #f8fafc !important;
   border: 1px dashed #cbd5e1;
   border-radius: 8px;
-  padding: 0.85rem;
+  padding: 1rem;
 }
 
 .upload-area-bg img,
@@ -571,6 +688,11 @@ body,
 
 .diulem-upload-center {
   text-align: center;
+}
+
+.diulem-upload-center .btn-list,
+.upload-area-bg .btn-list {
+  justify-content: center;
 }
 
 .diulem-mempelai-upload {
@@ -654,6 +776,10 @@ body,
 
 .preview-uploads-delete {
   flex: 0 0 auto;
+}
+
+.preview-uploads-delete .btn {
+  min-width: 2.1rem;
 }
 
 .diulem-upload-button {
@@ -977,6 +1103,13 @@ body,
 
 .page-wrapper .table .btn-list .btn {
   flex: 0 0 auto;
+}
+
+.page-wrapper .card-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .hadir-selfie {

@@ -30,7 +30,7 @@ $waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, 
             <div class="card-header">
                 <h3 class="card-title">Data Tamu Undangan</h3>
                 <div class="card-actions">
-                    <button type="submit" form="formHapusTamu" class="btn btn-danger btn-sm">
+                    <button type="submit" form="formHapusTamu" class="btn btn-danger">
                         <i class="ti ti-trash me-2"></i>Hapus Banyak
                     </button>
                 </div>
@@ -102,44 +102,42 @@ $waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, 
 </div>
 
         <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Data Tamu</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="col mt-2">
-                        <label>Nama Tamu Undangan</label>
-                        <input id="id_user" type="hidden" class="form-control" value="<?=$_SESSION['id'] ?>">
-                        <input id="nama_tamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Agus Sukamto" required>
-                    </div>
-                    <div class="col mt-2">
-                        <label>Alamat Tamu Undangan</label>
-                        <input id="alamat_tamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Medan Merdeka" required>
-                    </div>
-
-                    <div class="col mt-2">
-                        <label>No Whatsapp</label>
-                        <input id="no_wa" type="text" placeholder="Contoh : 628xxxxx" class="form-control" required>
-                    </div>
-
-                    <div class="col mt-2">
-                        <label>Tanggal </label>
-                        <input name="datepicker" type="text" class="form-control diulem-datepicker-input" placeholder="Tanggal" id="datepicker" readonly="readonly" required>
-                        <input type="hidden" id="tgl_kirim">
-                    </div>
+                <div class="form-group">
+                    <label>Nama Tamu Undangan</label>
+                    <input id="id_user" type="hidden" class="form-control" value="<?=$_SESSION['id'] ?>">
+                    <input id="nama_tamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Agus Sukamto" required>
+                </div>
+                <div class="form-group">
+                    <label>Alamat Tamu Undangan</label>
+                    <input id="alamat_tamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Medan Merdeka" required>
+                </div>
+                <div class="form-group">
+                    <label>No Whatsapp</label>
+                    <input id="no_wa" type="text" placeholder="Contoh : 628xxxxx" class="form-control" required>
+                </div>
+                <div class="form-group mb-0">
+                    <label>Tanggal</label>
+                    <input name="datepicker" type="text" class="form-control diulem-datepicker-input" placeholder="Tanggal" id="datepicker" readonly="readonly" required>
+                    <input type="hidden" id="tgl_kirim">
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" id="simpanTamu">Simpan</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button class="btn btn-primary" id="simpanTamu">Simpan Data Tamu</button>
             </div>
             </div>
         </div>
         </div>
         
         <div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Import Data Tamu (Excel)</h5>
@@ -148,17 +146,17 @@ $waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, 
             <form method="post" action="<?php echo base_url('user/prosesExcel'); ?>" enctype="multipart/form-data">
             <div class="modal-body">
                 
-			<div class="form-group">
+			<div class="form-group mb-3">
 				<label>File Excel</label>
-				<input type="file" name="fileexcel" class="form-control" id="file" required accept=".xls, .xlsx" /></p>
+				<input type="file" name="fileexcel" class="form-control" id="file" required accept=".xls, .xlsx" />
 			</div>
-		    <label class="form-check-label ">
+		    <label class="form-check-label">
                 <a class="diulem-help-link" href="<?php echo base_url('import_tamu'); ?>" target="_blank"><i class="lni-question-circle"></i>&nbsp Susunan Data Untuk File Data Tamu (Excel)</a>
             </label>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="submit">Upload</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button class="btn btn-primary" type="submit">Upload Excel</button>
             </div>
             </form>
             </div>
@@ -168,37 +166,35 @@ $waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, 
 <!-- Modal -->
 
 <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Data Tamu</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="col mt-2">
-                        <label>Nama Tamu Undangan</label>
-                        <input id="namaTamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Agus Sukamto" required>
-                    </div>
-                    <div class="col mt-2">
-                        <label>Alamat Tamu Undangan</label>
-                        <input id="alamatTamu" type="text" placeholder="Contoh : Tlogosari, Semarang" class="form-control diulem-text-capitalize" required>
-                    </div>
-
-                    <div class="col mt-2">
-                        <label>No Whatsapp</label>
-                        <input id="noWa" type="text" placeholder="Contoh : 628xxxxx" class="form-control" required>
-                    </div>
-
-                    <div class="col mt-2">
-                        <label>Tanggal </label>
-                        <input name="datepicker2" type="text" class="form-control diulem-datepicker-input" placeholder="Tanggal" id="datepicker2" readonly="readonly" required>
-                        <input type="hidden" id="tglKirim">
-                    </div>
+        <div class="form-group">
+            <label>Nama Tamu Undangan</label>
+            <input id="namaTamu" type="text" class="form-control diulem-text-capitalize" placeholder="Contoh : Agus Sukamto" required>
+        </div>
+        <div class="form-group">
+            <label>Alamat Tamu Undangan</label>
+            <input id="alamatTamu" type="text" placeholder="Contoh : Tlogosari, Semarang" class="form-control diulem-text-capitalize" required>
+        </div>
+        <div class="form-group">
+            <label>No Whatsapp</label>
+            <input id="noWa" type="text" placeholder="Contoh : 628xxxxx" class="form-control" required>
+        </div>
+        <div class="form-group mb-0">
+            <label>Tanggal</label>
+            <input name="datepicker2" type="text" class="form-control diulem-datepicker-input" placeholder="Tanggal" id="datepicker2" readonly="readonly" required>
+            <input type="hidden" id="tglKirim">
+        </div>
         <input type="hidden" id="idTamunya" >
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-sm text-danger" id="editBtn">Update</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-primary" id="editBtn">Update Data Tamu</button>
       </div>
     </div>
   </div>

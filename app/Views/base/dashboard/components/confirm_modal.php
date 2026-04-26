@@ -22,8 +22,8 @@ $cancelText = $cancelText ?? 'Batal';
                 <input type="hidden" name="<?= esc($hiddenName) ?>" id="<?= esc($hiddenId) ?>" value="">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm <?= esc($confirmClass) ?>" id="<?= esc($confirmId) ?>"><?= esc($confirmText) ?></button>
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><?= esc($cancelText) ?></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= esc($cancelText) ?></button>
+                <button type="button" class="btn <?= esc($confirmClass) ?>" id="<?= esc($confirmId) ?>"><?= esc($confirmText) ?></button>
             </div>
         </div>
     </div>
