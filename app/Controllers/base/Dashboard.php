@@ -373,40 +373,40 @@ class Dashboard extends Controller
         if(!file_exists($path)){
         	$create = mkdir('assets/users/'.$kunci, 0777,true);
         }
-         
-        if($groom != ''){ //cek dulu ini fotonya siapa
-        	$avatar = $groom;
-        	$pathName = 'assets/users/'.$kunci.'/groom.png';
-        	if(file_exists($pathName)){
-        		unlink($pathName); //hapus dulu foto yg lama
-	    	} 
-				$avatar->move('assets/users/'.$kunci, 'groom.png'); //upload yg baru
-				$this->session->set('foto_groom', 1);
-			
-				echo 'uploadedgroom'; //give feedback ke jquery.. agar tampilan fotonya di ubah dgn yg baru
-        }else if($bride != ''){
+
+        $avatar = null;
+        $filename = '';
+        $response = '';
+        $sessionKey = '';
+
+        if ($groom && $groom->isValid() && ! $groom->hasMoved()) {
+            $avatar = $groom;
+            $filename = 'groom.png';
+            $response = 'uploadedgroom';
+            $sessionKey = 'foto_groom';
+        } elseif ($bride && $bride->isValid() && ! $bride->hasMoved()) {
             $avatar = $bride;
-            $pathName = 'assets/users/'.$kunci.'/bride.png';
-            if(file_exists($pathName)){
-                unlink($pathName);
-            } 
-            $avatar->move('assets/users/'.$kunci, 'bride.png');
-            $this->session->set('foto_bride', 1);
-          
-            echo 'uploadedbride';
-            
-        }else{
+            $filename = 'bride.png';
+            $response = 'uploadedbride';
+            $sessionKey = 'foto_bride';
+        } elseif ($sampul && $sampul->isValid() && ! $sampul->hasMoved()) {
             $avatar = $sampul;
-            $pathName = 'assets/users/'.$kunci.'/kita.png';
-            if(file_exists($pathName)){
-                unlink($pathName);
-            } 
-            $avatar->move('assets/users/'.$kunci, 'kita.png');
-           
-            $this->session->set('foto_sampul', 1);
-            
-            echo 'uploadedsampul';
-        } 	
+            $filename = 'kita.png';
+            $response = 'uploadedsampul';
+            $sessionKey = 'foto_sampul';
+        } else {
+            return $this->response->setStatusCode(400)->setBody('gagal');
+        }
+
+        $pathName = $path . '/' . $filename;
+        if (file_exists($pathName)) {
+            unlink($pathName);
+        }
+
+        $avatar->move($path, $filename, true);
+        $this->session->set($sessionKey, 1);
+
+        echo $response;
 
 
      }

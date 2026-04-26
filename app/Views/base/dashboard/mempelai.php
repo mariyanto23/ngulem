@@ -267,6 +267,11 @@ $(document).ready(function () {
         });
 
         $("#upload").on("click", function() {
+            if (!croppie) {
+                DiulemDashboard.notify('error', 'Upload Gagal', 'Foto belum siap diproses. Silakan pilih ulang gambar.');
+                return;
+            }
+
             var $button = $(this);
             DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Upload...');
             croppie.result('base64').then(function(base64) {
@@ -299,6 +304,7 @@ $(document).ready(function () {
                         DiulemDashboard.notify('error', 'Upload Gagal', 'Foto gagal diupload.');
                     },
                     complete: function() {
+                        $(".file-upload").val('');
                         DiulemDashboard.setButtonLoading($button, false);
                     }
                 });
