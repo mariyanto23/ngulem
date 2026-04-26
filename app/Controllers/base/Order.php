@@ -115,6 +115,13 @@ class Order extends Controller
 			    $generate = "dummy_".$randomString;
 			    $this->session->set('dummy', $generate);
 			}
+
+			if($this->request->getPost('setup_later') == '1'){
+				$this->session->set('quick_setup', 1);
+				$this->session->set('save', 1);
+				$this->session->set('checkpoint', 5);
+				return redirect()->to(base_url('order/save'));
+			}
 			
 		}
 		
@@ -495,6 +502,10 @@ class Order extends Controller
 	 	return (int) $price <= 0;
 	 }
 
+	 private function isQuickSetup(){
+	 	return (bool) $this->session->get('quick_setup');
+	 }
+
 	 public function finish(){
 
 	 	$submit = $this->request->getPost('submit');
@@ -565,6 +576,7 @@ class Order extends Controller
         
 		$email = $this->session->get('email');
 		$domain = $this->session->get('domain');
+		$isQuickSetup = $this->isQuickSetup();
         
 		//untuk menghindari doubble insert ketika ditekan tombol back setealh success
 		$cekUser = $this->order->cek_email($email);
@@ -627,14 +639,14 @@ class Order extends Controller
 		 
 	 	$dataMempelai = [
 	 		'id_user' => $id_user,
-	 		'nama_pria' => $nama_lengkap_pria,
-	 		'nama_panggilan_pria' => $nama_panggilan_pria,
-	 		'nama_ibu_pria' => $nama_ibu_pria,
-	 		'nama_ayah_pria' => $nama_ayah_pria,
-	 		'nama_wanita' => $nama_lengkap_wanita,
-	 		'nama_panggilan_wanita' => $nama_panggilan_wanita,
-	 		'nama_ibu_wanita' => $nama_ibu_wanita,
-	 		'nama_ayah_wanita' => $nama_ayah_wanita,
+	 		'nama_pria' => $nama_lengkap_pria ?: 'Calon Mempelai Pria',
+	 		'nama_panggilan_pria' => $nama_panggilan_pria ?: 'Mempelai Pria',
+	 		'nama_ibu_pria' => $nama_ibu_pria ?: '-',
+	 		'nama_ayah_pria' => $nama_ayah_pria ?: '-',
+	 		'nama_wanita' => $nama_lengkap_wanita ?: 'Calon Mempelai Wanita',
+	 		'nama_panggilan_wanita' => $nama_panggilan_wanita ?: 'Mempelai Wanita',
+	 		'nama_ibu_wanita' => $nama_ibu_wanita ?: '-',
+	 		'nama_ayah_wanita' => $nama_ayah_wanita ?: '-',
 	 	];
 
 	 	//order
@@ -650,32 +662,47 @@ class Order extends Controller
 	 	];
 
 	 	//acara
-	 	$jml_acara = $this->session->get('jml_acara');
+	 	$jml_acara = (int) $this->session->get('jml_acara');
+	 	$maps = '';
 
-	 	for($i=0;$i<$jml_acara;$i++){
-			$nama_acara = $this->session->get('nama_acara'.$i);
-			$tgl_acara = $this->session->get('tgl_acara'.$i);
-			$waktu_mulai = $this->session->get('waktu_mulai'.$i);
-            $waktu_akhir = $this->session->get('waktu_akhir'.$i);
-			$tempat_acara = $this->session->get('tempat_acara'.$i);
-			$alamat_acara = $this->session->get('alamat_acara'.$i);
-			$maps = $this->session->get('maps'.$i);
-			$dataAcara = [
-			    'id_user' => $id_user,
-				'nama_acara' => $nama_acara,
-				'tgl_acara' => $tgl_acara,
-				'waktu_mulai' => $waktu_mulai,
-				'waktu_akhir' => $waktu_akhir,
-				'tempat_acara' => $tempat_acara,
-				'alamat_acara' => $alamat_acara,
-				'maps' => $maps
-				];
-				$saveAcara = $this->order->save_acara($dataAcara);
+	 	if($isQuickSetup){
+	 		$dataAcara = [
+	 			'id_user' => $id_user,
+	 			'nama_acara' => 'Informasi acara akan diperbarui',
+	 			'tgl_acara' => date('Y/m/d'),
+	 			'waktu_mulai' => '08:00',
+	 			'waktu_akhir' => '10:00',
+	 			'tempat_acara' => 'Akan diperbarui',
+	 			'alamat_acara' => 'Silakan lengkapi detail acara dari dashboard.',
+	 			'maps' => ''
+	 		];
+	 		$this->order->save_acara($dataAcara);
+	 	}else{
+		 	for($i=0;$i<$jml_acara;$i++){
+				$nama_acara = $this->session->get('nama_acara'.$i);
+				$tgl_acara = $this->session->get('tgl_acara'.$i);
+				$waktu_mulai = $this->session->get('waktu_mulai'.$i);
+            	$waktu_akhir = $this->session->get('waktu_akhir'.$i);
+				$tempat_acara = $this->session->get('tempat_acara'.$i);
+				$alamat_acara = $this->session->get('alamat_acara'.$i);
+				$maps = $this->session->get('maps'.$i);
+				$dataAcara = [
+				    'id_user' => $id_user,
+					'nama_acara' => $nama_acara,
+					'tgl_acara' => $tgl_acara,
+					'waktu_mulai' => $waktu_mulai,
+					'waktu_akhir' => $waktu_akhir,
+					'tempat_acara' => $tempat_acara,
+					'alamat_acara' => $alamat_acara,
+					'maps' => $maps
+					];
+					$saveAcara = $this->order->save_acara($dataAcara);
+            	}
             }
 	 	//cerita
 	 	$skipCerita = $this->session->get('skipCerita');
 	 	$cerita = 0;
-		if($skipCerita == ''){
+		if(!$isQuickSetup && $skipCerita == ''){
 			$jml_cerita = $this->session->get('jml_cerita');
 
 			for($i=0;$i<$jml_cerita;$i++){
@@ -701,7 +728,7 @@ class Order extends Controller
 		$video = '';
 		$gallery = 0;
 		$generate = $this->session->get('dummy');
-		if($skipGallery == ''){
+		if(!$isQuickSetup && $skipGallery == ''){
 			for($a=1;$a<=10;$a++){
 		      $pathName = 'assets/users/'.$generate.'/album'.$a.'.png';
 		      if(!file_exists($pathName))continue;
@@ -824,8 +851,9 @@ Mohon untuk segera melakukan pembayaran pesanannya #'.$kode.' sejumlah *Rp. '.$b
 
 *Terima Kasih Dan Sukses Selalu*';
             }
-           $this->send_wa($token, $phone, $message);
+            $this->send_wa($token, $phone, $message);
             $this->sendEmail($from, $nama, $email, 'Invoice', $pesan);
+            $this->session->remove(['quick_setup', 'save', 'skipCerita', 'skipGallery']);
             $this->session->destroy();
 	 		return redirect()->to(base_url('/order/success/'.$kunci));
 	 	}else{

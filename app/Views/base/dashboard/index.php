@@ -15,6 +15,58 @@ $expiry = strtotime($pembayaran[0]->transaction_expired);
 $expiry_date = date('d-m-Y H:i A', $expiry);
 $undanganUrl = rtrim(SITE_UNDANGAN, '/') . '/' . $order[0]->domain;
 $hasWeeklyVisitors = false;
+$mempelaiData = $mempelai[0] ?? null;
+$acaraData = $acara[0] ?? null;
+$albumCount = isset($album) ? count($album) : 0;
+$ceritaCount = isset($cerita) ? count($cerita) : 0;
+$needsMempelai = $mempelaiData && (
+    ($mempelaiData->nama_pria ?? '') === 'Calon Mempelai Pria' ||
+    ($mempelaiData->nama_wanita ?? '') === 'Calon Mempelai Wanita' ||
+    ($mempelaiData->nama_ayah_pria ?? '') === '-' ||
+    ($mempelaiData->nama_ayah_wanita ?? '') === '-'
+);
+$needsAcara = $acaraData && (
+    ($acaraData->nama_acara ?? '') === 'Informasi acara akan diperbarui' ||
+    ($acaraData->tempat_acara ?? '') === 'Akan diperbarui'
+);
+$needsPhotos = isset($data[0]) && (((int) ($data[0]->foto_pria ?? 0) === 0) || ((int) ($data[0]->foto_wanita ?? 0) === 0));
+$needsContent = $albumCount === 0 && $ceritaCount === 0;
+$setupChecklist = [
+    [
+        'label' => 'Lengkapi data mempelai',
+        'description' => $needsMempelai ? 'Nama, panggilan, dan orang tua belum lengkap.' : 'Data mempelai sudah terisi.',
+        'url' => base_url('user/mempelai'),
+        'icon' => 'ti-heart',
+        'completed' => ! $needsMempelai,
+    ],
+    [
+        'label' => 'Upload foto mempelai',
+        'description' => $needsPhotos ? 'Tambahkan foto supaya tampilan undangan lebih hidup.' : 'Foto mempelai sudah tersedia.',
+        'url' => base_url('user/mempelai'),
+        'icon' => 'ti-camera',
+        'completed' => ! $needsPhotos,
+    ],
+    [
+        'label' => 'Atur detail acara',
+        'description' => $needsAcara ? 'Tanggal, waktu, dan lokasi acara masih placeholder.' : 'Detail acara sudah terisi.',
+        'url' => base_url('user/acara'),
+        'icon' => 'ti-calendar-event',
+        'completed' => ! $needsAcara,
+    ],
+    [
+        'label' => 'Lengkapi konten undangan',
+        'description' => $needsContent ? 'Tambahkan cerita atau gallery agar undangan lebih lengkap.' : 'Konten undangan sudah mulai terisi.',
+        'url' => base_url('user/tampilan'),
+        'icon' => 'ti-sparkles',
+        'completed' => ! $needsContent,
+    ],
+];
+$setupCompletedCount = count(array_filter($setupChecklist, static function ($item) {
+    return $item['completed'] === true;
+}));
+$setupTotalCount = count($setupChecklist);
+$setupProgress = $setupTotalCount > 0 ? (int) round(($setupCompletedCount / $setupTotalCount) * 100) : 0;
+$showSetupChecklist = $setupCompletedCount < $setupTotalCount;
 
 $statusLabel = 'Trial';
 $statusClass = 'bg-warning text-warning-fg';
@@ -158,6 +210,53 @@ foreach ($total_mingguan as $row) {
                 </div>
             </div>
         </div>
+
+        <?php if ($showSetupChecklist) { ?>
+            <div class="card mb-4 border-primary">
+                <div class="card-body">
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+                        <div>
+                            <div class="text-primary text-uppercase small fw-bold mb-1">Atur Nanti</div>
+                            <h3 class="card-title mb-1">Undangan kamu sudah aktif, tinggal dilengkapi</h3>
+                            <div class="text-secondary">Selesaikan langkah penting berikut agar undangan siap dibagikan.</div>
+                        </div>
+                        <div class="text-lg-end">
+                            <div class="fw-semibold mb-1"><?= $setupCompletedCount ?>/<?= $setupTotalCount ?> langkah selesai</div>
+                            <div class="progress" style="width: 220px; max-width: 100%;">
+                                <div class="progress-bar" role="progressbar" style="width: <?= $setupProgress ?>%;" aria-valuenow="<?= $setupProgress ?>" aria-valuemin="0" aria-valuemax="100"><?= $setupProgress ?>%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="<?= base_url('user/mempelai') ?>" class="btn btn-primary">
+                            <i class="ti ti-arrow-right me-2"></i>Lanjut Lengkapi
+                        </a>
+                    </div>
+                    <div class="row row-cards mt-3">
+                        <?php foreach ($setupChecklist as $item) { ?>
+                            <div class="col-md-6 col-xl-3">
+                                <a href="<?= $item['url'] ?>" class="card card-link card-link-pop h-100 text-reset <?= $item['completed'] ? 'border-success' : '' ?>">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <span class="diulem-stat-icon flex-shrink-0"><i class="ti <?= esc($item['icon']) ?>"></i></span>
+                                            <div>
+                                                <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                                                    <div class="fw-semibold"><?= esc($item['label']) ?></div>
+                                                    <span class="badge <?= $item['completed'] ? 'bg-success text-success-fg' : 'bg-warning text-warning-fg' ?>">
+                                                        <?= $item['completed'] ? 'Selesai' : 'Perlu Diisi' ?>
+                                                    </span>
+                                                </div>
+                                                <div class="text-secondary small"><?= esc($item['description']) ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
 
         <div class="row row-cards">
             <div class="col-lg-8">

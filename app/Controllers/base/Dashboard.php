@@ -35,6 +35,10 @@ class Dashboard extends Controller
             $data['setting'] = $this->DashboardModel->get_setting();
             $data['setting_bayar'] = $this->DashboardModel->get_setting_bayar();
             $data['data'] = $this->DashboardModel->get_data_by_id_user();
+            $data['mempelai'] = $this->DashboardModel->get_mempelai_by_id_user();
+            $data['acara'] = $this->DashboardModel->get_acara_by_id_user();
+            $data['album'] = $this->DashboardModel->get_album_by_id_user();
+            $data['cerita'] = $this->DashboardModel->get_cerita_by_id_user();
         
             return view('base/dashboard/layout', $data);
         }else{
