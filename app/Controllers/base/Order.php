@@ -135,14 +135,15 @@ class Order extends Controller
 
 		// cek pengiriman data & simpan form data sebelumnya
 		$submit = $this->request->getPost('submit');
-		if(isset($submit)){
+		$setupLater = $this->request->getPost('setup_later');
+		if(isset($submit) || $setupLater == '1'){
                        
                
 			//simpan data sebelumnya ke session
 			
 			$this->simpan_data_sessions('mempelai');
 
-			if($this->request->getPost('setup_later') == '1'){
+			if($setupLater == '1'){
 				$this->session->set('quick_setup', 1);
 				$this->session->set('save', 1);
 				$this->session->set('checkpoint', 5);
