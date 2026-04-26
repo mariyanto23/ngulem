@@ -294,8 +294,27 @@ $(document).ready(function () {
             id_tamu: id_tamu
         }, {
             button: $(this),
-            successMessage: 'Undangan berhasil dikirim.',
-            errorMessage: 'Undangan gagal dikirim.'
+            dataType: 'json',
+            reload: false,
+            errorMessage: 'Undangan gagal dikirim.',
+            onSuccess: function(response){
+                if (response.status === 'manual' && response.url) {
+                    DiulemDashboard.notify('info', 'Kirim Manual', response.message || 'Silakan kirim manual via WhatsApp.')
+                        .then(function () {
+                            window.open(response.url, '_blank');
+                            DiulemDashboard.reload();
+                        });
+                    return;
+                }
+
+                if (response.status === 'success') {
+                    DiulemDashboard.notify('success', 'Berhasil', response.message || 'Undangan berhasil dikirim.')
+                        .then(DiulemDashboard.reload);
+                    return;
+                }
+
+                DiulemDashboard.notify('error', 'Gagal', response.message || 'Undangan gagal dikirim.');
+            }
         });
     });
     

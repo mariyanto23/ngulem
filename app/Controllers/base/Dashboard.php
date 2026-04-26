@@ -1300,8 +1300,7 @@ class Dashboard extends Controller
                 
                 $salam_wa_atas = $row->salam_wa_atas;
                 $salam_wa_bawah = $row->salam_wa_bawah;
-                {
-            $message = 'Kepada Yth: '.$nama_tamu.'
+                $message = 'Kepada Yth: '.$nama_tamu.'
 
 '.$salam_wa_atas.'
 
@@ -1315,26 +1314,43 @@ Kami yang berbahagia,
 
 ======================
 Balas *OK* agar bisa diklik Link Undangan';
+            if (! $this->isWaGatewayEnabled($wa_gateway, $token)) {
+                $data['status_kirim'] = 'manual';
+                $this->DashboardModel->status_undangan($data, $id_tamu);
+
+                return $this->response->setJSON([
+                    'status' => 'manual',
+                    'url' => $this->buildManualWhatsappUrl($phone, $message),
+                    'message' => 'Whatsapp Gateway sedang nonaktif. Silakan kirim manual via WhatsApp.'
+                ]);
+            }
+
             if ($this->send_wa($token, $phone, $message) == 'true') {
                 $data['status_kirim'] = 'terkirim';
                 $update = $this->DashboardModel->status_undangan($data, $id_tamu);
                 $session = session();
                 $session->setFlashdata("success", "Undangan Berhasil terkirim");
-                echo 'sukses';
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Undangan berhasil dikirim.'
+                ]);
             }else{
                 $data['status_kirim'] = 'tidak terkirim';
                 $update = $this->DashboardModel->status_undangan($data, $id_tamu);
                 $session = session();
                 $session->setFlashdata("error", "Undangan Gagal dikirim");
-                echo 'gagal';
-        
-                
-            }
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Undangan gagal dikirim.'
+                ], 400);
             }
         }else{
          $session = session();
         $session->setFlashdata("error", "Undangan Gagal dikirim, harap lakukan pembayaran terlebih dahulu");
-            echo 'gagal';
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Undangan gagal dikirim, harap lakukan pembayaran terlebih dahulu.'
+            ], 400);
       }
     }
 }
@@ -1563,6 +1579,10 @@ Nominal : '.number_format($result->gross_amount).'
         }
 
         return strpos((string) $tokenValue, '__disabled__:') !== 0;
+    }
+
+    private function buildManualWhatsappUrl($phone, $message){
+        return 'https://api.whatsapp.com/send?phone=' . rawurlencode($phone) . '&text=' . rawurlencode($message);
     }
 
     private function cek_wa($token, $hp){
