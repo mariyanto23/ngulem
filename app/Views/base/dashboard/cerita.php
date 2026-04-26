@@ -95,7 +95,7 @@
                     <label>Nama Sumber</label>
                     <input id="sumber_quote" type="text" class="form-control" placeholder="Masukan Nama Sumber Quote" value="<?php if(!empty($quote)) echo $quote[0]->sumber_quote ?>" required>
                     </div>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalQuote">Simpan</button>
+                    <button class="btn btn-primary" id="simpanQuote">Simpan</button>
                 </div>
             </div>
         </div>
@@ -103,14 +103,6 @@
     </div>
 </div>
 </div>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalQuote',
-    'message' => 'Apakah kamu yakin ingin menyimpan quote pernikahan?',
-    'confirmId' => 'simpanQuote',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
 
 <template id="ceritaTemplate">
     <div class="diulem-repeat-item cerita-item" id="cerita__INDEX__">

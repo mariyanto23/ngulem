@@ -48,6 +48,38 @@
       location.reload();
     },
 
+    getElement: function (target) {
+      if (!target) {
+        return null;
+      }
+
+      if (target instanceof Element) {
+        return target;
+      }
+
+      return document.querySelector(target.charAt(0) === '#' ? target : '#' + target);
+    },
+
+    showModal: function (target) {
+      var element = this.getElement(target);
+
+      if (!element || !window.bootstrap) {
+        return;
+      }
+
+      bootstrap.Modal.getOrCreateInstance(element).show();
+    },
+
+    hideModal: function (target) {
+      var element = this.getElement(target);
+
+      if (!element || !window.bootstrap) {
+        return;
+      }
+
+      bootstrap.Modal.getOrCreateInstance(element).hide();
+    },
+
     reloadAfterSuccess: function (result, successMessage, errorMessage) {
       if (this.isSuccess(result)) {
         this.notify('success', 'Berhasil', successMessage).then(function () {

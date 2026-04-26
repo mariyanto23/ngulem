@@ -47,7 +47,7 @@
                             <textarea id="ulasan" class="form-control" rows="5"><?= esc($testimoni[0]->ulasan) ?></textarea>
                         </div>
 
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalUser">
+                        <button class="btn btn-primary" id="simpanTesti">
                             <i class="ti ti-device-floppy me-2"></i>Kirim
                         </button>
                     </div>
@@ -56,14 +56,6 @@
         </div>
     </div>
 </div>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalUser',
-    'message' => 'Apakah kamu yakin ingin menyimpan testimonial?',
-    'confirmId' => 'simpanTesti',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
 
 <script>
     $('#simpanTesti').on('click', function() {

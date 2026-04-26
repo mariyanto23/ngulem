@@ -87,7 +87,7 @@
                     </label>
                     </div>
                     <div class="col mt-3">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalVideo">Simpan</button>
+                        <button class="btn btn-primary" id="simpanVideo">Simpan</button>
                     </div>
                 </div>
             </div>
@@ -97,14 +97,6 @@
     </div>
 </div>
 </div>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalVideo',
-    'message' => 'Apakah kamu yakin ingin menyimpan video undangan?',
-    'confirmId' => 'simpanVideo',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
 
 <script src="<?php echo base_url() ?>/assets/base/js/dropzone.js"></script>
 <script>

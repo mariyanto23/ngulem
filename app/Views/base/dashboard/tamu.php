@@ -1,4 +1,9 @@
 <div class="page-body">
+<?php
+$waGatewayRaw = $setting[0]->wa_gateway ?? 'nusagateway';
+$waTokenRaw = $setting[0]->token_wa ?? '';
+$waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, '__disabled__:') === 0) ? '0' : '1';
+?>
     <div class="container-xl">
         <div class="page-header d-print-none mb-3">
             <div class="row align-items-center">
@@ -60,7 +65,11 @@
                                 <td>
                                     <div class="btn-list flex-nowrap">
                                         <?php if ($paket[0]->kirim_whatsapp == 1) { ?>
-                                            <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-success btn-icon kirim" data-toggle="modal" data-target="#modalKirim" title="Kirim undangan" aria-label="Kirim undangan">
+                                            <button
+                                                data-id="<?= esc($row->id_tamu) ?>"
+                                                class="btn btn-sm btn-success btn-icon kirim"
+                                                title="Kirim undangan"
+                                                aria-label="Kirim undangan">
                                                 <i class="ti ti-send"></i>
                                             </button>
                                         <?php } ?>
@@ -77,7 +86,7 @@
                                             aria-label="Edit tamu">
                                             <i class="ti ti-pencil"></i>
                                         </button>
-                                        <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus tamu" aria-label="Hapus tamu">
+                                        <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger btn-icon hapus" title="Hapus tamu" aria-label="Hapus tamu">
                                             <i class="ti ti-trash"></i>
                                         </button>
                                     </div>
@@ -194,22 +203,6 @@
     </div>
   </div>
 </div>
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalHapus',
-    'message' => 'Apakah kamu yakin ingin menghapus data tamu ini?',
-    'hiddenName' => 'idTamu',
-    'hiddenId' => 'idTamu',
-]) ?>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalKirim',
-    'message' => 'Apakah kamu yakin ingin mengirim undangan?',
-    'hiddenName' => 'idTamu',
-    'hiddenId' => 'idTamu',
-    'confirmId' => 'kirimBtn',
-    'confirmText' => 'Kirim',
-    'confirmClass' => 'btn-success',
-]) ?>
 <script src="<?php echo base_url() ?>/assets/base/js/pikaday.js"></script>
 <script>
 $(document).ready(function () {
@@ -260,40 +253,43 @@ $(document).ready(function () {
 
     });
 
-    $('.hapus').on('click', function (event) {
-         $('#centangSemua').prop('checked', false);
+    $('.hapus').on('click', function () {
+        $('#centangSemua').prop('checked', false);
         $('.centangTamu').prop('checked', false);
         var idTamu = $(this).data('id');
-        $(".modal-body #idTamu").val( idTamu );
-    });
+        var $button = $(this);
 
-    $('#hapusBtn').on('click', function(event) {
+        DiulemDashboard.confirm({
+            title: 'Hapus Tamu',
+            text: 'Apakah kamu yakin ingin menghapus data tamu ini?',
+            confirmButtonText: 'Ya, Hapus'
+        }).then(function(result) {
+            if (!result.value) {
+                return;
+            }
 
-        var id_tamu = $('#idTamu').val();
-
-        DiulemDashboard.post("<?= base_url('user/hapus_tamu') ?>", {
-            id_tamu: id_tamu
-        }, {
-            button: $(this),
-            successMessage: 'Data tamu berhasil dihapus.',
-            errorMessage: 'Data tamu gagal dihapus.'
+            DiulemDashboard.post("<?= base_url('user/hapus_tamu') ?>", {
+                id_tamu: idTamu
+            }, {
+                button: $button,
+                successMessage: 'Data tamu berhasil dihapus.',
+                errorMessage: 'Data tamu gagal dihapus.'
+            });
         });
     });
-    $('.kirim').on('click', function (event) {
-         $('#centangSemua').prop('checked', false);
+
+    $('.kirim').on('click', function(event) {
+        event.preventDefault();
+        $('#centangSemua').prop('checked', false);
         $('.centangTamu').prop('checked', false);
-        var idTamu = $(this).data('id');
-        $(".modal-body #idTamu").val( idTamu );
-    });
 
-    $('#kirimBtn').on('click', function(event) {
-
-        var id_tamu = $('#idTamu').val();
+        var id_tamu = $(this).data('id');
+        var $button = $(this);
 
         DiulemDashboard.post("<?= base_url('user/kirim_undangan') ?>", {
             id_tamu: id_tamu
         }, {
-            button: $(this),
+            button: $button,
             dataType: 'json',
             reload: false,
             errorMessage: 'Undangan gagal dikirim.',

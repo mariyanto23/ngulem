@@ -208,7 +208,7 @@ class Beranda extends Controller
                 $nama_slug = $row->nama_slug;
                 $alamat_tamu = $row->alamat_tamu;
                 $alamat_slug = $row->alamat_slug;
-                $link = SITE_UNDANGAN.'/'.$domain.'/'.$id_tamu;
+                $link = rtrim(SITE_UNDANGAN, '/') . '/' . $domain . '/' . $id_tamu;
                 $ayah_pria = $row->nama_ayah_pria;
                 $ibu_pria = $row->nama_ibu_pria;
                 $ayah_wanita = $row->nama_ayah_wanita;

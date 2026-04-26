@@ -36,7 +36,7 @@
                             <div class="col-md-6"><label class="form-label">Private Key</label><input id="privatekey_tripay" type="text" class="form-control" value="<?= esc($setting[0]->privatekey_tripay) ?>" required></div>
                             <div class="col-md-6"><label class="form-label">URL Transaksi</label><input id="url_tripay" type="text" class="form-control" value="<?= esc($setting[0]->url_tripay) ?>" required></div>
                         </div>
-                        <div class="mt-4"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSetting1"><i class="ti ti-device-floppy me-2"></i>Simpan Gateway</button></div>
+                        <div class="mt-4"><button class="btn btn-primary" id="simpanSetting1"><i class="ti ti-device-floppy me-2"></i>Simpan Gateway</button></div>
                     </div>
                 </div>
             </div>
@@ -50,16 +50,13 @@
                             <option value="midtrans" <?= $setting[0]->metode_bayar == 'midtrans' ? 'selected' : '' ?>>Midtrans</option>
                             <option value="tripay" <?= $setting[0]->metode_bayar == 'tripay' ? 'selected' : '' ?>>Tripay</option>
                         </select>
-                        <div class="mt-4"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSetting2"><i class="ti ti-device-floppy me-2"></i>Simpan Metode</button></div>
+                        <div class="mt-4"><button class="btn btn-primary" id="simpanSetting2"><i class="ti ti-device-floppy me-2"></i>Simpan Metode</button></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<?= view('admin/components/confirm_modal', ['modalId' => 'modalSetting1', 'message' => 'Apakah kamu yakin ingin menyimpan gateway pembayaran?', 'confirmId' => 'simpanSetting1', 'confirmText' => 'Ya, Simpan']) ?>
-<?= view('admin/components/confirm_modal', ['modalId' => 'modalSetting2', 'message' => 'Apakah kamu yakin ingin menyimpan metode pembayaran?', 'confirmId' => 'simpanSetting2', 'confirmText' => 'Ya, Simpan']) ?>
 
 <script>
 $('#simpanSetting1').on('click', function() {

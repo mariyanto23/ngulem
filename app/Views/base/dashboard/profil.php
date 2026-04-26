@@ -43,7 +43,7 @@
                             <small class="form-hint">Gunakan format internasional, misalnya 6281234567890.</small>
                         </div>
 
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalUser">
+                        <button class="btn btn-primary" id="simpanUser">
                             <i class="ti ti-device-floppy me-2"></i>Simpan Profil
                         </button>
                     </div>
@@ -65,14 +65,6 @@
         </div>
     </div>
 </div>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalUser',
-    'message' => 'Apakah kamu yakin ingin menyimpan perubahan profil?',
-    'confirmId' => 'simpanUser',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
 
 <script>
 $('#simpanUser').on('click', function() {

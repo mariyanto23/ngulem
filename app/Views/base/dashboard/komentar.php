@@ -61,7 +61,7 @@
                                 <td><?= esc($row->nama_komentar) ?></td>
                                 <td class="text-wrap"><?= esc($row->isi_komentar) ?></td>
                                 <td>
-                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus ucapan" aria-label="Hapus ucapan">
+                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger btn-icon hapus" title="Hapus ucapan" aria-label="Hapus ucapan">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </td>
@@ -74,27 +74,27 @@
     </div>
 </div>
 
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalHapus',
-    'message' => 'Apakah kamu yakin ingin menghapus komentar ini?',
-    'hiddenName' => 'idKomentar',
-    'hiddenId' => 'idKomentar',
-]) ?>
-
 <script>
 $('.hapus').on('click', function () {
-    $('#modalHapus #idKomentar').val($(this).data('id'));
-});
+    var idkomentar = $(this).data('id');
+    var $button = $(this);
 
-$('#hapusBtn').on('click', function() {
-    var idkomentar = $('#idKomentar').val();
+    DiulemDashboard.confirm({
+        title: 'Hapus Ucapan',
+        text: 'Apakah kamu yakin ingin menghapus komentar ini?',
+        confirmButtonText: 'Ya, Hapus'
+    }).then(function(result) {
+        if (!result.value) {
+            return;
+        }
 
-    DiulemDashboard.post("<?= base_url('user/hapus_komentar') ?>", {
-        id: idkomentar
-    }, {
-        button: $(this),
-        successMessage: 'Ucapan berhasil dihapus.',
-        errorMessage: 'Ucapan gagal dihapus.'
+        DiulemDashboard.post("<?= base_url('user/hapus_komentar') ?>", {
+            id: idkomentar
+        }, {
+            button: $button,
+            successMessage: 'Ucapan berhasil dihapus.',
+            errorMessage: 'Ucapan gagal dihapus.'
+        });
     });
 });
 </script>

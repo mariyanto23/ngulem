@@ -33,7 +33,7 @@
                             <label class="form-label">Nama Lengkap</label>
                             <input id="nama" type="text" class="form-control" placeholder="Contoh: Admin Diulem" value="<?= esc($admin[0]->nama_lengkap) ?>" required>
                         </div>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdmin">
+                        <button class="btn btn-primary" id="simpanAdmin">
                             <i class="ti ti-device-floppy me-2"></i>Simpan
                         </button>
                     </div>
@@ -42,14 +42,6 @@
         </div>
     </div>
 </div>
-
-<?= view('admin/components/confirm_modal', [
-    'modalId' => 'modalAdmin',
-    'message' => 'Apakah kamu yakin ingin menyimpan perubahan profil admin?',
-    'confirmId' => 'simpanAdmin',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
 
 <script>
 $('#simpanAdmin').on('click', function() {

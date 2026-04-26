@@ -38,7 +38,7 @@ if ($waGatewayProvider === 'nusagateway') {
                                 <input id="domain" type="text" class="form-control" placeholder="akudandia" value="<?= esc($order[0]->domain) ?>" onkeyup="nospaces(this)" required>
                             </div>
                         </div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalDomain">
+                        <button class="btn btn-primary" id="simpanDomain">
                             <i class="ti ti-device-floppy me-2"></i>Simpan Domain
                         </button>
                     </div>
@@ -55,7 +55,7 @@ if ($waGatewayProvider === 'nusagateway') {
                                 </small>
                             <?php } ?>
                         </div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalToken">
+                        <button class="btn btn-primary" id="simpanToken">
                             <i class="ti ti-device-floppy me-2"></i>Simpan Token
                         </button>
                     </div>
@@ -100,7 +100,7 @@ if ($waGatewayProvider === 'nusagateway') {
                             <label class="form-label">Salam Pembuka Whatsapp Bawah</label>
                             <textarea rows="4" id="salam_wa_bawah" class="form-control" required><?= esc($data[0]->salam_wa_bawah) ?></textarea>
                         </div>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalSalam">
+                        <button class="btn btn-primary" id="simpanSalam">
                             <i class="ti ti-device-floppy me-2"></i>Simpan Salam
                         </button>
                     </div>
@@ -186,61 +186,12 @@ if ($waGatewayProvider === 'nusagateway') {
                             </div>
                         </div>
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modalFitur">
+                            <button type="button" class="btn btn-primary" id="simpanFitur">
                                 <i class="ti ti-device-floppy me-2"></i>Simpan Fitur
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalDomain',
-    'message' => 'Apakah kamu yakin ingin mengubah nama domain?',
-    'confirmId' => 'simpanDomain',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalToken',
-    'message' => 'Apakah kamu yakin ingin mengubah Token Whatsapp Gateway?',
-    'confirmId' => 'simpanToken',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalFitur',
-    'message' => 'Apakah kamu yakin ingin menyimpan perubahan fitur?',
-    'confirmId' => 'simpanFitur',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalSalam',
-    'message' => 'Apakah kamu yakin ingin menyimpan perubahan salam pembuka?',
-    'confirmId' => 'simpanSalam',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
-
-<div class="modal fade" id="modalGagal" tabindex="-1" role="dialog" aria-labelledby="modalGagalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalGagalLabel">Kesalahan</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Gagal mengganti nama domain. Nama domain sudah dipakai.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -298,8 +249,7 @@ $('#simpanDomain').on('click', function() {
                 return;
             }
 
-            $('#modalDomain').modal('hide');
-            $('#modalGagal').modal('show');
+            DiulemDashboard.notify('error', 'Gagal', 'Gagal mengganti nama domain. Nama domain sudah dipakai.');
         }
     });
 });

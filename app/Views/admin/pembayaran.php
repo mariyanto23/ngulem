@@ -67,7 +67,7 @@
                                             <i class="ti ti-eye"></i>
                                         </button>
                                     <?php } ?>
-                                    <button type="button" class="btn btn-success btn-sm btn-icon konfirmasiBtn" title="Konfirmasi" aria-label="Konfirmasi" data-id="<?= esc($row->id_user) ?>" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi">
+                                    <button type="button" class="btn btn-success btn-sm btn-icon konfirmasiBtn" title="Konfirmasi" aria-label="Konfirmasi" data-id="<?= esc($row->id_user) ?>">
                                         <i class="ti ti-check"></i>
                                     </button>
                                 </div>
@@ -80,16 +80,6 @@
         </div>
     </div>
 </div>
-
-<?= view('admin/components/confirm_modal', [
-    'modalId' => 'modalKonfirmasi',
-    'message' => 'Apakah kamu yakin ingin mengkonfirmasi pengguna?',
-    'hiddenName' => 'iduser',
-    'hiddenId' => 'iduser',
-    'confirmId' => 'konfirmasi',
-    'confirmText' => 'Ya, Konfirmasi',
-    'confirmClass' => 'btn-success',
-]) ?>
 
 <div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-labelledby="modalDataLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -127,17 +117,25 @@ $('#modalData').on('show.bs.modal', function(e) {
     $('#bukti').attr('src', '<?= base_url() ?>/assets/bukti/' + $button.data('invoice') + '.png');
 });
 
-$('.konfirmasiBtn').on('click', function () {
-    $('#modalKonfirmasi #iduser').val($(this).data('id'));
-});
+$('.konfirmasiBtn').on('click', function() {
+    var $button = $(this);
 
-$('#konfirmasi').on('click', function() {
-    DiulemAdmin.post("<?= base_url('admin/konfirmasi') ?>", {
-        id: $('#iduser').val()
-    }, {
-        button: $(this),
-        successMessage: 'Pengguna berhasil dikonfirmasi.',
-        errorMessage: 'Pengguna gagal dikonfirmasi.'
+    DiulemAdmin.confirm({
+        title: 'Konfirmasi Pembayaran',
+        text: 'Konfirmasi pembayaran pengguna ini?',
+        confirmButtonText: 'Ya, Konfirmasi'
+    }).then(function(result) {
+        if (!result.value) {
+            return;
+        }
+
+        DiulemAdmin.post("<?= base_url('admin/konfirmasi') ?>", {
+            id: $button.data('id')
+        }, {
+            button: $button,
+            successMessage: 'Pengguna berhasil dikonfirmasi.',
+            errorMessage: 'Pengguna gagal dikonfirmasi.'
+        });
     });
 });
 </script>

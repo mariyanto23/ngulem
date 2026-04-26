@@ -80,7 +80,7 @@
                                 <td><?= esc(date('d M Y', strtotime($row->created_at))) ?></td>
                                 <td><?= esc($row->nama_pengunjung) ?></td>
                                 <td>
-                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus riwayat" aria-label="Hapus riwayat">
+                                    <button data-id="<?= esc($row->id) ?>" class="btn btn-sm btn-danger btn-icon hapus" title="Hapus riwayat" aria-label="Hapus riwayat">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </td>
@@ -93,13 +93,6 @@
         </div>
     </div>
 </div>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalHapus',
-    'message' => 'Apakah kamu yakin ingin menghapus riwayat pengunjung ini?',
-    'hiddenName' => 'idPengunjung',
-    'hiddenId' => 'idPengunjung',
-]) ?>
 
 <script>
 var jumlah = [];
@@ -118,18 +111,25 @@ $(document).ready(function () {
     $('.hapus').on('click', function () {
         $('#centangSemua').prop('checked', false);
         $('.centangPengunjung').prop('checked', false);
-        $('#modalHapus #idPengunjung').val($(this).data('id'));
-    });
+        var idPengunjung = $(this).data('id');
+        var $button = $(this);
 
-    $('#hapusBtn').on('click', function() {
-        var id_pengunjung = $('#idPengunjung').val();
+        DiulemDashboard.confirm({
+            title: 'Hapus Riwayat',
+            text: 'Apakah kamu yakin ingin menghapus riwayat pengunjung ini?',
+            confirmButtonText: 'Ya, Hapus'
+        }).then(function(result) {
+            if (!result.value) {
+                return;
+            }
 
-        DiulemDashboard.post("<?= base_url('user/hapus_riwayat') ?>", {
-            id: id_pengunjung
-        }, {
-            button: $(this),
-            successMessage: 'Riwayat pengunjung berhasil dihapus.',
-            errorMessage: 'Riwayat pengunjung gagal dihapus.'
+            DiulemDashboard.post("<?= base_url('user/hapus_riwayat') ?>", {
+                id: idPengunjung
+            }, {
+                button: $button,
+                successMessage: 'Riwayat pengunjung berhasil dihapus.',
+                errorMessage: 'Riwayat pengunjung gagal dihapus.'
+            });
         });
     });
 

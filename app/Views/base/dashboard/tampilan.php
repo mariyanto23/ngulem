@@ -99,7 +99,7 @@ $categoryBadgeClass = static function ($categoryName) {
                             <h3 class="card-title mb-3"><?= esc($row->nama_theme) ?></h3>
                             <div class="btn-list">
                                 <?php if ($paket[0]->tema_bebas == 1 && $order[0]->status_bayar == 2) { ?>
-                                    <button class="btn btn-success btn-sm pilih" data-id="<?= esc($row->id) ?>" data-toggle="modal" data-target="#modalTema">
+                                    <button class="btn btn-success btn-sm pilih" data-id="<?= esc($row->id) ?>">
                                         Pilih
                                     </button>
                                 <?php } ?>
@@ -119,28 +119,14 @@ $categoryBadgeClass = static function ($categoryName) {
     </div>
 </div>
 
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalTema',
-    'message' => 'Apakah kamu yakin ingin mengubah tema?',
-    'hiddenName' => 'idTema',
-    'hiddenId' => 'idTema',
-    'confirmId' => 'pilihBtn',
-    'confirmText' => 'Ya, Pilih',
-    'confirmClass' => 'btn-primary',
-]) ?>
-
 <script>
 $('.pilih').on('click', function () {
-    $('#modalTema #idTema').val($(this).data('id'));
-});
-
-$('#pilihBtn').on('click', function() {
-    var idtema = $('#idTema').val();
-
+    var $button = $(this);
+    var idtema = $button.data('id');
     DiulemDashboard.post("<?= base_url('user/ganti_tema') ?>", {
         id: idtema
     }, {
-        button: $(this),
+        button: $button,
         successMessage: 'Tema berhasil diganti.',
         errorMessage: 'Tema gagal diganti.'
     });

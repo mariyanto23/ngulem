@@ -46,7 +46,7 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger btn-icon hapus" data-toggle="modal" data-target="#modalHapus" title="Hapus data hadir" aria-label="Hapus data hadir">
+                                    <button data-id="<?= esc($row->id_tamu) ?>" class="btn btn-sm btn-danger btn-icon hapus" title="Hapus data hadir" aria-label="Hapus data hadir">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </td>
@@ -58,15 +58,6 @@
         </div>
     </div>
 </div>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalHapus',
-    'message' => 'Apakah kamu yakin ingin menghapus tamu dari daftar hadir?',
-    'hiddenName' => 'idTamu',
-    'hiddenId' => 'idTamu',
-    'confirmId' => 'pilihHapus',
-    'confirmText' => 'Ya, Hapus',
-]) ?>
 
 <div class="modal fade" id="modalSelfie" tabindex="-1" role="dialog" aria-labelledby="modalSelfieLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -86,7 +77,25 @@
 $(document).ready(function () {
     $('.hapus').on('click', function () {
         var idtamu = $(this).data('id');
-        $('#modalHapus #idTamu').val(idtamu);
+        var $button = $(this);
+
+        DiulemDashboard.confirm({
+            title: 'Hapus Data Hadir',
+            text: 'Apakah kamu yakin ingin menghapus tamu dari daftar hadir?',
+            confirmButtonText: 'Ya, Hapus'
+        }).then(function(result) {
+            if (!result.value) {
+                return;
+            }
+
+            DiulemDashboard.post("<?= base_url('user/hapus_hadir') ?>", {
+                id: idtamu
+            }, {
+                button: $button,
+                successMessage: 'Data hadir berhasil dihapus.',
+                errorMessage: 'Data hadir gagal dihapus.'
+            });
+        });
     });
 
     $('.hadir-selfie').on('click', function () {
@@ -94,16 +103,5 @@ $(document).ready(function () {
         $('#selfiePreview').attr('src', $(this).data('image'));
     });
 
-    $('#pilihHapus').on('click', function(event) {
-        var idtamu = $('#idTamu').val();
-
-        DiulemDashboard.post("<?= base_url('user/hapus_hadir') ?>", {
-            id: idtamu
-        }, {
-            button: $(this),
-            successMessage: 'Data hadir berhasil dihapus.',
-            errorMessage: 'Data hadir gagal dihapus.'
-        });
-    });
 });
 </script>

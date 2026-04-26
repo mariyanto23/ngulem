@@ -63,7 +63,7 @@
                         <input id="nama_ibu_pria" type="text" class="form-control" placeholder="Nama Ibu" value="<?= $mempelai[0]->nama_ibu_pria ?>" required>
                     </div>
                     <div class="col mt-3">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalPria">Simpan</button>
+                        <button class="btn btn-primary" id="simpanPria">Simpan</button>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                     </div>
 
                     <div class="col mt-3">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalWanita">Simpan</button>
+                        <button class="btn btn-primary" id="simpanWanita">Simpan</button>
                     </div>
                 </div>
             </div>
@@ -182,24 +182,6 @@
 </div>
 
 
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalWanita',
-    'message' => 'Apakah kamu yakin ingin menyimpan data mempelai wanita?',
-    'confirmId' => 'simpanWanita',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
-
-<?= view('base/dashboard/components/confirm_modal', [
-    'modalId' => 'modalPria',
-    'message' => 'Apakah kamu yakin ingin menyimpan data mempelai pria?',
-    'confirmId' => 'simpanPria',
-    'confirmText' => 'Ya, Simpan',
-    'confirmClass' => 'btn-primary',
-]) ?>
-
-
-
 <script src="<?php echo base_url() ?>/assets/base/js/croppie.min.js"></script>
 <script>
 
@@ -263,7 +245,7 @@ $(document).ready(function () {
             }
 
             fotonyasiapa = $(this).attr("id");
-            $("#myModal").modal();
+            DiulemDashboard.showModal('myModal');
             /* Initailize croppie instance and assign it to global variable */
             if (croppie) {
                 croppie.destroy();
@@ -288,7 +270,7 @@ $(document).ready(function () {
             var $button = $(this);
             DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Upload...');
             croppie.result('base64').then(function(base64) {
-                $("#myModal").modal("hide"); 
+                DiulemDashboard.hideModal('myModal'); 
 
                 var url = "<?php echo base_url('user/update_foto_mempelai') ?>";
                 var formData = new FormData();
