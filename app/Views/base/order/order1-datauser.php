@@ -66,14 +66,6 @@
                     <!-- <a class="btn btn-primary btn-order btn-block" style="background-color: #3498db;">Lanjut</a> -->
                     <input class="btn btn-primary btn-order btn-block" type="submit" name="submit" value="Lanjut">
                   </div>
-                  <div class="col mt-3 mt-md-0">
-                    <button class="btn btn-outline-secondary btn-order btn-block" type="submit" name="setup_later" value="1">Atur Nanti</button>
-                  </div>
-
-                </div>
-
-                <div class="mt-3 text-center text-muted" style="font-size: 14px;">
-                  Atur nanti akan membuat undangan dasar dulu, lalu detailnya bisa dilengkapi dari dashboard.
                 </div>
 
                 <div class="form-check mt-4" style="text-align: center;">

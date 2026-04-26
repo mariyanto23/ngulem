@@ -116,13 +116,6 @@ class Order extends Controller
 			    $this->session->set('dummy', $generate);
 			}
 
-			if($this->request->getPost('setup_later') == '1'){
-				$this->session->set('quick_setup', 1);
-				$this->session->set('save', 1);
-				$this->session->set('checkpoint', 5);
-				return redirect()->to(base_url('order/save'));
-			}
-			
 		}
 		
 		//set view data
@@ -148,6 +141,13 @@ class Order extends Controller
 			//simpan data sebelumnya ke session
 			
 			$this->simpan_data_sessions('mempelai');
+
+			if($this->request->getPost('setup_later') == '1'){
+				$this->session->set('quick_setup', 1);
+				$this->session->set('save', 1);
+				$this->session->set('checkpoint', 5);
+				return redirect()->to(base_url('order/save'));
+			}
 			
 			//set checkpoint
 			$c = $this->session->get('checkpoint');

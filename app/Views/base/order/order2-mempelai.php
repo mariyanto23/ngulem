@@ -187,10 +187,16 @@
                   <div class="col-auto">
                     <a href="<?= base_url('order/1'); ?>" class="btn btn-secondary btn-order">Kembali</a>
                   </div>
+                  <div class="col-auto">
+                    <button name="setup_later" value="1" type="submit" formnovalidate class="btn btn-outline-secondary btn-order">Atur Nanti</button>
+                  </div>
                   <div class="col">
                     <input name="submit" type="submit" class="btn btn-primary btn-order btn-block" style="background-color: #3498db;" value="Lanjut">
                   </div>
-                </div>   
+                </div>
+                <div class="mt-3 text-center text-muted" style="font-size: 14px;">
+                  Atur nanti akan membuat undangan dasar dulu, lalu detailnya bisa dilengkapi dari dashboard.
+                </div>
               </div>
             </div>
           </form>
