@@ -20,7 +20,7 @@
                     <div class="card h-100 diulem-admin-theme-card">
                         <div class="diulem-admin-theme-preview">
                             <img src="<?= base_url() ?>/assets/themes_video/<?= esc($row->preview) ?>" alt="<?= esc($row->nama_tema) ?>">
-                            <span class="badge bg-teal-lt text-teal diulem-admin-theme-status"><?= esc($row->name) ?></span>
+                            <span class="badge bg-teal-lt text-teal diulem-admin-theme-status diulem-admin-theme-status-left"><?= esc($row->name) ?></span>
                         </div>
                         <div class="card-body">
                             <div class="card-title mb-1"><?= esc($row->nama_tema) ?></div>
