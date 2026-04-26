@@ -291,8 +291,8 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         $data['host_email'] = $this->request->getPost('host_email');
         $data['email'] = $this->request->getPost('email');
         $data['pass_email'] = $this->request->getPost('pass_email');
-        $data['wa_gateway'] = $this->buildWaGatewayValue($provider, $enabled);
-        $data['token_wa'] = $this->request->getPost('token_wa');
+        $data['wa_gateway'] = $this->normalizeWaProvider($provider);
+        $data['token_wa'] = $this->buildWaTokenValue($this->request->getPost('token_wa'), $enabled);
         $data['no_wa'] = $this->request->getPost('no_wa');
         $data['pesan_wa'] = $this->request->getPost('pesan_wa'); 
         $update = $this->AdminModel->update_setting($data);
@@ -1104,10 +1104,11 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
             echo 'gagal';
         }
     }
-    private function parseWaGatewayConfig($value){
+    private function parseWaGatewayConfig($value, $tokenValue = ''){
         $config = [
             'enabled' => true,
             'provider' => 'nusagateway',
+            'token' => $this->parseWaTokenValue($tokenValue),
         ];
 
         if (empty($value)) {
@@ -1124,16 +1125,41 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         return $config;
     }
 
-    private function buildWaGatewayValue($provider, $enabled){
-        $provider = in_array($provider, ['nusagateway', 'starsender', 'onesender'], true) ? $provider : 'nusagateway';
-        return $enabled ? $provider : 'off:' . $provider;
+    private function normalizeWaProvider($provider){
+        return in_array($provider, ['nusagateway', 'starsender', 'onesender'], true) ? $provider : 'nusagateway';
+    }
+
+    private function parseWaTokenValue($token){
+        if (empty($token)) {
+            return '';
+        }
+
+        if (strpos($token, '__disabled__:') === 0) {
+            return substr($token, 13);
+        }
+
+        return $token;
+    }
+
+    private function isWaGatewayEnabled($gatewayValue, $tokenValue = ''){
+        if (strpos((string) $gatewayValue, 'off:') === 0) {
+            return false;
+        }
+
+        return strpos((string) $tokenValue, '__disabled__:') !== 0;
+    }
+
+    private function buildWaTokenValue($token, $enabled){
+        $cleanToken = $this->parseWaTokenValue((string) $token);
+        return $enabled ? $cleanToken : '__disabled__:' . $cleanToken;
     }
 
     private function send_wa($token, $phone, $message){
         foreach ($this->AdminModel->get_setting() as $row){
-            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway);
+            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway, $row->token_wa);
         }
-        if (! $waGatewayConfig['enabled'] || empty($token) || empty($phone)) {
+        $token = $this->parseWaTokenValue($token);
+        if (! $this->isWaGatewayEnabled($row->wa_gateway ?? '', $row->token_wa ?? '') || empty($token) || empty($phone)) {
             return false;
         }
 

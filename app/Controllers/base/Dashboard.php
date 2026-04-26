@@ -1524,10 +1524,11 @@ Nominal : '.number_format($result->gross_amount).'
             return redirect()->to(base_url('user/invoice'));
         }
     } 
-    private function parseWaGatewayConfig($value){
+    private function parseWaGatewayConfig($value, $tokenValue = ''){
         $config = [
             'enabled' => true,
             'provider' => 'nusagateway',
+            'token' => $this->parseWaTokenValue($tokenValue),
         ];
 
         if (empty($value)) {
@@ -1542,6 +1543,26 @@ Nominal : '.number_format($result->gross_amount).'
 
         $config['provider'] = $value;
         return $config;
+    }
+
+    private function parseWaTokenValue($token){
+        if (empty($token)) {
+            return '';
+        }
+
+        if (strpos($token, '__disabled__:') === 0) {
+            return substr($token, 13);
+        }
+
+        return $token;
+    }
+
+    private function isWaGatewayEnabled($gatewayValue, $tokenValue = ''){
+        if (strpos((string) $gatewayValue, 'off:') === 0) {
+            return false;
+        }
+
+        return strpos((string) $tokenValue, '__disabled__:') !== 0;
     }
 
     private function cek_wa($token, $hp){
@@ -1565,9 +1586,10 @@ Nominal : '.number_format($result->gross_amount).'
 	
 	private function send_wa($token, $phone, $message){
 	    foreach ($this->DashboardModel->get_setting() as $row){
-            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway);
+            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway, $row->token_wa);
         }
-        if (! $waGatewayConfig['enabled'] || empty($token) || empty($phone)) {
+        $token = $this->parseWaTokenValue($token);
+        if (! $this->isWaGatewayEnabled($row->wa_gateway ?? '', $row->token_wa ?? '') || empty($token) || empty($phone)) {
             return false;
         }
         $wa_gateway = $waGatewayConfig['provider'];

@@ -1,8 +1,9 @@
 <div class="page-body">
 <?php
 $waGatewayRaw = $setting[0]->wa_gateway ?? 'nusagateway';
-$waGatewayEnabled = strpos($waGatewayRaw, 'off:') === 0 ? '0' : '1';
-$waGatewayProvider = $waGatewayEnabled === '0' ? substr($waGatewayRaw, 4) : $waGatewayRaw;
+$waTokenRaw = $setting[0]->token_wa ?? '';
+$waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, '__disabled__:') === 0) ? '0' : '1';
+$waGatewayProvider = strpos($waGatewayRaw, 'off:') === 0 ? substr($waGatewayRaw, 4) : $waGatewayRaw;
 if (! in_array($waGatewayProvider, ['nusagateway', 'starsender', 'onesender'], true)) {
     $waGatewayProvider = 'nusagateway';
 }

@@ -1,10 +1,12 @@
 <?php
 $waGatewayRaw = $setting[0]->wa_gateway ?? 'nusagateway';
-$waGatewayEnabled = strpos($waGatewayRaw, 'off:') === 0 ? '0' : '1';
-$waGatewayProvider = $waGatewayEnabled === '0' ? substr($waGatewayRaw, 4) : $waGatewayRaw;
+$waTokenRaw = $setting[0]->token_wa ?? '';
+$waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, '__disabled__:') === 0) ? '0' : '1';
+$waGatewayProvider = strpos($waGatewayRaw, 'off:') === 0 ? substr($waGatewayRaw, 4) : $waGatewayRaw;
 if (! in_array($waGatewayProvider, ['nusagateway', 'starsender', 'onesender'], true)) {
     $waGatewayProvider = 'nusagateway';
 }
+$waTokenValue = strpos($waTokenRaw, '__disabled__:') === 0 ? substr($waTokenRaw, 13) : $waTokenRaw;
 $waGatewayLink = '';
 if ($waGatewayProvider === 'nusagateway') {
     $waGatewayLink = 'https://nusagateway.com';
@@ -90,7 +92,7 @@ if ($waGatewayProvider === 'nusagateway') {
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Token Whatsapp Gateway</label>
-                            <input id="token_wa" type="text" class="form-control" placeholder="Masukkan token" value="<?= esc($setting[0]->token_wa) ?>" required>
+                            <input id="token_wa" type="text" class="form-control" placeholder="Masukkan token" value="<?= esc($waTokenValue) ?>" required>
                             <?php if ($waGatewayProvider != 'onesender' && ! empty($waGatewayLink)) { ?>
                                 <small class="form-hint">
                                     Kosongkan jika tidak memiliki token atau
@@ -143,8 +145,8 @@ $('#simpanSetting1').on('click', function() {
         pesan_wa: $('#pesan_wa').val()
     }, {
         button: $(this),
-        successMessage: 'Contact admin berhasil disimpan.',
-        errorMessage: 'Contact admin gagal disimpan.'
+        successMessage: 'Kontak admin dan Whatsapp Gateway berhasil disimpan.',
+        errorMessage: 'Kontak admin dan Whatsapp Gateway gagal disimpan.'
     });
 });
 
