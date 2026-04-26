@@ -445,7 +445,7 @@ INSERT INTO `setting` (`id`, `harga`, `img`, `created_at`, `trial`, `aktif`, `ho
 
 CREATE TABLE `setting_pembayaran` (
   `id_setting` int(11) NOT NULL,
-  `metode_bayar` enum('manual','midtrans','tripay') NOT NULL,
+  `metode_bayar` enum('manual','manual_qris','midtrans','tripay') NOT NULL,
   `bank_manual` varchar(100) DEFAULT NULL,
   `norek_manual` varchar(100) DEFAULT NULL,
   `nama_manual` varchar(100) DEFAULT NULL,

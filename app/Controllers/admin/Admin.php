@@ -335,6 +335,32 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         $data['view'] = 'admin/setting_pembayaran';
 		return view('admin/layout', $data);
     }
+
+    private function ensurePaymentMethodSchema()
+    {
+        try {
+            $db = \Config\Database::connect();
+            $result = $db->query("SHOW COLUMNS FROM `setting_pembayaran` LIKE 'metode_bayar'");
+            $row = $result ? $result->getRow() : null;
+
+            if ($row && isset($row->Type) && stripos($row->Type, 'manual_qris') === false) {
+                $db->query("ALTER TABLE `setting_pembayaran` MODIFY `metode_bayar` ENUM('manual','manual_qris','midtrans','tripay') NOT NULL");
+            }
+        } catch (\Throwable $th) {
+            log_message('error', 'Gagal menyesuaikan schema metode_bayar: {message}', ['message' => $th->getMessage()]);
+        }
+    }
+
+    private function hasManualQrisAsset()
+    {
+        foreach (['png', 'jpg', 'jpeg', 'webp'] as $extension) {
+            if (is_file(FCPATH . 'assets/base/img/qris-manual.' . $extension)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     
     public function setting_paket(){
         $data['setting'] = $this->AdminModel->get_setting_paket();
@@ -344,6 +370,7 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     }
 
     public function do_update_setting_pembayaran_1(){
+        $this->ensurePaymentMethodSchema();
         $data['bank_manual'] = $this->request->getPost('bank_manual');
         $data['norek_manual'] = $this->request->getPost('norek_manual');
         $data['nama_manual'] = $this->request->getPost('nama_manual');
@@ -391,7 +418,16 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
 
     }
     public function do_update_setting_pembayaran_2(){
+        $this->ensurePaymentMethodSchema();
         $data['metode_bayar'] = $this->request->getPost('metode_bayar');
+
+        if ($data['metode_bayar'] === 'manual_qris' && ! $this->hasManualQrisAsset()) {
+            $session = session();
+            $session->setFlashdata("error", "Upload gambar QRIS manual dulu sebelum mengaktifkan metode ini");
+            echo 'gagal';
+            return;
+        }
+
         $update = $this->AdminModel->update_setting_pembayaran($data);
         if($update){
             $session = session();

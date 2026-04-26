@@ -82,6 +82,7 @@
                             <option value="midtrans" <?= $setting[0]->metode_bayar == 'midtrans' ? 'selected' : '' ?>>Midtrans</option>
                             <option value="tripay" <?= $setting[0]->metode_bayar == 'tripay' ? 'selected' : '' ?>>Tripay</option>
                         </select>
+                        <small class="form-hint">Manual QRIS hanya bisa diaktifkan jika gambar QRIS sudah diupload pada bagian Gateway Pembayaran.</small>
                         <div class="mt-4"><button class="btn btn-primary" id="simpanSetting2"><i class="ti ti-device-floppy me-2"></i>Simpan Metode</button></div>
                     </div>
                 </div>
