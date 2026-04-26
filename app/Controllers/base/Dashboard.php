@@ -896,6 +896,14 @@ class Dashboard extends Controller
 
     }
     public function refresh_invoice(){
+        $bayar = $this->DashboardModel->get_pembayaran_by_id_user();
+        if ((int) ($bayar[0]->harga ?? 0) <= 0) {
+            $session = session();
+            $session->setFlashdata("success", "Paket gratis tidak memerlukan refresh invoice");
+            echo 'sukses';
+            return;
+        }
+
         $id_user = $_SESSION['id']; //ambil id user
 		$today = date('ym');
 	 	$kode = $today.$id_user.rand(10,99);
@@ -918,13 +926,22 @@ class Dashboard extends Controller
 		$data['id_user'] = $_SESSION['id']; 
 	 	$data['invoice'] = $today.$id_user.rand(10,99);
         $ordernya = $this->DashboardModel->get_pembayaran_by_id_user();
+        $isFreePackage = false;
          foreach( $ordernya as $order){
             $data['harga'] = $order->harga;
+            $isFreePackage = (int) $order->harga <= 0;
          }
+        if ($isFreePackage) {
+            $data['status'] = 2;
+            $data['payment_type'] = 'gratis';
+            $data['transaction_status'] = 'settlement';
+            $data['transaction_time'] = date('Y-m-d H:i:s');
+            $data['transaction_expired'] = null;
+        }
         $insert = $this->DashboardModel->re_order($data);
         if($insert){
             $session = session();
-            $session->setFlashdata("success", "Invoice Baru Berhasil dibuat");
+            $session->setFlashdata("success", $isFreePackage ? "Paket gratis berhasil diaktifkan kembali" : "Invoice Baru Berhasil dibuat");
             echo 'sukses';
         }else{ 
          $session = session();
@@ -938,14 +955,23 @@ class Dashboard extends Controller
         $id_paket = $this->request->getPost('id_paket');
 		$today = date('ym');
         $bayar = $this->DashboardModel->get_pembayaran_by_id_user();
-        if($bayar[0]->status == 2) {
+        $paket = $this->DashboardModel->get_paket_by_id($id_paket);
+        $isFreePackage = (int) $paket[0]->harga_paket <= 0;
+        if($bayar[0]->status == 2 || $isFreePackage) {
         $data1['created_at'] = date('Y-m-d H:i:s');
         }
         $data1['id_paket'] = $id_paket;
-        $paket = $this->DashboardModel->get_paket_by_id($id_paket);
         $data2 = ['invoice' => $today.$_SESSION['id'].rand(10,99),
-            'status' => 0,
+            'status' => $isFreePackage ? 2 : 0,
             'harga' => $paket[0]->harga_paket,
+            'payment_type' => $isFreePackage ? 'gratis' : '',
+            'nama_bank' => '',
+            'va_number' => '',
+            'biller_code' => '',
+            'instruction' => '',
+            'transaction_status' => $isFreePackage ? 'settlement' : '',
+            'transaction_time' => $isFreePackage ? date('Y-m-d H:i:s') : null,
+            'transaction_expired' => null,
             ];
         $array_items = ['kirim_hadiah', 'buku_tamu'];
         $this->session->remove($array_items);
@@ -954,7 +980,7 @@ class Dashboard extends Controller
         $update = $this->DashboardModel->update_paket($data1, $data2);
         if($update){
             $session = session();
-            $session->setFlashdata("success", "Paket Undangan Berhasil diperbarui");
+            $session->setFlashdata("success", $isFreePackage ? "Paket gratis berhasil diaktifkan" : "Paket Undangan Berhasil diperbarui");
             echo 'sukses';
             return redirect()->to(base_url('user/invoice'));
         }else{ 

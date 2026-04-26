@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-auto">
                       <?php if($status == 2){ ?>
-                       <a href="#" class="btn-success btn-sm" >Lunas</a>
+                       <a href="#" class="btn-success btn-sm" >Aktif</a>
                       <?php }else{ ?> 
                         <a href="#" class="btn-warning btn-sm" >Belum Lunas</a>
                       <?php } ?>

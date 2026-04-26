@@ -20,7 +20,12 @@
                 <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/update_paket'); ?>">
                     <div class="card h-100">
                         <div class="card-header">
-                            <h3 class="card-title">Paket <?= $index + 1 ?></h3>
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <h3 class="card-title mb-0">Paket <?= $index + 1 ?></h3>
+                                <?php if ((int) $paket->harga_paket <= 0) { ?>
+                                    <span class="badge bg-azure text-azure-fg">Gratis</span>
+                                <?php } ?>
+                            </div>
                         </div>
                         <div class="card-body">
                             <input type="hidden" name="id_paket" value="<?= esc($paket->id_paket) ?>">
@@ -31,6 +36,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Harga Paket Undangan</label>
                                 <input name="harga_paket" type="text" class="form-control" placeholder="Masukkan harga paket" value="<?= esc($paket->harga_paket) ?>" required>
+                                <?php if ((int) $paket->harga_paket <= 0) { ?>
+                                    <small class="form-hint">Paket ini akan aktif tanpa pembayaran.</small>
+                                <?php } ?>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Masa Aktif Undangan (hari)</label>
@@ -93,6 +101,7 @@
                     <div class="mb-3">
                         <label class="form-label">Harga Paket Undangan</label>
                         <input name="harga_paket" type="text" class="form-control" placeholder="Masukkan harga paket" required>
+                        <small class="form-hint">Isi `0` untuk membuat paket gratis.</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Masa Aktif Undangan (hari)</label>

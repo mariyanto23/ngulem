@@ -491,6 +491,10 @@ class Order extends Controller
 
 	 }
 
+	 private function isFreePackage($price){
+	 	return (int) $price <= 0;
+	 }
+
 	 public function finish(){
 
 	 	$submit = $this->request->getPost('submit');
@@ -761,13 +765,18 @@ class Order extends Controller
 		];
 		
         $paket = $this->order->get_paket_by_id($id_paket);
-        $harga = $paket[0]->harga_paket;
+        $harga = (int) $paket[0]->harga_paket;
+        $isFreePackage = $this->isFreePackage($harga);
 		//pembayaran
 		$dataPembayaran = [
 			'id_user' => $id_user,
 			'invoice' => $kode,
-			'status' => '0',
-			'harga' => $harga
+			'status' => $isFreePackage ? '2' : '0',
+			'harga' => $harga,
+			'payment_type' => $isFreePackage ? 'gratis' : '',
+			'transaction_status' => $isFreePackage ? 'settlement' : '',
+			'transaction_time' => $isFreePackage ? date('Y-m-d H:i:s') : null,
+			'transaction_expired' => null,
 		];
 		$dataTesti= [
 			'id_user' => $id_user
@@ -792,16 +801,29 @@ class Order extends Controller
             $nama = SITE_NAME;
             $bayar = number_format($harga);
             $phone = $hp;
-            $pesan = 'Halo Kak, Terima Kasih Sudah Memesan Undangan Digital <b>'.DOMAIN_UTAMA.'</b><br>
+            if ($isFreePackage) {
+            	$pesan = 'Halo Kak, Terima Kasih Sudah Membuat Undangan Digital <b>'.DOMAIN_UTAMA.'</b><br>
+Undangan Anda dengan kode <b>#'.$kode.'</b> sudah aktif tanpa pembayaran.<br>
+Masuk ke Halaman Dashboard Anda : '.SITE_UTAMA.'/login<br><br>
+-------------------------------------------<br>
+<b>Terima Kasih Dan Sukses Selalu</b>';
+            	$message = 'Halo Kak, Terima Kasih Sudah Membuat Undangan Digital '.DOMAIN_UTAMA.'
+Undangan Anda dengan kode #'.$kode.' sudah aktif tanpa pembayaran.
+Masuk ke Halaman Dashboard Anda : '.SITE_UTAMA.'/login
+
+*Terima Kasih Dan Sukses Selalu*';
+            } else {
+            	$pesan = 'Halo Kak, Terima Kasih Sudah Memesan Undangan Digital <b>'.DOMAIN_UTAMA.'</b><br>
 Masuk ke Halaman Dashboard Anda : '.SITE_UTAMA.'/login<br>
 Mohon untuk segera melakukan pembayaran pesanannya <b>#'.$kode.'</b> sejumlah <b>Rp. '.$bayar.'</b>. <br><br>
 -------------------------------------------<br>
 <b>Terima Kasih Dan Sukses Selalu</b>';
-            $message = 'Halo Kak, Terima Kasih Sudah Memesan Undangan Digital '.DOMAIN_UTAMA.'
+            	$message = 'Halo Kak, Terima Kasih Sudah Memesan Undangan Digital '.DOMAIN_UTAMA.'
 Masuk ke Halaman Dashboard Anda : '.SITE_UTAMA.'/login
 Mohon untuk segera melakukan pembayaran pesanannya #'.$kode.' sejumlah *Rp. '.$bayar.'* 
 
 *Terima Kasih Dan Sukses Selalu*';
+            }
            $this->send_wa($token, $phone, $message);
             $this->sendEmail($from, $nama, $email, 'Invoice', $pesan);
             $this->session->destroy();

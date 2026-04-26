@@ -219,9 +219,14 @@
                 <div class="pricing-panel">
                   <!--  Pricing heading   -->
                   <div class="pricing-head">
-                    <h6 class="pricing-name"><?= strtoupper($data->nama_paket) ?></h6>
+                    <h6 class="pricing-name">
+                      <?= strtoupper($data->nama_paket) ?>
+                      <?php if ((int) $data->harga_paket <= 0) { ?>
+                        <span class="label-coral" style="margin-left:8px;">GRATIS</span>
+                      <?php } ?>
+                    </h6>
                     <div class="pricing-type">
-                      <p class="price">Rp. <?= number_format($data->harga_paket) ?></p>
+                      <p class="price"><?= (int) $data->harga_paket <= 0 ? 'Gratis' : 'Rp. ' . number_format($data->harga_paket) ?></p>
                       <p class="per">Aktif <?= $data->masa_aktif ?> Hari</p>
                     </div>
                   </div>
@@ -238,7 +243,7 @@
                       <li>Galeri Foto</li>
                       <li>Background Music</li>
                       
-                    </ul><a class="btn btn--bordered btn--primary" href="<?= base_url() ?>/order">Buat Undangan</a>
+                    </ul><a class="btn btn--bordered btn--primary" href="<?= base_url() ?>/order"><?= (int) $data->harga_paket <= 0 ? 'Coba Gratis' : 'Buat Undangan' ?></a>
                   </div>
                 </div>
               </div>

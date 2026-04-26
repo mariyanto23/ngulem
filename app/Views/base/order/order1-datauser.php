@@ -17,14 +17,16 @@
                 <select class="form-control" id="id_paket" name="id_paket" required>
                     <option value=''>--Pilihan Paket Undangan--</option>
                     <?php foreach ($paket as $row) : ?>
+                <?php $hargaPaket = (int) $row->harga_paket; ?>
                     <?php if ($row->id_paket == $id_paket) { ?>
-                    <option value="<?= $row->id_paket ?>" selected>Paket <?= $row->nama_paket ?> - Harga Rp <?= number_format($row->harga_paket) ?></option>
+                    <option value="<?= $row->id_paket ?>" selected><?= $hargaPaket <= 0 ? '[GRATIS] ' : '' ?>Paket <?= $row->nama_paket ?> - Harga <?= $hargaPaket <= 0 ? 'Gratis' : 'Rp ' . number_format($hargaPaket) ?></option>
                         <?php } else { ?>
-                    <option value="<?= $row->id_paket ?>">Paket <?= $row->nama_paket ?> - Harga Rp <?= number_format($row->harga_paket) ?></option>
+                    <option value="<?= $row->id_paket ?>"><?= $hargaPaket <= 0 ? '[GRATIS] ' : '' ?>Paket <?= $row->nama_paket ?> - Harga <?= $hargaPaket <= 0 ? 'Gratis' : 'Rp ' . number_format($hargaPaket) ?></option>
                         <?php
                             }
                     endforeach; ?>
                 </select>
+                <small class="form-text text-muted">Paket gratis akan langsung aktif tanpa pembayaran.</small>
               </div>
             </div>
             <div class="row align-items-center">

@@ -34,13 +34,17 @@
                     $tglNonaktif = strtotime($aktif, strtotime( $tglBayar));
                     $tglNonaktifFormated = date("d-m-Y H:i", $tglNonaktif) . ' WIB';
                     $instruction = json_decode($pembayaran[0]->instruction);
+                    $isFreePackage = (int) $pembayaran[0]->harga <= 0;
                     $isInvoiceExpired = $today >= $expiry;
                     $isInvitationExpired = $pembayaran[0]->status == 2 && $today >= $tglNonaktif;
-                    $showPaymentAccount = $metode_bayar == 'manual' || $pembayaran[0]->status != 0;
+                    $showPaymentAccount = ! $isFreePackage && ($metode_bayar == 'manual' || $pembayaran[0]->status != 0);
                     $invoiceStatusLabel = 'Belum Lunas';
                     $invoiceStatusClass = 'bg-warning text-warning-fg';
 
-                    if ($isInvitationExpired) {
+                    if ($isFreePackage && $pembayaran[0]->status == 2 && ! $isInvitationExpired) {
+                        $invoiceStatusLabel = 'Gratis';
+                        $invoiceStatusClass = 'bg-azure text-azure-fg';
+                    } elseif ($isInvitationExpired) {
                         $invoiceStatusLabel = 'Tidak Aktif';
                         $invoiceStatusClass = 'bg-danger text-danger-fg';
                     } elseif ($pembayaran[0]->status == 2) {
@@ -57,7 +61,9 @@
                         $invoiceStatusClass = 'bg-warning text-warning-fg';
                     }
 
-                    if($pembayaran[0]->status == 0){ ?>
+                    if($isFreePackage && $pembayaran[0]->status == 2 && ! $isInvitationExpired){ ?>
+                    <div class="alert alert-success mb-0">Paket gratis aktif sampai <?= esc($tglNonaktifFormated) ?>.</div>
+                    <?php } else if($pembayaran[0]->status == 0){ ?>
                     <div class="alert alert-danger mb-0">Invoice: masa trial anda akan berakhir pada tanggal <?= esc($tglExpFormated) ?>. Segera lakukan pembayaran.</div>
                     <?php }else if($pembayaran[0]->status == 1){ 
                     if($metode_bayar == 'manual') {?>
@@ -65,7 +71,10 @@
                     <?php }else{ ?>
                     <div class="alert alert-warning mb-0">Invoice: selesaikan pembayaran anda sebelum <?= esc($expiry_date) ?>.</div>
                     <?php }
-                    } else if($pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ 
+                    } else if($isFreePackage && $pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ 
+                    ?>
+                    <div class="alert alert-danger mb-0">Masa aktif paket gratis sudah habis pada tanggal <?= esc($tglNonaktifFormated) ?>. Silahkan aktifkan ulang paket gratis.</div>
+                    <?php } else if($pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ 
                     ?>
                     <div class="alert alert-danger mb-0">Masa aktif undangan sudah habis pada tanggal <?= esc($tglNonaktifFormated) ?>. Silahkan lakukan pembayaran lagi untuk memperpanjang masa aktif undangan.</div>
                     <?php }else{ ?>
@@ -93,7 +102,7 @@
                                     <button id="re_order" class="btn btn-danger btn-sm btn-icon" title="Buat invoice perpanjangan" aria-label="Buat invoice perpanjangan">
                                         <i class="ti ti-refresh"></i>
                                     </button>
-                                    <?php } elseif ($pembayaran[0]->status == 1 || $pembayaran[0]->status == 0) { ?>
+                                    <?php } elseif (! $isFreePackage && ($pembayaran[0]->status == 1 || $pembayaran[0]->status == 0)) { ?>
                                     <button id="refresh" class="btn btn-danger btn-sm btn-icon" title="Refresh invoice" aria-label="Refresh invoice">
                                         <i class="ti ti-refresh"></i>
                                     </button>
@@ -109,14 +118,18 @@
                     <div class="form-group">
                         <label>Total Tagihan</label>
                         <div class="diulem-invoice-box">
-                            <span class="diulem-invoice-total"><?= rupiah($pembayaran[0]->harga) ?></span>
+                            <span class="diulem-invoice-total"><?= $isFreePackage ? 'Gratis' : rupiah($pembayaran[0]->harga) ?></span>
                         </div>
                     </div>
                     <form id="payment-form" method="post" action="<?= base_url('user/finish') ?>">
                         <input type="hidden" name="result_type" id="result-type" value="">
                         <input type="hidden" name="result_data" id="result-data" value="">
                     </form>
-                    <?php if($pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ ?>
+                    <?php if($isFreePackage && $pembayaran[0]->status == 2 && ! $isInvitationExpired){ ?>
+                        <button class="btn btn-primary w-100" disabled><i class="ti ti-gift me-2"></i>Paket Gratis Aktif</button>
+                    <?php }else if($isFreePackage && $pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ ?>
+                    <button class="btn btn-primary w-100" id="re_order"><i class="ti ti-refresh me-2"></i>Aktifkan Ulang Gratis</button>
+                    <?php }else if($pembayaran[0]->status == 2 && $today >= $tglNonaktif ){ ?>
                     <button class="btn btn-primary w-100" id="pay-button"><i class="ti ti-credit-card me-2"></i>Perpanjangan</button>
                     <?php }else if($pembayaran[0]->status == 2){ ?>
                         <button class="btn btn-primary w-100" id="pay-button" disabled><i class="ti ti-circle-check me-2"></i>Lunas</button>
@@ -338,9 +351,10 @@
                 <select class="form-control" id="id_paket" name="id_paket" required>
                     <option value=''>Pilih paket undangan</option>
                     <?php foreach ($paket as $row) : ?>
-                    <option value="<?= $row->id_paket ?>" >Paket <?= $row->nama_paket ?> - Harga Rp <?= number_format($row->harga_paket) ?></option>
+                    <option value="<?= $row->id_paket ?>" ><?= (int) $row->harga_paket <= 0 ? '[GRATIS] ' : '' ?>Paket <?= $row->nama_paket ?> - Harga <?= (int) $row->harga_paket <= 0 ? 'Gratis' : 'Rp ' . number_format($row->harga_paket) ?></option>
                     <?php endforeach; ?>
                 </select>
+                <small class="form-text text-muted">Jika memilih paket gratis, undangan akan aktif tanpa pembayaran.</small>
         </div>
         </div>
       <div class="modal-footer">

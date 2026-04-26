@@ -22,8 +22,23 @@ $statusMessage = 'Selesaikan pembayaran anda sebelum ' . $tglExpFormated . ' unt
 $billingLabel = 'Belum Lunas';
 $billingClass = 'bg-warning text-warning-fg';
 $billingMeta = 'Trial sampai ' . $tglExpFormated;
+$isFreePackage = (int) $pembayaran[0]->harga <= 0;
 
-if ($pembayaran[0]->status == 0) {
+if ($isFreePackage && $pembayaran[0]->status == 2 && $today < $tglNonaktif) {
+    $statusLabel = 'Aktif';
+    $statusClass = 'bg-success text-success-fg';
+    $statusMessage = 'Paket gratis aktif sampai ' . $tglNonaktifFormated . '.';
+    $billingLabel = 'Gratis';
+    $billingClass = 'bg-azure text-azure-fg';
+    $billingMeta = 'Tidak perlu pembayaran';
+} elseif ($isFreePackage && $pembayaran[0]->status == 2 && $today >= $tglNonaktif) {
+    $statusLabel = 'Tidak Aktif';
+    $statusClass = 'bg-danger text-danger-fg';
+    $statusMessage = 'Masa aktif paket gratis sudah berakhir pada ' . $tglNonaktifFormated . '.';
+    $billingLabel = 'Gratis Berakhir';
+    $billingClass = 'bg-danger text-danger-fg';
+    $billingMeta = 'Aktifkan ulang paket gratis';
+} elseif ($pembayaran[0]->status == 0) {
     if ($today >= $tglExp) {
         $statusLabel = 'Tidak Aktif';
         $statusClass = 'bg-danger text-danger-fg';
@@ -31,21 +46,21 @@ if ($pembayaran[0]->status == 0) {
         $billingClass = 'bg-danger text-danger-fg';
         $billingMeta = 'Perlu pembayaran baru';
     }
-} else if ($pembayaran[0]->status == 1 && $metode_bayar == 'manual') {
+} elseif ($pembayaran[0]->status == 1 && $metode_bayar == 'manual') {
     $statusLabel = $today < $tglExp ? 'Menunggu Konfirmasi' : 'Tidak Aktif';
     $statusClass = $today < $tglExp ? 'bg-warning text-warning-fg' : 'bg-danger text-danger-fg';
     $statusMessage = 'Pembayaran anda menunggu dikonfirmasi.';
     $billingLabel = 'Menunggu Konfirmasi';
     $billingClass = 'bg-warning text-warning-fg';
     $billingMeta = 'Tim akan memverifikasi pembayaran';
-} else if ($pembayaran[0]->status == 1 && $metode_bayar != 'manual') {
+} elseif ($pembayaran[0]->status == 1 && $metode_bayar != 'manual') {
     $statusLabel = $today < $tglExp ? 'Menunggu Pembayaran' : 'Tidak Aktif';
     $statusClass = $today < $tglExp ? 'bg-warning text-warning-fg' : 'bg-danger text-danger-fg';
     $statusMessage = 'Selesaikan pembayaran anda sebelum ' . $expiry_date . '.';
     $billingLabel = 'Menunggu Pembayaran';
     $billingClass = 'bg-warning text-warning-fg';
     $billingMeta = 'Batas bayar ' . $expiry_date;
-} else if ($pembayaran[0]->status == 2 && $today >= $tglNonaktif) {
+} elseif ($pembayaran[0]->status == 2 && $today >= $tglNonaktif) {
     $statusLabel = 'Tidak Aktif';
     $statusClass = 'bg-danger text-danger-fg';
     $statusMessage = 'Masa aktif undangan sudah habis pada tanggal ' . $tglNonaktifFormated . '.';
