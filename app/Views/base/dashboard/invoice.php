@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <label>Nama Merchant</label>
                         <div class="diulem-invoice-box">
-                            <span class="diulem-invoice-value"><?= esc(strtoupper($setting_bayar[0]->nama_manual ?: SITE_NAME)) ?></span>
+                            <span class="diulem-invoice-value"><?= esc(strtoupper($setting_bayar[0]->merchant_qris_manual ?: $setting_bayar[0]->nama_manual ?: SITE_NAME)) ?></span>
                         </div>
                     </div>
                     <div class="form-group">

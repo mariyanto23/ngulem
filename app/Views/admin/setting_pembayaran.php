@@ -34,11 +34,15 @@
                         <h4>Manual QRIS</h4>
                         <div class="row g-3 align-items-start">
                             <div class="col-md-6">
+                                <label class="form-label">Nama Merchant QRIS</label>
+                                <input id="merchant_qris_manual" type="text" class="form-control" value="<?= esc($setting[0]->merchant_qris_manual ?? $setting[0]->nama_manual) ?>" placeholder="Contoh: DIULEM DIGITAL INDONESIA">
+                            </div>
+                            <div class="col-md-6">
                                 <label class="form-label">Upload QRIS</label>
                                 <input id="qris_manual_file" type="file" class="form-control" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
                                 <small class="form-hint">Format PNG/JPG/JPEG/WEBP, maksimal 2MB.</small>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="form-label">Preview QRIS</label>
                                 <div class="border rounded p-3 bg-light text-center">
                                     <?php if ($qrisManualImage !== '') { ?>
@@ -99,6 +103,7 @@ $('#simpanSetting1').on('click', function() {
     formData.append('bank_manual', $('#bank_manual').val());
     formData.append('norek_manual', $('#norek_manual').val());
     formData.append('nama_manual', $('#nama_manual').val());
+    formData.append('merchant_qris_manual', $('#merchant_qris_manual').val());
     formData.append('url_midtrans', $('#url_midtrans').val());
     formData.append('serverkey_midtrans', $('#serverkey_midtrans').val());
     formData.append('clientkey_midtrans', $('#clientkey_midtrans').val());

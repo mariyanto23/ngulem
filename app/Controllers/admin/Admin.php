@@ -346,6 +346,14 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
             if ($row && isset($row->Type) && stripos($row->Type, 'manual_qris') === false) {
                 $db->query("ALTER TABLE `setting_pembayaran` MODIFY `metode_bayar` ENUM('manual','manual_qris','midtrans','tripay') NOT NULL");
             }
+
+            $merchantResult = $db->query("SHOW COLUMNS FROM `setting_pembayaran` LIKE 'merchant_qris_manual'");
+            $merchantRow = $merchantResult ? $merchantResult->getRow() : null;
+
+            if (! $merchantRow) {
+                $db->query("ALTER TABLE `setting_pembayaran` ADD `merchant_qris_manual` VARCHAR(100) DEFAULT NULL AFTER `nama_manual`");
+                $db->query("UPDATE `setting_pembayaran` SET `merchant_qris_manual` = `nama_manual` WHERE (`merchant_qris_manual` IS NULL OR `merchant_qris_manual` = '') AND `nama_manual` IS NOT NULL");
+            }
         } catch (\Throwable $th) {
             log_message('error', 'Gagal menyesuaikan schema metode_bayar: {message}', ['message' => $th->getMessage()]);
         }
@@ -374,6 +382,7 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         $data['bank_manual'] = $this->request->getPost('bank_manual');
         $data['norek_manual'] = $this->request->getPost('norek_manual');
         $data['nama_manual'] = $this->request->getPost('nama_manual');
+        $data['merchant_qris_manual'] = $this->request->getPost('merchant_qris_manual');
         $data['url_midtrans'] = $this->request->getPost('url_midtrans');
         $data['serverkey_midtrans'] = $this->request->getPost('serverkey_midtrans');
         $data['clientkey_midtrans'] = $this->request->getPost('clientkey_midtrans');

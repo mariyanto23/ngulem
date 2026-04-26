@@ -449,6 +449,7 @@ CREATE TABLE `setting_pembayaran` (
   `bank_manual` varchar(100) DEFAULT NULL,
   `norek_manual` varchar(100) DEFAULT NULL,
   `nama_manual` varchar(100) DEFAULT NULL,
+  `merchant_qris_manual` varchar(100) DEFAULT NULL,
   `url_midtrans` varchar(200) DEFAULT NULL,
   `serverkey_midtrans` varchar(200) DEFAULT NULL,
   `clientkey_midtrans` varchar(200) DEFAULT NULL,
@@ -463,8 +464,8 @@ CREATE TABLE `setting_pembayaran` (
 -- Dumping data for table `setting_pembayaran`
 --
 
-INSERT INTO `setting_pembayaran` (`id_setting`, `metode_bayar`, `bank_manual`, `norek_manual`, `nama_manual`, `url_midtrans`, `serverkey_midtrans`, `clientkey_midtrans`, `midtrans_production`, `url_tripay`, `apikey_tripay`, `privatekey_tripay`, `merchantcode_tripay`) VALUES
-(1, 'manual', 'BNI', '12414', 'Vincenzo', 'https://app.midtrans.com/snap/snap.js', '', '', 'true', '', '', '', '');
+INSERT INTO `setting_pembayaran` (`id_setting`, `metode_bayar`, `bank_manual`, `norek_manual`, `nama_manual`, `merchant_qris_manual`, `url_midtrans`, `serverkey_midtrans`, `clientkey_midtrans`, `midtrans_production`, `url_tripay`, `apikey_tripay`, `privatekey_tripay`, `merchantcode_tripay`) VALUES
+(1, 'manual', 'BNI', '12414', 'Vincenzo', 'Vincenzo', 'https://app.midtrans.com/snap/snap.js', '', '', 'true', '', '', '', '');
 
 -- --------------------------------------------------------
 
