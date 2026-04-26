@@ -541,6 +541,7 @@ class Order extends Controller
 				    $domain = $row->domain;
 				    $username = $row->username;
 				    $status = $row->statusPembayaran;
+				    $harga = $row->harga;
 
 				}
 				$data['setting'] = $this->order->get_setting();
@@ -548,6 +549,8 @@ class Order extends Controller
 				$data['domain'] = $domain;
 				$data['kode'] = $kode;
 				$data['status'] = $status;
+				$data['harga'] = $harga;
+				$data['isQuickSetup'] = $this->request->getGet('setup') === 'quick';
 
 				// set session login
 				$ok = array('masukUser' => TRUE, 'uname' => $username, 'id' => $id);
@@ -853,9 +856,13 @@ Mohon untuk segera melakukan pembayaran pesanannya #'.$kode.' sejumlah *Rp. '.$b
             }
             $this->send_wa($token, $phone, $message);
             $this->sendEmail($from, $nama, $email, 'Invoice', $pesan);
+            $redirectSuccessUrl = base_url('/order/success/'.$kunci);
+            if ($isQuickSetup) {
+            	$redirectSuccessUrl .= '?setup=quick';
+            }
             $this->session->remove(['quick_setup', 'save', 'skipCerita', 'skipGallery']);
             $this->session->destroy();
-	 		return redirect()->to(base_url('/order/success/'.$kunci));
+	 		return redirect()->to($redirectSuccessUrl);
 	 	}else{
 	 		echo "gagal";
 	 	}
