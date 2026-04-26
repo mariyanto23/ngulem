@@ -227,11 +227,7 @@ class Beranda extends Controller
             $salam_wa_bawah = $row->salam_wa_bawah;
             $paket = $this->BerandaModel->get_paket_by_domain($domain);
             if($paket[0]->kirim_whatsapp == '1'){
-                if($wa_gateway == 'nusagateway' && $this->cek_wa($token, $phone) == false){
-                    $data['status_kirim'] = 'tidak terdaftar';
-                    $update = $this->BerandaModel->status_undangan($data, $id_tamu);
-                
-            }else{
+            {
                 $message = 'Kepada Yth: '.$nama_tamu.'
 
 '.$salam_wa_atas.'
@@ -252,7 +248,7 @@ Balas *OK* agar bisa diklik Link Undangan';
                 }else{ 
                 $data['status_kirim'] = 'tidak terkirim';
                 $update = $this->BerandaModel->status_undangan($data, $id_tamu);
-                }
+            }
             }
         }
     }
@@ -319,6 +315,26 @@ Pembayaran Anda #'.$order_id.' Gagal, Silahkan Ulangi Kembali.
         $this->send_wa($token, $phone, $message);
     
     }
+    private function parseWaGatewayConfig($value){
+        $config = [
+            'enabled' => true,
+            'provider' => 'nusagateway',
+        ];
+
+        if (empty($value)) {
+            return $config;
+        }
+
+        if (strpos($value, 'off:') === 0) {
+            $config['enabled'] = false;
+            $config['provider'] = substr($value, 4) ?: 'nusagateway';
+            return $config;
+        }
+
+        $config['provider'] = $value;
+        return $config;
+    }
+
     private function cek_wa($token, $hp){
 	    $url = 'http://nusagateway.com/api/check-number.php';
         $curl = curl_init($url);
@@ -340,8 +356,12 @@ Pembayaran Anda #'.$order_id.' Gagal, Silahkan Ulangi Kembali.
 	
 	private function send_wa($token, $phone, $message){
 	    foreach ($this->BerandaModel->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
+            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway);
         }
+        if (! $waGatewayConfig['enabled'] || empty($token) || empty($phone)) {
+            return false;
+        }
+        $wa_gateway = $waGatewayConfig['provider'];
 		if($wa_gateway == 'nusagateway'){
 			$url = 'http://nusagateway.com/api/send-message.php';
 			$curl = curl_init($url);
@@ -399,7 +419,7 @@ Pembayaran Anda #'.$order_id.' Gagal, Silahkan Ulangi Kembali.
                 $status = 'false';
             }
         }
-        if($status == 'true'){
+        if(($status ?? 'false') == 'true'){
 			return true;
 		}else{
 			return false;

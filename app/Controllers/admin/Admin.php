@@ -286,10 +286,12 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     }
 
     public function do_update_setting_1(){
+        $provider = $this->request->getPost('wa_gateway');
+        $enabled = $this->request->getPost('wa_gateway_enabled') === '1';
         $data['host_email'] = $this->request->getPost('host_email');
         $data['email'] = $this->request->getPost('email');
         $data['pass_email'] = $this->request->getPost('pass_email');
-        $data['wa_gateway'] = $this->request->getPost('wa_gateway');
+        $data['wa_gateway'] = $this->buildWaGatewayValue($provider, $enabled);
         $data['token_wa'] = $this->request->getPost('token_wa');
         $data['no_wa'] = $this->request->getPost('no_wa');
         $data['pesan_wa'] = $this->request->getPost('pesan_wa'); 
@@ -1102,10 +1104,40 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
             echo 'gagal';
         }
     }
+    private function parseWaGatewayConfig($value){
+        $config = [
+            'enabled' => true,
+            'provider' => 'nusagateway',
+        ];
+
+        if (empty($value)) {
+            return $config;
+        }
+
+        if (strpos($value, 'off:') === 0) {
+            $config['enabled'] = false;
+            $config['provider'] = substr($value, 4) ?: 'nusagateway';
+            return $config;
+        }
+
+        $config['provider'] = $value;
+        return $config;
+    }
+
+    private function buildWaGatewayValue($provider, $enabled){
+        $provider = in_array($provider, ['nusagateway', 'starsender', 'onesender'], true) ? $provider : 'nusagateway';
+        return $enabled ? $provider : 'off:' . $provider;
+    }
+
     private function send_wa($token, $phone, $message){
         foreach ($this->AdminModel->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
+            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway);
         }
+        if (! $waGatewayConfig['enabled'] || empty($token) || empty($phone)) {
+            return false;
+        }
+
+        $wa_gateway = $waGatewayConfig['provider'];
 		if($wa_gateway == 'nusagateway'){
 			$url = 'http://nusagateway.com/api/send-message.php';
 			$curl = curl_init($url);
@@ -1163,7 +1195,7 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
                 $status = 'false';
             }
         }
-        if($status == 'true'){
+        if(($status ?? 'false') == 'true'){
 			return true;
 		}else{
 			return false;

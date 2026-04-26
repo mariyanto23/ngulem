@@ -290,8 +290,8 @@ body,
 
 .diulem-admin-theme-status {
   border-radius: 8px;
-  left: 0.75rem;
   position: absolute;
+  right: 0.75rem;
   top: 0.75rem;
 }
 

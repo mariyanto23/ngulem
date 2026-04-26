@@ -1300,13 +1300,7 @@ class Dashboard extends Controller
                 
                 $salam_wa_atas = $row->salam_wa_atas;
                 $salam_wa_bawah = $row->salam_wa_bawah;
-                if($wa_gateway == 'nusagateway' && $this->cek_wa($token, $phone) == false){
-                    $data['status_kirim'] = 'tidak terdaftar';
-                    $update = $this->DashboardModel->status_undangan($data, $id_tamu);
-                    $session = session();
-                    $session->setFlashdata("error", "No HP tidak Terdaftar di Whatsapp");
-                    echo 'gagal';
-                }else{
+                {
             $message = 'Kepada Yth: '.$nama_tamu.'
 
 '.$salam_wa_atas.'
@@ -1336,8 +1330,8 @@ Balas *OK* agar bisa diklik Link Undangan';
         
                 
             }
-        }
-      }else{
+            }
+        }else{
          $session = session();
         $session->setFlashdata("error", "Undangan Gagal dikirim, harap lakukan pembayaran terlebih dahulu");
             echo 'gagal';
@@ -1530,6 +1524,26 @@ Nominal : '.number_format($result->gross_amount).'
             return redirect()->to(base_url('user/invoice'));
         }
     } 
+    private function parseWaGatewayConfig($value){
+        $config = [
+            'enabled' => true,
+            'provider' => 'nusagateway',
+        ];
+
+        if (empty($value)) {
+            return $config;
+        }
+
+        if (strpos($value, 'off:') === 0) {
+            $config['enabled'] = false;
+            $config['provider'] = substr($value, 4) ?: 'nusagateway';
+            return $config;
+        }
+
+        $config['provider'] = $value;
+        return $config;
+    }
+
     private function cek_wa($token, $hp){
 	    $url = 'http://nusagateway.com/api/check-number.php';
         $curl = curl_init($url);
@@ -1551,8 +1565,12 @@ Nominal : '.number_format($result->gross_amount).'
 	
 	private function send_wa($token, $phone, $message){
 	    foreach ($this->DashboardModel->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
+            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway);
         }
+        if (! $waGatewayConfig['enabled'] || empty($token) || empty($phone)) {
+            return false;
+        }
+        $wa_gateway = $waGatewayConfig['provider'];
 		if($wa_gateway == 'nusagateway'){
 			$url = 'http://nusagateway.com/api/send-message.php';
 			$curl = curl_init($url);
@@ -1610,7 +1628,7 @@ Nominal : '.number_format($result->gross_amount).'
                 $status = 'false';
             }
         }
-        if($status == 'true'){
+        if(($status ?? 'false') == 'true'){
 			return true;
 		}else{
 			return false;

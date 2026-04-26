@@ -100,19 +100,7 @@ class Order extends Controller
 					</script>";
 					exit();
 			}
-			foreach ($this->order->get_setting() as $row){
-            	$wa_gateway = $row->wa_gateway;
-        	}
-			if($wa_gateway == 'nusagateway' && $this->cek_wa($hp) == false){
-				$this->session->set('hp', "");
-				echo "<script>
-					alert('No HP anda tidak terdaftar di Whatsapp!');
-					document.location.href='order/any';
-					</script>";
-					exit();
-			}else{
-					$this->session->set('hp', $hp);
-			}
+			$this->session->set('hp', $hp);
 			//buatkan data dummynya
 			//untuk identitas sementara
 			$c = $this->session->get('checkpoint');
@@ -878,10 +866,34 @@ Mohon untuk segera melakukan pembayaran pesanannya #'.$kode.' sejumlah *Rp. '.$b
 		
         }
 	}
+	private function parseWaGatewayConfig($value){
+		$config = [
+			'enabled' => true,
+			'provider' => 'nusagateway',
+		];
+
+		if(empty($value)){
+			return $config;
+		}
+
+		if(strpos($value, 'off:') === 0){
+			$config['enabled'] = false;
+			$config['provider'] = substr($value, 4) ?: 'nusagateway';
+			return $config;
+		}
+
+		$config['provider'] = $value;
+		return $config;
+	}
+
 	private function send_wa($token, $phone, $message){
 	    foreach ($this->order->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
+            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway);
         }
+        if(! $waGatewayConfig['enabled'] || empty($token) || empty($phone)){
+            return false;
+        }
+        $wa_gateway = $waGatewayConfig['provider'];
 		if($wa_gateway == 'nusagateway'){
 			$url = 'http://nusagateway.com/api/send-message.php';
 			$curl = curl_init($url);
@@ -939,7 +951,7 @@ Mohon untuk segera melakukan pembayaran pesanannya #'.$kode.' sejumlah *Rp. '.$b
                 $status = 'false';
             }
         }
-        if($status == 'true'){
+        if(($status ?? 'false') == 'true'){
 			return true;
 		}else{
 			return false;

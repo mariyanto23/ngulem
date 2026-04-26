@@ -1,3 +1,17 @@
+<?php
+$waGatewayRaw = $setting[0]->wa_gateway ?? 'nusagateway';
+$waGatewayEnabled = strpos($waGatewayRaw, 'off:') === 0 ? '0' : '1';
+$waGatewayProvider = $waGatewayEnabled === '0' ? substr($waGatewayRaw, 4) : $waGatewayRaw;
+if (! in_array($waGatewayProvider, ['nusagateway', 'starsender', 'onesender'], true)) {
+    $waGatewayProvider = 'nusagateway';
+}
+$waGatewayLink = '';
+if ($waGatewayProvider === 'nusagateway') {
+    $waGatewayLink = 'https://nusagateway.com';
+} elseif ($waGatewayProvider === 'starsender') {
+    $waGatewayLink = 'https://starsender.online';
+}
+?>
 <div class="page-body">
     <div class="container-xl">
         <div class="page-header d-print-none mb-3">
@@ -59,20 +73,28 @@
                             <input id="pass_email" type="text" class="form-control" placeholder="Masukkan password email" value="<?= esc($setting[0]->pass_email) ?>" required>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label mb-2">Status Whatsapp Gateway</label>
+                            <label class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" id="wa_gateway_enabled" <?= $waGatewayEnabled === '1' ? 'checked' : '' ?>>
+                                <span class="form-check-label">Aktifkan Whatsapp Gateway</span>
+                            </label>
+                            <div class="form-hint">Saat dimatikan, sistem tidak mengirim pesan WA dan tidak memblokir aksi apa pun.</div>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Whatsapp Gateway</label>
                             <select class="form-control" id="wa_gateway" name="wa_gateway" required>
-                                <option value="nusagateway" <?= $setting[0]->wa_gateway == 'nusagateway' ? 'selected' : '' ?>>Nusagateway</option>
-                                <option value="starsender" <?= $setting[0]->wa_gateway == 'starsender' ? 'selected' : '' ?>>Starsender</option>
-                                <option value="onesender" <?= $setting[0]->wa_gateway == 'onesender' ? 'selected' : '' ?>>Onesender</option>
+                                <option value="nusagateway" <?= $waGatewayProvider == 'nusagateway' ? 'selected' : '' ?>>Nusagateway</option>
+                                <option value="starsender" <?= $waGatewayProvider == 'starsender' ? 'selected' : '' ?>>Starsender</option>
+                                <option value="onesender" <?= $waGatewayProvider == 'onesender' ? 'selected' : '' ?>>Onesender</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Token Whatsapp Gateway</label>
                             <input id="token_wa" type="text" class="form-control" placeholder="Masukkan token" value="<?= esc($setting[0]->token_wa) ?>" required>
-                            <?php if ($setting[0]->wa_gateway != 'onesender') { ?>
+                            <?php if ($waGatewayProvider != 'onesender' && ! empty($waGatewayLink)) { ?>
                                 <small class="form-hint">
                                     Kosongkan jika tidak memiliki token atau
-                                    <a target="_blank" href="<?php if ($setting[0]->wa_gateway == 'nusagateway') { echo 'https://nusagateway.com'; } elseif ($setting[0]->wa_gateway == 'starsender') { echo 'https://starsender.online'; } ?>">klik disini</a>.
+                                    <a target="_blank" href="<?= esc($waGatewayLink) ?>">klik disini</a>.
                                 </small>
                             <?php } ?>
                         </div>
@@ -115,6 +137,7 @@ $('#simpanSetting1').on('click', function() {
         email: $('#email').val(),
         pass_email: $('#pass_email').val(),
         wa_gateway: $('#wa_gateway').val(),
+        wa_gateway_enabled: $('#wa_gateway_enabled').is(':checked') ? 1 : 0,
         token_wa: $('#token_wa').val(),
         no_wa: $('#no_wa').val(),
         pesan_wa: $('#pesan_wa').val()

@@ -147,10 +147,34 @@ Silahkan Klik Tautan berikut untuk ubah password baru
 		}
     }
     
+    private function parseWaGatewayConfig($value){
+        $config = [
+            'enabled' => true,
+            'provider' => 'nusagateway',
+        ];
+
+        if (empty($value)) {
+            return $config;
+        }
+
+        if (strpos($value, 'off:') === 0) {
+            $config['enabled'] = false;
+            $config['provider'] = substr($value, 4) ?: 'nusagateway';
+            return $config;
+        }
+
+        $config['provider'] = $value;
+        return $config;
+    }
+
     private function send_wa($token, $phone, $message){
 	    foreach ($this->DashboardModel->get_setting() as $row){
-            $wa_gateway = $row->wa_gateway;
+            $waGatewayConfig = $this->parseWaGatewayConfig($row->wa_gateway);
         }
+        if (! $waGatewayConfig['enabled'] || empty($token) || empty($phone)) {
+            return false;
+        }
+        $wa_gateway = $waGatewayConfig['provider'];
 		if($wa_gateway == 'nusagateway'){
 			$url = 'http://nusagateway.com/api/send-message.php';
 			$curl = curl_init($url);
@@ -208,7 +232,7 @@ Silahkan Klik Tautan berikut untuk ubah password baru
                 $status = 'false';
             }
         }
-        if($status == 'true'){
+        if(($status ?? 'false') == 'true'){
 			return true;
 		}else{
 			return false;

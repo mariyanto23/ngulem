@@ -1,4 +1,18 @@
 <div class="page-body">
+<?php
+$waGatewayRaw = $setting[0]->wa_gateway ?? 'nusagateway';
+$waGatewayEnabled = strpos($waGatewayRaw, 'off:') === 0 ? '0' : '1';
+$waGatewayProvider = $waGatewayEnabled === '0' ? substr($waGatewayRaw, 4) : $waGatewayRaw;
+if (! in_array($waGatewayProvider, ['nusagateway', 'starsender', 'onesender'], true)) {
+    $waGatewayProvider = 'nusagateway';
+}
+$waGatewayLink = '';
+if ($waGatewayProvider === 'nusagateway') {
+    $waGatewayLink = 'https://nusagateway.com';
+} elseif ($waGatewayProvider === 'starsender') {
+    $waGatewayLink = 'https://starsender.online';
+}
+?>
     <div class="container-xl">
         <div class="page-header d-print-none mb-3">
             <div class="row align-items-center">
@@ -31,10 +45,12 @@
                         <div class="mb-3">
                             <label class="form-label">Token Whatsapp Gateway</label>
                             <input id="token_wa" type="text" class="form-control" placeholder="Masukan Token Whatsapp Gateway anda" value="<?= esc($data[0]->token_wa) ?>">
-                            <?php if ($setting[0]->wa_gateway != 'onesender') { ?>
+                            <?php if ($waGatewayEnabled === '0') { ?>
+                                <small class="form-hint text-warning">Whatsapp Gateway sedang dimatikan oleh admin.</small>
+                            <?php } elseif ($waGatewayProvider != 'onesender' && ! empty($waGatewayLink)) { ?>
                                 <small class="form-hint">
                                     Kosongkan jika tidak memiliki Token Whatsapp Gateway atau
-                                    <a target="_blank" href="<?php if ($setting[0]->wa_gateway == 'nusagateway') { echo 'https://nusagateway.com'; } else if ($setting[0]->wa_gateway == 'starsender') { echo 'https://starsender.online'; } ?>">klik disini</a>.
+                                    <a target="_blank" href="<?= esc($waGatewayLink) ?>">klik disini</a>.
                                 </small>
                             <?php } ?>
                         </div>
