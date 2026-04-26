@@ -188,6 +188,17 @@ body,
   line-height: 1.35;
 }
 
+.page-wrapper .card,
+.page-wrapper .card-body,
+.page-wrapper .modal-content {
+  color: var(--diulem-ink);
+}
+
+.page-wrapper .text-secondary,
+.page-wrapper .text-muted {
+  color: #64748b !important;
+}
+
 .page-wrapper .card-body label,
 .page-wrapper .custom-control-label {
   color: #344256;
@@ -241,6 +252,43 @@ body,
 .diulem-hero .page-title,
 .diulem-hero .text-secondary {
   color: #ffffff !important;
+}
+
+.page-wrapper .alert {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.page-wrapper .alert,
+.page-wrapper .alert p,
+.page-wrapper .alert strong,
+.page-wrapper .alert span,
+.page-wrapper .alert small {
+  color: inherit;
+}
+
+.page-wrapper .alert a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.page-wrapper .alert-success {
+  background: #ecfdf3;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.page-wrapper .alert-danger {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+.page-wrapper .alert-warning {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
 }
 
 .diulem-stat-icon {
@@ -768,6 +816,13 @@ body,
   font-size: 1.35rem;
   font-weight: 850;
   line-height: 1.2;
+}
+
+.diulem-qris-preview {
+  border: 1px solid var(--diulem-line);
+  border-radius: 8px;
+  max-height: 320px;
+  padding: 0.35rem;
 }
 
 .diulem-payment-steps {

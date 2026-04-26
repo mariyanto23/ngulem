@@ -355,6 +355,29 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         $data['apikey_tripay'] = $this->request->getPost('apikey_tripay');
         $data['privatekey_tripay'] = $this->request->getPost('privatekey_tripay');
         $data['merchantcode_tripay'] = $this->request->getPost('merchantcode_tripay');
+        $qrisManualFile = $this->request->getFile('qris_manual_file');
+
+        if ($qrisManualFile && $qrisManualFile->isValid() && ! $qrisManualFile->hasMoved()) {
+            $allowedExtensions = ['png', 'jpg', 'jpeg', 'webp'];
+            $extension = strtolower($qrisManualFile->getExtension());
+
+            if (! in_array($extension, $allowedExtensions, true) || $qrisManualFile->getSizeByUnit('mb') > 2) {
+                $session = session();
+                $session->setFlashdata("error", "QRIS manual harus berupa PNG/JPG/JPEG/WEBP maksimal 2MB");
+                echo 'gagal';
+                return;
+            }
+
+            foreach ($allowedExtensions as $oldExtension) {
+                $oldPath = FCPATH . 'assets/base/img/qris-manual.' . $oldExtension;
+                if (is_file($oldPath)) {
+                    @unlink($oldPath);
+                }
+            }
+
+            $qrisManualFile->move(FCPATH . 'assets/base/img', 'qris-manual.' . $extension, true);
+        }
+
         $update = $this->AdminModel->update_setting_pembayaran($data);
         if($update){
             $session = session();

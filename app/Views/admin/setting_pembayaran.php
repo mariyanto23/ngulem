@@ -1,5 +1,15 @@
 <div class="page-body">
     <div class="container-xl">
+        <?php
+        $qrisManualImage = '';
+        foreach (['png', 'jpg', 'jpeg', 'webp'] as $extension) {
+            $qrisPath = FCPATH . 'assets/base/img/qris-manual.' . $extension;
+            if (is_file($qrisPath)) {
+                $qrisManualImage = base_url('assets/base/img/qris-manual.' . $extension) . '?v=' . filemtime($qrisPath);
+                break;
+            }
+        }
+        ?>
         <div class="page-header d-print-none mb-3">
             <div class="row align-items-center">
                 <div class="col">
@@ -14,11 +24,32 @@
                 <div class="card">
                     <div class="card-header"><h3 class="card-title">Gateway Pembayaran</h3></div>
                     <div class="card-body">
-                        <h4>Manual</h4>
+                        <h4>Manual Transfer</h4>
                         <div class="row g-3">
                             <div class="col-md-4"><label class="form-label">Nama Bank</label><input id="bank_manual" type="text" class="form-control" value="<?= esc($setting[0]->bank_manual) ?>" required></div>
                             <div class="col-md-4"><label class="form-label">No Rekening</label><input id="norek_manual" type="number" class="form-control" value="<?= esc($setting[0]->norek_manual) ?>" required></div>
                             <div class="col-md-4"><label class="form-label">Nama Pemilik</label><input id="nama_manual" type="text" class="form-control" value="<?= esc($setting[0]->nama_manual) ?>" required></div>
+                        </div>
+                        <hr>
+                        <h4>Manual QRIS</h4>
+                        <div class="row g-3 align-items-start">
+                            <div class="col-md-6">
+                                <label class="form-label">Upload QRIS</label>
+                                <input id="qris_manual_file" type="file" class="form-control" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                                <small class="form-hint">Format PNG/JPG/JPEG/WEBP, maksimal 2MB.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Preview QRIS</label>
+                                <div class="border rounded p-3 bg-light text-center">
+                                    <?php if ($qrisManualImage !== '') { ?>
+                                        <img id="qris_manual_preview" src="<?= esc($qrisManualImage) ?>" alt="QRIS Manual" class="img-fluid" style="max-height: 260px;">
+                                        <div id="qris_manual_empty" class="text-secondary d-none">Belum ada QRIS manual yang diupload.</div>
+                                    <?php } else { ?>
+                                        <img id="qris_manual_preview" src="" alt="QRIS Manual" class="img-fluid d-none" style="max-height: 260px;">
+                                        <div id="qris_manual_empty" class="text-secondary">Belum ada QRIS manual yang diupload.</div>
+                                    <?php } ?>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <h4>Midtrans</h4>
@@ -46,7 +77,8 @@
                     <div class="card-body">
                         <label class="form-label">Pilihan Pembayaran</label>
                         <select class="form-control" id="metode_bayar">
-                            <option value="manual" <?= $setting[0]->metode_bayar == 'manual' ? 'selected' : '' ?>>Manual</option>
+                            <option value="manual" <?= $setting[0]->metode_bayar == 'manual' ? 'selected' : '' ?>>Manual Transfer</option>
+                            <option value="manual_qris" <?= $setting[0]->metode_bayar == 'manual_qris' ? 'selected' : '' ?>>Manual QRIS</option>
                             <option value="midtrans" <?= $setting[0]->metode_bayar == 'midtrans' ? 'selected' : '' ?>>Midtrans</option>
                             <option value="tripay" <?= $setting[0]->metode_bayar == 'tripay' ? 'selected' : '' ?>>Tripay</option>
                         </select>
@@ -60,24 +92,61 @@
 
 <script>
 $('#simpanSetting1').on('click', function() {
-    DiulemAdmin.post("<?= base_url('admin/update_setting_pembayaran_1') ?>", {
-        bank_manual: $('#bank_manual').val(),
-        norek_manual: $('#norek_manual').val(),
-        nama_manual: $('#nama_manual').val(),
-        url_midtrans: $('#url_midtrans').val(),
-        serverkey_midtrans: $('#serverkey_midtrans').val(),
-        clientkey_midtrans: $('#clientkey_midtrans').val(),
-        midtrans_production: $('#midtrans_production').val(),
-        url_tripay: $('#url_tripay').val(),
-        merchantcode_tripay: $('#merchantcode_tripay').val(),
-        privatekey_tripay: $('#privatekey_tripay').val(),
-        apikey_tripay: $('#apikey_tripay').val()
-    }, { button: $(this), successMessage: 'Gateway pembayaran berhasil disimpan.', errorMessage: 'Gateway pembayaran gagal disimpan.' });
+    var formData = new FormData();
+    var qrisManualFile = $('#qris_manual_file')[0].files[0];
+
+    formData.append('bank_manual', $('#bank_manual').val());
+    formData.append('norek_manual', $('#norek_manual').val());
+    formData.append('nama_manual', $('#nama_manual').val());
+    formData.append('url_midtrans', $('#url_midtrans').val());
+    formData.append('serverkey_midtrans', $('#serverkey_midtrans').val());
+    formData.append('clientkey_midtrans', $('#clientkey_midtrans').val());
+    formData.append('midtrans_production', $('#midtrans_production').val());
+    formData.append('url_tripay', $('#url_tripay').val());
+    formData.append('merchantcode_tripay', $('#merchantcode_tripay').val());
+    formData.append('privatekey_tripay', $('#privatekey_tripay').val());
+    formData.append('apikey_tripay', $('#apikey_tripay').val());
+
+    if (qrisManualFile) {
+        formData.append('qris_manual_file', qrisManualFile);
+    }
+
+    DiulemAdmin.post("<?= base_url('admin/update_setting_pembayaran_1') ?>", formData, { button: $(this), successMessage: 'Gateway pembayaran berhasil disimpan.', errorMessage: 'Gateway pembayaran gagal disimpan.' });
 });
 
 $('#simpanSetting2').on('click', function() {
     DiulemAdmin.post("<?= base_url('admin/update_setting_pembayaran_2') ?>", {
         metode_bayar: $('#metode_bayar').val()
     }, { button: $(this), successMessage: 'Metode pembayaran berhasil disimpan.', errorMessage: 'Metode pembayaran gagal disimpan.' });
+});
+
+$('#qris_manual_file').on('change', function() {
+    var file = this.files && this.files[0] ? this.files[0] : null;
+    var $preview = $('#qris_manual_preview');
+    var $empty = $('#qris_manual_empty');
+
+    if (!file) {
+        if ($preview.attr('src')) {
+            $preview.removeClass('d-none');
+            $empty.addClass('d-none');
+        } else {
+            $preview.addClass('d-none').attr('src', '');
+            $empty.removeClass('d-none');
+        }
+        return;
+    }
+
+    if (!file.type.match(/^image\//)) {
+        $preview.addClass('d-none').attr('src', '');
+        $empty.removeClass('d-none').text('File yang dipilih bukan gambar.');
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        $preview.attr('src', event.target.result).removeClass('d-none');
+        $empty.addClass('d-none').text('Belum ada QRIS manual yang diupload.');
+    };
+    reader.readAsDataURL(file);
 });
 </script>

@@ -16,6 +16,7 @@
         foreach ($setting_bayar as $bayar) {
             $metode_bayar = $bayar->metode_bayar;
         }
+        $isManualPayment = in_array($metode_bayar, ['manual', 'manual_qris'], true);
         ?>
 
         <div class="card">
@@ -57,7 +58,7 @@
                             <?php } ?>
                             <td class="text-end">
                                 <div class="btn-list justify-content-end flex-nowrap">
-                                    <?php if ($metode_bayar == 'manual') { ?>
+                                    <?php if ($isManualPayment) { ?>
                                         <button type="button" class="btn btn-info btn-sm btn-icon lihatBukti" title="Lihat bukti" aria-label="Lihat bukti"
                                             data-nama="<?= esc($row->nama_lengkap) ?>"
                                             data-bank="<?= esc($row->nama_bank) ?>"
@@ -85,7 +86,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalDataLabel">Bukti Transfer</h5>
+                <h5 class="modal-title" id="modalDataLabel">Bukti Pembayaran</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -94,11 +95,11 @@
                     <input id="nama_lengkap" type="text" class="form-control" readonly>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Nama Bank</label>
+                    <label class="form-label">Bank / E-Wallet</label>
                     <input id="nama_bank" type="text" class="form-control" readonly>
                 </div>
                 <div>
-                    <label class="form-label">Bukti Transfer</label>
+                    <label class="form-label">Bukti Pembayaran</label>
                     <img id="bukti" src="" class="diulem-admin-proof" alt="Bukti transfer">
                 </div>
             </div>

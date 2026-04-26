@@ -35,9 +35,11 @@
                     $tglNonaktifFormated = date("d-m-Y H:i", $tglNonaktif) . ' WIB';
                     $instruction = json_decode($pembayaran[0]->instruction);
                     $isFreePackage = (int) $pembayaran[0]->harga <= 0;
+                    $isManualPayment = in_array($metode_bayar, ['manual', 'manual_qris'], true);
+                    $isManualQris = $metode_bayar === 'manual_qris';
                     $isInvoiceExpired = $today >= $expiry;
                     $isInvitationExpired = $pembayaran[0]->status == 2 && $today >= $tglNonaktif;
-                    $showPaymentAccount = ! $isFreePackage && ($metode_bayar == 'manual' || $pembayaran[0]->status != 0);
+                    $showPaymentAccount = ! $isFreePackage && ($isManualPayment || $pembayaran[0]->status != 0);
                     $invoiceStatusLabel = 'Belum Lunas';
                     $invoiceStatusClass = 'bg-warning text-warning-fg';
 
@@ -50,7 +52,7 @@
                     } elseif ($pembayaran[0]->status == 2) {
                         $invoiceStatusLabel = 'Lunas';
                         $invoiceStatusClass = 'bg-success text-success-fg';
-                    } elseif ($pembayaran[0]->status == 1 && $metode_bayar == 'manual') {
+                    } elseif ($pembayaran[0]->status == 1 && $isManualPayment) {
                         $invoiceStatusLabel = 'Menunggu Konfirmasi';
                         $invoiceStatusClass = 'bg-warning text-warning-fg';
                     } elseif ($pembayaran[0]->status == 1 && $isInvoiceExpired) {
@@ -66,7 +68,7 @@
                     <?php } else if($pembayaran[0]->status == 0){ ?>
                     <div class="alert alert-danger mb-0">Invoice: masa trial anda akan berakhir pada tanggal <?= esc($tglExpFormated) ?>. Segera lakukan pembayaran.</div>
                     <?php }else if($pembayaran[0]->status == 1){ 
-                    if($metode_bayar == 'manual') {?>
+                    if($isManualPayment) {?>
                     <div class="alert alert-warning mb-0">Invoice: pembayaran anda menunggu konfirmasi.</div>
                     <?php }else{ ?>
                     <div class="alert alert-warning mb-0">Invoice: selesaikan pembayaran anda sebelum <?= esc($expiry_date) ?>.</div>
@@ -134,13 +136,13 @@
                     <?php }else if($pembayaran[0]->status == 2){ ?>
                         <button class="btn btn-primary w-100" id="pay-button" disabled><i class="ti ti-circle-check me-2"></i>Lunas</button>
                     <?php }else if($pembayaran[0]->status == 1){ 
-                            if($metode_bayar == 'manual') {?> 
+                            if($isManualPayment) {?> 
                         <button class="btn btn-primary w-100" disabled><i class="ti ti-clock me-2"></i>Menunggu Konfirmasi</button>
                         <?php }else{ ?>
                         <button class="btn btn-primary w-100" id="pay-button" disabled><i class="ti ti-clock me-2"></i>Menunggu Pembayaran</button>
                     <?php }
                     }else if($pembayaran[0]->status == 0){ 
-                            if($metode_bayar == 'manual') {?>
+                            if($isManualPayment) {?>
                         <button class="btn btn-primary w-100" data-toggle="modal" data-target="#modalKonfirmasi"><i class="ti ti-upload me-2"></i>Konfirmasi</button>
                         <?php }else if ($metode_bayar == 'midtrans'){ ?>
                         <button class="btn btn-primary w-100" id="pay-button"><i class="ti ti-credit-card me-2"></i>Pembayaran</button>
@@ -154,9 +156,19 @@
         <div class="col-xl-6 col-lg-6 <?= $showPaymentAccount ? '' : 'd-none' ?>">
             <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Rekening Pembayaran</h3>
+                  <h3 class="card-title"><?= $isManualQris ? 'QRIS Pembayaran' : 'Rekening Pembayaran' ?></h3>
                 </div>
                 <div class="card-body">
+                    <?php
+                    $manualQrisImage = '';
+                    foreach (['png', 'jpg', 'jpeg', 'webp'] as $extension) {
+                        $manualQrisPath = FCPATH . 'assets/base/img/qris-manual.' . $extension;
+                        if (is_file($manualQrisPath)) {
+                            $manualQrisImage = base_url('assets/base/img/qris-manual.' . $extension) . '?v=' . filemtime($manualQrisPath);
+                            break;
+                        }
+                    }
+                    ?>
                     <?php if($metode_bayar == 'manual') { ?>
                     <div class="form-group">
                         <label>Nama Bank</label>
@@ -178,6 +190,24 @@
                         <label>Atas Nama</label>
                         <div class="diulem-invoice-box">
                             <span class="diulem-invoice-value"><?= esc(strtoupper($setting_bayar[0]->nama_manual)) ?></span>   
+                        </div>
+                    </div>
+                    <?php } elseif ($isManualQris) { ?>
+                    <div class="form-group">
+                        <label>Nama Merchant</label>
+                        <div class="diulem-invoice-box">
+                            <span class="diulem-invoice-value"><?= esc(strtoupper($setting_bayar[0]->nama_manual ?: SITE_NAME)) ?></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Scan QRIS</label>
+                        <div class="diulem-invoice-box text-center">
+                            <?php if ($manualQrisImage !== '') { ?>
+                            <img src="<?= esc($manualQrisImage) ?>" alt="QRIS Pembayaran" class="diulem-qris-preview img-fluid">
+                            <div class="small text-secondary mt-2">Scan QRIS ini lalu upload bukti pembayaran.</div>
+                            <?php } else { ?>
+                            <div class="alert alert-warning mb-0">QRIS manual belum diatur admin. Silakan hubungi admin untuk melanjutkan pembayaran.</div>
+                            <?php } ?>
                         </div>
                     </div>
                     <?php } else {?>
@@ -245,11 +275,11 @@
             <input name="nama_lengkap" type="text" class="form-control" placeholder="Contoh : Dinda Rahma" value="" required>
         </div>
         <div class="col mt-2">
-            <label>Nama Bank</label>
-            <input name="nama_bank" type="text" class="form-control" placeholder="Contoh : BRI " value="" required>
+            <label>Bank / E-Wallet / Sumber Dana</label>
+            <input name="nama_bank" type="text" class="form-control" placeholder="Contoh : BRI / DANA / GoPay" value="" required>
         </div>        
         <div class="col mt-2 mb-2">
-            <label>Bukti Transfer (max 2MB)</label>
+            <label>Bukti Pembayaran (max 2MB)</label>
             <input type="file" class="form-control" id="bukti" name="bukti">
         </div>
         <input type="hidden"  value="<?= $pembayaran[0]->invoice ?>" name="invoice">

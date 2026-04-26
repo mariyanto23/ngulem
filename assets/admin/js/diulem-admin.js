@@ -288,16 +288,22 @@
         dataType: 'html'
       }, options || {});
       var $button = settings.button ? $(settings.button) : null;
-
-      this.setButtonLoading($button, true, settings.loadingText);
-
-      return $.ajax({
+      var ajaxOptions = {
         url: url,
         method: 'POST',
         data: data,
         async: true,
         dataType: settings.dataType
-      }).done(function (result) {
+      };
+
+      if (window.FormData && data instanceof FormData) {
+        ajaxOptions.processData = false;
+        ajaxOptions.contentType = false;
+      }
+
+      this.setButtonLoading($button, true, settings.loadingText);
+
+      return $.ajax(ajaxOptions).done(function (result) {
         if (settings.reload) {
           DiulemAdmin.reloadAfterSuccess(result, settings.successMessage, settings.errorMessage);
           return;

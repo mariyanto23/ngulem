@@ -75,6 +75,7 @@ $billingLabel = 'Belum Lunas';
 $billingClass = 'bg-warning text-warning-fg';
 $billingMeta = 'Trial sampai ' . $tglExpFormated;
 $isFreePackage = (int) $pembayaran[0]->harga <= 0;
+$isManualPayment = in_array($metode_bayar, ['manual', 'manual_qris'], true);
 
 if ($isFreePackage && $pembayaran[0]->status == 2 && $today < $tglNonaktif) {
     $statusLabel = 'Aktif';
@@ -98,14 +99,14 @@ if ($isFreePackage && $pembayaran[0]->status == 2 && $today < $tglNonaktif) {
         $billingClass = 'bg-danger text-danger-fg';
         $billingMeta = 'Perlu pembayaran baru';
     }
-} elseif ($pembayaran[0]->status == 1 && $metode_bayar == 'manual') {
+} elseif ($pembayaran[0]->status == 1 && $isManualPayment) {
     $statusLabel = $today < $tglExp ? 'Menunggu Konfirmasi' : 'Tidak Aktif';
     $statusClass = $today < $tglExp ? 'bg-warning text-warning-fg' : 'bg-danger text-danger-fg';
     $statusMessage = 'Pembayaran anda menunggu dikonfirmasi.';
     $billingLabel = 'Menunggu Konfirmasi';
     $billingClass = 'bg-warning text-warning-fg';
     $billingMeta = 'Tim akan memverifikasi pembayaran';
-} elseif ($pembayaran[0]->status == 1 && $metode_bayar != 'manual') {
+} elseif ($pembayaran[0]->status == 1 && ! $isManualPayment) {
     $statusLabel = $today < $tglExp ? 'Menunggu Pembayaran' : 'Tidak Aktif';
     $statusClass = $today < $tglExp ? 'bg-warning text-warning-fg' : 'bg-danger text-danger-fg';
     $statusMessage = 'Selesaikan pembayaran anda sebelum ' . $expiry_date . '.';
