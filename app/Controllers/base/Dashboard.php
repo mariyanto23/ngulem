@@ -39,6 +39,7 @@ class Dashboard extends Controller
             $data['acara'] = $this->DashboardModel->get_acara_by_id_user();
             $data['album'] = $this->DashboardModel->get_album_by_id_user();
             $data['cerita'] = $this->DashboardModel->get_cerita_by_id_user();
+            $data['quote'] = $this->DashboardModel->get_quote_by_id_user();
         
             return view('base/dashboard/layout', $data);
         }else{

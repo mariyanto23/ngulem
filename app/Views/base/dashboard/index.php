@@ -17,8 +17,14 @@ $undanganUrl = rtrim(SITE_UNDANGAN, '/') . '/' . $order[0]->domain;
 $hasWeeklyVisitors = false;
 $mempelaiData = $mempelai[0] ?? null;
 $acaraData = $acara[0] ?? null;
+$quoteData = $quote[0] ?? null;
 $albumCount = isset($album) ? count($album) : 0;
 $ceritaCount = isset($cerita) ? count($cerita) : 0;
+$userKunci = $data[0]->kunci ?? null;
+$hasGroomPhoto = $userKunci ? file_exists(FCPATH . 'assets/users/' . $userKunci . '/groom.png') : false;
+$hasBridePhoto = $userKunci ? file_exists(FCPATH . 'assets/users/' . $userKunci . '/bride.png') : false;
+$hasCoverPhoto = $userKunci ? file_exists(FCPATH . 'assets/users/' . $userKunci . '/kita.png') : false;
+$hasQuote = ! empty(trim((string) ($quoteData->quote ?? '')));
 $needsMempelai = $mempelaiData && (
     ($mempelaiData->nama_pria ?? '') === 'Calon Mempelai Pria' ||
     ($mempelaiData->nama_wanita ?? '') === 'Calon Mempelai Wanita' ||
@@ -29,8 +35,8 @@ $needsAcara = $acaraData && (
     ($acaraData->nama_acara ?? '') === 'Informasi acara akan diperbarui' ||
     ($acaraData->tempat_acara ?? '') === 'Akan diperbarui'
 );
-$needsPhotos = isset($data[0]) && (((int) ($data[0]->foto_pria ?? 0) === 0) || ((int) ($data[0]->foto_wanita ?? 0) === 0));
-$needsContent = $albumCount === 0 && $ceritaCount === 0;
+$needsPhotos = ! ($hasGroomPhoto && $hasBridePhoto);
+$needsContent = ! ($albumCount > 0 || $ceritaCount > 0 || $hasCoverPhoto || $hasQuote);
 $setupChecklist = [
     [
         'label' => 'Lengkapi data mempelai',
@@ -55,7 +61,7 @@ $setupChecklist = [
     ],
     [
         'label' => 'Lengkapi konten undangan',
-        'description' => $needsContent ? 'Tambahkan cerita atau gallery agar undangan lebih lengkap.' : 'Konten undangan sudah mulai terisi.',
+        'description' => $needsContent ? 'Tambahkan foto sampul, quote, cerita, atau gallery agar undangan lebih lengkap.' : 'Konten undangan sudah mulai terisi.',
         'url' => base_url('user/tampilan'),
         'icon' => 'ti-sparkles',
         'completed' => ! $needsContent,
