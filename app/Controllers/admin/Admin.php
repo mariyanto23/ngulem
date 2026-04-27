@@ -284,9 +284,76 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
 
     public function setting(){
         $data['setting'] = $this->AdminModel->get_setting();
+        $data['music_library'] = $this->getMusicLibraryTracks();
         $data['title'] = 'Setting Web';
         $data['view'] = 'admin/setting';
 		return view('admin/layout', $data);
+    }
+
+    public function upload_musik_library()
+    {
+        if (!$this->validate([
+            'musik_library' => [
+                'rules' => 'uploaded[musik_library]'
+                    . '|mime_in[musik_library,audio/mpeg,audio/mpg,audio/x-mpeg,audio/mp3]'
+                    . '|max_size[musik_library,5120]',
+                'errors' => [
+                    'uploaded' => 'Silakan pilih file musik terlebih dahulu.',
+                    'mime_in' => 'File musik harus berformat MP3.',
+                    'max_size' => 'Ukuran file musik maksimal 5 MB.',
+                ],
+            ],
+        ])) {
+            session()->setFlashdata('error', $this->validate->getError('musik_library'));
+            return redirect()->back()->withInput();
+        }
+
+        $musik = $this->request->getFile('musik_library');
+        if (! $musik || ! $musik->isValid() || $musik->hasMoved()) {
+            session()->setFlashdata('error', 'File musik tidak valid.');
+            return redirect()->back()->withInput();
+        }
+
+        $this->ensureMusicLibraryStorage();
+
+        $title = trim((string) $this->request->getPost('judul_musik'));
+        $originalName = pathinfo($musik->getClientName(), PATHINFO_FILENAME);
+        $safeBaseName = url_title($originalName ?: 'musik-admin', '-', true);
+        if ($safeBaseName === '') {
+            $safeBaseName = 'musik-admin';
+        }
+
+        $fileName = $safeBaseName . '-' . time() . '.mp3';
+        $musik->move($this->getMusicLibraryDir(), $fileName, true);
+
+        $titles = $this->readMusicLibraryTitles();
+        $titles[$fileName] = $title !== '' ? $title : ucwords(str_replace('-', ' ', $safeBaseName));
+        $this->writeMusicLibraryTitles($titles);
+
+        session()->setFlashdata('success', 'Musik bawaan admin berhasil ditambahkan.');
+        return redirect()->back();
+    }
+
+    public function delete_musik_library()
+    {
+        $trackKey = (string) $this->request->getPost('track_key');
+        $track = $this->resolveMusicTrack($trackKey);
+
+        if (! $track || ! empty($track['is_default'])) {
+            session()->setFlashdata('error', 'Musik bawaan utama tidak dapat dihapus.');
+            return redirect()->back();
+        }
+
+        if (file_exists($track['path'])) {
+            @unlink($track['path']);
+        }
+
+        $titles = $this->readMusicLibraryTitles();
+        unset($titles[$track['file']]);
+        $this->writeMusicLibraryTitles($titles);
+
+        session()->setFlashdata('success', 'Musik bawaan admin berhasil dihapus.');
+        return redirect()->back();
     }
 
     public function do_update_setting_1(){
@@ -876,6 +943,85 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
 		}
 		return redirect()->back()->withInput(); 
 	}
+
+    private function getMusicLibraryDir()
+    {
+        return FCPATH . 'assets/musik/library';
+    }
+
+    private function getMusicLibraryManifestPath()
+    {
+        return $this->getMusicLibraryDir() . '/library.json';
+    }
+
+    private function ensureMusicLibraryStorage()
+    {
+        $dir = $this->getMusicLibraryDir();
+        if (! is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $manifest = $this->getMusicLibraryManifestPath();
+        if (! file_exists($manifest)) {
+            file_put_contents($manifest, json_encode(new \stdClass(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        }
+    }
+
+    private function readMusicLibraryTitles()
+    {
+        $this->ensureMusicLibraryStorage();
+        $raw = @file_get_contents($this->getMusicLibraryManifestPath());
+        $decoded = json_decode((string) $raw, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    private function writeMusicLibraryTitles(array $titles)
+    {
+        $this->ensureMusicLibraryStorage();
+        ksort($titles);
+        file_put_contents(
+            $this->getMusicLibraryManifestPath(),
+            json_encode($titles, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+        );
+    }
+
+    private function getMusicLibraryTracks()
+    {
+        $titles = $this->readMusicLibraryTitles();
+        $tracks = [];
+
+        $defaultPath = FCPATH . 'assets/musik/musik.mp3';
+        if (file_exists($defaultPath)) {
+            $tracks['musik.mp3'] = [
+                'key' => 'musik.mp3',
+                'file' => 'musik.mp3',
+                'title' => 'Musik Default',
+                'path' => $defaultPath,
+                'url' => base_url('assets/musik/musik.mp3'),
+                'is_default' => true,
+            ];
+        }
+
+        foreach (glob($this->getMusicLibraryDir() . '/*.mp3') ?: [] as $filePath) {
+            $fileName = basename($filePath);
+            $tracks['library/' . $fileName] = [
+                'key' => 'library/' . $fileName,
+                'file' => $fileName,
+                'title' => $titles[$fileName] ?? ucwords(str_replace(['-', '_'], ' ', pathinfo($fileName, PATHINFO_FILENAME))),
+                'path' => $filePath,
+                'url' => base_url('assets/musik/library/' . $fileName),
+                'is_default' => false,
+            ];
+        }
+
+        return $tracks;
+    }
+
+    private function resolveMusicTrack($trackKey)
+    {
+        $tracks = $this->getMusicLibraryTracks();
+        return $tracks[$trackKey] ?? null;
+    }
 
     public function do_update_fitur(){
         $data['cerita'] = $this->request->getPost('cerita');

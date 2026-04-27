@@ -114,6 +114,68 @@ if ($waGatewayProvider === 'nusagateway') {
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Musik Latar Bawaan</h3>
+                    </div>
+                    <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_musik_library'); ?>">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Judul Musik</label>
+                                <input type="text" name="judul_musik" class="form-control" placeholder="Contoh: Romantic Piano">
+                                <div class="form-hint">Opsional. Jika kosong, judul mengikuti nama file.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">File MP3</label>
+                                <input type="file" name="musik_library" class="form-control" accept=".mp3,audio/mpeg">
+                                <div class="form-hint">Format MP3, maksimal 5MB.</div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="ti ti-upload me-2"></i>Tambah Musik
+                            </button>
+                        </div>
+                    </form>
+                    <div class="card-body border-top">
+                        <div class="d-flex flex-column gap-3">
+                            <?php if (! empty($music_library)) { ?>
+                                <?php foreach ($music_library as $track) { ?>
+                                    <div class="border rounded p-3">
+                                        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                                            <div>
+                                                <div class="fw-semibold"><?= esc($track['title']) ?></div>
+                                                <div class="text-secondary small"><?= esc($track['file']) ?></div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <?php if (! empty($track['is_default'])) { ?>
+                                                    <span class="badge bg-azure text-azure-fg">Default</span>
+                                                <?php } else { ?>
+                                                    <form method="post" action="<?= base_url('admin/delete_musik_library'); ?>" onsubmit="return confirm('Hapus musik ini dari koleksi admin?');">
+                                                        <input type="hidden" name="track_key" value="<?= esc($track['key']) ?>">
+                                                        <button class="btn btn-outline-danger btn-sm" type="submit">
+                                                            <i class="ti ti-trash me-1"></i>Hapus
+                                                        </button>
+                                                    </form>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <audio class="w-100 mt-3" controls preload="none">
+                                            <source src="<?= esc($track['url']) ?>" type="audio/mpeg">
+                                        </audio>
+                                    </div>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <div class="empty">
+                                    <div class="empty-img"><i class="ti ti-music fs-1 text-secondary"></i></div>
+                                    <p class="empty-title">Belum ada musik tersedia</p>
+                                    <p class="empty-subtitle text-secondary">Upload musik bawaan agar pengguna bisa memilih selain upload sendiri.</p>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

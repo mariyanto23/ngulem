@@ -190,6 +190,7 @@ class Dashboard extends Controller
         $data['fitur'] = $this->DashboardModel->get_fitur_by_id_user();
         $data['data'] = $this->DashboardModel->get_data_by_id_user();
         $data['setting'] = $this->DashboardModel->get_setting();
+        $data['music_library'] = $this->getMusicLibraryTracks();
         $data['title'] = 'Pengaturan Undangan';
         $data['view'] = 'base/dashboard/pengaturan';
 		return view('base/dashboard/layout', $data);
@@ -349,6 +350,37 @@ class Dashboard extends Controller
 		return redirect()->to(base_url('user/pengaturan'));
     }
 
+    public function do_select_musik_admin()
+    {
+        $trackKey = (string) $this->request->getPost('track_key');
+        $track = $this->resolveMusicTrack($trackKey);
+
+        if (! $track || ! file_exists($track['path'])) {
+            session()->setFlashdata('error', 'Musik bawaan yang dipilih tidak ditemukan.');
+            return redirect()->to(base_url('user/pengaturan'));
+        }
+
+        $data = $this->DashboardModel->get_data_by_id_user();
+        $kunci = $data[0]->kunci ?? null;
+        if (empty($kunci)) {
+            session()->setFlashdata('error', 'Data undangan tidak ditemukan.');
+            return redirect()->to(base_url('user/pengaturan'));
+        }
+
+        $targetDir = FCPATH . 'assets/users/' . $kunci;
+        if (! is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        if (! @copy($track['path'], $targetDir . '/musik.mp3')) {
+            session()->setFlashdata('error', 'Musik bawaan gagal diterapkan.');
+            return redirect()->to(base_url('user/pengaturan'));
+        }
+
+        session()->setFlashdata('success', 'Musik latar berhasil dipilih dari koleksi admin.');
+        return redirect()->to(base_url('user/pengaturan'));
+    }
+
     public function mempelai()
 	{
         $data['mempelai'] = $this->DashboardModel->get_mempelai_by_id_user();
@@ -359,6 +391,75 @@ class Dashboard extends Controller
       
 		return view('base/dashboard/layout', $data);
 		
+    }
+
+    private function getMusicLibraryDir()
+    {
+        return FCPATH . 'assets/musik/library';
+    }
+
+    private function getMusicLibraryManifestPath()
+    {
+        return $this->getMusicLibraryDir() . '/library.json';
+    }
+
+    private function ensureMusicLibraryStorage()
+    {
+        $dir = $this->getMusicLibraryDir();
+        if (! is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $manifest = $this->getMusicLibraryManifestPath();
+        if (! file_exists($manifest)) {
+            file_put_contents($manifest, json_encode(new \stdClass(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        }
+    }
+
+    private function readMusicLibraryTitles()
+    {
+        $this->ensureMusicLibraryStorage();
+        $raw = @file_get_contents($this->getMusicLibraryManifestPath());
+        $decoded = json_decode((string) $raw, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    private function getMusicLibraryTracks()
+    {
+        $titles = $this->readMusicLibraryTitles();
+        $tracks = [];
+
+        $defaultPath = FCPATH . 'assets/musik/musik.mp3';
+        if (file_exists($defaultPath)) {
+            $tracks['musik.mp3'] = [
+                'key' => 'musik.mp3',
+                'file' => 'musik.mp3',
+                'title' => 'Musik Default',
+                'path' => $defaultPath,
+                'url' => base_url('assets/musik/musik.mp3'),
+                'is_default' => true,
+            ];
+        }
+
+        foreach (glob($this->getMusicLibraryDir() . '/*.mp3') ?: [] as $filePath) {
+            $fileName = basename($filePath);
+            $tracks['library/' . $fileName] = [
+                'key' => 'library/' . $fileName,
+                'file' => $fileName,
+                'title' => $titles[$fileName] ?? ucwords(str_replace(['-', '_'], ' ', pathinfo($fileName, PATHINFO_FILENAME))),
+                'path' => $filePath,
+                'url' => base_url('assets/musik/library/' . $fileName),
+                'is_default' => false,
+            ];
+        }
+
+        return $tracks;
+    }
+
+    private function resolveMusicTrack($trackKey)
+    {
+        $tracks = $this->getMusicLibraryTracks();
+        return $tracks[$trackKey] ?? null;
     }
 
     //upload foto mempelai

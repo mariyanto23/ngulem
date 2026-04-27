@@ -52,6 +52,8 @@ if(isset($_SERVER['HTTP_HOST'])){
 	$routes->post('do_auth', 'Admin::do_auth');
 	$routes->post('admin/update_setting1', 'Admin::do_update_setting_1');
 	$routes->post('admin/update_setting2', 'Admin::do_update_setting_2');
+	$routes->post('admin/upload_musik_library', 'Admin::upload_musik_library');
+	$routes->post('admin/delete_musik_library', 'Admin::delete_musik_library');
 	$routes->post('admin/update_setting_pembayaran_1', 'Admin::do_update_setting_pembayaran_1');
 	$routes->post('admin/update_setting_pembayaran_2', 'Admin::do_update_setting_pembayaran_2');
 	$routes->post('admin/add_paket', 'Admin::add_paket');
@@ -189,6 +191,7 @@ if(isset($_SERVER['HTTP_HOST'])){
 	$routes->post('user/update_rekening', 'Dashboard::do_update_rekening');
 	$routes->post('user/update_user', 'Dashboard::do_update_user');
 	$routes->post('user/update_musik', 'Dashboard::do_update_musik');
+	$routes->post('user/select_musik_admin', 'Dashboard::do_select_musik_admin');
 	$routes->post('user/update_video', 'Dashboard::do_update_video');
 	$routes->post('user/konfirmasi', 'Dashboard::do_konfirmasi');
 	$routes->post('user/update_salam', 'Dashboard::do_update_salam');
