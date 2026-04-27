@@ -107,13 +107,19 @@ class Bukutamu extends Controller
         $idnya = $_SESSION['id_user'];
         $datanya = $this->BukutamuModel->get_data($idnya);
         $qrcode = $this->normalizeQrCodeValue($this->request->getPost('qrcode'));
-        $nama = $this->request->getPost('nama');
+        $nama = trim((string) $this->request->getPost('nama'));
         foreach ($datanya->getResult() as $row){ 
 	$kunci = $row->kunci;
 	}
-	$image = $_POST['image'];
-    $image = str_replace('data:image/png;base64,','', $image);
-	$image = base64_decode($image);
+	$image = (string) $this->request->getPost('image');
+        $image = preg_replace('#^data:image/\w+;base64,#i', '', $image);
+	$image = base64_decode($image, true);
+
+        if ($qrcode === '' || $nama === '' || $nama === '-' || empty($image)) {
+            echo 'gagal';
+            exit;
+        }
+
 	$filename = $qrcode.'.png';
     $path = 'assets/users/'.$kunci;
     if (!is_dir(FCPATH.'/'.$path)) {

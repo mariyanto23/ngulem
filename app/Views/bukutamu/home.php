@@ -149,11 +149,11 @@
     <div class="col col-sm-3" > 
         <b><h4>Capture Foto Selfi</h4></b>
         <div class="well" id="canvas-camera" style="border: 5px solid yellow">
-            <a id="btn-capture" onClick="configure()">
+            <a id="btn-open-camera" href="#" onClick="configure(); return false;">
             <img src="<?php echo base_url() ?>/assets/bukutamu/img/photo-capture.png" alt="Image" class="img-fluid"></a>
             <div id="camera" hidden="" style="display:none;"></div>
             <div id="webcam" hidden="" style="display:none;">
-                <input type="button" class="btn btn-sm btn-danger" value="Capture" id="btn-capture" onClick="preview()" >
+                <input type="button" class="btn btn-sm btn-danger" value="Capture" id="btn-do-capture" onClick="preview()" >
             </div>
             <div id="simpan" hidden="" style="display:none">
                 <button type="button" class="btn btn-sm btn-danger" id="reset" onClick="batal()">Remove</button>
@@ -224,6 +224,16 @@ event.preventDefault();
 var image = $('.image-tag').val();
 var qrcode2 = $('#outputData').val();
 var nama =  $('#nama_tamu').val();
+
+if (!qrcode2 || !nama || nama === '-' || !image) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Data belum lengkap',
+        text: 'Scan QR dan ambil foto selfie terlebih dahulu sebelum menyimpan.'
+    });
+    return;
+}
+
 $.ajax({
     url : base_url+'/add_hadir',
     method : "POST",
@@ -234,11 +244,17 @@ $.ajax({
               if($hasil == 'sukses'){
                   location.reload();
               }else{
-                  $('#modalHadir').modal('hide'); 
                   $('#modalGagal').modal('show'); 
               }
               console.log($hasil);
-        }
+        },
+    error: function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal menyimpan',
+            text: 'Terjadi kendala saat menyimpan data hadir.'
+        });
+    }
 });
 });
 });
@@ -273,6 +289,44 @@ $.ajax({
 </script>
 <script>
 
+function configure() {
+    var qrCodeValue = $('#outputData').val();
+    var namaTamu = $('#nama_tamu').val();
+
+    if (!qrCodeValue || !namaTamu || namaTamu === '-') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Scan QR dulu',
+            text: 'Silakan scan QR Code tamu terlebih dahulu sebelum ambil foto selfie.'
+        });
+        return false;
+    }
+
+    initializeSelfieCamera();
+    return false;
+}
+
+function initializeSelfieCamera() {
+    Webcam.reset();
+    Webcam.set({
+        width: 187,
+        height: 140,
+        dest_width: 187,
+        dest_height: 140,
+        crop_width: 187,
+        crop_height: 140,
+        image_format: 'jpg',
+        jpeg_quality: 100
+    });
+
+    Webcam.attach('#camera');
+    document.getElementById('btn-open-camera').hidden = true;
+    document.getElementById('webcam').style.display = '';
+    document.getElementById('webcam').hidden = false;
+    document.getElementById('camera').style.display = '';
+    document.getElementById('camera').hidden = false;
+}
+
 $(document).ready(function () {
 const qrcode = window.qrcode;
 const video = document.createElement("video");
@@ -298,22 +352,7 @@ qrcode.callback = res => {
     canvasElement.hidden = true;
     btnScanQR.hidden = false;
     document.getElementById('outputData').focus();
-    Webcam.set({
-            width: 187,
-            height: 140,
-            dest_width: 187, // device capture size
-    dest_height: 140,
-    crop_width: 187, // final cropped size
-    crop_height: 140,
-            image_format: 'jpg',
-            jpeg_quality: 100
-        });
-        Webcam.attach('#camera');
-        document.getElementById('btn-capture').hidden = true;
-        document.getElementById('webcam').style.display = '';
-        document.getElementById('webcam').hidden = false;
-        document.getElementById('camera').style.display = '';
-        document.getElementById('camera').hidden = false;
+    initializeSelfieCamera();
         
   }
 };
@@ -328,10 +367,12 @@ btnScanQR.onclick = () => {
       canvasElement.hidden = false;
       Webcam.unfreeze();
       document.getElementById('simpan').style.display = 'none';
-      document.getElementById('btn-capture').hidden = false;
+      document.getElementById('btn-open-camera').hidden = false;
       document.getElementById('camera').style.display = 'none';
       document.getElementById('webcam').hidden = true;
+      document.getElementById('webcam').style.display = 'none';
       document.getElementById('camera').hidden = true;
+      document.getElementById('btn-do-capture').hidden = false;
       
       video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       video.srcObject = stream;
