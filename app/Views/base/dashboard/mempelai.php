@@ -227,6 +227,7 @@ $(document).ready(function () {
         }
         var fotonyasiapa = '';
         var pendingImageSource = null;
+        var cropInitTimeout = null;
 
         function initCroppieWithSource(imageSource) {
             if (!imageSource) {
@@ -277,12 +278,7 @@ $(document).ready(function () {
             var reader = new FileReader();
             reader.onload = function(e) {
                 pendingImageSource = e.target.result;
-                DiulemDashboard.showModal('myModal');
-
-                if ($('#myModal').hasClass('show')) {
-                    initCroppieWithSource(pendingImageSource);
-                    pendingImageSource = null;
-                }
+                $('#myModal').modal('show');
             };
             reader.readAsDataURL(file);
         });
@@ -292,8 +288,14 @@ $(document).ready(function () {
                 return;
             }
 
-            initCroppieWithSource(pendingImageSource);
-            pendingImageSource = null;
+            if (cropInitTimeout) {
+                clearTimeout(cropInitTimeout);
+            }
+
+            cropInitTimeout = setTimeout(function() {
+                initCroppieWithSource(pendingImageSource);
+                pendingImageSource = null;
+            }, 120);
         });
 
         $("#upload").on("click", function() {
@@ -350,6 +352,10 @@ $(document).ready(function () {
             /* This function will call immediately after model close */
             /* To ensure that old croppie instance is destroyed on every model close */
             pendingImageSource = null;
+            if (cropInitTimeout) {
+                clearTimeout(cropInitTimeout);
+                cropInitTimeout = null;
+            }
             setTimeout(function() {
                 if (croppie) {
                     croppie.destroy();
