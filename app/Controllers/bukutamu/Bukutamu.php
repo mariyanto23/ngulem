@@ -22,8 +22,7 @@ class Bukutamu extends Controller
 
 	public function index()
 	{
-		// return redirect()->to(DOMAIN_UTAMA); //redirect ke domain utama
-		echo "Tidak ada apapun disini";
+		return redirect()->to(rtrim(SITE_UTAMA, '/'));
 
 	}
 
@@ -75,6 +74,9 @@ class Bukutamu extends Controller
  			$data['pembayaran'] = $this->BukutamuModel->get_pembayaran($idnya);
  			$data['setting'] = $this->BukutamuModel->get_setting();
  			$data['hadir'] = $this->BukutamuModel->get_hadir_by_id_user();
+            $data['total_tamu'] = $this->BukutamuModel->get_total_tamu_by_id_user();
+            $data['total_hadir'] = $this->BukutamuModel->get_total_hadir_by_id_user();
+            $data['total_hadir_today'] = $this->BukutamuModel->get_total_hadir_today_by_id_user();
 
 // 			//cek pada tabel order untuk mengambil tema yang digunakan user
  			$ordernya = $this->BukutamuModel->get_order($idnya);
@@ -136,6 +138,8 @@ class Bukutamu extends Controller
                 'status' => 'sukses',
                 'nama_tamu' => $nama,
                 'alamat_tamu' => $alamatTamu,
+                'waktu_hadir' => date('Y-m-d H:i:s'),
+                'selfie_url' => base_url('assets/users/' . $kunci . '/' . $filename),
             ]);
         }else{
             return $this->response->setJSON(['status' => 'gagal']);

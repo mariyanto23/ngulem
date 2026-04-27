@@ -163,6 +163,33 @@ class BukutamuModel extends Model
         $query = $builder->get();
         return $query->getResult();
     }
+
+    public function get_total_tamu_by_id_user(){
+        $builder = $this->tamu;
+        $builder->selectCount('id_tamu', 'total');
+        $builder->where('id_user', $_SESSION['id_user']);
+        $query = $builder->get()->getRow();
+        return (int) ($query->total ?? 0);
+    }
+
+    public function get_total_hadir_by_id_user(){
+        $builder = $this->tamu;
+        $builder->selectCount('id_tamu', 'total');
+        $builder->where('id_user', $_SESSION['id_user']);
+        $builder->where('status', 'hadir');
+        $query = $builder->get()->getRow();
+        return (int) ($query->total ?? 0);
+    }
+
+    public function get_total_hadir_today_by_id_user(){
+        $builder = $this->tamu;
+        $builder->selectCount('id_tamu', 'total');
+        $builder->where('id_user', $_SESSION['id_user']);
+        $builder->where('status', 'hadir');
+        $builder->where('DATE(waktu_hadir)', date('Y-m-d'));
+        $query = $builder->get()->getRow();
+        return (int) ($query->total ?? 0);
+    }
     public function cek_hadir($qrcode){
         $builder = $this->tamu;
         $builder->select('id_tamu');

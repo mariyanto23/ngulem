@@ -44,6 +44,175 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.css">
     <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.42), rgba(15, 23, 42, 0.72));
+            z-index: -1;
+        }
+
+        .bukutamu-shell {
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: 24px;
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.18);
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .bukutamu-hero {
+            margin-bottom: 18px;
+        }
+
+        .bukutamu-hero-card,
+        .bukutamu-stat-card,
+        .bukutamu-section-card {
+            background: #fff;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        .bukutamu-hero-card {
+            padding: 22px 24px;
+            background: linear-gradient(135deg, rgba(250, 204, 21, 0.18), rgba(255, 255, 255, 0.96));
+        }
+
+        .bukutamu-hero-title {
+            margin: 0 0 6px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .bukutamu-hero-subtitle {
+            margin: 0;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .bukutamu-date-card {
+            padding: 18px 20px;
+            text-align: center;
+        }
+
+        .bukutamu-date-card .utama-detail {
+            margin: 0;
+            color: #0f172a;
+        }
+
+        .bukutamu-stat-card {
+            padding: 18px 16px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .bukutamu-stat-label {
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .bukutamu-stat-value {
+            margin: 8px 0 4px;
+            font-size: 30px;
+            line-height: 1;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .bukutamu-stat-meta {
+            color: #475569;
+            font-size: 12px;
+        }
+
+        .bukutamu-slider-card {
+            overflow: hidden;
+        }
+
+        #myCarousel {
+            border: 0 !important;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        #myCarousel .item img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+        }
+
+        .bukutamu-checkin-grid {
+            margin-top: 18px;
+        }
+
+        .bukutamu-section-card {
+            padding: 18px;
+            min-height: 100%;
+        }
+
+        .bukutamu-step {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            background: #0f766e;
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .bukutamu-section-title {
+            margin: 0 0 6px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .bukutamu-section-subtitle {
+            margin: 0 0 14px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .bukutamu-action-area,
+        .bukutamu-form-area,
+        .bukutamu-list-area {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .bukutamu-action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 56px;
+            text-decoration: none;
+            background: #fff7d6;
+            border: 1px dashed #f59e0b;
+            border-radius: 14px;
+            transition: .2s ease;
+        }
+
+        .bukutamu-action-button:hover {
+            text-decoration: none;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(245, 158, 11, 0.12);
+        }
         
         @media (max-width: 300px) {
             #camera video {
@@ -54,25 +223,56 @@
         
         }
 
-        .bukutamu-action-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: 56px;
-            text-decoration: none;
-        }
-
         .bukutamu-action-button.is-disabled {
             opacity: .45;
             pointer-events: none;
         }
 
         .bukutamu-helper {
-            margin-top: 10px;
+            margin-top: 12px;
             font-size: 12px;
             color: #6b7280;
             text-align: center;
+        }
+
+        .bukutamu-selfie-actions .btn,
+        #btn-do-capture {
+            border-radius: 10px;
+        }
+
+        #hadir-list .list-group-item {
+            border: 0;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px 16px;
+            background: transparent;
+        }
+
+        #hadir-list .list-group-item:last-child {
+            border-bottom: 0;
+        }
+
+        .bukutamu-selfie-thumb {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #facc15;
+            cursor: pointer;
+        }
+
+        @media (max-width: 767px) {
+            .bukutamu-shell {
+                padding: 16px;
+                border-radius: 18px;
+            }
+
+            .bukutamu-hero-title {
+                font-size: 22px;
+            }
+
+            .bukutamu-section-card {
+                margin-bottom: 16px;
+            }
         }
   </style>
 </head>
@@ -98,12 +298,72 @@
 		$tempat = $acara[0]->tempat_acara;
 		$alamat = $acara[0]->alamat_acara;
 	 }
+    $totalTamu = (int) ($total_tamu ?? 0);
+    $totalHadir = (int) ($total_hadir ?? 0);
+    $totalHadirToday = (int) ($total_hadir_today ?? 0);
+    $totalBelumHadir = max(0, $totalTamu - $totalHadir);
+    $attendanceRate = $totalTamu > 0 ? round(($totalHadir / $totalTamu) * 100) : 0;
     ?>
 
-<div class="container" style="padding-top:10px">
+<div class="container" style="padding-top:18px;padding-bottom:28px;">
+<div class="bukutamu-shell">
+<div class="row bukutamu-hero">
+    <div class="col-sm-8">
+        <div class="bukutamu-hero-card">
+            <h1 class="bukutamu-hero-title"><?php if($posisi_mempelai == 0) echo $nama_panggilan_pria." & ".$nama_panggilan_wanita; else echo $nama_panggilan_wanita." & ".$nama_panggilan_pria;?></h1>
+            <p class="bukutamu-hero-subtitle">Panel check-in tamu undangan. Scan QR, ambil selfie, lalu simpan kehadiran tanpa pindah halaman.</p>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="bukutamu-hero-card bukutamu-date-card">
+            <div class="bukutamu-stat-label">Waktu Saat Ini</div>
+            <h3 class="utama-detail" id="tanggal-sekarang-acara"><?php echo $tanggal_sekarang; ?></h3>
+            <h2 class="utama-detail" id="jam"></h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="bukutamu-stat-card">
+            <div class="bukutamu-stat-label">Total Tamu</div>
+            <div class="bukutamu-stat-value" id="stat-total-tamu"><?= $totalTamu ?></div>
+            <div class="bukutamu-stat-meta">Semua undangan terdaftar</div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="bukutamu-stat-card">
+            <div class="bukutamu-stat-label">Sudah Hadir</div>
+            <div class="bukutamu-stat-value" id="stat-total-hadir"><?= $totalHadir ?></div>
+            <div class="bukutamu-stat-meta">Check-in berhasil tersimpan</div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="bukutamu-stat-card">
+            <div class="bukutamu-stat-label">Hadir Hari Ini</div>
+            <div class="bukutamu-stat-value" id="stat-total-hadir-today"><?= $totalHadirToday ?></div>
+            <div class="bukutamu-stat-meta">Update real-time</div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="bukutamu-stat-card">
+            <div class="bukutamu-stat-label">Progress Kehadiran</div>
+            <div class="bukutamu-stat-value" id="stat-attendance-rate"><?= $attendanceRate ?>%</div>
+            <div class="bukutamu-stat-meta" id="stat-total-belum-hadir"><?= $totalBelumHadir ?> tamu belum hadir</div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="padding:0;margin-top:10px;">
 <div class="row">
   <div class="col-sm-8" >
-    <div id="myCarousel" style="border: 5px solid yellow;" class="carousel slide" data-ride="carousel">
+    <div class="bukutamu-section-card bukutamu-slider-card">
+    <div style="padding:0 0 14px;">
+        <div class="bukutamu-step">A</div>
+        <h3 class="bukutamu-section-title">Suasana Acara</h3>
+        <p class="bukutamu-section-subtitle">Slider visual buku tamu dan informasi singkat acara.</p>
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
       <?php
@@ -138,38 +398,46 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
+    </div>
   </div>
   <div class="col-sm-4">
-    <div class="well" style="background-image: linear-gradient(black,white); color:white; border: 5px solid yellow;">
+    <div class="bukutamu-section-card" style="background:linear-gradient(135deg,#0f172a,#334155);color:#fff;">
     <p class="utama-mempelai"><u><?php echo $nama_panggilan_pria; ?> & <?php echo $nama_panggilan_wanita; ?></p></u>
 	<b><p class="utama-detail" id="tanggal-acara-resepsi"></p></b>
 	<p class="utama-detail"><?php echo $tempat; ?></p>
 	<span class="utama-detail"><?php echo $alamat; ?></span>
 	
     </div>
-    <div class="well" style="border: 5px solid yellow;">
-        <h1 class="utama-detail" id="tanggal-sekarang-acara"><?php echo $tanggal_sekarang; ?></h1>
-        <h1 class="utama-detail" id="jam"></h1>
+    <div class="bukutamu-section-card" style="margin-top:16px;">
+        <div class="bukutamu-step">B</div>
+        <h3 class="bukutamu-section-title">Petunjuk Singkat</h3>
+        <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR.</p>
     </div>
   </div>
 </div>
-<hr>
 </div>
 
-<div class="container text-center" id ="scan-hadir-tamu">    
+<div class="container-fluid text-center bukutamu-checkin-grid" id ="scan-hadir-tamu">    
   <div class="row">
     <div class="col col-sm-3">
-        <b><h4>Scan QR Code</h4></b>
-     <div class="well" style="border: 5px solid yellow;">
+     <div class="bukutamu-section-card">
+      <div class="bukutamu-step">1</div>
+      <h4 class="bukutamu-section-title">Scan QR Code</h4>
+      <p class="bukutamu-section-subtitle">Arahkan kamera ke QR buku tamu untuk mengisi data tamu otomatis.</p>
+     <div class="bukutamu-action-area">
       <a id="btn-scan-qr">
         <img src="<?php echo base_url() ?>/assets/dashboard/img/qrscan.png" alt="Image" class="img-fluid">
       </a>
       <canvas hidden="" id="qr-canvas"></canvas>
       </div>
+      </div>
     </div>
     <div class="col col-sm-3" > 
-        <b><h4>Capture Foto Selfi</h4></b>
-        <div class="well" id="canvas-camera" style="border: 5px solid yellow">
+        <div class="bukutamu-section-card" id="canvas-camera">
+            <div class="bukutamu-step">2</div>
+            <h4 class="bukutamu-section-title">Capture Foto Selfie</h4>
+            <p class="bukutamu-section-subtitle">Ambil foto tamu setelah data undangan ditemukan.</p>
+        <div class="bukutamu-action-area">
             <a id="btn-open-camera" class="bukutamu-action-button is-disabled" href="#" onClick="configure(); return false;">
             <img src="<?php echo base_url() ?>/assets/bukutamu/img/photo-capture.png" alt="Image" class="img-fluid"></a>
             <div id="camera" hidden="" style="display:none;"></div>
@@ -182,11 +450,15 @@
                 <input type="hidden" name="image" class="image-tag">
             </div>
             <div id="selfie-helper" class="bukutamu-helper">Scan QR tamu terlebih dahulu untuk membuka kamera selfie.</div>
+            </div>
           </div>  
     </div>
     <div class="col-sm-3">
-        <b><h4>Identitas Tamu</h4></b>
-      <div class="well" style="border: 5px solid yellow;">
+      <div class="bukutamu-section-card">
+        <div class="bukutamu-step">3</div>
+        <h4 class="bukutamu-section-title">Identitas Tamu</h4>
+        <p class="bukutamu-section-subtitle">Data ini akan terisi otomatis setelah QR berhasil dibaca.</p>
+      <div class="bukutamu-form-area">
           
         <div class="col mt-2" id="qr-result" >
             <label>QR Code Tamu</label>
@@ -203,22 +475,55 @@
             <input id="alamat_tamu" type="text" class="form-control" placeholder="Contoh : Jack" value="" disabled required>
         </div>
       </div>
+      </div>
     </div>
     <div class="col-sm-3">
-        <b><h4>Kehadiran Tamu</h4></b>
-      <div>
-       <ul class="list-group" id="hadir-list" style="border: 5px solid yellow;">
+      <div class="bukutamu-section-card">
+        <div class="bukutamu-step">4</div>
+        <h4 class="bukutamu-section-title">Kehadiran Terbaru</h4>
+        <p class="bukutamu-section-subtitle">Update terbaru muncul otomatis tanpa reload halaman.</p>
+      <div class="bukutamu-list-area">
+       <ul class="list-group" id="hadir-list">
            <?php if(empty($hadir)) {?>
             <li class="list-group-item" id="hadir-empty-state"><strong>Belum Ada Data Tamu Hadir</strong></li>
             <?php }else { ?>
             <?php foreach($hadir as $row){ 
             ?>
-            <li class="list-group-item"><strong><?= $row->nama_tamu ?></strong><br><small><?= $row->alamat_tamu ?></small></li>
+            <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
+            <li class="list-group-item">
+                <div class="media" style="display:flex;align-items:center;gap:12px;">
+                    <div>
+                        <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
+                    </div>
+                    <div style="text-align:left;">
+                        <strong><?= $row->nama_tamu ?></strong><br>
+                        <small><?= $row->alamat_tamu ?></small><br>
+                        <small class="text-muted"><?= $row->waktu_hadir ?></small>
+                    </div>
+                </div>
+            </li>
             <?php }
              } ?>
         </ul>
       </div>
+      </div>
     </div>  
+  </div>
+</div>
+</div>
+<div class="modal fade" id="modalSelfiePreview" tabindex="-1" role="dialog" aria-labelledby="modalSelfiePreviewLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSelfiePreviewLabel">Selfie Tamu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="" alt="Preview selfie" id="selfie-preview-image" style="width:100%;border-radius:12px;object-fit:cover;">
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal fade" id="modalGagal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -270,6 +575,23 @@ function updateAttendanceUiState() {
     }
 }
 
+function escapeHtml(value) {
+    return $('<div>').text(value || '').html();
+}
+
+function updateAttendanceStats() {
+    var totalTamu = parseInt($('#stat-total-tamu').text(), 10) || 0;
+    var totalHadir = $('#hadir-list .list-group-item').not('#hadir-empty-state').length;
+    var totalHadirToday = parseInt($('#stat-total-hadir-today').text(), 10) || 0;
+    var totalBelumHadir = Math.max(0, totalTamu - totalHadir);
+    var attendanceRate = totalTamu > 0 ? Math.round((totalHadir / totalTamu) * 100) : 0;
+
+    $('#stat-total-hadir').text(totalHadir);
+    $('#stat-total-hadir-today').text(totalHadirToday);
+    $('#stat-attendance-rate').text(attendanceRate + '%');
+    $('#stat-total-belum-hadir').text(totalBelumHadir + ' tamu belum hadir');
+}
+
 $(document).ready(function () {
 $('#save').on('click', function(event) {
 event.preventDefault();
@@ -300,7 +622,18 @@ $.ajax({
     success: function($hasil){
               if($hasil && $hasil.status === 'sukses'){
                   $('#hadir-empty-state').remove();
-                  $('#hadir-list').prepend('<li class="list-group-item"><strong>' + $('<div>').text($hasil.nama_tamu || nama).html() + '</strong><br><small>' + $('<div>').text($hasil.alamat_tamu || alamat).html() + '</small></li>');
+                  $('#hadir-list').prepend(
+                    '<li class="list-group-item">' +
+                      '<div class="media" style="display:flex;align-items:center;gap:12px;">' +
+                        '<div><img src="' + escapeHtml($hasil.selfie_url || '') + '" alt="Selfie ' + escapeHtml($hasil.nama_tamu || nama) + '" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid #facc15;cursor:pointer;" class="hadir-selfie-thumb" data-image="' + escapeHtml($hasil.selfie_url || '') + '" data-name="' + escapeHtml($hasil.nama_tamu || nama) + '"></div>' +
+                        '<div style="text-align:left;">' +
+                          '<strong>' + escapeHtml($hasil.nama_tamu || nama) + '</strong><br>' +
+                          '<small>' + escapeHtml($hasil.alamat_tamu || alamat) + '</small><br>' +
+                          '<small class="text-muted">' + escapeHtml($hasil.waktu_hadir || '') + '</small>' +
+                        '</div>' +
+                      '</div>' +
+                    '</li>'
+                  );
                   $('#outputData').val('');
                   $('#nama_tamu').val('');
                   $('#alamat_tamu').val('');
@@ -310,6 +643,9 @@ $.ajax({
                   $('#camera').prop('hidden', true).hide();
                   $('#btn-open-camera').prop('hidden', false);
                   Webcam.reset();
+                  var currentToday = parseInt($('#stat-total-hadir-today').text(), 10) || 0;
+                  $('#stat-total-hadir-today').text(currentToday + 1);
+                  updateAttendanceStats();
                   updateAttendanceUiState();
                   Swal.fire({
                       icon: 'success',
@@ -525,7 +861,13 @@ $(document).ready(function () {
         $('#outputData').val(queryQrCode);
         autofill();
     }
+    $(document).on('click', '.hadir-selfie-thumb', function() {
+        $('#modalSelfiePreviewLabel').text('Selfie - ' + ($(this).data('name') || 'Tamu'));
+        $('#selfie-preview-image').attr('src', $(this).data('image') || '');
+        $('#modalSelfiePreview').modal('show');
+    });
     updateAttendanceUiState();
+    updateAttendanceStats();
 });
 </script>
 <script type="text/javascript">
