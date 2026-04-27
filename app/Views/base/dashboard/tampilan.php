@@ -74,7 +74,7 @@ $categoryBadgeClass = static function ($categoryName) {
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
                             <h3 class="card-title mb-0"><?= esc($order[0]->nama_theme) ?></h3>
-                            <span class="badge bg-success text-success-fg">Aktif</span>
+                            <span class="badge diulem-badge-solid-success">Aktif</span>
                         </div>
                         <div class="text-secondary small">Tampilan yang sedang digunakan.</div>
                     </div>

@@ -3,6 +3,24 @@
 $waGatewayRaw = $setting[0]->wa_gateway ?? 'nusagateway';
 $waTokenRaw = $setting[0]->token_wa ?? '';
 $waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, '__disabled__:') === 0) ? '0' : '1';
+
+$statusBadgeClass = static function ($status) {
+    $normalized = strtolower(trim((string) $status));
+
+    if (in_array($normalized, ['terkirim', 'lunas', 'aktif'], true)) {
+        return 'bg-success text-success-fg';
+    }
+
+    if (in_array($normalized, ['manual', 'menunggu', 'pending', 'proses'], true)) {
+        return 'bg-warning text-warning-fg';
+    }
+
+    if (in_array($normalized, ['gagal', 'tidak terkirim', 'expired', 'batal'], true)) {
+        return 'bg-danger text-danger-fg';
+    }
+
+    return 'bg-secondary text-secondary-fg';
+};
 ?>
     <div class="container-xl">
         <div class="page-header d-print-none mb-3">
@@ -61,7 +79,7 @@ $waGatewayEnabled = (strpos($waGatewayRaw, 'off:') === 0 || strpos($waTokenRaw, 
                                     </a>
                                 </td>
                                 <td><?= esc($row->tgl_kirim) ?></td>
-                                <td><span class="badge bg-secondary-lt"><?= esc($row->status_kirim) ?></span></td>
+                                <td><span class="badge <?= esc($statusBadgeClass($row->status_kirim)) ?>"><?= esc($row->status_kirim) ?></span></td>
                                 <td>
                                     <div class="btn-list flex-nowrap">
                                         <?php if ($paket[0]->kirim_whatsapp == 1) { ?>
