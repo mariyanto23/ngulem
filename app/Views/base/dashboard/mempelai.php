@@ -328,13 +328,13 @@ $(document).ready(function () {
                     success: function(data) {
                         if (data == "uploadedbride") {
                             $("#profile-pic-bride").attr("src", base64);
-                            DiulemDashboard.hideModal('myModal');
+                            $('#myModal').modal('hide');
                         } else if(data == "uploadedgroom"){
                             $("#profile-pic-groom").attr("src", base64);
-                            DiulemDashboard.hideModal('myModal');
+                            $('#myModal').modal('hide');
                         } else if(data == "uploadedsampul"){
                             $("#profile-pic-sampul").attr("src", base64);
-                            DiulemDashboard.hideModal('myModal');
+                            $('#myModal').modal('hide');
                         } else {
                             DiulemDashboard.notify('error', 'Upload Gagal', 'Foto gagal diupload.');
                         }
