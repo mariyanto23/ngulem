@@ -72,7 +72,8 @@
 
       sessionStorage.setItem('diulemAdminSuppressFlash', JSON.stringify({
         type: type || '',
-        text: text || ''
+        text: text || '',
+        suppressAnyText: true
       }));
     },
 
@@ -90,7 +91,15 @@
 
       try {
         var saved = JSON.parse(raw);
-        return !(saved.type === (type || '') && saved.text === (text || ''));
+        if (saved.type !== (type || '')) {
+          return true;
+        }
+
+        if (saved.suppressAnyText) {
+          return false;
+        }
+
+        return saved.text !== (text || '');
       } catch (error) {
         return true;
       }
