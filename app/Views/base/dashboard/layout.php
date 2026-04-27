@@ -191,11 +191,11 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
     </div>
 </div>
 
-<div class="modal" id="myModal">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Foto Mempelai</h4>
+                <h4 class="modal-title" id="myModalLabel">Foto Mempelai</h4>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -218,11 +218,11 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
     </div>
 </div>
 
-<div class="modal" id="myModal2">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Foto Slider</h4>
+                <h4 class="modal-title" id="myModal2Label">Foto Slider</h4>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

@@ -226,6 +226,7 @@ $(document).ready(function () {
             }
         }
         var fotonyasiapa = '';
+        var pendingImageInput = null;
         $(".file-upload").on("change", function(event) {
             var file = event.target.files[0];
             if (!file) {
@@ -245,25 +246,34 @@ $(document).ready(function () {
             }
 
             fotonyasiapa = $(this).attr("id");
+            pendingImageInput = event.target;
             DiulemDashboard.showModal('myModal');
-            /* Initailize croppie instance and assign it to global variable */
+        });
+
+        $('#myModal').on('shown.bs.modal', function () {
+            if (!pendingImageInput) {
+                return;
+            }
+
             if (croppie) {
                 croppie.destroy();
             }
+
             croppie = new Croppie(el, {
-                    viewport: {
-                        width: 300,
-                        height: 300,
-                        type: 'square'
-                    },
-                    boundary: {
-                        width: 350,
-                        height: 350
-                    },
-                    
-                    enableOrientation: true
-                });
-            $.getImage(event.target, croppie); 
+                viewport: {
+                    width: 300,
+                    height: 300,
+                    type: 'square'
+                },
+                boundary: {
+                    width: 350,
+                    height: 350
+                },
+                enableOrientation: true
+            });
+
+            $.getImage(pendingImageInput, croppie);
+            pendingImageInput = null;
         });
 
         $("#upload").on("click", function() {
@@ -319,6 +329,7 @@ $(document).ready(function () {
         $('#myModal').on('hidden.bs.modal', function (e) {
             /* This function will call immediately after model close */
             /* To ensure that old croppie instance is destroyed on every model close */
+            pendingImageInput = null;
             setTimeout(function() {
                 if (croppie) {
                     croppie.destroy();
