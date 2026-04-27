@@ -226,32 +226,10 @@ $(document).ready(function () {
             }
         }
         var fotonyasiapa = '';
-        var pendingImageInput = null;
-        $(".file-upload").on("change", function(event) {
-            var file = event.target.files[0];
-            if (!file) {
-                return;
-            }
+        var pendingImageSource = null;
 
-            if (!file.type.match(/^image\//)) {
-                DiulemDashboard.notify('error', 'Upload Gagal', 'File harus berupa gambar.');
-                $(this).val('');
-                return;
-            }
-
-            if (file.size > 2 * 1024 * 1024) {
-                DiulemDashboard.notify('error', 'Upload Gagal', 'Ukuran foto maksimal 2MB.');
-                $(this).val('');
-                return;
-            }
-
-            fotonyasiapa = $(this).attr("id");
-            pendingImageInput = event.target;
-            DiulemDashboard.showModal('myModal');
-        });
-
-        $('#myModal').on('shown.bs.modal', function () {
-            if (!pendingImageInput) {
+        function initCroppieWithSource(imageSource) {
+            if (!imageSource) {
                 return;
             }
 
@@ -272,8 +250,50 @@ $(document).ready(function () {
                 enableOrientation: true
             });
 
-            $.getImage(pendingImageInput, croppie);
-            pendingImageInput = null;
+            croppie.bind({
+                url: imageSource
+            });
+        }
+
+        $(".file-upload").on("change", function(event) {
+            var file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            if (!file.type.match(/^image\//)) {
+                DiulemDashboard.notify('error', 'Upload Gagal', 'File harus berupa gambar.');
+                $(this).val('');
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                DiulemDashboard.notify('error', 'Upload Gagal', 'Ukuran foto maksimal 2MB.');
+                $(this).val('');
+                return;
+            }
+
+            fotonyasiapa = $(this).attr("id");
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                pendingImageSource = e.target.result;
+                DiulemDashboard.showModal('myModal');
+
+                if ($('#myModal').hasClass('show')) {
+                    initCroppieWithSource(pendingImageSource);
+                    pendingImageSource = null;
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        $('#myModal').on('shown.bs.modal', function () {
+            if (!pendingImageSource) {
+                return;
+            }
+
+            initCroppieWithSource(pendingImageSource);
+            pendingImageSource = null;
         });
 
         $("#upload").on("click", function() {
@@ -329,7 +349,7 @@ $(document).ready(function () {
         $('#myModal').on('hidden.bs.modal', function (e) {
             /* This function will call immediately after model close */
             /* To ensure that old croppie instance is destroyed on every model close */
-            pendingImageInput = null;
+            pendingImageSource = null;
             setTimeout(function() {
                 if (croppie) {
                     croppie.destroy();
