@@ -306,12 +306,16 @@ $(document).ready(function () {
 
             var $button = $(this);
             DiulemDashboard.setButtonLoading($button, true, '<i class="ti ti-loader me-2"></i>Upload...');
-            croppie.result('base64').then(function(base64) {
-                DiulemDashboard.hideModal('myModal'); 
+            croppie.result({
+                type: 'base64',
+                size: 'viewport',
+                format: 'png',
+                quality: 1
+            }).then(function(base64) {
 
                 var url = "<?php echo base_url('user/update_foto_mempelai') ?>";
                 var formData = new FormData();
-                formData.append("foto_"+fotonyasiapa, $.base64ImageToBlob(base64));
+                formData.append("foto_"+fotonyasiapa, $.base64ImageToBlob(base64), fotonyasiapa + '.png');
                 formData.append("kunci", "<?= $kunci ?>");
 
 
@@ -323,11 +327,14 @@ $(document).ready(function () {
                     contentType: false,
                     success: function(data) {
                         if (data == "uploadedbride") {
-                            $("#profile-pic-bride").attr("src", base64); 
+                            $("#profile-pic-bride").attr("src", base64);
+                            DiulemDashboard.hideModal('myModal');
                         } else if(data == "uploadedgroom"){
-                            $("#profile-pic-groom").attr("src", base64); 
+                            $("#profile-pic-groom").attr("src", base64);
+                            DiulemDashboard.hideModal('myModal');
                         } else if(data == "uploadedsampul"){
-                            $("#profile-pic-sampul").attr("src", base64); 
+                            $("#profile-pic-sampul").attr("src", base64);
+                            DiulemDashboard.hideModal('myModal');
                         } else {
                             DiulemDashboard.notify('error', 'Upload Gagal', 'Foto gagal diupload.');
                         }
@@ -340,6 +347,9 @@ $(document).ready(function () {
                         DiulemDashboard.setButtonLoading($button, false);
                     }
                 });
+            }).catch(function() {
+                DiulemDashboard.notify('error', 'Upload Gagal', 'Foto gagal diproses. Silakan coba lagi.');
+                DiulemDashboard.setButtonLoading($button, false);
             });
         });
 
