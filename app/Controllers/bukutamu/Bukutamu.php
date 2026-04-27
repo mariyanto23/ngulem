@@ -131,23 +131,22 @@ class Bukutamu extends Controller
 	    $update = $this->BukutamuModel->update_hadir($qrcode);
         if($update){
             file_put_contents(FCPATH.'/'.$path.'/'.$filename,$image);
-            $session = session();
-            $session->setFlashdata("success", "Data tamu Berhasil ditambahkan");
-            echo 'sukses';
+            $alamatTamu = trim((string) $this->request->getPost('alamat'));
+            return $this->response->setJSON([
+                'status' => 'sukses',
+                'nama_tamu' => $nama,
+                'alamat_tamu' => $alamatTamu,
+            ]);
         }else{
-         $session = session();
-        $session->setFlashdata("error", "Data tamu Gagal diupdate");
-            echo 'gagal';
+            return $this->response->setJSON(['status' => 'gagal']);
         }
                 
             }else{
-        echo 'gagal';
-                exit;
-    }
-    }else{
-        echo 'gagal';
-                exit;
-    }
+                return $this->response->setJSON(['status' => 'gagal']);
+            }
+        }else{
+            return $this->response->setJSON(['status' => 'gagal']);
+        }
     }
     private function normalizeQrCodeValue($value)
     {

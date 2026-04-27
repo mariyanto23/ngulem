@@ -53,6 +53,27 @@
         
         
         }
+
+        .bukutamu-action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 56px;
+            text-decoration: none;
+        }
+
+        .bukutamu-action-button.is-disabled {
+            opacity: .45;
+            pointer-events: none;
+        }
+
+        .bukutamu-helper {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
   </style>
 </head>
 <body style="background-image: url('<?= base_url() ?>/assets/users/<?= $kunci; ?>/bg-tamu.png');">
@@ -149,7 +170,7 @@
     <div class="col col-sm-3" > 
         <b><h4>Capture Foto Selfi</h4></b>
         <div class="well" id="canvas-camera" style="border: 5px solid yellow">
-            <a id="btn-open-camera" href="#" onClick="configure(); return false;">
+            <a id="btn-open-camera" class="bukutamu-action-button is-disabled" href="#" onClick="configure(); return false;">
             <img src="<?php echo base_url() ?>/assets/bukutamu/img/photo-capture.png" alt="Image" class="img-fluid"></a>
             <div id="camera" hidden="" style="display:none;"></div>
             <div id="webcam" hidden="" style="display:none;">
@@ -160,6 +181,7 @@
                 <button type="button" class="btn btn-sm btn-primary" name="save" id="save" >Simpan</button>
                 <input type="hidden" name="image" class="image-tag">
             </div>
+            <div id="selfie-helper" class="bukutamu-helper">Scan QR tamu terlebih dahulu untuk membuka kamera selfie.</div>
           </div>  
     </div>
     <div class="col-sm-3">
@@ -185,9 +207,9 @@
     <div class="col-sm-3">
         <b><h4>Kehadiran Tamu</h4></b>
       <div>
-       <ul class="list-group" style="border: 5px solid yellow;">
+       <ul class="list-group" id="hadir-list" style="border: 5px solid yellow;">
            <?php if(empty($hadir)) {?>
-            <li class="list-group-item"><strong>Belum Ada Data Tamu Hadir</strong></li>
+            <li class="list-group-item" id="hadir-empty-state"><strong>Belum Ada Data Tamu Hadir</strong></li>
             <?php }else { ?>
             <?php foreach($hadir as $row){ 
             ?>
@@ -218,12 +240,44 @@
   </div>
 </div>
 <script>
+function hasValidGuestData() {
+    var qrCodeValue = ($('#outputData').val() || '').trim();
+    var namaTamu = ($('#nama_tamu').val() || '').trim();
+    return qrCodeValue !== '' && namaTamu !== '' && namaTamu !== '-';
+}
+
+function updateAttendanceUiState() {
+    var canOpenCamera = hasValidGuestData();
+    var hasImage = (($('.image-tag').val() || '').trim() !== '');
+    var openCameraButton = document.getElementById('btn-open-camera');
+    var helper = document.getElementById('selfie-helper');
+    var webcamVisible = document.getElementById('webcam').hidden === false;
+
+    if (openCameraButton) {
+        openCameraButton.classList.toggle('is-disabled', !canOpenCamera);
+    }
+
+    if (helper) {
+        if (hasImage) {
+            helper.textContent = 'Foto selfie sudah siap. Klik Simpan untuk menyelesaikan kehadiran.';
+        } else if (webcamVisible) {
+            helper.textContent = 'Posisikan wajah tamu dengan jelas, lalu klik Capture.';
+        } else if (canOpenCamera) {
+            helper.textContent = 'Data tamu sudah ditemukan. Klik ikon kamera untuk ambil foto selfie.';
+        } else {
+            helper.textContent = 'Scan QR tamu terlebih dahulu untuk membuka kamera selfie.';
+        }
+    }
+}
+
 $(document).ready(function () {
 $('#save').on('click', function(event) {
 event.preventDefault();
 var image = $('.image-tag').val();
 var qrcode2 = $('#outputData').val();
 var nama =  $('#nama_tamu').val();
+var alamat = $('#alamat_tamu').val();
+var $saveButton = $('#save');
 
 if (!qrcode2 || !nama || nama === '-' || !image) {
     Swal.fire({
@@ -237,16 +291,34 @@ if (!qrcode2 || !nama || nama === '-' || !image) {
 $.ajax({
     url : base_url+'/add_hadir',
     method : "POST",
-    data : {qrcode:qrcode2, image : image, nama:nama},
+    data : {qrcode:qrcode2, image : image, nama:nama, alamat:alamat},
     async : true,
-    dataType : 'html',
+    dataType : 'json',
+    beforeSend: function() {
+        $saveButton.prop('disabled', true).text('Menyimpan...');
+    },
     success: function($hasil){
-              if($hasil == 'sukses'){
-                  location.reload();
+              if($hasil && $hasil.status === 'sukses'){
+                  $('#hadir-empty-state').remove();
+                  $('#hadir-list').prepend('<li class="list-group-item"><strong>' + $('<div>').text($hasil.nama_tamu || nama).html() + '</strong><br><small>' + $('<div>').text($hasil.alamat_tamu || alamat).html() + '</small></li>');
+                  $('#outputData').val('');
+                  $('#nama_tamu').val('');
+                  $('#alamat_tamu').val('');
+                  $('.image-tag').val('');
+                  $('#simpan').prop('hidden', true).hide();
+                  $('#webcam').prop('hidden', true).hide();
+                  $('#camera').prop('hidden', true).hide();
+                  $('#btn-open-camera').prop('hidden', false);
+                  Webcam.reset();
+                  updateAttendanceUiState();
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Berhasil',
+                      text: 'Data hadir berhasil disimpan.'
+                  });
               }else{
                   $('#modalGagal').modal('show'); 
               }
-              console.log($hasil);
         },
     error: function() {
         Swal.fire({
@@ -254,6 +326,9 @@ $.ajax({
             title: 'Gagal menyimpan',
             text: 'Terjadi kendala saat menyimpan data hadir.'
         });
+    },
+    complete: function() {
+        $saveButton.prop('disabled', false).text('Simpan');
     }
 });
 });
@@ -268,10 +343,12 @@ $.ajax({
             Webcam.freeze();
             // ganti display webcam menjadi none dan simpan menjadi terlihat
             document.getElementById('webcam').hidden = true;
+            document.getElementById('webcam').style.display = 'none';
             document.getElementById('simpan').hidden= false;
             //document.getElementById('webcam').style.display = 'none';
             document.getElementById('simpan').style.display = '';
             x.getElementsByTagName("video")[0].hidden= true;
+            updateAttendanceUiState();
             } );
         }
         
@@ -283,17 +360,17 @@ $.ajax({
             document.getElementById('webcam').hidden = false;
             document.getElementById('simpan').hidden = true;
             document.getElementById('webcam').style.display = '';
+            document.getElementById('simpan').style.display = 'none';
+            $('.image-tag').val('');
             x.getElementsByTagName("video")[0].hidden= false;
             //document.getElementById('simpan').style.display = 'none';
+            updateAttendanceUiState();
         }
 </script>
 <script>
 
 function configure() {
-    var qrCodeValue = $('#outputData').val();
-    var namaTamu = $('#nama_tamu').val();
-
-    if (!qrCodeValue || !namaTamu || namaTamu === '-') {
+    if (!hasValidGuestData()) {
         Swal.fire({
             icon: 'warning',
             title: 'Scan QR dulu',
@@ -325,6 +402,10 @@ function initializeSelfieCamera() {
     document.getElementById('webcam').hidden = false;
     document.getElementById('camera').style.display = '';
     document.getElementById('camera').hidden = false;
+    document.getElementById('simpan').hidden = true;
+    document.getElementById('simpan').style.display = 'none';
+    $('.image-tag').val('');
+    updateAttendanceUiState();
 }
 
 $(document).ready(function () {
@@ -373,6 +454,7 @@ btnScanQR.onclick = () => {
       document.getElementById('webcam').style.display = 'none';
       document.getElementById('camera').hidden = true;
       document.getElementById('btn-do-capture').hidden = false;
+      updateAttendanceUiState();
       
       video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       video.srcObject = stream;
@@ -411,7 +493,7 @@ function autofill(){
                  $.each(hasil, function(key,val){ 
                     document.getElementById('nama_tamu').value=val.nama_tamu;
                     document.getElementById('alamat_tamu').value=val.alamat_tamu;
-
+                    updateAttendanceUiState();
                     });
                 }
             });
@@ -443,6 +525,7 @@ $(document).ready(function () {
         $('#outputData').val(queryQrCode);
         autofill();
     }
+    updateAttendanceUiState();
 });
 </script>
 <script type="text/javascript">
