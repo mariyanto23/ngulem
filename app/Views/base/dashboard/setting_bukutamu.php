@@ -132,6 +132,18 @@ function preview_image(event) {
         return;
     }
 
+    if (!file.type.match(/^image\//)) {
+        DiulemDashboard.notify('error', 'Upload Gagal', 'File harus berupa gambar.');
+        event.target.value = '';
+        return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+        DiulemDashboard.notify('error', 'Upload Gagal', 'Ukuran background maksimal 2MB.');
+        event.target.value = '';
+        return;
+    }
+
     var reader = new FileReader();
     reader.onload = function() {
         document.getElementById('img-bukutamu').src = reader.result;

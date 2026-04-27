@@ -1145,6 +1145,10 @@ class Dashboard extends Controller
 	    $avatar = $this->request->getFile('file'); //a
         $kunci = $this->request->getPost('kunci');
         $path = 'assets/users/'.$kunci;
+
+        if (! $avatar || ! $avatar->isValid() || $avatar->hasMoved()) {
+            return $this->response->setStatusCode(400)->setBody('Maksimal file 2MB dan harus berupa gambar.');
+        }
         
         //folder e
         if(!file_exists($path)){
@@ -1156,7 +1160,7 @@ class Dashboard extends Controller
         	$pathName = 'assets/users/'.$kunci.'/slider'.$i.'.png';
         	if(!file_exists($pathName)){
         		$ok = array("no"=>$i,"kunci"=>$kunci);
-        		$avatar->move('assets/users/'.$kunci, 'slider'.$i.'.png');
+        		$avatar->move('assets/users/'.$kunci, 'slider'.$i.'.png', true);
                 echo json_encode($ok);
                 
                 //save to db
@@ -1169,6 +1173,8 @@ class Dashboard extends Controller
         		break;
         	} 
         }
+
+        return $this->response->setBody('');
         
      }
      public function do_del_slider_bukutamu(){
@@ -1176,7 +1182,9 @@ class Dashboard extends Controller
        $id = $this->request->getPost('id');
        $kunci = $this->request->getPost('kunci');
        $file = 'assets/users/'.$kunci.'/slider'.$id.'.png';
-       unlink($file);
+       if (file_exists($file)) {
+           unlink($file);
+       }
        $data['nama_slider'] = 'slider'.$id;
        $data['id_user'] = $_SESSION['id'];
        $delete = $this->DashboardModel->delete_slider_bukutamu($data);
