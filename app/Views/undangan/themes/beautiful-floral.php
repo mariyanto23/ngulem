@@ -113,8 +113,8 @@
                     </a></li>
             <?php }
                     if ($set->qrcode == 1 && $order[0]->buku_tamu == 1) { ?>
-                <li><a href="#" data-toggle="modal" data-target="#sw-qrcode" title="QrCode"><i class="fa fa-qrcode"></i>
-                        <p>QrCode</p>
+                <li><a href="#" data-toggle="modal" data-target="#sw-qrcode" title="QR Buku Tamu"><i class="fa fa-qrcode"></i>
+                        <p>QR Buku Tamu</p>
                     </a></li>
             <?php }
                     if ($set->hadiah == 1 && $order[0]->kirim_hadiah == 1) { ?>
@@ -400,7 +400,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">QrCode Tamu</h4>
+                    <h4 class="modal-title" id="myModalLabel">QR Code Buku Tamu</h4>
                 </div>
                 <div class="modal-body">
                     <div class="social-share text-center">

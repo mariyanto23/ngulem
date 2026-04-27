@@ -462,6 +462,58 @@ class Dashboard extends Controller
         return $tracks[$trackKey] ?? null;
     }
 
+    private function getQuoteLibraryPath()
+    {
+        return WRITEPATH . 'diulem/quote-library.json';
+    }
+
+    private function ensureQuoteLibraryStorage()
+    {
+        $dir = dirname($this->getQuoteLibraryPath());
+        if (! is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $path = $this->getQuoteLibraryPath();
+        if (! file_exists($path)) {
+            file_put_contents($path, json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        }
+    }
+
+    private function getQuoteLibraryItems()
+    {
+        $this->ensureQuoteLibraryStorage();
+        $raw = @file_get_contents($this->getQuoteLibraryPath());
+        $decoded = json_decode((string) $raw, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    private function normalizeQrCodeValue($value)
+    {
+        $value = trim((string) $value);
+        if ($value === '' || $value === 'Tidak Ada Qrcode') {
+            return '';
+        }
+
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            $query = parse_url($value, PHP_URL_QUERY);
+            if ($query) {
+                parse_str($query, $params);
+                if (! empty($params['qrcode'])) {
+                    return trim((string) $params['qrcode']);
+                }
+            }
+
+            $path = trim((string) parse_url($value, PHP_URL_PATH), '/');
+            if ($path !== '') {
+                $segments = explode('/', $path);
+                return trim((string) end($segments));
+            }
+        }
+
+        return $value;
+    }
+
     //upload foto mempelai
 	 public function do_update_foto_mempelai(){
 	 
@@ -741,6 +793,7 @@ class Dashboard extends Controller
 
     public function cerita(){
         $data['quote'] = $this->DashboardModel->get_quote_by_id_user();
+        $data['quote_library'] = $this->getQuoteLibraryItems();
         $data['cerita'] = $this->DashboardModel->get_cerita_by_id_user();
         $data['order'] = $this->DashboardModel->get_order_by_id_user();
         $data['title'] = 'Data Cerita';
@@ -1344,7 +1397,7 @@ class Dashboard extends Controller
      
     public function autofill()
     {
-        $qrcode =$_GET['qrcode'];
+        $qrcode = $this->normalizeQrCodeValue($_GET['qrcode'] ?? '');
         $hasil = $this->DashboardModel->autofill($qrcode);
         
         if(count($hasil) > 0){
@@ -1358,7 +1411,7 @@ class Dashboard extends Controller
     }
 
     public function do_update_hadir(){
-        $qrcode = $this->request->getPost('qrcode');
+        $qrcode = $this->normalizeQrCodeValue($this->request->getPost('qrcode'));
         $nama = $this->request->getPost('nama');
         // $id = $this->request->getPost('id');
         $cekhadir = $this->DashboardModel->cek_hadir($qrcode);

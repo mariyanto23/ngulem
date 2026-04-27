@@ -54,6 +54,8 @@ if(isset($_SERVER['HTTP_HOST'])){
 	$routes->post('admin/update_setting2', 'Admin::do_update_setting_2');
 	$routes->post('admin/upload_musik_library', 'Admin::upload_musik_library');
 	$routes->post('admin/delete_musik_library', 'Admin::delete_musik_library');
+	$routes->post('admin/add_quote_library', 'Admin::add_quote_library');
+	$routes->post('admin/delete_quote_library', 'Admin::delete_quote_library');
 	$routes->post('admin/update_setting_pembayaran_1', 'Admin::do_update_setting_pembayaran_1');
 	$routes->post('admin/update_setting_pembayaran_2', 'Admin::do_update_setting_pembayaran_2');
 	$routes->post('admin/add_paket', 'Admin::add_paket');

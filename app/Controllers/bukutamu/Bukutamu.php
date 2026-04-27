@@ -89,7 +89,7 @@ class Bukutamu extends Controller
 
     public function autofill()
     {
-    $qrcode =$_GET['qrcode'];
+    $qrcode = $this->normalizeQrCodeValue($_GET['qrcode'] ?? '');
     //$qrcode = $this->request->getPost('qrcode');
     $hasil = $this->BukutamuModel->autofill($qrcode);
     if(count($hasil) > 0){
@@ -106,7 +106,7 @@ class Bukutamu extends Controller
     public function do_add_hadir(){
         $idnya = $_SESSION['id_user'];
         $datanya = $this->BukutamuModel->get_data($idnya);
-        $qrcode = $this->request->getPost('qrcode');
+        $qrcode = $this->normalizeQrCodeValue($this->request->getPost('qrcode'));
         $nama = $this->request->getPost('nama');
         foreach ($datanya->getResult() as $row){ 
 	$kunci = $row->kunci;
@@ -142,5 +142,30 @@ class Bukutamu extends Controller
         echo 'gagal';
                 exit;
     }
+    }
+    private function normalizeQrCodeValue($value)
+    {
+        $value = trim((string) $value);
+        if ($value === '' || $value === 'Tidak Ada Qrcode') {
+            return '';
+        }
+
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            $query = parse_url($value, PHP_URL_QUERY);
+            if ($query) {
+                parse_str($query, $params);
+                if (! empty($params['qrcode'])) {
+                    return trim((string) $params['qrcode']);
+                }
+            }
+
+            $path = trim((string) parse_url($value, PHP_URL_PATH), '/');
+            if ($path !== '') {
+                $segments = explode('/', $path);
+                return trim((string) end($segments));
+            }
+        }
+
+        return $value;
     }
 }

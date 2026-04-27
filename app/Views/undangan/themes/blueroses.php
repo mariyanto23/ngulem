@@ -191,11 +191,11 @@
         <img src="<?php echo base_url() ?>/assets/base/img/sw-element-bottom.png" class="mempelai-salam-pembuka"/>
     </div>
  
-    <!-- ============== QrCode Tamu =============== -->
+    <!-- ============== QR Code Buku Tamu =============== -->
     <div id="hadir-konten" class="konten" style="display: none;" >
     <div class="container">
 		<div class="section-title">
-			<h2>QR Code Tamu</h2>
+			<h2>QR Code Buku Tamu</h2>
 		</div>
 		<div class="row">
 		        <p style="padding:20px 20%">Silahkan Scan QR Code Berikut untuk Mengisi Buku Tamu:</p>	

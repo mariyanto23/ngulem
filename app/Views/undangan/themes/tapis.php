@@ -323,7 +323,7 @@
             <a href="#" class="sw-custom-icon sw-custom-icon-share" data-toggle="modal" data-target="#sw-share" title="Bagikan">Share</a>
             <?php foreach ($rules->getResult() as $set){ 
 			if($set->qrcode == 1 && $order[0]->buku_tamu == 1) { ?>
-            <a href="#" class="sw-custom-icon sw-custom-icon-qrcode" data-toggle="modal" data-target="#sw-qrcode" title="QrCode">QrCode</a>
+            <a href="#" class="sw-custom-icon sw-custom-icon-qrcode" data-toggle="modal" data-target="#sw-qrcode" title="QR Buku Tamu">QR Buku Tamu</a>
             <?php } 
             if($set->hadiah == 1 && $order[0]->kirim_hadiah == 1) { ?>
             <a href="#" class="sw-custom-icon sw-custom-icon-gift" data-toggle="modal" data-target="#sw-hadiah" title="Hadiah">Hadiah</a>
@@ -391,7 +391,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">QrCode Tamu</h4>
+                <h4 class="modal-title" id="myModalLabel">QR Code Buku Tamu</h4>
             </div>
             <div class="modal-body">
                 <div class="social-share text-center">

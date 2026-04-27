@@ -87,6 +87,31 @@
                   <h3 class="card-title">Quote Pernikahan</h3>
                 </div>
                 <div class="card-body">
+                    <?php if (!empty($quote_library)) { ?>
+                    <div class="mb-3">
+                        <label class="form-label">Pilih Quote dari Admin</label>
+                        <select id="quote_library_select" class="form-select">
+                            <option value="">Pilih quote yang tersedia</option>
+                            <?php foreach ($quote_library as $quoteItem) { ?>
+                                <option value="<?= esc($quoteItem['id'] ?? '') ?>" data-quote="<?= esc($quoteItem['text'] ?? '', 'attr') ?>" data-source="<?= esc($quoteItem['source'] ?? '', 'attr') ?>">
+                                    <?= esc(mb_strimwidth($quoteItem['text'] ?? '', 0, 80, '...')) ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                        <small class="form-hint">Pilih quote admin untuk mengisi form otomatis, atau tulis quote sendiri di bawah.</small>
+                    </div>
+                    <div class="mb-3 d-flex flex-column gap-3">
+                        <?php foreach ($quote_library as $quoteItem) { ?>
+                            <div class="border rounded p-3">
+                                <div class="fw-semibold mb-1">"<?= esc($quoteItem['text'] ?? '') ?>"</div>
+                                <div class="text-secondary small mb-3"><?= esc($quoteItem['source'] ?? 'Tanpa sumber') ?></div>
+                                <button type="button" class="btn btn-outline-primary btn-sm gunakan-quote-admin" data-quote="<?= esc($quoteItem['text'] ?? '', 'attr') ?>" data-source="<?= esc($quoteItem['source'] ?? '', 'attr') ?>">
+                                    <i class="ti ti-check me-1"></i>Gunakan Quote Ini
+                                </button>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <?php } ?>
                     <div class="form-group">
                     <label>Quote Pernikahan</label>
                     <textarea id="quote" type="text" class="form-control" placeholder="Masukan Quote/Kutipan Pernikahan" required><?php if(!empty($quote)) echo $quote[0]->isi_quote ?></textarea>
@@ -172,6 +197,20 @@
           errorMessage: 'Quote gagal disimpan.'
       });
 
+    });
+
+    $('#quote_library_select').on('change', function() {
+      var selected = $(this).find(':selected');
+      if (!selected.val()) {
+        return;
+      }
+      $('#quote').val(selected.data('quote') || '');
+      $('#sumber_quote').val(selected.data('source') || '');
+    });
+
+    $(document).on('click', '.gunakan-quote-admin', function() {
+      $('#quote').val($(this).data('quote') || '');
+      $('#sumber_quote').val($(this).data('source') || '');
     });
 
 </script>

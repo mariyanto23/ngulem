@@ -285,6 +285,7 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     public function setting(){
         $data['setting'] = $this->AdminModel->get_setting();
         $data['music_library'] = $this->getMusicLibraryTracks();
+        $data['quote_library'] = $this->getQuoteLibraryItems();
         $data['title'] = 'Setting Web';
         $data['view'] = 'admin/setting';
 		return view('admin/layout', $data);
@@ -353,6 +354,40 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         $this->writeMusicLibraryTitles($titles);
 
         session()->setFlashdata('success', 'Musik bawaan admin berhasil dihapus.');
+        return redirect()->back();
+    }
+
+    public function add_quote_library()
+    {
+        $quoteText = trim((string) $this->request->getPost('quote_text'));
+        $quoteSource = trim((string) $this->request->getPost('quote_source'));
+
+        if ($quoteText === '') {
+            session()->setFlashdata('error', 'Isi quote wajib diisi.');
+            return redirect()->back()->withInput();
+        }
+
+        $items = $this->getQuoteLibraryItems();
+        $items[] = [
+            'id' => 'quote-' . time() . '-' . mt_rand(100, 999),
+            'text' => $quoteText,
+            'source' => $quoteSource,
+        ];
+
+        $this->writeQuoteLibraryItems($items);
+        session()->setFlashdata('success', 'Quote bawaan admin berhasil ditambahkan.');
+        return redirect()->back();
+    }
+
+    public function delete_quote_library()
+    {
+        $quoteId = (string) $this->request->getPost('quote_id');
+        $items = array_values(array_filter($this->getQuoteLibraryItems(), static function ($item) use ($quoteId) {
+            return ($item['id'] ?? '') !== $quoteId;
+        }));
+
+        $this->writeQuoteLibraryItems($items);
+        session()->setFlashdata('success', 'Quote bawaan admin berhasil dihapus.');
         return redirect()->back();
     }
 
@@ -1021,6 +1056,41 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     {
         $tracks = $this->getMusicLibraryTracks();
         return $tracks[$trackKey] ?? null;
+    }
+
+    private function getQuoteLibraryPath()
+    {
+        return WRITEPATH . 'diulem/quote-library.json';
+    }
+
+    private function ensureQuoteLibraryStorage()
+    {
+        $dir = dirname($this->getQuoteLibraryPath());
+        if (! is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $path = $this->getQuoteLibraryPath();
+        if (! file_exists($path)) {
+            file_put_contents($path, json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        }
+    }
+
+    private function getQuoteLibraryItems()
+    {
+        $this->ensureQuoteLibraryStorage();
+        $raw = @file_get_contents($this->getQuoteLibraryPath());
+        $decoded = json_decode((string) $raw, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    private function writeQuoteLibraryItems(array $items)
+    {
+        $this->ensureQuoteLibraryStorage();
+        file_put_contents(
+            $this->getQuoteLibraryPath(),
+            json_encode(array_values($items), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+        );
     }
 
     public function do_update_fitur(){

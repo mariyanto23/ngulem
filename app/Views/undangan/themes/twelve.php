@@ -547,7 +547,7 @@
 			</div>
 			<div class="modal-body">
 			    <div class="text-center">
-                        <h5 class="font-bold text-center">QrCode Tamu</h5>
+                        <h5 class="font-bold text-center">QR Code Buku Tamu</h5>
 					<div class="maps">
 			            <span id="qrcode"></span>
 		            </div>

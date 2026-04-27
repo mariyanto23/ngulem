@@ -285,7 +285,9 @@ let scanning = false;
 
 qrcode.callback = res => {
   if (res) {
-    $("#outputData").val(res);
+    var normalized = normalizeQrValue(res);
+    $("#outputData").val(normalized);
+    autofill();
     scanning = false;
 
     video.srcObject.getTracks().forEach(track => {
@@ -373,6 +375,34 @@ function autofill(){
                 }
             });
         }
+
+function normalizeQrValue(value) {
+    if (!value) {
+        return '';
+    }
+
+    try {
+        var url = new URL(value);
+        var code = url.searchParams.get('qrcode');
+        if (code) {
+            return code;
+        }
+
+        var segments = url.pathname.split('/').filter(Boolean);
+        return segments.length ? segments[segments.length - 1] : value;
+    } catch (error) {
+        return value;
+    }
+}
+
+$(document).ready(function () {
+    var params = new URLSearchParams(window.location.search);
+    var queryQrCode = params.get('qrcode');
+    if (queryQrCode) {
+        $('#outputData').val(queryQrCode);
+        autofill();
+    }
+});
 </script>
 <script type="text/javascript">
  window.onload = function() { jam(); }

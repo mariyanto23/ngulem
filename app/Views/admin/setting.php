@@ -176,6 +176,57 @@ if ($waGatewayProvider === 'nusagateway') {
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quote Pernikahan Bawaan</h3>
+                    </div>
+                    <form method="post" action="<?= base_url('admin/add_quote_library'); ?>">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Isi Quote</label>
+                                <textarea name="quote_text" rows="4" class="form-control" placeholder="Masukkan quote pernikahan"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama Sumber</label>
+                                <input type="text" name="quote_source" class="form-control" placeholder="Contoh: QS. Ar-Rum: 21 atau Anonim">
+                            </div>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="ti ti-plus me-2"></i>Tambah Quote
+                            </button>
+                        </div>
+                    </form>
+                    <div class="card-body border-top">
+                        <div class="d-flex flex-column gap-3">
+                            <?php if (! empty($quote_library)) { ?>
+                                <?php foreach ($quote_library as $quoteItem) { ?>
+                                    <div class="border rounded p-3">
+                                        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                                            <div>
+                                                <div class="fw-semibold">"<?= esc($quoteItem['text'] ?? '') ?>"</div>
+                                                <div class="text-secondary small"><?= esc($quoteItem['source'] ?? 'Tanpa sumber') ?></div>
+                                            </div>
+                                            <form method="post" action="<?= base_url('admin/delete_quote_library'); ?>" onsubmit="return confirm('Hapus quote ini?');">
+                                                <input type="hidden" name="quote_id" value="<?= esc($quoteItem['id'] ?? '') ?>">
+                                                <button class="btn btn-outline-danger btn-sm" type="submit">
+                                                    <i class="ti ti-trash me-1"></i>Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <div class="empty">
+                                    <div class="empty-img"><i class="ti ti-quote fs-1 text-secondary"></i></div>
+                                    <p class="empty-title">Belum ada quote tersedia</p>
+                                    <p class="empty-subtitle text-secondary">Tambahkan quote bawaan agar pengguna bisa memilih dengan cepat.</p>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

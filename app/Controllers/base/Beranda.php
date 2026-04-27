@@ -134,7 +134,7 @@ class Beranda extends Controller
 			$data['invite_slug'] = preg_replace('/%20/', '+', $nama_tamu);
 			$data['alamat_tamu'] = $alamat_tamu;
 			$data['alamat_slug'] = preg_replace('/%20/', '+', $alamat_tamu);
-			$data['qrcode'] = $qrcode;
+			$data['qrcode'] = $this->buildBukutamuQrUrl('demo', $qrcode);
 			}else{
 			$nama_tamu= 'Tamu Undangan';
 			$alamat_tamu = 'Di Tempat';
@@ -167,6 +167,18 @@ class Beranda extends Controller
 		}
 
 	}
+
+    private function buildBukutamuQrUrl($domain, $qrcode)
+    {
+        $cleanDomain = trim((string) $domain, '/');
+        $cleanCode = trim((string) $qrcode);
+
+        if ($cleanDomain === '' || $cleanCode === '' || $cleanCode === 'Tidak Ada Qrcode') {
+            return 'Tidak Ada Qrcode';
+        }
+
+        return rtrim(SITE_BUKUTAMU, '/') . '/' . $cleanDomain . '?qrcode=' . rawurlencode($cleanCode);
+    }
 
 	public function youtube()
 	{
