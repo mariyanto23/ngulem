@@ -280,6 +280,83 @@
             cursor: pointer;
         }
 
+        .bukutamu-selfie-slider {
+            margin-top: 18px;
+        }
+
+        .bukutamu-selfie-slide {
+            min-height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .bukutamu-selfie-card {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+        }
+
+        .bukutamu-selfie-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 2px solid #facc15;
+        }
+
+        .bukutamu-selfie-meta {
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .bukutamu-selfie-meta strong {
+            display: block;
+            font-size: 18px;
+            color: #0f172a;
+        }
+
+        .bukutamu-selfie-meta small {
+            display: block;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        #selfieCarousel .carousel-indicators {
+            bottom: -6px;
+        }
+
+        #selfieCarousel .carousel-indicators li {
+            width: 10px;
+            height: 10px;
+            border: 0;
+            background: #cbd5e1;
+            margin: 0 4px;
+        }
+
+        #selfieCarousel .carousel-indicators .active {
+            background: #0f766e;
+        }
+
+        #selfieCarousel .left.carousel-control,
+        #selfieCarousel .right.carousel-control {
+            background-image: none;
+            width: 52px;
+            opacity: 1;
+        }
+
+        #selfieCarousel .glyphicon {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.7);
+        }
+
         @media (max-width: 767px) {
             .bukutamu-shell {
                 padding: 16px;
@@ -298,8 +375,17 @@
                 width: 72px;
                 max-width: 36%;
             }
+
+            .bukutamu-selfie-slide {
+                min-height: 300px;
+                padding: 0;
+            }
+
+            .bukutamu-selfie-card img {
+                height: 200px;
+            }
         }
-    </style>
+  </style>
 </head>
 
 <body style="background-image: url('<?= base_url() ?>/assets/users/<?= $kunci; ?>/bg-tamu.png');">
@@ -460,7 +546,7 @@
                         <h4 class="bukutamu-section-title">Scan QR Code</h4>
                         <p class="bukutamu-section-subtitle">Arahkan kamera ke QR buku tamu untuk mengisi data tamu otomatis.</p>
                         <div class="bukutamu-action-area">
-                            <a id="btn-scan-qr" class="bukutamu-action-button" href="#" role="button" aria-label="Mulai scan QR code">
+                            <a id="btn-scan-qr" class="bukutamu-action-button" href="#" role="button" aria-label="Mulai scan QR code" onclick="return startQrScan(event);">
                                 <img src="<?php echo base_url() ?>/assets/dashboard/img/qrscan.png" alt="Image" class="img-fluid">
                             </a>
                             <canvas hidden="" id="qr-canvas" class="bukutamu-scan-canvas"></canvas>
@@ -544,6 +630,52 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="bukutamu-selfie-slider">
+            <div class="bukutamu-section-card">
+                <div class="bukutamu-step">5</div>
+                <h4 class="bukutamu-section-title">Slider Selfie Tamu Terbaru</h4>
+                <p class="bukutamu-section-subtitle">Galeri check-in terbaru yang bergerak otomatis selama acara berlangsung.</p>
+                <?php if (!empty($hadir)) { ?>
+                    <div id="selfieCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+                        <ol class="carousel-indicators" id="selfie-carousel-indicators">
+                            <?php foreach ($hadir as $index => $row) { ?>
+                                <li data-target="#selfieCarousel" data-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
+                            <?php } ?>
+                        </ol>
+                        <div class="carousel-inner" role="listbox" id="selfie-carousel-inner">
+                            <?php foreach ($hadir as $index => $row) { ?>
+                                <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
+                                <div class="item <?= $index === 0 ? 'active' : '' ?> bukutamu-selfie-slide">
+                                    <div class="bukutamu-selfie-card">
+                                        <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
+                                        <div class="bukutamu-selfie-meta">
+                                            <strong><?= esc($row->nama_tamu) ?></strong>
+                                            <small><?= esc($row->alamat_tamu) ?></small>
+                                            <small><?= esc($row->waktu_hadir) ?></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <a class="left carousel-control" href="#selfieCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#selfieCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <div id="selfie-slider-empty" hidden></div>
+                <?php } else { ?>
+                    <div id="selfie-slider-empty" class="bukutamu-form-area text-center">
+                        <strong>Belum ada selfie tamu</strong>
+                        <p class="bukutamu-section-subtitle" style="margin-top:8px;">Slider akan otomatis aktif setelah tamu pertama berhasil check-in.</p>
+                    </div>
+                    <div id="selfieCarousel" class="carousel slide" hidden></div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -640,6 +772,61 @@
             return $('<div>').text(value || '').html();
         }
 
+        function prependSelfieSlide(item) {
+            var $carousel = $('#selfieCarousel');
+            var $indicators = $('#selfie-carousel-indicators');
+            var $inner = $('#selfie-carousel-inner');
+            var isEmpty = !$inner.length || $inner.children('.item').length === 0;
+
+            $('#selfie-slider-empty').prop('hidden', true).hide();
+
+            if (!$inner.length) {
+                $carousel.html(
+                    '<ol class="carousel-indicators" id="selfie-carousel-indicators"></ol>' +
+                    '<div class="carousel-inner" role="listbox" id="selfie-carousel-inner"></div>' +
+                    '<a class="left carousel-control" href="#selfieCarousel" role="button" data-slide="prev">' +
+                        '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>' +
+                        '<span class="sr-only">Previous</span>' +
+                    '</a>' +
+                    '<a class="right carousel-control" href="#selfieCarousel" role="button" data-slide="next">' +
+                        '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>' +
+                        '<span class="sr-only">Next</span>' +
+                    '</a>'
+                );
+                $carousel.removeAttr('hidden');
+                $indicators = $('#selfie-carousel-indicators');
+                $inner = $('#selfie-carousel-inner');
+                isEmpty = true;
+            }
+
+            $inner.find('.item').removeClass('active');
+            $indicators.find('li').removeClass('active');
+
+            $inner.prepend(
+                '<div class="item active bukutamu-selfie-slide">' +
+                    '<div class="bukutamu-selfie-card">' +
+                        '<img src="' + escapeHtml(item.selfie_url || '') + '" alt="Selfie ' + escapeHtml(item.nama_tamu || '') + '" class="hadir-selfie-thumb" data-image="' + escapeHtml(item.selfie_url || '') + '" data-name="' + escapeHtml(item.nama_tamu || '') + '">' +
+                        '<div class="bukutamu-selfie-meta">' +
+                            '<strong>' + escapeHtml(item.nama_tamu || '') + '</strong>' +
+                            '<small>' + escapeHtml(item.alamat_tamu || '') + '</small>' +
+                            '<small>' + escapeHtml(item.waktu_hadir || '') + '</small>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>'
+            );
+
+            var totalSlides = $inner.children('.item').length;
+            $indicators.empty();
+            for (var i = 0; i < totalSlides; i++) {
+                $indicators.append('<li data-target="#selfieCarousel" data-slide-to="' + i + '" class="' + (i === 0 ? 'active' : '') + '"></li>');
+            }
+
+            $carousel.removeAttr('hidden');
+            if (!isEmpty) {
+                $carousel.carousel(0);
+            }
+        }
+
         function updateAttendanceStats() {
             var totalTamu = parseInt($('#stat-total-tamu').text(), 10) || 0;
             var totalHadir = $('#hadir-list .list-group-item').not('#hadir-empty-state').length;
@@ -711,6 +898,7 @@
                             Webcam.reset();
                             var currentToday = parseInt($('#stat-total-hadir-today').text(), 10) || 0;
                             $('#stat-total-hadir-today').text(currentToday + 1);
+                            prependSelfieSlide($hasil);
                             updateAttendanceStats();
                             updateAttendanceUiState();
                             Swal.fire({
@@ -913,6 +1101,12 @@
                 return false;
             };
 
+            window.__diulemStartQrScan = function() {
+                return btnScanQR.onclick({
+                    preventDefault: function() {}
+                });
+            };
+
             $('#btn-scan-qr').on('click', function(event) {
                 event.preventDefault();
                 if (typeof btnScanQR.onclick === 'function') {
@@ -1016,6 +1210,18 @@
     </script>
 
     <script>
+        window.startQrScan = function(event) {
+            if (event && typeof event.preventDefault === 'function') {
+                event.preventDefault();
+            }
+
+            if (window.__diulemStartQrScan && typeof window.__diulemStartQrScan === 'function') {
+                return window.__diulemStartQrScan();
+            }
+
+            return false;
+        };
+
         function autofill() {
             var qrcode = $("#outputData").val();
             $.ajax({
