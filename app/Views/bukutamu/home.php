@@ -577,7 +577,7 @@
 
             <div style="margin-top:10px;">
                 <div class="bukutamu-pair-layout">
-                    <div class="bukutamu-pair-main">
+                    <section class="bukutamu-pair-main">
                         <div class="bukutamu-section-card bukutamu-slider-card">
                             <div style="padding:0 0 14px;">
                                 <div class="bukutamu-step">B</div>
@@ -585,42 +585,31 @@
                                 <p class="bukutamu-section-subtitle">Slider visual buku tamu dan informasi singkat acara.</p>
                             </div>
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                <!-- Indicators -->
                                 <ol class="carousel-indicators">
-                                    <?php
-
-                                    foreach ($slider as $key => $data) {
-                                        $active = ($key == 0) ? 'active' : '';
-                                        echo '<li data-target="#carousel-berita" data-slide-to="' . $key . '" class="' . $active . '"></li>';
-                                    }
-                                    ?>
+                                    <?php foreach ($slider as $key => $data) { ?>
+                                        <li data-target="#myCarousel" data-slide-to="<?= $key ?>" class="<?= $key === 0 ? 'active' : '' ?>"></li>
+                                    <?php } ?>
                                 </ol>
-
-                                <!-- Wrapper for slides -->
                                 <div class="carousel-inner" role="listbox">
-                                    <?php
-                                    foreach ($slider as $key => $data) {
-                                        $active = ($key == 0) ? 'active' : '';
-                                        echo '<div class="item ' . $active . '">' ?>
-                                        <img src="<?php echo base_url() ?>/assets/users/<?php echo $kunci . '/' . $data['nama_slider']; ?>.png" alt="img-fluid">
+                                    <?php foreach ($slider as $key => $data) { ?>
+                                        <div class="item <?= $key === 0 ? 'active' : '' ?>">
+                                            <img src="<?= base_url() ?>/assets/users/<?= $kunci . '/' . $data['nama_slider']; ?>.png" alt="Galeri acara <?= $key + 1 ?>" class="img-fluid">
+                                        </div>
+                                    <?php } ?>
                                 </div>
-                            <?php }
-                            ?>
-
+                                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
                             </div>
-
-                            <!-- Left and right controls -->
-                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
                         </div>
-                    </div>
-                    <div class="bukutamu-pair-side">
+                    </section>
+
+                    <aside class="bukutamu-pair-side">
                         <div class="bukutamu-selfie-slider">
                             <div class="bukutamu-section-card">
                                 <h4 class="bukutamu-section-title">Galeri Selfie</h4>
@@ -661,8 +650,7 @@
                                 <?php } ?>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </aside>
                 </div>
             </div>
         </div>
