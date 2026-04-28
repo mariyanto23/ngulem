@@ -439,7 +439,8 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="bukutamu-section-card" style="background:linear-gradient(135deg,#0f172a,#334155);color:#fff;">
-                        <p class="utama-mempelai"><u><?php echo $nama_panggilan_pria; ?> & <?php echo $nama_panggilan_wanita; ?></p></u>
+                        <p class="utama-mempelai"><u><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
+                                                        else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></u></p>
                         <b>
                             <p class="utama-detail" id="tanggal-acara-resepsi"></p>
                         </b>
