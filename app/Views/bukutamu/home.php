@@ -366,6 +366,15 @@
         </div>
     </div>
 </div>
+<div class="row" style="margin-bottom:16px;">
+    <div class="col-sm-12">
+        <div class="bukutamu-section-card">
+            <div class="bukutamu-step">B</div>
+            <h3 class="bukutamu-section-title">Petunjuk Singkat</h3>
+            <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR agar data tamu tetap terbaca.</p>
+        </div>
+    </div>
+</div>
 
 <div class="container-fluid" style="padding:0;margin-top:10px;">
 <div class="row">
@@ -420,11 +429,6 @@
 	<p class="utama-detail"><?php echo $tempat; ?></p>
 	<span class="utama-detail"><?php echo $alamat; ?></span>
 	
-    </div>
-    <div class="bukutamu-section-card" style="margin-top:16px;">
-        <div class="bukutamu-step">B</div>
-        <h3 class="bukutamu-section-title">Petunjuk Singkat</h3>
-        <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR.</p>
     </div>
   </div>
 </div>
