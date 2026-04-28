@@ -342,6 +342,34 @@
             margin-top: 4px;
         }
 
+        @media (min-width: 768px) {
+            .bukutamu-selfie-slider .bukutamu-section-card {
+                padding: 16px 16px 14px;
+            }
+
+            .bukutamu-selfie-slide {
+                min-height: 310px;
+                padding: 6px 8px 12px;
+            }
+
+            .bukutamu-selfie-card {
+                max-width: 360px;
+                padding: 12px;
+            }
+
+            .bukutamu-selfie-card img {
+                height: 205px;
+            }
+
+            .bukutamu-selfie-meta {
+                margin-top: 10px;
+            }
+
+            .bukutamu-selfie-meta strong {
+                font-size: 16px;
+            }
+        }
+
         #selfieCarousel .carousel-indicators {
             bottom: -6px;
         }
