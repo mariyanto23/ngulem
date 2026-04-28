@@ -309,6 +309,7 @@
         }
 
         .bukutamu-selfie-card {
+            position: relative;
             width: 100%;
             max-width: 420px;
             background: #ffffff;
@@ -325,21 +326,25 @@
             border: 2px solid #facc15;
         }
 
-        .bukutamu-selfie-meta {
-            margin-top: 14px;
-            text-align: center;
-        }
-
-        .bukutamu-selfie-meta strong {
-            display: block;
-            font-size: 18px;
-            color: #0f172a;
-        }
-
-        .bukutamu-selfie-meta small {
-            display: block;
-            color: #64748b;
-            margin-top: 4px;
+        .bukutamu-selfie-name-badge {
+            position: absolute;
+            top: 26px;
+            left: 26px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            max-width: calc(100% - 52px);
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.88);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
         }
 
         @media (min-width: 768px) {
@@ -361,12 +366,10 @@
                 height: 205px;
             }
 
-            .bukutamu-selfie-meta {
-                margin-top: 10px;
-            }
-
-            .bukutamu-selfie-meta strong {
-                font-size: 16px;
+            .bukutamu-selfie-name-badge {
+                top: 18px;
+                left: 18px;
+                max-width: calc(100% - 36px);
             }
         }
 
@@ -427,6 +430,14 @@
 
             .bukutamu-selfie-card img {
                 height: 200px;
+            }
+
+            .bukutamu-selfie-name-badge {
+                top: 18px;
+                left: 18px;
+                max-width: calc(100% - 36px);
+                font-size: 12px;
+                padding: 7px 11px;
             }
         }
   </style>
@@ -592,12 +603,8 @@
                                             <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
                                             <div class="item <?= $index === 0 ? 'active' : '' ?> bukutamu-selfie-slide">
                                                 <div class="bukutamu-selfie-card">
+                                                    <span class="bukutamu-selfie-name-badge"><?= esc($row->nama_tamu) ?></span>
                                                     <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
-                                                    <div class="bukutamu-selfie-meta">
-                                                        <strong><?= esc($row->nama_tamu) ?></strong>
-                                                        <small><?= esc($row->alamat_tamu) ?></small>
-                                                        <small><?= esc($row->waktu_hadir) ?></small>
-                                                    </div>
                                                 </div>
                                             </div>
                                         <?php } ?>
@@ -839,12 +846,8 @@
             $inner.prepend(
                 '<div class="item active bukutamu-selfie-slide">' +
                     '<div class="bukutamu-selfie-card">' +
+                        '<span class="bukutamu-selfie-name-badge">' + escapeHtml(item.nama_tamu || '') + '</span>' +
                         '<img src="' + escapeHtml(item.selfie_url || '') + '" alt="Selfie ' + escapeHtml(item.nama_tamu || '') + '" class="hadir-selfie-thumb" data-image="' + escapeHtml(item.selfie_url || '') + '" data-name="' + escapeHtml(item.nama_tamu || '') + '">' +
-                        '<div class="bukutamu-selfie-meta">' +
-                            '<strong>' + escapeHtml(item.nama_tamu || '') + '</strong>' +
-                            '<small>' + escapeHtml(item.alamat_tamu || '') + '</small>' +
-                            '<small>' + escapeHtml(item.waktu_hadir || '') + '</small>' +
-                        '</div>' +
                     '</div>' +
                 '</div>'
             );
