@@ -150,6 +150,7 @@
         .bukutamu-pair-main,
         .bukutamu-pair-side {
             min-height: 1px;
+            min-width: 0;
         }
 
         #myCarousel {
@@ -363,19 +364,15 @@
 
         @media (min-width: 768px) {
             .bukutamu-pair-layout {
-                display: flex;
-                align-items: stretch;
+                display: grid;
+                grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
                 gap: 16px;
             }
 
-            .bukutamu-pair-main {
-                flex: 0 0 calc(66.66666667% - 8px);
-                max-width: calc(66.66666667% - 8px);
-            }
-
+            .bukutamu-pair-main,
             .bukutamu-pair-side {
-                flex: 0 0 calc(33.33333333% - 8px);
-                max-width: calc(33.33333333% - 8px);
+                width: auto;
+                max-width: none;
             }
 
             .bukutamu-selfie-slider {
