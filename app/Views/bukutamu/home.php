@@ -164,6 +164,11 @@
             min-height: 100%;
         }
 
+        .bukutamu-info-card {
+            background: linear-gradient(135deg, #0f172a, #334155);
+            color: #fff;
+        }
+
         .bukutamu-step {
             display: inline-flex;
             align-items: center;
@@ -348,26 +353,56 @@
         }
 
         @media (min-width: 768px) {
+            .bukutamu-equal-row {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .bukutamu-equal-row>[class*='col-'] {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .bukutamu-equal-row>[class*='col-']>.bukutamu-section-card,
+            .bukutamu-equal-row>[class*='col-']>.bukutamu-selfie-slider {
+                flex: 1 1 auto;
+            }
+
             .bukutamu-selfie-slider {
                 margin-top: 0;
+                display: flex;
+            }
+
+            .bukutamu-slider-card,
+            .bukutamu-selfie-slider .bukutamu-section-card {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #myCarousel,
+            #selfieCarousel {
+                flex: 1 1 auto;
             }
 
             .bukutamu-selfie-slider .bukutamu-section-card {
+                width: 100%;
                 padding: 16px 16px 14px;
             }
 
             .bukutamu-selfie-slide {
-                min-height: 310px;
+                min-height: 420px;
                 padding: 6px 8px 12px;
             }
 
             .bukutamu-selfie-card {
-                max-width: 360px;
+                max-width: none;
+                height: 100%;
                 padding: 12px;
             }
 
             .bukutamu-selfie-card img {
-                height: 205px;
+                height: 100%;
+                min-height: 360px;
             }
 
             .bukutamu-selfie-name-badge {
@@ -409,6 +444,10 @@
         }
 
         @media (max-width: 767px) {
+            .bukutamu-equal-row {
+                display: block;
+            }
+
             .bukutamu-shell {
                 padding: 16px;
                 border-radius: 18px;
@@ -526,7 +565,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-bottom:16px;">
+            <div class="row bukutamu-equal-row" style="margin-bottom:16px;">
                 <div class="col-sm-8">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">A</div>
@@ -535,7 +574,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="bukutamu-section-card" style="background:linear-gradient(135deg,#0f172a,#334155);color:#fff;">
+                    <div class="bukutamu-section-card bukutamu-info-card">
                         <p class="utama-mempelai"><u><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
                                                         else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></u></p>
                         <b>
@@ -548,7 +587,7 @@
             </div>
 
             <div class="container-fluid" style="padding:0;margin-top:10px;">
-                <div class="row">
+                <div class="row bukutamu-equal-row">
                     <div class="col-sm-8">
                         <div class="bukutamu-section-card bukutamu-slider-card">
                             <div style="padding:0 0 14px;">
@@ -593,44 +632,45 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                    <div class="bukutamu-selfie-slider">
-                        <div class="bukutamu-section-card">
-                            <h4 class="bukutamu-section-title">Galeri Selfie</h4>
-                            <?php if (!empty($hadir)) { ?>
-                                <div id="selfieCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
-                                    <ol class="carousel-indicators" id="selfie-carousel-indicators">
-                                        <?php foreach ($hadir as $index => $row) { ?>
-                                            <li data-target="#selfieCarousel" data-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
-                                        <?php } ?>
-                                    </ol>
-                                    <div class="carousel-inner" role="listbox" id="selfie-carousel-inner">
-                                        <?php foreach ($hadir as $index => $row) { ?>
-                                            <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
-                                            <div class="item <?= $index === 0 ? 'active' : '' ?> bukutamu-selfie-slide">
-                                                <div class="bukutamu-selfie-card">
-                                                    <span class="bukutamu-selfie-name-badge"><?= esc($row->nama_tamu) ?></span>
-                                                    <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
+                        <div class="bukutamu-selfie-slider">
+                            <div class="bukutamu-section-card">
+                                <h4 class="bukutamu-section-title">Galeri Selfie</h4>
+                                <?php if (!empty($hadir)) { ?>
+                                    <div id="selfieCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+                                        <ol class="carousel-indicators" id="selfie-carousel-indicators">
+                                            <?php foreach ($hadir as $index => $row) { ?>
+                                                <li data-target="#selfieCarousel" data-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
+                                            <?php } ?>
+                                        </ol>
+                                        <div class="carousel-inner" role="listbox" id="selfie-carousel-inner">
+                                            <?php foreach ($hadir as $index => $row) { ?>
+                                                <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
+                                                <div class="item <?= $index === 0 ? 'active' : '' ?> bukutamu-selfie-slide">
+                                                    <div class="bukutamu-selfie-card">
+                                                        <span class="bukutamu-selfie-name-badge"><?= esc($row->nama_tamu) ?></span>
+                                                        <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php } ?>
+                                            <?php } ?>
+                                        </div>
+                                        <a class="left carousel-control" href="#selfieCarousel" role="button" data-slide="prev">
+                                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="right carousel-control" href="#selfieCarousel" role="button" data-slide="next">
+                                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
                                     </div>
-                                    <a class="left carousel-control" href="#selfieCarousel" role="button" data-slide="prev">
-                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="right carousel-control" href="#selfieCarousel" role="button" data-slide="next">
-                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                                <div id="selfie-slider-empty" hidden></div>
-                            <?php } else { ?>
-                                <div id="selfie-slider-empty" class="bukutamu-form-area text-center">
-                                    <strong>Belum ada selfie tamu</strong>
-                                    <p class="bukutamu-section-subtitle" style="margin-top:8px;">Slider akan otomatis aktif setelah tamu pertama berhasil check-in.</p>
-                                </div>
-                                <div id="selfieCarousel" class="carousel slide" hidden></div>
-                            <?php } ?>
+                                    <div id="selfie-slider-empty" hidden></div>
+                                <?php } else { ?>
+                                    <div id="selfie-slider-empty" class="bukutamu-form-area text-center">
+                                        <strong>Belum ada selfie tamu</strong>
+                                        <p class="bukutamu-section-subtitle" style="margin-top:8px;">Slider akan otomatis aktif setelah tamu pertama berhasil check-in.</p>
+                                    </div>
+                                    <div id="selfieCarousel" class="carousel slide" hidden></div>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
                 </div>
