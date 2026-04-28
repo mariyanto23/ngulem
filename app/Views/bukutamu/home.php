@@ -523,11 +523,22 @@
                 </div>
             </div>
             <div class="row" style="margin-bottom:16px;">
-                <div class="col-sm-12">
+                <div class="col-sm-8">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">A</div>
                         <h3 class="bukutamu-section-title">Panduan</h3>
                         <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR agar data tamu tetap terbaca.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="bukutamu-section-card" style="background:linear-gradient(135deg,#0f172a,#334155);color:#fff;">
+                        <p class="utama-mempelai"><u><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
+                                                        else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></u></p>
+                        <b>
+                            <p class="utama-detail" id="tanggal-acara-resepsi"></p>
+                        </b>
+                        <p class="utama-detail"><?php echo $tempat; ?></p>
+                        <span class="utama-detail"><?php echo $alamat; ?></span>
                     </div>
                 </div>
             </div>
@@ -577,17 +588,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="bukutamu-section-card" style="background:linear-gradient(135deg,#0f172a,#334155);color:#fff;">
-                        <p class="utama-mempelai"><u><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
-                                                        else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></u></p>
-                        <b>
-                            <p class="utama-detail" id="tanggal-acara-resepsi"></p>
-                        </b>
-                        <p class="utama-detail"><?php echo $tempat; ?></p>
-                        <span class="utama-detail"><?php echo $alamat; ?></span>
-                    </div>
+                    <div class="col-sm-4">
                     <div class="bukutamu-selfie-slider">
                         <div class="bukutamu-section-card">
                             <h4 class="bukutamu-section-title">Galeri Selfie</h4>
@@ -628,6 +629,7 @@
                             <?php } ?>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
