@@ -797,6 +797,9 @@ function initializeSelfieCamera() {
 
 $(document).ready(function () {
 const qrcode = window.qrcode;
+const barcodeDetector = ('BarcodeDetector' in window)
+  ? new BarcodeDetector({ formats: ['qr_code'] })
+  : null;
 const video = document.createElement("video");
 const canvasElement = document.getElementById("qr-canvas");
 const canvas = canvasElement.getContext("2d");
@@ -825,15 +828,7 @@ function stopScanStream() {
 
 qrcode.callback = res => {
   if (res && !String(res).toLowerCase().includes('error')) {
-    var normalized = normalizeQrValue(res);
-    $("#outputData").val(normalized);
-    autofill();
-    stopScanStream();
-
-    qrResult.hidden = false;
-    document.getElementById('outputData').focus();
-    initializeSelfieCamera();
-    updateScanUiState(false, 'QR berhasil dibaca. Data tamu sedang diisi otomatis.');
+    handleScanResult(res);
   }
 };
 
@@ -895,6 +890,11 @@ function tick() {
     return;
   }
 
+  if (!video.videoWidth || !video.videoHeight) {
+    requestAnimationFrame(tick);
+    return;
+  }
+
   canvasElement.height = video.videoHeight;
   canvasElement.width = video.videoWidth;
   canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
@@ -902,8 +902,49 @@ function tick() {
   scanning && requestAnimationFrame(tick);
 }
 
+function handleScanResult(rawValue) {
+  if (!rawValue) {
+    return;
+  }
+
+  var normalized = normalizeQrValue(rawValue);
+  $("#outputData").val(normalized);
+  autofill();
+  stopScanStream();
+
+  qrResult.hidden = false;
+  document.getElementById('outputData').focus();
+  initializeSelfieCamera();
+  updateScanUiState(false, 'QR berhasil dibaca. Data tamu sedang diisi otomatis.');
+}
+
+async function detectWithBarcodeDetector() {
+  if (!scanning || !barcodeDetector) {
+    return;
+  }
+
+  try {
+    var barcodes = await barcodeDetector.detect(canvasElement);
+    if (barcodes && barcodes.length > 0) {
+      handleScanResult(barcodes[0].rawValue || '');
+      return;
+    }
+  } catch (error) {
+    // fallback to legacy decoder below
+  }
+
+  if (scanning) {
+    setTimeout(detectWithBarcodeDetector, 180);
+  }
+}
+
 function scan() {
   if (!scanning) {
+    return;
+  }
+
+  if (barcodeDetector) {
+    detectWithBarcodeDetector();
     return;
   }
 
