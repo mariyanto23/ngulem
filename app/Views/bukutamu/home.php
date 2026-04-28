@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php foreach ($mempelai->getResult() as $row) {
         $nama_panggilan_pria = $row->nama_panggilan_pria;
@@ -13,22 +14,25 @@
         $posisi_mempelai = $row->posisi_mempelai;
     }
     ?>
-    <?php foreach ($data->getResult() as $row){
+    <?php foreach ($data->getResult() as $row) {
         $kunci = $row->kunci;
     }
-	?>
-    <title><?php if($posisi_mempelai == 0) echo $nama_panggilan_pria." & ".$nama_panggilan_wanita; else echo $nama_panggilan_wanita." & ".$nama_panggilan_pria;?></title> 
+    ?>
+    <title><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
+            else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></title>
     <!-- REQUIRED META AREA	 -->
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name=viewport content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta property="og:title" content="<?php if($posisi_mempelai == 0) echo $nama_panggilan_pria." & ".$nama_panggilan_wanita; else echo $nama_panggilan_wanita." & ".$nama_panggilan_pria;?>">
+    <meta property="og:title" content="<?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
+                                        else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?>">
     <meta name=keywords content="ngulemind,undangan,pernikahan,online,website,wedding,invitation,digital,video">
     <meta property="og:url" content="<?php echo base_url() ?>">
-    <meta property="og:image" content="<?= base_url() ?>/assets/users/<?= $kunci; ?>/kita.png" >
-    <meta property="og:image:alt" content="<?php if($posisi_mempelai == 0) echo $nama_panggilan_pria." & ".$nama_panggilan_wanita; else echo $nama_panggilan_wanita." & ".$nama_panggilan_pria;?>" >
+    <meta property="og:image" content="<?= base_url() ?>/assets/users/<?= $kunci; ?>/kita.png">
+    <meta property="og:image:alt" content="<?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
+                                            else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?>">
     <meta property="og:image:width" content="300">
     <meta property="og:image:height" content="300">
     <meta property="og:type" content="website" />
@@ -37,7 +41,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/bukutamu/css/style.css">
     <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
-    
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
@@ -221,14 +225,14 @@
             height: auto;
             object-fit: contain;
         }
-        
+
         @media (max-width: 300px) {
             #camera video {
                 max-width: 80%;
                 max-height: 80%;
             }
-        
-        
+
+
         }
 
         .bukutamu-action-button.is-disabled {
@@ -295,30 +299,32 @@
                 max-width: 36%;
             }
         }
-  </style>
+    </style>
 </head>
+
 <body style="background-image: url('<?= base_url() ?>/assets/users/<?= $kunci; ?>/bg-tamu.png');">
     <?php
-    $satu_hari        = mktime(0,0,0,date("n"),date("j"),date("Y"));
-    function tglIndonesia($str){
+    $satu_hari        = mktime(0, 0, 0, date("n"), date("j"), date("Y"));
+    function tglIndonesia($str)
+    {
         $tr   = trim($str);
         $str    = str_replace(array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'), array('Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum\'at', 'Sabtu', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'), $tr);
         return $str;
     }
     $tanggal_sekarang = date('Y/m/d');
-    if(!empty($countdown->getResult())){
-        foreach ($countdown->getResult() as $row){
-        $tgl_acara = $row->tgl_acara;
-		$clock = $row->tgl_acara.' '.$row->waktu_mulai;
-		$tempat = $row->tempat_acara;
-		$alamat = $row->alamat_acara;
+    if (!empty($countdown->getResult())) {
+        foreach ($countdown->getResult() as $row) {
+            $tgl_acara = $row->tgl_acara;
+            $clock = $row->tgl_acara . ' ' . $row->waktu_mulai;
+            $tempat = $row->tempat_acara;
+            $alamat = $row->alamat_acara;
         }
-	}else{
-	    $tgl_acara = $acara[0]->tgl_acara;
-		$clock = $acara[0]->tgl_acara.' '.$acara[0]->waktu_mulai;
-		$tempat = $acara[0]->tempat_acara;
-		$alamat = $acara[0]->alamat_acara;
-	 }
+    } else {
+        $tgl_acara = $acara[0]->tgl_acara;
+        $clock = $acara[0]->tgl_acara . ' ' . $acara[0]->waktu_mulai;
+        $tempat = $acara[0]->tempat_acara;
+        $alamat = $acara[0]->alamat_acara;
+    }
     $totalTamu = (int) ($total_tamu ?? 0);
     $totalHadir = (int) ($total_hadir ?? 0);
     $totalHadirToday = (int) ($total_hadir_today ?? 0);
@@ -326,419 +332,427 @@
     $attendanceRate = $totalTamu > 0 ? round(($totalHadir / $totalTamu) * 100) : 0;
     ?>
 
-<div class="container" style="padding-top:18px;padding-bottom:28px;">
-<div class="bukutamu-shell">
-<div class="row bukutamu-hero">
-    <div class="col-sm-8">
-        <div class="bukutamu-hero-card">
-            <h1 class="bukutamu-hero-title"><?php if($posisi_mempelai == 0) echo $nama_panggilan_pria." & ".$nama_panggilan_wanita; else echo $nama_panggilan_wanita." & ".$nama_panggilan_pria;?></h1>
-            <p class="bukutamu-hero-subtitle">Panel check-in tamu undangan. Scan QR, ambil selfie, lalu simpan kehadiran tanpa pindah halaman.</p>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="bukutamu-hero-card bukutamu-date-card">
-            <div class="bukutamu-stat-label">Waktu Saat Ini</div>
-            <h3 class="utama-detail" id="tanggal-sekarang-acara"><?php echo $tanggal_sekarang; ?></h3>
-            <h2 class="utama-detail" id="jam"></h2>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-3">
-        <div class="bukutamu-stat-card">
-            <div class="bukutamu-stat-label">Total Tamu</div>
-            <div class="bukutamu-stat-value" id="stat-total-tamu"><?= $totalTamu ?></div>
-            <div class="bukutamu-stat-meta">Semua undangan terdaftar</div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="bukutamu-stat-card">
-            <div class="bukutamu-stat-label">Sudah Hadir</div>
-            <div class="bukutamu-stat-value" id="stat-total-hadir"><?= $totalHadir ?></div>
-            <div class="bukutamu-stat-meta">Check-in berhasil tersimpan</div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="bukutamu-stat-card">
-            <div class="bukutamu-stat-label">Hadir Hari Ini</div>
-            <div class="bukutamu-stat-value" id="stat-total-hadir-today"><?= $totalHadirToday ?></div>
-            <div class="bukutamu-stat-meta">Update real-time</div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="bukutamu-stat-card">
-            <div class="bukutamu-stat-label">Progress Kehadiran</div>
-            <div class="bukutamu-stat-value" id="stat-attendance-rate"><?= $attendanceRate ?>%</div>
-            <div class="bukutamu-stat-meta" id="stat-total-belum-hadir"><?= $totalBelumHadir ?> tamu belum hadir</div>
-        </div>
-    </div>
-</div>
-<div class="row" style="margin-bottom:16px;">
-    <div class="col-sm-12">
-        <div class="bukutamu-section-card">
-            <div class="bukutamu-step">B</div>
-            <h3 class="bukutamu-section-title">Petunjuk Singkat</h3>
-            <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR agar data tamu tetap terbaca.</p>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid" style="padding:0;margin-top:10px;">
-<div class="row">
-  <div class="col-sm-8" >
-    <div class="bukutamu-section-card bukutamu-slider-card">
-    <div style="padding:0 0 14px;">
-        <div class="bukutamu-step">A</div>
-        <h3 class="bukutamu-section-title">Suasana Acara</h3>
-        <p class="bukutamu-section-subtitle">Slider visual buku tamu dan informasi singkat acara.</p>
-    </div>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-      <?php
-               
-                foreach ($slider as $key => $data) {
-                    $active = ($key == 0) ? 'active' : '';
-                    echo '<li data-target="#carousel-berita" data-slide-to="' . $key . '" class="' . $active . '"></li>';
-                }
-                ?>
-          </ol>
-
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox">
-      <?php
-                foreach($slider as $key => $data) {
-                    $active = ($key == 0) ? 'active' : '';
-                    echo '<div class="item ' . $active . '">' ?>
-                      <img src="<?php echo base_url() ?>/assets/users/<?php echo $kunci.'/'.$data['nama_slider']; ?>.png" alt="img-fluid">
-                                        </div>
-                <?php }
-                ?>
-     
-      </div>
-
-      <!-- Left and right controls -->
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="bukutamu-section-card" style="background:linear-gradient(135deg,#0f172a,#334155);color:#fff;">
-    <p class="utama-mempelai"><u><?php echo $nama_panggilan_pria; ?> & <?php echo $nama_panggilan_wanita; ?></p></u>
-	<b><p class="utama-detail" id="tanggal-acara-resepsi"></p></b>
-	<p class="utama-detail"><?php echo $tempat; ?></p>
-	<span class="utama-detail"><?php echo $alamat; ?></span>
-	
-    </div>
-  </div>
-</div>
-</div>
-
-<div class="container-fluid text-center bukutamu-checkin-grid" id ="scan-hadir-tamu">    
-  <div class="row">
-    <div class="col col-sm-3">
-     <div class="bukutamu-section-card">
-      <div class="bukutamu-step">1</div>
-      <h4 class="bukutamu-section-title">Scan QR Code</h4>
-      <p class="bukutamu-section-subtitle">Arahkan kamera ke QR buku tamu untuk mengisi data tamu otomatis.</p>
-     <div class="bukutamu-action-area">
-      <a id="btn-scan-qr" class="bukutamu-action-button" href="#" role="button" aria-label="Mulai scan QR code">
-        <img src="<?php echo base_url() ?>/assets/dashboard/img/qrscan.png" alt="Image" class="img-fluid">
-      </a>
-      <canvas hidden="" id="qr-canvas" class="bukutamu-scan-canvas"></canvas>
-      <div id="scan-helper" class="bukutamu-helper">Klik tombol scan untuk membuka kamera belakang.</div>
-      </div>
-      </div>
-    </div>
-    <div class="col col-sm-3" > 
-        <div class="bukutamu-section-card" id="canvas-camera">
-            <div class="bukutamu-step">2</div>
-            <h4 class="bukutamu-section-title">Capture Foto Selfie</h4>
-            <p class="bukutamu-section-subtitle">Ambil foto tamu setelah data undangan ditemukan.</p>
-        <div class="bukutamu-action-area">
-            <a id="btn-open-camera" class="bukutamu-action-button is-disabled" href="#" onClick="configure(); return false;">
-            <img src="<?php echo base_url() ?>/assets/bukutamu/img/photo-capture.png" alt="Image" class="img-fluid"></a>
-            <div id="camera" hidden="" style="display:none;"></div>
-            <div id="webcam" hidden="" style="display:none;">
-                <input type="button" class="btn btn-sm btn-danger" value="Capture" id="btn-do-capture" onClick="preview()" >
-            </div>
-            <div id="simpan" hidden="" style="display:none">
-                <button type="button" class="btn btn-sm btn-danger" id="reset" onClick="batal()">Remove</button>
-                <button type="button" class="btn btn-sm btn-primary" name="save" id="save" >Simpan</button>
-                <input type="hidden" name="image" class="image-tag">
-            </div>
-            <div id="selfie-helper" class="bukutamu-helper">Scan QR tamu terlebih dahulu untuk membuka kamera selfie.</div>
-            </div>
-          </div>  
-    </div>
-    <div class="col-sm-3">
-      <div class="bukutamu-section-card">
-        <div class="bukutamu-step">3</div>
-        <h4 class="bukutamu-section-title">Identitas Tamu</h4>
-        <p class="bukutamu-section-subtitle">Data ini akan terisi otomatis setelah QR berhasil dibaca.</p>
-      <div class="bukutamu-form-area">
-          
-        <div class="col mt-2" id="qr-result" >
-            <label>QR Code Tamu</label>
-            <input id="outputData" type="text" class="form-control" onfocus="autofill(this.value)" placeholder="QR Code Tamu Undangan" required>
-        </div>
-                    
-        <div class="col mt-2">
-            <label>Nama Tamu</label>
-            <input id="nama_tamu" type="text" class="form-control" placeholder="Contoh : Jack Dawson S.Kom" value="" disabled required>
-        </div>
-
-        <div class="col mt-2">
-            <label>Alamat Tamu</label>
-            <input id="alamat_tamu" type="text" class="form-control" placeholder="Contoh : Jack" value="" disabled required>
-        </div>
-      </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="bukutamu-section-card">
-        <div class="bukutamu-step">4</div>
-        <h4 class="bukutamu-section-title">Kehadiran Terbaru</h4>
-        <p class="bukutamu-section-subtitle">Update terbaru muncul otomatis tanpa reload halaman.</p>
-      <div class="bukutamu-list-area">
-       <ul class="list-group" id="hadir-list">
-           <?php if(empty($hadir)) {?>
-            <li class="list-group-item" id="hadir-empty-state"><strong>Belum Ada Data Tamu Hadir</strong></li>
-            <?php }else { ?>
-            <?php foreach($hadir as $row){ 
-            ?>
-            <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
-            <li class="list-group-item">
-                <div class="media" style="display:flex;align-items:center;gap:12px;">
-                    <div>
-                        <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
-                    </div>
-                    <div style="text-align:left;">
-                        <strong><?= $row->nama_tamu ?></strong><br>
-                        <small><?= $row->alamat_tamu ?></small><br>
-                        <small class="text-muted"><?= $row->waktu_hadir ?></small>
+    <div class="container" style="padding-top:18px;padding-bottom:28px;">
+        <div class="bukutamu-shell">
+            <div class="row bukutamu-hero">
+                <div class="col-sm-8">
+                    <div class="bukutamu-hero-card">
+                        <h1 class="bukutamu-hero-title"><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
+                                                        else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></h1>
+                        <p class="bukutamu-hero-subtitle">Panel check-in tamu undangan. Scan QR, ambil selfie, lalu simpan kehadiran tanpa pindah halaman.</p>
                     </div>
                 </div>
-            </li>
-            <?php }
-             } ?>
-        </ul>
-      </div>
-      </div>
-    </div>  
-  </div>
-</div>
-</div>
-<div class="modal fade" id="modalSelfiePreview" tabindex="-1" role="dialog" aria-labelledby="modalSelfiePreviewLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalSelfiePreviewLabel">Selfie Tamu</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <img src="" alt="Preview selfie" id="selfie-preview-image" style="width:100%;border-radius:12px;object-fit:cover;">
-      </div>
+                <div class="col-sm-4">
+                    <div class="bukutamu-hero-card bukutamu-date-card">
+                        <div class="bukutamu-stat-label">Waktu Saat Ini</div>
+                        <h3 class="utama-detail" id="tanggal-sekarang-acara"><?php echo $tanggal_sekarang; ?></h3>
+                        <h2 class="utama-detail" id="jam"></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="bukutamu-stat-card">
+                        <div class="bukutamu-stat-label">Total Tamu</div>
+                        <div class="bukutamu-stat-value" id="stat-total-tamu"><?= $totalTamu ?></div>
+                        <div class="bukutamu-stat-meta">Semua undangan terdaftar</div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bukutamu-stat-card">
+                        <div class="bukutamu-stat-label">Sudah Hadir</div>
+                        <div class="bukutamu-stat-value" id="stat-total-hadir"><?= $totalHadir ?></div>
+                        <div class="bukutamu-stat-meta">Check-in berhasil tersimpan</div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bukutamu-stat-card">
+                        <div class="bukutamu-stat-label">Hadir Hari Ini</div>
+                        <div class="bukutamu-stat-value" id="stat-total-hadir-today"><?= $totalHadirToday ?></div>
+                        <div class="bukutamu-stat-meta">Update real-time</div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bukutamu-stat-card">
+                        <div class="bukutamu-stat-label">Progress Kehadiran</div>
+                        <div class="bukutamu-stat-value" id="stat-attendance-rate"><?= $attendanceRate ?>%</div>
+                        <div class="bukutamu-stat-meta" id="stat-total-belum-hadir"><?= $totalBelumHadir ?> tamu belum hadir</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:16px;">
+                <div class="col-sm-12">
+                    <div class="bukutamu-section-card">
+                        <div class="bukutamu-step">A</div>
+                        <h3 class="bukutamu-section-title">Petunjuk Singkat</h3>
+                        <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR agar data tamu tetap terbaca.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid" style="padding:0;margin-top:10px;">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="bukutamu-section-card bukutamu-slider-card">
+                            <div style="padding:0 0 14px;">
+                                <div class="bukutamu-step">B</div>
+                                <h3 class="bukutamu-section-title">Suasana Acara</h3>
+                                <p class="bukutamu-section-subtitle">Slider visual buku tamu dan informasi singkat acara.</p>
+                            </div>
+                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ol class="carousel-indicators">
+                                    <?php
+
+                                    foreach ($slider as $key => $data) {
+                                        $active = ($key == 0) ? 'active' : '';
+                                        echo '<li data-target="#carousel-berita" data-slide-to="' . $key . '" class="' . $active . '"></li>';
+                                    }
+                                    ?>
+                                </ol>
+
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox">
+                                    <?php
+                                    foreach ($slider as $key => $data) {
+                                        $active = ($key == 0) ? 'active' : '';
+                                        echo '<div class="item ' . $active . '">' ?>
+                                        <img src="<?php echo base_url() ?>/assets/users/<?php echo $kunci . '/' . $data['nama_slider']; ?>.png" alt="img-fluid">
+                                </div>
+                            <?php }
+                            ?>
+
+                            </div>
+
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="bukutamu-section-card" style="background:linear-gradient(135deg,#0f172a,#334155);color:#fff;">
+                        <p class="utama-mempelai"><u><?php echo $nama_panggilan_pria; ?> & <?php echo $nama_panggilan_wanita; ?></p></u>
+                        <b>
+                            <p class="utama-detail" id="tanggal-acara-resepsi"></p>
+                        </b>
+                        <p class="utama-detail"><?php echo $tempat; ?></p>
+                        <span class="utama-detail"><?php echo $alamat; ?></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid text-center bukutamu-checkin-grid" id="scan-hadir-tamu">
+            <div class="row">
+                <div class="col col-sm-3">
+                    <div class="bukutamu-section-card">
+                        <div class="bukutamu-step">1</div>
+                        <h4 class="bukutamu-section-title">Scan QR Code</h4>
+                        <p class="bukutamu-section-subtitle">Arahkan kamera ke QR buku tamu untuk mengisi data tamu otomatis.</p>
+                        <div class="bukutamu-action-area">
+                            <a id="btn-scan-qr" class="bukutamu-action-button" href="#" role="button" aria-label="Mulai scan QR code">
+                                <img src="<?php echo base_url() ?>/assets/dashboard/img/qrscan.png" alt="Image" class="img-fluid">
+                            </a>
+                            <canvas hidden="" id="qr-canvas" class="bukutamu-scan-canvas"></canvas>
+                            <div id="scan-helper" class="bukutamu-helper">Klik tombol scan untuk membuka kamera belakang.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-sm-3">
+                    <div class="bukutamu-section-card" id="canvas-camera">
+                        <div class="bukutamu-step">2</div>
+                        <h4 class="bukutamu-section-title">Capture Foto Selfie</h4>
+                        <p class="bukutamu-section-subtitle">Ambil foto tamu setelah data undangan ditemukan.</p>
+                        <div class="bukutamu-action-area">
+                            <a id="btn-open-camera" class="bukutamu-action-button is-disabled" href="#" onClick="configure(); return false;">
+                                <img src="<?php echo base_url() ?>/assets/bukutamu/img/photo-capture.png" alt="Image" class="img-fluid"></a>
+                            <div id="camera" hidden="" style="display:none;"></div>
+                            <div id="webcam" hidden="" style="display:none;">
+                                <input type="button" class="btn btn-sm btn-danger" value="Capture" id="btn-do-capture" onClick="preview()">
+                            </div>
+                            <div id="simpan" hidden="" style="display:none">
+                                <button type="button" class="btn btn-sm btn-danger" id="reset" onClick="batal()">Remove</button>
+                                <button type="button" class="btn btn-sm btn-primary" name="save" id="save">Simpan</button>
+                                <input type="hidden" name="image" class="image-tag">
+                            </div>
+                            <div id="selfie-helper" class="bukutamu-helper">Scan QR tamu terlebih dahulu untuk membuka kamera selfie.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bukutamu-section-card">
+                        <div class="bukutamu-step">3</div>
+                        <h4 class="bukutamu-section-title">Identitas Tamu</h4>
+                        <p class="bukutamu-section-subtitle">Data ini akan terisi otomatis setelah QR berhasil dibaca.</p>
+                        <div class="bukutamu-form-area">
+
+                            <div class="col mt-2" id="qr-result">
+                                <label>QR Code Tamu</label>
+                                <input id="outputData" type="text" class="form-control" onfocus="autofill(this.value)" placeholder="QR Code Tamu Undangan" required>
+                            </div>
+
+                            <div class="col mt-2">
+                                <label>Nama Tamu</label>
+                                <input id="nama_tamu" type="text" class="form-control" placeholder="Contoh : Jack Dawson S.Kom" value="" disabled required>
+                            </div>
+
+                            <div class="col mt-2">
+                                <label>Alamat Tamu</label>
+                                <input id="alamat_tamu" type="text" class="form-control" placeholder="Contoh : Jack" value="" disabled required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bukutamu-section-card">
+                        <div class="bukutamu-step">4</div>
+                        <h4 class="bukutamu-section-title">Kehadiran Terbaru</h4>
+                        <p class="bukutamu-section-subtitle">Update terbaru muncul otomatis tanpa reload halaman.</p>
+                        <div class="bukutamu-list-area">
+                            <ul class="list-group" id="hadir-list">
+                                <?php if (empty($hadir)) { ?>
+                                    <li class="list-group-item" id="hadir-empty-state"><strong>Belum Ada Data Tamu Hadir</strong></li>
+                                <?php } else { ?>
+                                    <?php foreach ($hadir as $row) {
+                                    ?>
+                                        <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
+                                        <li class="list-group-item">
+                                            <div class="media" style="display:flex;align-items:center;gap:12px;">
+                                                <div>
+                                                    <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
+                                                </div>
+                                                <div style="text-align:left;">
+                                                    <strong><?= $row->nama_tamu ?></strong><br>
+                                                    <small><?= $row->alamat_tamu ?></small><br>
+                                                    <small class="text-muted"><?= $row->waktu_hadir ?></small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                <?php }
+                                } ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<div class="modal fade" id="modalGagal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Mohon Maaf, Tamu Undangan Sudah Mengisi Form Kehadiran/ tidak ditemukan
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
-      </div>
+    <div class="modal fade" id="modalSelfiePreview" tabindex="-1" role="dialog" aria-labelledby="modalSelfiePreviewLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSelfiePreviewLabel">Selfie Tamu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" alt="Preview selfie" id="selfie-preview-image" style="width:100%;border-radius:12px;object-fit:cover;">
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<script>
-function hasValidGuestData() {
-    var qrCodeValue = ($('#outputData').val() || '').trim();
-    var namaTamu = ($('#nama_tamu').val() || '').trim();
-    return qrCodeValue !== '' && namaTamu !== '' && namaTamu !== '-';
-}
-
-function updateAttendanceUiState() {
-    var canOpenCamera = hasValidGuestData();
-    var hasImage = (($('.image-tag').val() || '').trim() !== '');
-    var openCameraButton = document.getElementById('btn-open-camera');
-    var helper = document.getElementById('selfie-helper');
-    var webcamVisible = document.getElementById('webcam').hidden === false;
-
-    if (openCameraButton) {
-        openCameraButton.classList.toggle('is-disabled', !canOpenCamera);
-    }
-
-    if (helper) {
-        if (hasImage) {
-            helper.textContent = 'Foto selfie sudah siap. Klik Simpan untuk menyelesaikan kehadiran.';
-        } else if (webcamVisible) {
-            helper.textContent = 'Posisikan wajah tamu dengan jelas, lalu klik Capture.';
-        } else if (canOpenCamera) {
-            helper.textContent = 'Data tamu sudah ditemukan. Klik ikon kamera untuk ambil foto selfie.';
-        } else {
-            helper.textContent = 'Scan QR tamu terlebih dahulu untuk membuka kamera selfie.';
+    <div class="modal fade" id="modalGagal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Mohon Maaf, Tamu Undangan Sudah Mengisi Form Kehadiran/ tidak ditemukan
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function hasValidGuestData() {
+            var qrCodeValue = ($('#outputData').val() || '').trim();
+            var namaTamu = ($('#nama_tamu').val() || '').trim();
+            return qrCodeValue !== '' && namaTamu !== '' && namaTamu !== '-';
         }
-    }
-}
 
-function updateScanUiState(isScanning, message) {
-    var scanButton = document.getElementById('btn-scan-qr');
-    var scanHelper = document.getElementById('scan-helper');
-    var canvasElement = document.getElementById('qr-canvas');
+        function updateAttendanceUiState() {
+            var canOpenCamera = hasValidGuestData();
+            var hasImage = (($('.image-tag').val() || '').trim() !== '');
+            var openCameraButton = document.getElementById('btn-open-camera');
+            var helper = document.getElementById('selfie-helper');
+            var webcamVisible = document.getElementById('webcam').hidden === false;
 
-    if (scanButton) {
-        scanButton.classList.toggle('is-disabled', !!isScanning);
-        scanButton.setAttribute('aria-busy', isScanning ? 'true' : 'false');
-    }
+            if (openCameraButton) {
+                openCameraButton.classList.toggle('is-disabled', !canOpenCamera);
+            }
 
-    if (canvasElement) {
-        canvasElement.hidden = !isScanning;
-    }
-
-    if (scanHelper) {
-        if (message) {
-            scanHelper.textContent = message;
-        } else {
-            scanHelper.textContent = isScanning
-                ? 'Kamera aktif. Arahkan QR ke dalam frame.'
-                : 'Klik tombol scan untuk membuka kamera belakang.';
+            if (helper) {
+                if (hasImage) {
+                    helper.textContent = 'Foto selfie sudah siap. Klik Simpan untuk menyelesaikan kehadiran.';
+                } else if (webcamVisible) {
+                    helper.textContent = 'Posisikan wajah tamu dengan jelas, lalu klik Capture.';
+                } else if (canOpenCamera) {
+                    helper.textContent = 'Data tamu sudah ditemukan. Klik ikon kamera untuk ambil foto selfie.';
+                } else {
+                    helper.textContent = 'Scan QR tamu terlebih dahulu untuk membuka kamera selfie.';
+                }
+            }
         }
-    }
-}
 
-function escapeHtml(value) {
-    return $('<div>').text(value || '').html();
-}
+        function updateScanUiState(isScanning, message) {
+            var scanButton = document.getElementById('btn-scan-qr');
+            var scanHelper = document.getElementById('scan-helper');
+            var canvasElement = document.getElementById('qr-canvas');
 
-function updateAttendanceStats() {
-    var totalTamu = parseInt($('#stat-total-tamu').text(), 10) || 0;
-    var totalHadir = $('#hadir-list .list-group-item').not('#hadir-empty-state').length;
-    var totalHadirToday = parseInt($('#stat-total-hadir-today').text(), 10) || 0;
-    var totalBelumHadir = Math.max(0, totalTamu - totalHadir);
-    var attendanceRate = totalTamu > 0 ? Math.round((totalHadir / totalTamu) * 100) : 0;
+            if (scanButton) {
+                scanButton.classList.toggle('is-disabled', !!isScanning);
+                scanButton.setAttribute('aria-busy', isScanning ? 'true' : 'false');
+            }
 
-    $('#stat-total-hadir').text(totalHadir);
-    $('#stat-total-hadir-today').text(totalHadirToday);
-    $('#stat-attendance-rate').text(attendanceRate + '%');
-    $('#stat-total-belum-hadir').text(totalBelumHadir + ' tamu belum hadir');
-}
+            if (canvasElement) {
+                canvasElement.hidden = !isScanning;
+            }
 
-$(document).ready(function () {
-$('#save').on('click', function(event) {
-event.preventDefault();
-var image = $('.image-tag').val();
-var qrcode2 = $('#outputData').val();
-var nama =  $('#nama_tamu').val();
-var alamat = $('#alamat_tamu').val();
-var $saveButton = $('#save');
+            if (scanHelper) {
+                if (message) {
+                    scanHelper.textContent = message;
+                } else {
+                    scanHelper.textContent = isScanning ?
+                        'Kamera aktif. Arahkan QR ke dalam frame.' :
+                        'Klik tombol scan untuk membuka kamera belakang.';
+                }
+            }
+        }
 
-if (!qrcode2 || !nama || nama === '-' || !image) {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Data belum lengkap',
-        text: 'Scan QR dan ambil foto selfie terlebih dahulu sebelum menyimpan.'
-    });
-    return;
-}
+        function escapeHtml(value) {
+            return $('<div>').text(value || '').html();
+        }
 
-$.ajax({
-    url : base_url+'/add_hadir',
-    method : "POST",
-    data : {qrcode:qrcode2, image : image, nama:nama, alamat:alamat},
-    async : true,
-    dataType : 'json',
-    beforeSend: function() {
-        $saveButton.prop('disabled', true).text('Menyimpan...');
-    },
-    success: function($hasil){
-              if($hasil && $hasil.status === 'sukses'){
-                  $('#hadir-empty-state').remove();
-                  $('#hadir-list').prepend(
-                    '<li class="list-group-item">' +
-                      '<div class="media" style="display:flex;align-items:center;gap:12px;">' +
-                        '<div><img src="' + escapeHtml($hasil.selfie_url || '') + '" alt="Selfie ' + escapeHtml($hasil.nama_tamu || nama) + '" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid #facc15;cursor:pointer;" class="hadir-selfie-thumb" data-image="' + escapeHtml($hasil.selfie_url || '') + '" data-name="' + escapeHtml($hasil.nama_tamu || nama) + '"></div>' +
-                        '<div style="text-align:left;">' +
-                          '<strong>' + escapeHtml($hasil.nama_tamu || nama) + '</strong><br>' +
-                          '<small>' + escapeHtml($hasil.alamat_tamu || alamat) + '</small><br>' +
-                          '<small class="text-muted">' + escapeHtml($hasil.waktu_hadir || '') + '</small>' +
-                        '</div>' +
-                      '</div>' +
-                    '</li>'
-                  );
-                  $('#outputData').val('');
-                  $('#nama_tamu').val('');
-                  $('#alamat_tamu').val('');
-                  $('.image-tag').val('');
-                  $('#simpan').prop('hidden', true).hide();
-                  $('#webcam').prop('hidden', true).hide();
-                  $('#camera').prop('hidden', true).hide();
-                  $('#btn-open-camera').prop('hidden', false);
-                  Webcam.reset();
-                  var currentToday = parseInt($('#stat-total-hadir-today').text(), 10) || 0;
-                  $('#stat-total-hadir-today').text(currentToday + 1);
-                  updateAttendanceStats();
-                  updateAttendanceUiState();
-                  Swal.fire({
-                      icon: 'success',
-                      title: 'Berhasil',
-                      text: 'Data hadir berhasil disimpan.'
-                  });
-              }else{
-                  $('#modalGagal').modal('show'); 
-              }
-        },
-    error: function() {
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal menyimpan',
-            text: 'Terjadi kendala saat menyimpan data hadir.'
+        function updateAttendanceStats() {
+            var totalTamu = parseInt($('#stat-total-tamu').text(), 10) || 0;
+            var totalHadir = $('#hadir-list .list-group-item').not('#hadir-empty-state').length;
+            var totalHadirToday = parseInt($('#stat-total-hadir-today').text(), 10) || 0;
+            var totalBelumHadir = Math.max(0, totalTamu - totalHadir);
+            var attendanceRate = totalTamu > 0 ? Math.round((totalHadir / totalTamu) * 100) : 0;
+
+            $('#stat-total-hadir').text(totalHadir);
+            $('#stat-total-hadir-today').text(totalHadirToday);
+            $('#stat-attendance-rate').text(attendanceRate + '%');
+            $('#stat-total-belum-hadir').text(totalBelumHadir + ' tamu belum hadir');
+        }
+
+        $(document).ready(function() {
+            $('#save').on('click', function(event) {
+                event.preventDefault();
+                var image = $('.image-tag').val();
+                var qrcode2 = $('#outputData').val();
+                var nama = $('#nama_tamu').val();
+                var alamat = $('#alamat_tamu').val();
+                var $saveButton = $('#save');
+
+                if (!qrcode2 || !nama || nama === '-' || !image) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Data belum lengkap',
+                        text: 'Scan QR dan ambil foto selfie terlebih dahulu sebelum menyimpan.'
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    url: base_url + '/add_hadir',
+                    method: "POST",
+                    data: {
+                        qrcode: qrcode2,
+                        image: image,
+                        nama: nama,
+                        alamat: alamat
+                    },
+                    async: true,
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $saveButton.prop('disabled', true).text('Menyimpan...');
+                    },
+                    success: function($hasil) {
+                        if ($hasil && $hasil.status === 'sukses') {
+                            $('#hadir-empty-state').remove();
+                            $('#hadir-list').prepend(
+                                '<li class="list-group-item">' +
+                                '<div class="media" style="display:flex;align-items:center;gap:12px;">' +
+                                '<div><img src="' + escapeHtml($hasil.selfie_url || '') + '" alt="Selfie ' + escapeHtml($hasil.nama_tamu || nama) + '" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid #facc15;cursor:pointer;" class="hadir-selfie-thumb" data-image="' + escapeHtml($hasil.selfie_url || '') + '" data-name="' + escapeHtml($hasil.nama_tamu || nama) + '"></div>' +
+                                '<div style="text-align:left;">' +
+                                '<strong>' + escapeHtml($hasil.nama_tamu || nama) + '</strong><br>' +
+                                '<small>' + escapeHtml($hasil.alamat_tamu || alamat) + '</small><br>' +
+                                '<small class="text-muted">' + escapeHtml($hasil.waktu_hadir || '') + '</small>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>'
+                            );
+                            $('#outputData').val('');
+                            $('#nama_tamu').val('');
+                            $('#alamat_tamu').val('');
+                            $('.image-tag').val('');
+                            $('#simpan').prop('hidden', true).hide();
+                            $('#webcam').prop('hidden', true).hide();
+                            $('#camera').prop('hidden', true).hide();
+                            $('#btn-open-camera').prop('hidden', false);
+                            Webcam.reset();
+                            var currentToday = parseInt($('#stat-total-hadir-today').text(), 10) || 0;
+                            $('#stat-total-hadir-today').text(currentToday + 1);
+                            updateAttendanceStats();
+                            updateAttendanceUiState();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Data hadir berhasil disimpan.'
+                            });
+                        } else {
+                            $('#modalGagal').modal('show');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal menyimpan',
+                            text: 'Terjadi kendala saat menyimpan data hadir.'
+                        });
+                    },
+                    complete: function() {
+                        $saveButton.prop('disabled', false).text('Simpan');
+                    }
+                });
+            });
         });
-    },
-    complete: function() {
-        $saveButton.prop('disabled', false).text('Simpan');
-    }
-});
-});
-});
-</script>
- <script language="JavaScript">
+    </script>
+    <script language="JavaScript">
         function preview() {
             const x = document.getElementById('camera');
             // untuk preview gambar sebelum di upload
-            Webcam.snap( function(data_uri) {
-            $(".image-tag").val(data_uri);
-            Webcam.freeze();
-            // ganti display webcam menjadi none dan simpan menjadi terlihat
-            document.getElementById('webcam').hidden = true;
-            document.getElementById('webcam').style.display = 'none';
-            document.getElementById('simpan').hidden= false;
-            //document.getElementById('webcam').style.display = 'none';
-            document.getElementById('simpan').style.display = '';
-            x.getElementsByTagName("video")[0].hidden= true;
-            updateAttendanceUiState();
-            } );
+            Webcam.snap(function(data_uri) {
+                $(".image-tag").val(data_uri);
+                Webcam.freeze();
+                // ganti display webcam menjadi none dan simpan menjadi terlihat
+                document.getElementById('webcam').hidden = true;
+                document.getElementById('webcam').style.display = 'none';
+                document.getElementById('simpan').hidden = false;
+                //document.getElementById('webcam').style.display = 'none';
+                document.getElementById('simpan').style.display = '';
+                x.getElementsByTagName("video")[0].hidden = true;
+                updateAttendanceUiState();
+            });
         }
-        
+
         function batal() {
             // batal preview
             Webcam.unfreeze();
@@ -749,324 +763,352 @@ $.ajax({
             document.getElementById('webcam').style.display = '';
             document.getElementById('simpan').style.display = 'none';
             $('.image-tag').val('');
-            x.getElementsByTagName("video")[0].hidden= false;
+            x.getElementsByTagName("video")[0].hidden = false;
             //document.getElementById('simpan').style.display = 'none';
             updateAttendanceUiState();
         }
-</script>
-<script>
+    </script>
+    <script>
+        function configure() {
+            if (!hasValidGuestData()) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Scan QR dulu',
+                    text: 'Silakan scan QR Code tamu terlebih dahulu sebelum ambil foto selfie.'
+                });
+                return false;
+            }
 
-function configure() {
-    if (!hasValidGuestData()) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Scan QR dulu',
-            text: 'Silakan scan QR Code tamu terlebih dahulu sebelum ambil foto selfie.'
+            initializeSelfieCamera();
+            return false;
+        }
+
+        function initializeSelfieCamera() {
+            Webcam.reset();
+            Webcam.set({
+                width: 187,
+                height: 140,
+                dest_width: 187,
+                dest_height: 140,
+                crop_width: 187,
+                crop_height: 140,
+                image_format: 'jpg',
+                jpeg_quality: 100
+            });
+
+            Webcam.attach('#camera');
+            document.getElementById('btn-open-camera').hidden = true;
+            document.getElementById('webcam').style.display = '';
+            document.getElementById('webcam').hidden = false;
+            document.getElementById('camera').style.display = '';
+            document.getElementById('camera').hidden = false;
+            document.getElementById('simpan').hidden = true;
+            document.getElementById('simpan').style.display = 'none';
+            $('.image-tag').val('');
+            updateAttendanceUiState();
+        }
+
+        $(document).ready(function() {
+            const qrcode = window.qrcode;
+            let barcodeDetector = null;
+            if ('BarcodeDetector' in window) {
+                try {
+                    barcodeDetector = new BarcodeDetector({
+                        formats: ['qr_code']
+                    });
+                } catch (error) {
+                    barcodeDetector = null;
+                }
+            }
+            const video = document.createElement("video");
+            const canvasElement = document.getElementById("qr-canvas");
+            const canvas = canvasElement.getContext("2d");
+            const qrResult = document.getElementById("qr-result");
+            const outputData = document.getElementById("outputData");
+            const btnScanQR = document.getElementById("btn-scan-qr");
+            let scanning = false;
+            let scanStream = null;
+
+            function stopScanStream() {
+                scanning = false;
+
+                if (scanStream) {
+                    scanStream.getTracks().forEach(function(track) {
+                        track.stop();
+                    });
+                    scanStream = null;
+                }
+
+                if (video.srcObject) {
+                    video.srcObject = null;
+                }
+
+                updateScanUiState(false);
+            }
+
+            qrcode.callback = res => {
+                if (res && !String(res).toLowerCase().includes('error')) {
+                    handleScanResult(res);
+                }
+            };
+
+            btnScanQR.onclick = function(event) {
+                event.preventDefault();
+
+                if (scanning) {
+                    return false;
+                }
+
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Kamera tidak tersedia',
+                        text: 'Browser ini belum mendukung akses kamera untuk scan QR.'
+                    });
+                    return false;
+                }
+
+                navigator.mediaDevices
+                    .getUserMedia({
+                        video: {
+                            facingMode: "environment"
+                        }
+                    })
+                    .then(function(stream) {
+                        scanning = true;
+                        scanStream = stream;
+                        qrResult.hidden = false;
+                        updateScanUiState(true);
+                        Webcam.unfreeze();
+                        document.getElementById('simpan').style.display = 'none';
+                        document.getElementById('btn-open-camera').hidden = false;
+                        document.getElementById('camera').style.display = 'none';
+                        document.getElementById('webcam').hidden = true;
+                        document.getElementById('webcam').style.display = 'none';
+                        document.getElementById('camera').hidden = true;
+                        document.getElementById('btn-do-capture').hidden = false;
+                        updateAttendanceUiState();
+
+                        video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                        video.srcObject = stream;
+                        video.onloadedmetadata = function() {
+                            video.play();
+                            tick();
+                            scan();
+                        };
+                    })
+                    .catch(function() {
+                        stopScanStream();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Izin kamera ditolak',
+                            text: 'Izinkan akses kamera agar QR Code bisa dipindai.'
+                        });
+                    });
+
+                return false;
+            };
+
+            $('#btn-scan-qr').on('click', function(event) {
+                event.preventDefault();
+                if (typeof btnScanQR.onclick === 'function') {
+                    return btnScanQR.onclick(event);
+                }
+                return false;
+            });
+
+            function tick() {
+                if (!scanning) {
+                    return;
+                }
+
+                if (!video.videoWidth || !video.videoHeight) {
+                    requestAnimationFrame(tick);
+                    return;
+                }
+
+                canvasElement.height = video.videoHeight;
+                canvasElement.width = video.videoWidth;
+                canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+
+                scanning && requestAnimationFrame(tick);
+            }
+
+            function handleScanResult(rawValue) {
+                if (!rawValue) {
+                    return;
+                }
+
+                var normalized = normalizeQrValue(rawValue);
+                $("#outputData").val(normalized);
+                autofill();
+                stopScanStream();
+
+                qrResult.hidden = false;
+                document.getElementById('outputData').focus();
+                initializeSelfieCamera();
+                updateScanUiState(false, 'QR berhasil dibaca. Data tamu sedang diisi otomatis.');
+            }
+
+            async function detectWithBarcodeDetector() {
+                if (!scanning || !barcodeDetector) {
+                    return;
+                }
+
+                try {
+                    var barcodes = await barcodeDetector.detect(canvasElement);
+                    if (barcodes && barcodes.length > 0) {
+                        handleScanResult(barcodes[0].rawValue || '');
+                        return;
+                    }
+                } catch (error) {
+                    // fallback to legacy decoder below
+                }
+
+                if (scanning) {
+                    setTimeout(detectWithBarcodeDetector, 180);
+                }
+            }
+
+            function scan() {
+                if (!scanning) {
+                    return;
+                }
+
+                if (barcodeDetector) {
+                    detectWithBarcodeDetector();
+                    return;
+                }
+
+                try {
+                    qrcode.decode();
+                } catch (e) {
+                    if (scanning) {
+                        setTimeout(scan, 300);
+                    }
+                }
+            }
         });
-        return false;
-    }
+    </script>
 
-    initializeSelfieCamera();
-    return false;
-}
-
-function initializeSelfieCamera() {
-    Webcam.reset();
-    Webcam.set({
-        width: 187,
-        height: 140,
-        dest_width: 187,
-        dest_height: 140,
-        crop_width: 187,
-        crop_height: 140,
-        image_format: 'jpg',
-        jpeg_quality: 100
-    });
-
-    Webcam.attach('#camera');
-    document.getElementById('btn-open-camera').hidden = true;
-    document.getElementById('webcam').style.display = '';
-    document.getElementById('webcam').hidden = false;
-    document.getElementById('camera').style.display = '';
-    document.getElementById('camera').hidden = false;
-    document.getElementById('simpan').hidden = true;
-    document.getElementById('simpan').style.display = 'none';
-    $('.image-tag').val('');
-    updateAttendanceUiState();
-}
-
-$(document).ready(function () {
-const qrcode = window.qrcode;
-const barcodeDetector = ('BarcodeDetector' in window)
-  ? new BarcodeDetector({ formats: ['qr_code'] })
-  : null;
-const video = document.createElement("video");
-const canvasElement = document.getElementById("qr-canvas");
-const canvas = canvasElement.getContext("2d");
-const qrResult = document.getElementById("qr-result");
-const outputData = document.getElementById("outputData");
-const btnScanQR = document.getElementById("btn-scan-qr");
-let scanning = false;
-let scanStream = null;
-
-function stopScanStream() {
-  scanning = false;
-
-  if (scanStream) {
-    scanStream.getTracks().forEach(function(track) {
-      track.stop();
-    });
-    scanStream = null;
-  }
-
-  if (video.srcObject) {
-    video.srcObject = null;
-  }
-
-  updateScanUiState(false);
-}
-
-qrcode.callback = res => {
-  if (res && !String(res).toLowerCase().includes('error')) {
-    handleScanResult(res);
-  }
-};
-
-btnScanQR.onclick = function(event) {
-  event.preventDefault();
-
-  if (scanning) {
-    return false;
-  }
-
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Kamera tidak tersedia',
-      text: 'Browser ini belum mendukung akses kamera untuk scan QR.'
-    });
-    return false;
-  }
-
-  navigator.mediaDevices
-    .getUserMedia({ video: { facingMode: "environment" } })
-    .then(function(stream) {
-      scanning = true;
-      scanStream = stream;
-      qrResult.hidden = false;
-      updateScanUiState(true);
-      Webcam.unfreeze();
-      document.getElementById('simpan').style.display = 'none';
-      document.getElementById('btn-open-camera').hidden = false;
-      document.getElementById('camera').style.display = 'none';
-      document.getElementById('webcam').hidden = true;
-      document.getElementById('webcam').style.display = 'none';
-      document.getElementById('camera').hidden = true;
-      document.getElementById('btn-do-capture').hidden = false;
-      updateAttendanceUiState();
-      
-      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-      video.srcObject = stream;
-      video.onloadedmetadata = function() {
-        video.play();
-        tick();
-        scan();
-      };
-    })
-    .catch(function() {
-      stopScanStream();
-      Swal.fire({
-        icon: 'error',
-        title: 'Izin kamera ditolak',
-        text: 'Izinkan akses kamera agar QR Code bisa dipindai.'
-      });
-    });
-
-  return false;
-};
-
-function tick() {
-  if (!scanning) {
-    return;
-  }
-
-  if (!video.videoWidth || !video.videoHeight) {
-    requestAnimationFrame(tick);
-    return;
-  }
-
-  canvasElement.height = video.videoHeight;
-  canvasElement.width = video.videoWidth;
-  canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-
-  scanning && requestAnimationFrame(tick);
-}
-
-function handleScanResult(rawValue) {
-  if (!rawValue) {
-    return;
-  }
-
-  var normalized = normalizeQrValue(rawValue);
-  $("#outputData").val(normalized);
-  autofill();
-  stopScanStream();
-
-  qrResult.hidden = false;
-  document.getElementById('outputData').focus();
-  initializeSelfieCamera();
-  updateScanUiState(false, 'QR berhasil dibaca. Data tamu sedang diisi otomatis.');
-}
-
-async function detectWithBarcodeDetector() {
-  if (!scanning || !barcodeDetector) {
-    return;
-  }
-
-  try {
-    var barcodes = await barcodeDetector.detect(canvasElement);
-    if (barcodes && barcodes.length > 0) {
-      handleScanResult(barcodes[0].rawValue || '');
-      return;
-    }
-  } catch (error) {
-    // fallback to legacy decoder below
-  }
-
-  if (scanning) {
-    setTimeout(detectWithBarcodeDetector, 180);
-  }
-}
-
-function scan() {
-  if (!scanning) {
-    return;
-  }
-
-  if (barcodeDetector) {
-    detectWithBarcodeDetector();
-    return;
-  }
-
-  try {
-    qrcode.decode();
-  } catch (e) {
-    if (scanning) {
-      setTimeout(scan, 300);
-    }
-  }
-}
-});
-</script>
-
-<script>
-function autofill(){
-     var qrcode = $("#outputData").val();
-        $.ajax({
-        url:"<?= base_url('bukutamu/autofill') ?>",
-        data:'&qrcode='+qrcode,
-        success:function(data){
-        var hasil = JSON.parse(data);
-                 $.each(hasil, function(key,val){ 
-                    document.getElementById('nama_tamu').value=val.nama_tamu;
-                    document.getElementById('alamat_tamu').value=val.alamat_tamu;
-                    updateAttendanceUiState();
+    <script>
+        function autofill() {
+            var qrcode = $("#outputData").val();
+            $.ajax({
+                url: "<?= base_url('bukutamu/autofill') ?>",
+                data: '&qrcode=' + qrcode,
+                success: function(data) {
+                    var hasil = JSON.parse(data);
+                    $.each(hasil, function(key, val) {
+                        document.getElementById('nama_tamu').value = val.nama_tamu;
+                        document.getElementById('alamat_tamu').value = val.alamat_tamu;
+                        updateAttendanceUiState();
                     });
                 }
             });
         }
 
-function normalizeQrValue(value) {
-    if (!value) {
-        return '';
-    }
+        function normalizeQrValue(value) {
+            if (!value) {
+                return '';
+            }
 
-    try {
-        var url = new URL(value);
-        var code = url.searchParams.get('qrcode');
-        if (code) {
-            return code;
+            try {
+                var url = new URL(value);
+                var code = url.searchParams.get('qrcode');
+                if (code) {
+                    return code;
+                }
+
+                var segments = url.pathname.split('/').filter(Boolean);
+                return segments.length ? segments[segments.length - 1] : value;
+            } catch (error) {
+                return value;
+            }
         }
 
-        var segments = url.pathname.split('/').filter(Boolean);
-        return segments.length ? segments[segments.length - 1] : value;
-    } catch (error) {
-        return value;
-    }
-}
+        $(document).ready(function() {
+            var params = new URLSearchParams(window.location.search);
+            var queryQrCode = params.get('qrcode');
+            if (queryQrCode) {
+                $('#outputData').val(queryQrCode);
+                autofill();
+            }
+            $(document).on('click', '.hadir-selfie-thumb', function() {
+                $('#modalSelfiePreviewLabel').text('Selfie - ' + ($(this).data('name') || 'Tamu'));
+                $('#selfie-preview-image').attr('src', $(this).data('image') || '');
+                $('#modalSelfiePreview').modal('show');
+            });
+            updateAttendanceUiState();
+            updateAttendanceStats();
+        });
+    </script>
+    <script type="text/javascript">
+        window.onload = function() {
+            jam();
+        }
 
-$(document).ready(function () {
-    var params = new URLSearchParams(window.location.search);
-    var queryQrCode = params.get('qrcode');
-    if (queryQrCode) {
-        $('#outputData').val(queryQrCode);
-        autofill();
-    }
-    $(document).on('click', '.hadir-selfie-thumb', function() {
-        $('#modalSelfiePreviewLabel').text('Selfie - ' + ($(this).data('name') || 'Tamu'));
-        $('#selfie-preview-image').attr('src', $(this).data('image') || '');
-        $('#modalSelfiePreview').modal('show');
-    });
-    updateAttendanceUiState();
-    updateAttendanceStats();
-});
-</script>
-<script type="text/javascript">
- window.onload = function() { jam(); }
+        function jam() {
+            var e = document.getElementById('jam'),
+                d = new Date(),
+                h, m, s;
+            h = d.getHours();
+            m = set(d.getMinutes());
+            s = set(d.getSeconds());
 
- function jam() {
-  var e = document.getElementById('jam'),
-  d = new Date(), h, m, s;
-  h = d.getHours();
-  m = set(d.getMinutes());
-  s = set(d.getSeconds());
+            e.innerHTML = h + ':' + m + ':' + s;
 
-  e.innerHTML = h +':'+ m +':'+ s;
+            setTimeout('jam()', 1000);
+        }
 
-  setTimeout('jam()', 1000);
- }
-
- function set(e) {
-  e = e < 10 ? '0'+ e : e;
-  return e;
- }
+        function set(e) {
+            e = e < 10 ? '0' + e : e;
+            return e;
+        }
+    </script>
+    <script>
+        $(function() {
+            <?php if (session()->has("success")) { ?>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Great!',
+                    text: '<?= session("success") ?>'
+                })
+            <?php } ?>
+            <?php if (session()->has("deleted")) { ?>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Great!',
+                    text: '<?= session("deleted") ?>'
+                })
+            <?php } ?>
+            <?php if (session()->has("updated")) { ?>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Great!',
+                    text: '<?= session("updated") ?>'
+                })
+            <?php } ?>
+            <?php if (session()->has("error")) { ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '<?= session("error") ?>'
+                })
+            <?php } ?>
+        });
+    </script>
+</body>
+<script>
+    var base_url = '<?php echo base_url() ?>';
 </script>
 <script>
-$(function(){
-    <?php if(session()->has("success")) { ?>
-        Swal.fire({
-            icon: 'success',
-            title: 'Great!',
-            text: '<?= session("success") ?>'
-        })
-    <?php } ?>
-    <?php if(session()->has("deleted")) { ?>
-        Swal.fire({
-            icon: 'warning',
-            title: 'Great!',
-            text: '<?= session("deleted") ?>'
-        })
-    <?php } ?>
-    <?php if(session()->has("updated")) { ?>
-        Swal.fire({
-            icon: 'success',
-            title: 'Great!',
-            text: '<?= session("updated") ?>'
-        })
-    <?php } ?>
-     <?php if(session()->has("error")) { ?>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '<?= session("error") ?>'
-        })
-    <?php } ?>
-});
+    var tanggal_resepsi = '<?php echo $tgl_acara; ?>';
 </script>
-</body>
-<script>var base_url = '<?php echo base_url() ?>';</script>
-<script>var tanggal_resepsi = '<?php echo $tgl_acara; ?>';</script>
-<script>var tanggal_sekarang = '<?php echo $tanggal_sekarang; ?>';</script>
+<script>
+    var tanggal_sekarang = '<?php echo $tanggal_sekarang; ?>';
+</script>
 <script src="<?php echo base_url() ?>/assets/bukutamu/js/moment-with-locales.js"></script>
 <script src="<?php echo base_url() ?>/assets/bukutamu/js/script.js"></script>
+
 </html>
