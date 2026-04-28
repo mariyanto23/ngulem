@@ -206,12 +206,20 @@
             border: 1px dashed #f59e0b;
             border-radius: 14px;
             transition: .2s ease;
+            padding: 18px 12px;
         }
 
         .bukutamu-action-button:hover {
             text-decoration: none;
             transform: translateY(-1px);
             box-shadow: 0 12px 24px rgba(245, 158, 11, 0.12);
+        }
+
+        .bukutamu-action-button img {
+            width: 88px;
+            max-width: 42%;
+            height: auto;
+            object-fit: contain;
         }
         
         @media (max-width: 300px) {
@@ -272,6 +280,11 @@
 
             .bukutamu-section-card {
                 margin-bottom: 16px;
+            }
+
+            .bukutamu-action-button img {
+                width: 72px;
+                max-width: 36%;
             }
         }
   </style>
