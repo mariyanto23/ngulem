@@ -143,7 +143,7 @@
             overflow: hidden;
         }
 
-        .bukutamu-pair-row {
+        .bukutamu-pair-layout {
             display: block;
         }
 
@@ -362,15 +362,20 @@
         }
 
         @media (min-width: 768px) {
-            .bukutamu-pair-row {
+            .bukutamu-pair-layout {
                 display: flex;
-                flex-wrap: wrap;
+                align-items: stretch;
+                gap: 16px;
             }
 
-            .bukutamu-pair-row > [class*='col-sm-'] {
-                float: none;
-                display: flex;
-                flex-direction: column;
+            .bukutamu-pair-main {
+                flex: 0 0 calc(66.66666667% - 8px);
+                max-width: calc(66.66666667% - 8px);
+            }
+
+            .bukutamu-pair-side {
+                flex: 0 0 calc(33.33333333% - 8px);
+                max-width: calc(33.33333333% - 8px);
             }
 
             .bukutamu-selfie-slider {
@@ -552,15 +557,15 @@
                     </div>
                 </div>
             </div>
-            <div class="row bukutamu-pair-row" style="margin-bottom:16px;">
-                <div class="col-sm-8 bukutamu-pair-main">
+            <div class="bukutamu-pair-layout" style="margin-bottom:16px;">
+                <div class="bukutamu-pair-main">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">A</div>
                         <h3 class="bukutamu-section-title">Panduan</h3>
                         <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR agar data tamu tetap terbaca.</p>
                     </div>
                 </div>
-                <div class="col-sm-4 bukutamu-pair-side">
+                <div class="bukutamu-pair-side">
                     <div class="bukutamu-section-card bukutamu-info-card">
                         <p class="utama-mempelai"><u><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
                                                         else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></u></p>
@@ -573,9 +578,9 @@
                 </div>
             </div>
 
-            <div class="container-fluid" style="padding:0;margin-top:10px;">
-                <div class="row bukutamu-pair-row">
-                    <div class="col-sm-8 bukutamu-pair-main">
+            <div style="margin-top:10px;">
+                <div class="bukutamu-pair-layout">
+                    <div class="bukutamu-pair-main">
                         <div class="bukutamu-section-card bukutamu-slider-card">
                             <div style="padding:0 0 14px;">
                                 <div class="bukutamu-step">B</div>
@@ -618,7 +623,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-sm-4 bukutamu-pair-side">
+                    <div class="bukutamu-pair-side">
                         <div class="bukutamu-selfie-slider">
                             <div class="bukutamu-section-card">
                                 <h4 class="bukutamu-section-title">Galeri Selfie</h4>
@@ -1325,13 +1330,13 @@
 
         function syncPairHeights() {
             if (window.innerWidth < 768) {
-                $('.bukutamu-pair-row .bukutamu-section-card').css('min-height', '');
+                $('.bukutamu-pair-layout .bukutamu-section-card').css('min-height', '');
                 return;
             }
 
-            $('.bukutamu-pair-row').each(function() {
+            $('.bukutamu-pair-layout').each(function() {
                 var $row = $(this);
-                var $cards = $row.find('> [class*="col-"] > .bukutamu-section-card, > [class*="col-"] > .bukutamu-selfie-slider > .bukutamu-section-card');
+                var $cards = $row.find('> .bukutamu-pair-main > .bukutamu-section-card, > .bukutamu-pair-side > .bukutamu-section-card, > .bukutamu-pair-side > .bukutamu-selfie-slider > .bukutamu-section-card');
                 var maxHeight = 0;
 
                 $cards.css('min-height', '');
