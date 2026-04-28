@@ -364,18 +364,13 @@
         @media (min-width: 768px) {
             .bukutamu-pair-row {
                 display: flex;
-                flex-wrap: nowrap;
-                gap: 16px;
+                flex-wrap: wrap;
             }
 
-            .bukutamu-pair-main {
-                width: calc(66.66666667% - 8px);
+            .bukutamu-pair-row > [class*='col-sm-'] {
                 float: none;
-            }
-
-            .bukutamu-pair-side {
-                width: calc(33.33333333% - 8px);
-                float: none;
+                display: flex;
+                flex-direction: column;
             }
 
             .bukutamu-selfie-slider {
