@@ -43,7 +43,7 @@
     <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.css">
@@ -809,7 +809,8 @@
         }
 
         $(document).ready(function() {
-            const qrcode = window.qrcode;
+            const qrcode = window.qrcode || null;
+            const jsQRScanner = window.jsQR || null;
             let barcodeDetector = null;
             if ('BarcodeDetector' in window) {
                 try {
@@ -846,11 +847,13 @@
                 updateScanUiState(false);
             }
 
-            qrcode.callback = res => {
-                if (res && !String(res).toLowerCase().includes('error')) {
-                    handleScanResult(res);
-                }
-            };
+            if (qrcode) {
+                qrcode.callback = res => {
+                    if (res && !String(res).toLowerCase().includes('error')) {
+                        handleScanResult(res);
+                    }
+                };
+            }
 
             btnScanQR.onclick = function(event) {
                 event.preventDefault();
@@ -975,11 +978,25 @@
                     return;
                 }
 
-                if (barcodeDetector) {
-                    detectWithBarcodeDetector();
-                    return;
-                }
+            if (barcodeDetector) {
+                detectWithBarcodeDetector();
+                return;
+            }
 
+            if (jsQRScanner && canvasElement.width && canvasElement.height) {
+                try {
+                    var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+                    var qrCodeResult = jsQRScanner(imageData.data, imageData.width, imageData.height);
+                    if (qrCodeResult && qrCodeResult.data) {
+                        handleScanResult(qrCodeResult.data);
+                        return;
+                    }
+                } catch (error) {
+                    // fallback to legacy decoder below
+                }
+            }
+
+            if (qrcode) {
                 try {
                     qrcode.decode();
                 } catch (e) {
@@ -987,7 +1004,13 @@
                         setTimeout(scan, 300);
                     }
                 }
+                return;
             }
+
+            if (scanning) {
+                setTimeout(scan, 300);
+            }
+        }
         });
     </script>
 
