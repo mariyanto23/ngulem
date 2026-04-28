@@ -348,6 +348,10 @@
         }
 
         @media (min-width: 768px) {
+            .bukutamu-selfie-slider {
+                margin-top: 0;
+            }
+
             .bukutamu-selfie-slider .bukutamu-section-card {
                 padding: 16px 16px 14px;
             }
