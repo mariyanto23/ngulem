@@ -487,7 +487,7 @@
                 <div class="col-sm-12">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">A</div>
-                        <h3 class="bukutamu-section-title">Petunjuk Singkat</h3>
+                        <h3 class="bukutamu-section-title">Panduan</h3>
                         <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR agar data tamu tetap terbaca.</p>
                     </div>
                 </div>
@@ -499,7 +499,7 @@
                         <div class="bukutamu-section-card bukutamu-slider-card">
                             <div style="padding:0 0 14px;">
                                 <div class="bukutamu-step">B</div>
-                                <h3 class="bukutamu-section-title">Suasana Acara</h3>
+                                <h3 class="bukutamu-section-title">Galeri Acara</h3>
                                 <p class="bukutamu-section-subtitle">Slider visual buku tamu dan informasi singkat acara.</p>
                             </div>
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -551,9 +551,7 @@
                     </div>
                     <div class="bukutamu-selfie-slider">
                         <div class="bukutamu-section-card">
-                            <div class="bukutamu-step">C</div>
-                            <h4 class="bukutamu-section-title">Selfie Tamu Terbaru</h4>
-                            <p class="bukutamu-section-subtitle">Galeri check-in terbaru yang bergerak otomatis selama acara berlangsung.</p>
+                            <h4 class="bukutamu-section-title">Galeri Selfie</h4>
                             <?php if (!empty($hadir)) { ?>
                                 <div id="selfieCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
                                     <ol class="carousel-indicators" id="selfie-carousel-indicators">
@@ -604,7 +602,7 @@
                 <div class="col col-sm-3">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">1</div>
-                        <h4 class="bukutamu-section-title">Scan QR Code</h4>
+                        <h4 class="bukutamu-section-title">Scan QR</h4>
                         <p class="bukutamu-section-subtitle">Arahkan kamera ke QR buku tamu untuk mengisi data tamu otomatis.</p>
                         <div class="bukutamu-action-area">
                             <a id="btn-scan-qr" class="bukutamu-action-button" href="#" role="button" aria-label="Mulai scan QR code" onclick="return startQrScan(event);">
@@ -618,7 +616,7 @@
                 <div class="col col-sm-3">
                     <div class="bukutamu-section-card" id="canvas-camera">
                         <div class="bukutamu-step">2</div>
-                        <h4 class="bukutamu-section-title">Capture Foto Selfie</h4>
+                        <h4 class="bukutamu-section-title">Selfie</h4>
                         <p class="bukutamu-section-subtitle">Ambil foto tamu setelah data undangan ditemukan.</p>
                         <div class="bukutamu-action-area">
                             <a id="btn-open-camera" class="bukutamu-action-button is-disabled" href="#" onClick="configure(); return false;">
@@ -639,7 +637,7 @@
                 <div class="col-sm-3">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">3</div>
-                        <h4 class="bukutamu-section-title">Identitas Tamu</h4>
+                        <h4 class="bukutamu-section-title">Identitas</h4>
                         <p class="bukutamu-section-subtitle">Data ini akan terisi otomatis setelah QR berhasil dibaca.</p>
                         <div class="bukutamu-form-area">
 
@@ -663,7 +661,7 @@
                 <div class="col-sm-3">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">4</div>
-                        <h4 class="bukutamu-section-title">Kehadiran Terbaru</h4>
+                        <h4 class="bukutamu-section-title">Kehadiran</h4>
                         <p class="bukutamu-section-subtitle">Update terbaru muncul otomatis tanpa reload halaman.</p>
                         <div class="bukutamu-list-area">
                             <ul class="list-group" id="hadir-list">
