@@ -243,6 +243,14 @@
             text-align: center;
         }
 
+        .bukutamu-scan-canvas {
+            width: 100%;
+            max-width: 240px;
+            margin: 12px auto 0;
+            border-radius: 14px;
+            background: #0f172a;
+        }
+
         .bukutamu-selfie-actions .btn,
         #btn-do-capture {
             border-radius: 10px;
@@ -442,10 +450,11 @@
       <h4 class="bukutamu-section-title">Scan QR Code</h4>
       <p class="bukutamu-section-subtitle">Arahkan kamera ke QR buku tamu untuk mengisi data tamu otomatis.</p>
      <div class="bukutamu-action-area">
-      <a id="btn-scan-qr">
+      <a id="btn-scan-qr" class="bukutamu-action-button" href="#" role="button" aria-label="Mulai scan QR code">
         <img src="<?php echo base_url() ?>/assets/dashboard/img/qrscan.png" alt="Image" class="img-fluid">
       </a>
-      <canvas hidden="" id="qr-canvas"></canvas>
+      <canvas hidden="" id="qr-canvas" class="bukutamu-scan-canvas"></canvas>
+      <div id="scan-helper" class="bukutamu-helper">Klik tombol scan untuk membuka kamera belakang.</div>
       </div>
       </div>
     </div>
@@ -588,6 +597,31 @@ function updateAttendanceUiState() {
             helper.textContent = 'Data tamu sudah ditemukan. Klik ikon kamera untuk ambil foto selfie.';
         } else {
             helper.textContent = 'Scan QR tamu terlebih dahulu untuk membuka kamera selfie.';
+        }
+    }
+}
+
+function updateScanUiState(isScanning, message) {
+    var scanButton = document.getElementById('btn-scan-qr');
+    var scanHelper = document.getElementById('scan-helper');
+    var canvasElement = document.getElementById('qr-canvas');
+
+    if (scanButton) {
+        scanButton.classList.toggle('is-disabled', !!isScanning);
+        scanButton.setAttribute('aria-busy', isScanning ? 'true' : 'false');
+    }
+
+    if (canvasElement) {
+        canvasElement.hidden = !isScanning;
+    }
+
+    if (scanHelper) {
+        if (message) {
+            scanHelper.textContent = message;
+        } else {
+            scanHelper.textContent = isScanning
+                ? 'Kamera aktif. Arahkan QR ke dalam frame.'
+                : 'Klik tombol scan untuk membuka kamera belakang.';
         }
     }
 }
@@ -770,35 +804,62 @@ const qrResult = document.getElementById("qr-result");
 const outputData = document.getElementById("outputData");
 const btnScanQR = document.getElementById("btn-scan-qr");
 let scanning = false;
+let scanStream = null;
+
+function stopScanStream() {
+  scanning = false;
+
+  if (scanStream) {
+    scanStream.getTracks().forEach(function(track) {
+      track.stop();
+    });
+    scanStream = null;
+  }
+
+  if (video.srcObject) {
+    video.srcObject = null;
+  }
+
+  updateScanUiState(false);
+}
 
 qrcode.callback = res => {
-  if (res) {
+  if (res && !String(res).toLowerCase().includes('error')) {
     var normalized = normalizeQrValue(res);
     $("#outputData").val(normalized);
     autofill();
-    scanning = false;
-
-    video.srcObject.getTracks().forEach(track => {
-      track.stop();
-    });
+    stopScanStream();
 
     qrResult.hidden = false;
-    canvasElement.hidden = true;
-    btnScanQR.hidden = false;
     document.getElementById('outputData').focus();
     initializeSelfieCamera();
-        
+    updateScanUiState(false, 'QR berhasil dibaca. Data tamu sedang diisi otomatis.');
   }
 };
 
-btnScanQR.onclick = () => {
+btnScanQR.onclick = function(event) {
+  event.preventDefault();
+
+  if (scanning) {
+    return false;
+  }
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Kamera tidak tersedia',
+      text: 'Browser ini belum mendukung akses kamera untuk scan QR.'
+    });
+    return false;
+  }
+
   navigator.mediaDevices
     .getUserMedia({ video: { facingMode: "environment" } })
     .then(function(stream) {
       scanning = true;
+      scanStream = stream;
       qrResult.hidden = false;
-      btnScanQR.hidden = true;
-      canvasElement.hidden = false;
+      updateScanUiState(true);
       Webcam.unfreeze();
       document.getElementById('simpan').style.display = 'none';
       document.getElementById('btn-open-camera').hidden = false;
@@ -811,13 +872,29 @@ btnScanQR.onclick = () => {
       
       video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
       video.srcObject = stream;
-      video.play();
-      tick();
-      scan();
+      video.onloadedmetadata = function() {
+        video.play();
+        tick();
+        scan();
+      };
+    })
+    .catch(function() {
+      stopScanStream();
+      Swal.fire({
+        icon: 'error',
+        title: 'Izin kamera ditolak',
+        text: 'Izinkan akses kamera agar QR Code bisa dipindai.'
+      });
     });
+
+  return false;
 };
 
 function tick() {
+  if (!scanning) {
+    return;
+  }
+
   canvasElement.height = video.videoHeight;
   canvasElement.width = video.videoWidth;
   canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
@@ -826,10 +903,16 @@ function tick() {
 }
 
 function scan() {
+  if (!scanning) {
+    return;
+  }
+
   try {
     qrcode.decode();
   } catch (e) {
-    setTimeout(scan, 300);
+    if (scanning) {
+      setTimeout(scan, 300);
+    }
   }
 }
 });
