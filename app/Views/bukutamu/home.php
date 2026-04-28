@@ -143,6 +143,15 @@
             overflow: hidden;
         }
 
+        .bukutamu-pair-row {
+            display: block;
+        }
+
+        .bukutamu-pair-main,
+        .bukutamu-pair-side {
+            min-height: 1px;
+        }
+
         #myCarousel {
             border: 0 !important;
             border-radius: 18px;
@@ -151,7 +160,7 @@
 
         #myCarousel .item img {
             width: 100%;
-            max-height: 420px;
+            max-height: 360px;
             object-fit: cover;
         }
 
@@ -353,35 +362,24 @@
         }
 
         @media (min-width: 768px) {
-            .bukutamu-equal-row {
+            .bukutamu-pair-row {
                 display: flex;
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+                gap: 16px;
             }
 
-            .bukutamu-equal-row>[class*='col-'] {
-                display: flex;
-                flex-direction: column;
+            .bukutamu-pair-main {
+                width: calc(66.66666667% - 8px);
+                float: none;
             }
 
-            .bukutamu-equal-row>[class*='col-']>.bukutamu-section-card,
-            .bukutamu-equal-row>[class*='col-']>.bukutamu-selfie-slider {
-                flex: 1 1 auto;
+            .bukutamu-pair-side {
+                width: calc(33.33333333% - 8px);
+                float: none;
             }
 
             .bukutamu-selfie-slider {
                 margin-top: 0;
-                display: flex;
-            }
-
-            .bukutamu-slider-card,
-            .bukutamu-selfie-slider .bukutamu-section-card {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #myCarousel,
-            #selfieCarousel {
-                flex: 1 1 auto;
             }
 
             .bukutamu-selfie-slider .bukutamu-section-card {
@@ -390,19 +388,17 @@
             }
 
             .bukutamu-selfie-slide {
-                min-height: 420px;
+                min-height: 310px;
                 padding: 6px 8px 12px;
             }
 
             .bukutamu-selfie-card {
-                max-width: none;
-                height: 100%;
+                max-width: 360px;
                 padding: 12px;
             }
 
             .bukutamu-selfie-card img {
-                height: 100%;
-                min-height: 360px;
+                height: 205px;
             }
 
             .bukutamu-selfie-name-badge {
@@ -444,10 +440,6 @@
         }
 
         @media (max-width: 767px) {
-            .bukutamu-equal-row {
-                display: block;
-            }
-
             .bukutamu-shell {
                 padding: 16px;
                 border-radius: 18px;
@@ -565,15 +557,15 @@
                     </div>
                 </div>
             </div>
-            <div class="row bukutamu-equal-row" style="margin-bottom:16px;">
-                <div class="col-sm-8">
+            <div class="row bukutamu-pair-row" style="margin-bottom:16px;">
+                <div class="col-sm-8 bukutamu-pair-main">
                     <div class="bukutamu-section-card">
                         <div class="bukutamu-step">A</div>
                         <h3 class="bukutamu-section-title">Panduan</h3>
                         <p class="bukutamu-section-subtitle">1. Scan QR tamu, 2. Ambil selfie, 3. Simpan kehadiran. Jika QR bermasalah, isi manual lalu fokus ke input QR agar data tamu tetap terbaca.</p>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 bukutamu-pair-side">
                     <div class="bukutamu-section-card bukutamu-info-card">
                         <p class="utama-mempelai"><u><?php if ($posisi_mempelai == 0) echo $nama_panggilan_pria . " & " . $nama_panggilan_wanita;
                                                         else echo $nama_panggilan_wanita . " & " . $nama_panggilan_pria; ?></u></p>
@@ -587,8 +579,8 @@
             </div>
 
             <div class="container-fluid" style="padding:0;margin-top:10px;">
-                <div class="row bukutamu-equal-row">
-                    <div class="col-sm-8">
+                <div class="row bukutamu-pair-row">
+                    <div class="col-sm-8 bukutamu-pair-main">
                         <div class="bukutamu-section-card bukutamu-slider-card">
                             <div style="padding:0 0 14px;">
                                 <div class="bukutamu-step">B</div>
@@ -631,7 +623,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 bukutamu-pair-side">
                         <div class="bukutamu-selfie-slider">
                             <div class="bukutamu-section-card">
                                 <h4 class="bukutamu-section-title">Galeri Selfie</h4>
@@ -1336,6 +1328,28 @@
             }
         }
 
+        function syncPairHeights() {
+            if (window.innerWidth < 768) {
+                $('.bukutamu-pair-row .bukutamu-section-card').css('min-height', '');
+                return;
+            }
+
+            $('.bukutamu-pair-row').each(function() {
+                var $row = $(this);
+                var $cards = $row.find('> [class*="col-"] > .bukutamu-section-card, > [class*="col-"] > .bukutamu-selfie-slider > .bukutamu-section-card');
+                var maxHeight = 0;
+
+                $cards.css('min-height', '');
+                $cards.each(function() {
+                    maxHeight = Math.max(maxHeight, $(this).outerHeight());
+                });
+
+                if (maxHeight > 0) {
+                    $cards.css('min-height', maxHeight + 'px');
+                }
+            });
+        }
+
         $(document).ready(function() {
             var params = new URLSearchParams(window.location.search);
             var queryQrCode = params.get('qrcode');
@@ -1350,6 +1364,11 @@
             });
             updateAttendanceUiState();
             updateAttendanceStats();
+            syncPairHeights();
+        });
+
+        $(window).on('load resize', function() {
+            syncPairHeights();
         });
     </script>
     <script type="text/javascript">
