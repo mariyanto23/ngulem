@@ -271,6 +271,22 @@
             border-bottom: 0;
         }
 
+        .bukutamu-attendance-item {
+            text-align: left;
+        }
+
+        .bukutamu-attendance-item strong {
+            display: block;
+            color: #0f172a;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .bukutamu-attendance-item small {
+            color: #64748b;
+            font-size: 13px;
+        }
+
         .bukutamu-selfie-thumb {
             width: 52px;
             height: 52px;
@@ -532,7 +548,52 @@
                         </b>
                         <p class="utama-detail"><?php echo $tempat; ?></p>
                         <span class="utama-detail"><?php echo $alamat; ?></span>
-
+                    </div>
+                    <div class="bukutamu-selfie-slider">
+                        <div class="bukutamu-section-card">
+                            <div class="bukutamu-step">C</div>
+                            <h4 class="bukutamu-section-title">Selfie Tamu Terbaru</h4>
+                            <p class="bukutamu-section-subtitle">Galeri check-in terbaru yang bergerak otomatis selama acara berlangsung.</p>
+                            <?php if (!empty($hadir)) { ?>
+                                <div id="selfieCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+                                    <ol class="carousel-indicators" id="selfie-carousel-indicators">
+                                        <?php foreach ($hadir as $index => $row) { ?>
+                                            <li data-target="#selfieCarousel" data-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
+                                        <?php } ?>
+                                    </ol>
+                                    <div class="carousel-inner" role="listbox" id="selfie-carousel-inner">
+                                        <?php foreach ($hadir as $index => $row) { ?>
+                                            <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
+                                            <div class="item <?= $index === 0 ? 'active' : '' ?> bukutamu-selfie-slide">
+                                                <div class="bukutamu-selfie-card">
+                                                    <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
+                                                    <div class="bukutamu-selfie-meta">
+                                                        <strong><?= esc($row->nama_tamu) ?></strong>
+                                                        <small><?= esc($row->alamat_tamu) ?></small>
+                                                        <small><?= esc($row->waktu_hadir) ?></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                    <a class="left carousel-control" href="#selfieCarousel" role="button" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#selfieCarousel" role="button" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                                <div id="selfie-slider-empty" hidden></div>
+                            <?php } else { ?>
+                                <div id="selfie-slider-empty" class="bukutamu-form-area text-center">
+                                    <strong>Belum ada selfie tamu</strong>
+                                    <p class="bukutamu-section-subtitle" style="margin-top:8px;">Slider akan otomatis aktif setelah tamu pertama berhasil check-in.</p>
+                                </div>
+                                <div id="selfieCarousel" class="carousel slide" hidden></div>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -611,17 +672,10 @@
                                 <?php } else { ?>
                                     <?php foreach ($hadir as $row) {
                                     ?>
-                                        <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
                                         <li class="list-group-item">
-                                            <div class="media" style="display:flex;align-items:center;gap:12px;">
-                                                <div>
-                                                    <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
-                                                </div>
-                                                <div style="text-align:left;">
-                                                    <strong><?= $row->nama_tamu ?></strong><br>
-                                                    <small><?= $row->alamat_tamu ?></small><br>
-                                                    <small class="text-muted"><?= $row->waktu_hadir ?></small>
-                                                </div>
+                                            <div class="bukutamu-attendance-item">
+                                                <strong><?= $row->nama_tamu ?></strong>
+                                                <small><?= $row->alamat_tamu ?></small>
                                             </div>
                                         </li>
                                 <?php }
@@ -630,52 +684,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="bukutamu-selfie-slider">
-            <div class="bukutamu-section-card">
-                <div class="bukutamu-step">5</div>
-                <h4 class="bukutamu-section-title">Slider Selfie Tamu Terbaru</h4>
-                <p class="bukutamu-section-subtitle">Galeri check-in terbaru yang bergerak otomatis selama acara berlangsung.</p>
-                <?php if (!empty($hadir)) { ?>
-                    <div id="selfieCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
-                        <ol class="carousel-indicators" id="selfie-carousel-indicators">
-                            <?php foreach ($hadir as $index => $row) { ?>
-                                <li data-target="#selfieCarousel" data-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
-                            <?php } ?>
-                        </ol>
-                        <div class="carousel-inner" role="listbox" id="selfie-carousel-inner">
-                            <?php foreach ($hadir as $index => $row) { ?>
-                                <?php $selfieUrl = base_url() . '/assets/users/' . $kunci . '/' . $row->qrcode . '.png'; ?>
-                                <div class="item <?= $index === 0 ? 'active' : '' ?> bukutamu-selfie-slide">
-                                    <div class="bukutamu-selfie-card">
-                                        <img src="<?= esc($selfieUrl) ?>" alt="Selfie <?= esc($row->nama_tamu) ?>" class="hadir-selfie-thumb" data-image="<?= esc($selfieUrl) ?>" data-name="<?= esc($row->nama_tamu) ?>">
-                                        <div class="bukutamu-selfie-meta">
-                                            <strong><?= esc($row->nama_tamu) ?></strong>
-                                            <small><?= esc($row->alamat_tamu) ?></small>
-                                            <small><?= esc($row->waktu_hadir) ?></small>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
-                        <a class="left carousel-control" href="#selfieCarousel" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#selfieCarousel" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                    <div id="selfie-slider-empty" hidden></div>
-                <?php } else { ?>
-                    <div id="selfie-slider-empty" class="bukutamu-form-area text-center">
-                        <strong>Belum ada selfie tamu</strong>
-                        <p class="bukutamu-section-subtitle" style="margin-top:8px;">Slider akan otomatis aktif setelah tamu pertama berhasil check-in.</p>
-                    </div>
-                    <div id="selfieCarousel" class="carousel slide" hidden></div>
-                <?php } ?>
             </div>
         </div>
     </div>
@@ -877,13 +885,9 @@
                             $('#hadir-empty-state').remove();
                             $('#hadir-list').prepend(
                                 '<li class="list-group-item">' +
-                                '<div class="media" style="display:flex;align-items:center;gap:12px;">' +
-                                '<div><img src="' + escapeHtml($hasil.selfie_url || '') + '" alt="Selfie ' + escapeHtml($hasil.nama_tamu || nama) + '" style="width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid #facc15;cursor:pointer;" class="hadir-selfie-thumb" data-image="' + escapeHtml($hasil.selfie_url || '') + '" data-name="' + escapeHtml($hasil.nama_tamu || nama) + '"></div>' +
-                                '<div style="text-align:left;">' +
+                                '<div class="bukutamu-attendance-item">' +
                                 '<strong>' + escapeHtml($hasil.nama_tamu || nama) + '</strong><br>' +
-                                '<small>' + escapeHtml($hasil.alamat_tamu || alamat) + '</small><br>' +
-                                '<small class="text-muted">' + escapeHtml($hasil.waktu_hadir || '') + '</small>' +
-                                '</div>' +
+                                '<small>' + escapeHtml($hasil.alamat_tamu || alamat) + '</small>' +
                                 '</div>' +
                                 '</li>'
                             );
