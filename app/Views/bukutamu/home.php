@@ -584,9 +584,7 @@
                     <section class="bukutamu-pair-main">
                         <div class="bukutamu-section-card bukutamu-slider-card">
                             <div style="padding:0 0 14px;">
-                                <div class="bukutamu-step">B</div>
                                 <h3 class="bukutamu-section-title">Galeri Acara</h3>
-                                <p class="bukutamu-section-subtitle">Slider visual buku tamu dan informasi singkat acara.</p>
                             </div>
                             <div id="myCarousel" class="carousel slide bukutamu-media-carousel" data-ride="carousel">
                                 <ol class="carousel-indicators">
