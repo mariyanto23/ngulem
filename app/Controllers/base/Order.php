@@ -56,6 +56,7 @@ class Order extends Controller
 		$data['order_email_notice'] = $this->session->getFlashdata('order_email_notice');
 		$data['order_email_error'] = $this->session->getFlashdata('order_email_error');
 		$data['order_email_verified_notice'] = $this->session->getFlashdata('order_email_verified_notice');
+		$data['order_form_error'] = $this->session->getFlashdata('order_form_error');
 		$data['view'] = 'base/order/order1-datauser';
 
 		//cek session 
@@ -84,6 +85,7 @@ class Order extends Controller
 			$email = strtolower(trim((string) $this->request->getPost('email')));
 			$password = $this->request->getPost('password');  
 			$hp = $this->request->getPost('hp'); 
+			$agreeTerms = (string) $this->request->getPost('agree_terms') === '1';
 			$cekEmail = $this->order->cek_email($email);
 			$cekDomain = $this->order->cek_domain($domain);
 			//simpan datanya kedalam session
@@ -106,6 +108,11 @@ class Order extends Controller
 					document.location.href='order/any';
 					</script>";
 					exit();
+			}
+
+			if (! $agreeTerms) {
+				$this->session->setFlashdata('order_form_error', 'Centang dulu persetujuan syarat dan ketentuan sebelum lanjut ya.');
+				return redirect()->to(base_url('order/1'));
 			}
 
 			$this->queueOrderEmailVerification($id_paket, $domain, $email, $password, $hp);

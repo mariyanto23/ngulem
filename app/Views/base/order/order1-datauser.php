@@ -31,6 +31,12 @@
             </div>
             <?php } ?>
 
+            <?php if (!empty($order_form_error)) { ?>
+            <div class="order-inline-note" style="margin-bottom:18px;border-color:#fecaca;background:#fff1f2;color:#991b1b;">
+              <?= esc($order_form_error) ?>
+            </div>
+            <?php } ?>
+
             <form id="order-step1-form" action="<?php echo base_url('order/2') ?>" method="post">
             <div class="row align-items-center mt-3"> 
               <div class="col">
@@ -112,8 +118,13 @@
                 </div>
 
                 <div class="form-check mt-4 text-center">
-                  <label class="form-check-label">
-                      Dengan melanjutkan, kamu menyetujui <a href="<?= base_url() ?>">syarat dan ketentuan</a>.
+                  <input class="form-check-input"
+                         type="checkbox"
+                         value="1"
+                         id="agree_terms"
+                         name="agree_terms">
+                  <label class="form-check-label" for="agree_terms">
+                      Saya menyetujui <a href="<?= base_url('syarat-ketentuan') ?>" target="_blank" rel="noopener noreferrer">syarat dan ketentuan</a>.
                   </label>
                 </div>
                 
@@ -180,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var emailInput = document.getElementById('order-email-input');
   var nextButton = document.getElementById('order-next-button');
   var verifiedState = document.getElementById('order-email-verified-state');
+  var agreeTerms = document.getElementById('agree_terms');
   var verifiedEmail = <?= json_encode((string) ($email ?? '')) ?>;
   var isVerified = <?= !empty($order_email_verified_current) ? 'true' : 'false' ?>;
 
@@ -245,6 +257,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (nextButton.disabled) {
         event.preventDefault();
+        return;
+      }
+
+      if (agreeTerms && !agreeTerms.checked) {
+        event.preventDefault();
+        agreeTerms.focus();
+        alert('Centang dulu syarat dan ketentuan sebelum lanjut ya.');
         return;
       }
 

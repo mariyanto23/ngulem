@@ -46,6 +46,14 @@ class Beranda extends Controller
 		return view('base/beranda/layout', $data);
 	}
 
+	public function terms()
+	{
+		$data['setting'] = $this->BerandaModel->get_setting();
+		$data['title'] = 'Syarat dan Ketentuan';
+		$data['view'] = 'base/beranda/terms';
+		return view('base/beranda/layout', $data);
+	}
+
 	 public function themes()
 	{
 		$model = $this->TemaModel
@@ -182,16 +190,25 @@ class Beranda extends Controller
 
 	public function youtube()
 	{
-		return view('base/youtube');
+		$data['setting'] = $this->BerandaModel->get_setting();
+		$data['title'] = 'Tutorial Video';
+		$data['view'] = 'base/beranda/tutorial_youtube';
+		return view('base/beranda/layout', $data);
 	}
 
 	public function maps()
 	{
-		return view('base/maps');
+		$data['setting'] = $this->BerandaModel->get_setting();
+		$data['title'] = 'Tutorial Maps';
+		$data['view'] = 'base/beranda/tutorial_maps';
+		return view('base/beranda/layout', $data);
 	}
 	public function import_tamu()
 	{
-		return view('base/import_tamu');
+		$data['setting'] = $this->BerandaModel->get_setting();
+		$data['title'] = 'Tutorial Import Tamu';
+		$data['view'] = 'base/beranda/tutorial_import_tamu';
+		return view('base/beranda/layout', $data);
 	}
 	public function error404()
 	{

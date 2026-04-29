@@ -68,10 +68,3 @@
                </div>
             </div>
         </section>
-         <div class="navbar-footer text-center">
-    <ul>
-      <li><a href="<?php echo base_url() ?>"><i class="fa fa-home"></i><p>Home</p></a></li>
-      <li><a href="<?php echo base_url() ?>/tema"><i class="fa fa-globe"></i><p>Tema Online</p></a></li>
-      <li><a href="<?php echo base_url() ?>/tema_video"><i class="fa fa-youtube-play "></i><p>Tema Video</p></a></li>
-    </ul>
-  </div>

@@ -15,10 +15,13 @@
     <!-- Required CSS -->
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/bootstrap.min.css" >
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/line-icons.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/fontawesome.css">
     <link type="text/css" href="<?php echo base_url() ?>/assets/base/css/froala_blocks.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/pikaday.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/croppie.min.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>/assets/beranda/themes/assets/css/sw-main.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>/assets/beranda/themes/assets/css/sw-responsive.css">
     <style>
       :root {
         --order-primary: #0f766e;
@@ -38,16 +41,6 @@
           linear-gradient(180deg, #f6fbfa 0%, #eef5f3 100%);
         color: var(--order-text);
         font-family: 'Poppins', 'Roboto', sans-serif;
-      }
-
-      .order-flow .navbar.fixed-top {
-        background: rgba(255, 255, 255, 0.92);
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-        backdrop-filter: blur(12px);
-      }
-
-      .order-flow .navbar-order img {
-        height: 38px;
       }
 
       .order-page {
@@ -442,17 +435,7 @@
   </head>
 
   <body class="order-flow" oncontextmenu="return false">
-    <header>
-        <div class="container">
-          <nav class="navbar navbar-expand-md fixed-top">
-            <div class="container">
-              <a class="navbar-brand navbar-order" href="<?php echo base_url() ?>">
-                <img src="<?php echo base_url() ?>/assets/base/img/logo.png" height="35" alt="image">
-              </a>
-            </div>
-          </nav>
-        </div>
-    </header>
+    <?= view('base/beranda/components/public_header') ?>
 
     <?php 
       $jml_cerita = 2;
@@ -476,22 +459,7 @@
 
     ?>
 
-    <footer class="fdb-block footer-small footer">
-        <div class="container">
-        <div class="col-12 text-lg-left">
-            <p class="lead footer-social">
-              <a href="#" class="mx-2"><i class="lni-twitter-filled" aria-hidden="true"></i></a>
-              <a href="#" class="mx-2"><i class="lni-facebook-filled" aria-hidden="true"></i></a>
-              <a href="#" class="mx-2"><i class="lni-instagram-filled" aria-hidden="true"></i></a>
-            </p>
-          </div>
-            <div class="row text-center">
-            <div class="col">
-                <p class="text-footer">Copyright &#169; <?= date('Y') ?> <?= SITE_NAME ?>. All Rights Reserved</p>
-            </div>
-            </div>
-        </div>
-    </footer>
+    <?= view('base/beranda/components/public_footer') ?>
 
     <!-- modal upload croppie -->
     <div class="modal" id="myModal">
