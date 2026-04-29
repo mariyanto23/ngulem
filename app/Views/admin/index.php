@@ -5,6 +5,7 @@
                 <div class="col">
                     <div class="page-pretitle">Admin</div>
                     <h1 class="page-title"><?= esc($title); ?></h1>
+                    <div class="diulem-admin-page-note">Ringkasan cepat untuk memantau pemasukan, volume pengguna, dan invoice yang butuh tindak lanjut hari ini.</div>
                 </div>
             </div>
         </div>
@@ -21,33 +22,36 @@
 
         <div class="row row-cards mb-4">
             <div class="col-sm-6 col-xl-4">
-                <div class="card">
-                    <div class="card-body d-flex align-items-center justify-content-between">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
                         <div>
-                            <div class="text-secondary">Total Keuntungan</div>
-                            <div class="h2 mb-0"><?= rupiah($totalKeuntungan) ?></div>
+                            <div class="diulem-admin-summary-label">Total Keuntungan</div>
+                            <div class="diulem-admin-summary-value"><?= rupiah($totalKeuntungan) ?></div>
+                            <div class="diulem-admin-summary-help">Akumulasi pembayaran yang sudah masuk.</div>
                         </div>
                         <span class="diulem-admin-stat-icon"><i class="ti ti-wallet"></i></span>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-xl-4">
-                <div class="card">
-                    <div class="card-body d-flex align-items-center justify-content-between">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
                         <div>
-                            <div class="text-secondary">Total Pengguna</div>
-                            <div class="h2 mb-0"><?= count($join) ?></div>
+                            <div class="diulem-admin-summary-label">Total Pengguna</div>
+                            <div class="diulem-admin-summary-value"><?= count($join) ?></div>
+                            <div class="diulem-admin-summary-help">Semua akun pengguna yang sudah terdaftar.</div>
                         </div>
                         <span class="diulem-admin-stat-icon"><i class="ti ti-users"></i></span>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-xl-4">
-                <div class="card">
-                    <div class="card-body d-flex align-items-center justify-content-between">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
                         <div>
-                            <div class="text-secondary">Menunggu Konfirmasi</div>
-                            <div class="h2 mb-0"><?= esc($totalPending); ?></div>
+                            <div class="diulem-admin-summary-label">Menunggu Konfirmasi</div>
+                            <div class="diulem-admin-summary-value"><?= esc($totalPending); ?></div>
+                            <div class="diulem-admin-summary-help">Invoice yang perlu ditinjau admin.</div>
                         </div>
                         <span class="diulem-admin-stat-icon"><i class="ti ti-clock"></i></span>
                     </div>
@@ -59,7 +63,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Invoice Terbaru</h3>
+                        <div>
+                            <h3 class="card-title">Invoice Terbaru</h3>
+                            <div class="diulem-admin-card-note">Ambil keputusan cepat untuk beberapa invoice terakhir tanpa harus pindah ke halaman pembayaran penuh.</div>
+                        </div>
                         <div class="card-actions">
                             <a class="btn btn-primary btn-sm" href="<?= base_url('admin/pembayaran') ?>">
                                 Lihat Semua <i class="ti ti-chevron-right ms-2"></i>
@@ -93,9 +100,20 @@
                                 $tglNonaktif = strtotime('+'.$masa_aktif.' days', strtotime($row->tgl_bayar));
                             ?>
                                 <tr>
-                                    <td>#<?= esc($row->invoice) ?></td>
-                                    <td><?= esc($row->username) ?></td>
-                                    <td><a target="_blank" href="<?= rtrim(SITE_UNDANGAN, '/') . '/' . esc($row->domain) ?>"><?= esc($row->domain) ?></a></td>
+                                    <td>
+                                        <div class="diulem-admin-mono">#<?= esc($row->invoice) ?></div>
+                                        <span class="diulem-admin-meta"><?= esc($row->payment_type ?: 'manual') ?></span>
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold"><?= esc($row->username) ?></div>
+                                        <span class="diulem-admin-meta"><?= esc($row->nama_lengkap) ?></span>
+                                    </td>
+                                    <td>
+                                        <a class="diulem-admin-table-link" target="_blank" href="<?= rtrim(SITE_UNDANGAN, '/') . '/' . esc($row->domain) ?>">
+                                            <i class="ti ti-world"></i>
+                                            <span><?= esc($row->domain) ?></span>
+                                        </a>
+                                    </td>
                                     <?php if ($row->statusPembayaran == '1') { ?>
                                         <td><span class="badge bg-warning text-warning-fg">Menunggu Konfirmasi</span></td>
                                     <?php } elseif ($row->statusPembayaran == 2 && $today >= $tglNonaktif) { ?>

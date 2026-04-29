@@ -1,13 +1,16 @@
-<div class="konten" style="display: flex;flex-grow: 1;overflow-x: hidden;flex-direction: row;margin-top: 60px;margin-bottom: 40px;">
-    <section class="fdb-block" style="padding-top: 20px;flex:1; ">
+<div class="konten order-page">
+    <section class="fdb-block">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-            <div class="row">
-              <div class="col text-center">
-                <h1 style="color: #3498db;margin-bottom:0px;">Hallo!</h1>
-                <p tyle="font-size: 15px;font-weight:500; ">Hai kak! di isi dulu ya datanya </p>
-              </div>
+          <div class="col-12 col-md-8 col-lg-8 col-xl-6 order-panel">
+            <div class="order-hero">
+              <div class="order-step-badge">Langkah 1 dari 6</div>
+              <h1>Mulai Undangan</h1>
+              <p>Masukkan data dasar akun dan pilih paket yang paling cocok dulu.</p>
+            </div>
+
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 8%;" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100">8%</div>
             </div>
 
             <form action="<?php echo base_url('order/2') ?>" method="post">
@@ -50,7 +53,8 @@
             <div class="row align-items-center mt-3">
               <div class="col">
                 <label>Password</label>
-                <input name="password" type="text" class="form-control" placeholder="Password" value="<?php echo $password; ?>" required>
+                <input name="password" type="password" class="form-control" placeholder="Minimal 8 karakter" value="<?php echo $password; ?>" required>
+                <small class="form-text text-muted">Password ini nanti dipakai untuk login ke dashboard undangan.</small>
               </div>
             </div>
             <div class="row align-items-center mt-3">
@@ -59,18 +63,17 @@
                 <input name="hp" type="text" class="form-control" placeholder="contoh : 628123456789" value="<?php echo $hp; ?>" required>
               </div>
             </div>
-            <div class="row justify-content-start mt-4" >
+            <div class="row justify-content-start mt-4 order-actions">
               <div class="col">
                 <div class="row">
                   <div class="col">
-                    <!-- <a class="btn btn-primary btn-order btn-block" style="background-color: #3498db;">Lanjut</a> -->
                     <input class="btn btn-primary btn-order btn-block" type="submit" name="submit" value="Lanjut">
                   </div>
                 </div>
 
-                <div class="form-check mt-4" style="text-align: center;">
+                <div class="form-check mt-4 text-center">
                   <label class="form-check-label">
-                      I Read and Accept <a href="<?= base_url() ?>">Terms and Conditions</a>
+                      Dengan melanjutkan, kamu menyetujui <a href="<?= base_url() ?>">syarat dan ketentuan</a>.
                   </label>
                 </div>
                 

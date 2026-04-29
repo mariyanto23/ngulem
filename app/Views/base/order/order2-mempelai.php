@@ -1,20 +1,19 @@
-<div class="konten" style="display: flex;flex-grow: 1;overflow-x: hidden;flex-direction: row;margin-top: 60px;margin-bottom: 40px;">
-    <section class="fdb-block" style="padding-top: 20px;flex:1; ">
+<div class="konten order-page">
+    <section class="fdb-block">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-            <div class="row">
-              <div class="col text-center">
-                <h1 style="color: #3498db;margin-bottom:0px;">Informasi Mempelai!</h1>
-                <p tyle="font-size: 15px;font-weight:500; ">Hai kak! di isi dulu ya datanya </p>
-              </div>
+          <div class="col-12 col-md-8 col-lg-8 col-xl-6 order-panel">
+            <div class="order-hero">
+              <div class="order-step-badge">Langkah 2 dari 6</div>
+              <h1>Informasi Mempelai</h1>
+              <p>Isi nama dan foto utama dulu. Detail lain masih bisa dilengkapi nanti dari dashboard.</p>
             </div>
             
             <div class="progress" style="margin-top: 10px;">
               <div class="progress-bar" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" >15%</div>
             </div>
             
-            <a class="mt-2" style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">Calon Mempelai Pria</a>
+            <div class="order-section-title">Calon Mempelai Pria</div>
 
           <form action="<?= base_url('order/3') ?>" method="post">
 
@@ -80,7 +79,7 @@
               </div>
             </div>
             <hr>
-            <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;margin-top: 15px;display: flex;">Calon Mempelai Wanita</a>
+            <div class="order-section-title">Calon Mempelai Wanita</div>
 
             <div class="row d-flex align-items-center">
               <div class="col mt-2">
@@ -147,6 +146,7 @@
               </div>
             </div>
             <hr>
+            <div class="order-section-title">Foto Sampul</div>
             <div class="row d-flex align-items-center">
               <div class="col mt-2">
                 <label>Foto Sampul</label>
@@ -180,7 +180,7 @@
               </div>
             </div>
 
-            <div class="row justify-content-start mt-4" >
+            <div class="row justify-content-start mt-4 order-actions" >
               <div class="col">
                 <div class="row">
                   
@@ -192,10 +192,10 @@
                   </div>
                 </div>
                 <div class="mt-3 text-center">
-                  <button name="setup_later" value="1" type="submit" formnovalidate class="btn btn-link p-0" style="color: #6c757d; text-decoration: none;">
+                  <button name="setup_later" value="1" type="submit" formnovalidate class="btn btn-link p-0 order-link-button">
                     Atur nanti
                   </button>
-                  <div class="text-muted mt-2" style="font-size: 14px;">
+                  <div class="order-inline-note text-left">
                     Atur nanti akan membuat undangan dasar dulu, lalu detailnya bisa dilengkapi dari dashboard.
                   </div>
                 </div>

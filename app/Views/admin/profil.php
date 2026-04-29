@@ -5,6 +5,7 @@
                 <div class="col">
                     <div class="page-pretitle">Admin</div>
                     <h1 class="page-title"><?= esc($title); ?></h1>
+                    <div class="diulem-admin-page-note">Perbarui identitas akun admin utama. Password sekarang opsional dan akan disimpan dengan hash modern jika diubah.</div>
                 </div>
             </div>
         </div>
@@ -13,7 +14,10 @@
             <div class="col-lg-7">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Profil Admin</h3>
+                        <div>
+                            <h3 class="card-title">Profil Admin</h3>
+                            <div class="diulem-admin-card-note">Jaga email dan username tetap terbaru agar akses masuk dan notifikasi admin tetap lancar.</div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">

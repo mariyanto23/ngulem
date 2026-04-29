@@ -5,13 +5,69 @@
                 <div class="col">
                     <div class="page-pretitle">Admin</div>
                     <h1 class="page-title"><?= esc($title); ?></h1>
+                    <div class="diulem-admin-page-note">Tinjau ulasan pelanggan, tampilkan yang paling layak dipublikasikan, dan jaga kualitas social proof di landing page.</div>
+                </div>
+            </div>
+        </div>
+
+        <?php
+        $totalTestimoni = count($testimoni);
+        $tampilCount = 0;
+        $hiddenCount = 0;
+        foreach ($testimoni as $item) {
+            if ($item->status == '2') {
+                $tampilCount++;
+            } elseif ($item->status == '1') {
+                $hiddenCount++;
+            }
+        }
+        ?>
+
+        <div class="row row-cards mb-3">
+            <div class="col-sm-6 col-lg-4">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Total Testimonial</div>
+                            <div class="diulem-admin-summary-value"><?= $totalTestimoni ?></div>
+                            <div class="diulem-admin-summary-help">Semua ulasan yang masuk ke sistem.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-message-heart"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Sedang Tampil</div>
+                            <div class="diulem-admin-summary-value"><?= $tampilCount ?></div>
+                            <div class="diulem-admin-summary-help">Aktif sebagai social proof di publik.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-eye-check"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Tidak Tampil</div>
+                            <div class="diulem-admin-summary-value"><?= $hiddenCount ?></div>
+                            <div class="diulem-admin-summary-help">Masih disimpan tapi belum dipublikasikan.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-eye-off"></i></span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Data Testimonial</h3>
+                <div>
+                    <h3 class="card-title">Data Testimonial</h3>
+                    <div class="diulem-admin-card-note">Gunakan tabel ini untuk memilih testimonial terbaik dan menyembunyikan ulasan yang belum siap dipublikasikan.</div>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-vcenter card-table" id="dataTable">
@@ -28,10 +84,10 @@
                     <tbody>
                     <?php foreach ($testimoni as $row) { ?>
                         <tr>
-                            <td><?= esc($row->nama_lengkap) ?></td>
+                            <td><div class="fw-semibold"><?= esc($row->nama_lengkap) ?></div></td>
                             <td><?= esc($row->kota) ?></td>
                             <td><?= esc($row->provinsi) ?></td>
-                            <td><?= esc($row->ulasan) ?></td>
+                            <td><div class="diulem-admin-meta text-wrap"><?= esc($row->ulasan) ?></div></td>
                             <?php if ($row->status == '1') { ?>
                                 <td><span class="badge bg-warning text-warning-fg">Tidak Tampil</span></td>
                             <?php } elseif ($row->status == '2') { ?>

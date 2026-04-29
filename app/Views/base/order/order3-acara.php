@@ -1,5 +1,5 @@
-<div class="konten" style="display: flex;flex-grow: 1;overflow-x: hidden;flex-direction: row;margin-top: 60px;margin-bottom: 40px;">
-    <section class="fdb-block" style="padding-top: 20px;flex:1; ">
+<div class="konten order-page">
+    <section class="fdb-block">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 col-md-8 col-lg-8 col-xl-6">

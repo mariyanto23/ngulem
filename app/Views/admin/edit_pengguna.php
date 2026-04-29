@@ -5,6 +5,7 @@
                 <div class="col">
                     <div class="page-pretitle">Data Pengguna</div>
                     <h2 class="page-title"><?= $title; ?></h2>
+                    <div class="diulem-admin-page-note">Kelola konten undangan, aset media, dan profil pengguna dari satu halaman kerja yang lebih ringkas.</div>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
                     <a href="<?= SITE_UNDANGAN ?>/<?= $order[0]->domain ?>" target="_blank" class="btn btn-primary">
@@ -68,7 +69,7 @@
                           <input id="nama_ibu_pria" type="text" class="form-control" placeholder="Nama Ibu" value="<?= $mempelai[0]->nama_ibu_pria ?>" required>
                       </div>
                       <div class="col mt-3">
-                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPria">Simpan</button>
+                          <button class="btn btn-primary" type="button" id="simpanPria"><i class="ti ti-device-floppy me-2"></i>Simpan</button>
                       </div>
                   </div>
               </div>
@@ -119,7 +120,7 @@
                       </div>
 
                       <div class="col mt-3">
-                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalWanita">Simpan</button>
+                          <button class="btn btn-primary" type="button" id="simpanWanita"><i class="ti ti-device-floppy me-2"></i>Simpan</button>
                       </div>
                   </div>
               </div>
@@ -171,7 +172,7 @@
                         </div>
                    </div>
 
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDomain">Simpan</button>
+                    <button class="btn btn-primary" type="button" id="simpanDomain"><i class="ti ti-device-floppy me-2"></i>Simpan</button>
                 </div>
               </div>
             </div>
@@ -414,7 +415,7 @@
                       </label>
                       </div>
                       <div class="col mt-3">
-                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVideo">Simpan</button>
+                          <button class="btn btn-primary" type="button" id="simpanVideo"><i class="ti ti-device-floppy me-2"></i>Simpan</button>
                       </div>
                   </div>
               </div>
@@ -449,6 +450,7 @@
                   <h3 class="card-title">Fitur Undangan</h3>
                 </div>
                 <div class="card-body">
+                    <div class="diulem-admin-card-note">Fitur inti tetap aktif. Opsi di bawah ini membantu admin menyesuaikan pengalaman undangan per pengguna tanpa buka halaman lain.</div>
                     <div class="mb-3">
                       <div class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" disabled checked id="setSampul">
@@ -498,7 +500,7 @@
                         <label class="form-check-label" for="setHadiah" >Halaman Kirim Hadiah</label>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFitur">Simpan</button>
+                    <button type="button" class="btn btn-primary" id="simpanFitur"><i class="ti ti-device-floppy me-2"></i>Simpan</button>
                 </div>
             </div>
         </div>
@@ -532,7 +534,7 @@
                         <input id="hp" type="number" class="form-control" placeholder="Contoh : 6281234567890" value="<?= $user[0]->hp ?>" required>
                     </div>
 
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUser">Simpan</button>
+                    <button class="btn btn-primary" type="button" id="simpanUser"><i class="ti ti-device-floppy me-2"></i>Simpan</button>
                 </div>
             </div>
         </div>
@@ -540,203 +542,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="modalDomain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin mengubah nama domain ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanDomain">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="modalFitur" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanFitur">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalGagal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Gagal mengganti nama domain..
-        Nama domain sudah dipakai!!
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalAkad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanAkad">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="modalResepsi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanResepsi">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalMaps" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanMaps">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanVideo">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="modalWanita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanWanita">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalPria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanPria">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="modalUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah kamu yakin ingin menyimpan perubahan ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-primary" id="simpanUser">Ya</button>
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Batal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 
 <script src="<?php echo base_url() ?>/assets/base/js/croppie.min.js"></script>
 <script src="<?php echo base_url() ?>/assets/base/js/dropzone.js"></script>
@@ -881,6 +686,8 @@
             success: function($hasil){
                 if($hasil == 'sukses'){
                     DiulemAdmin.reload();
+                }else{
+                    DiulemAdmin.notify('error', 'Gagal', 'Data video pengguna belum berhasil disimpan.');
                 }
             }
         });
@@ -1014,6 +821,8 @@
             success: function($hasil){
                 if($hasil == 'sukses'){
                     DiulemAdmin.reload();
+                }else{
+                    DiulemAdmin.notify('error', 'Gagal', 'Data mempelai wanita belum berhasil disimpan.');
                 }
             }
         });
@@ -1037,6 +846,8 @@
           success: function($hasil){
               if($hasil == 'sukses'){
                   DiulemAdmin.reload();
+              }else{
+                  DiulemAdmin.notify('error', 'Gagal', 'Data mempelai pria belum berhasil disimpan.');
               }
           }
       });
@@ -1070,6 +881,8 @@
             success: function($hasil){
                 if($hasil == 'sukses'){
                     DiulemAdmin.reload();
+                }else{
+                    DiulemAdmin.notify('error', 'Gagal', 'Pengaturan fitur undangan belum berhasil disimpan.');
                 }
             }
         });
@@ -1090,8 +903,7 @@
               if($hasil == 'sukses'){
                   DiulemAdmin.reload();
               }else{
-                  DiulemAdmin.hideModal('modalDomain'); 
-                  DiulemAdmin.showModal('modalGagal'); 
+                  DiulemAdmin.notify('error', 'Domain sudah dipakai', 'Gagal mengganti nama domain karena domain tersebut sudah digunakan.');
               }
           }
       });
@@ -1116,9 +928,9 @@
                 if($hasil == 'sukses'){
                     DiulemAdmin.reload();
                 }else if($hasil == 'password_min'){
-                    DiulemAdmin.notify('warning', 'Password pengguna minimal 8 karakter.');
+                    DiulemAdmin.notify('warning', 'Perhatian', 'Password pengguna minimal 8 karakter.');
                 }else{
-                    DiulemAdmin.notify('error', 'Perubahan pengguna belum berhasil disimpan.');
+                    DiulemAdmin.notify('error', 'Gagal', 'Perubahan pengguna belum berhasil disimpan.');
                 }
             }
         });

@@ -19,10 +19,333 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/pikaday.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/croppie.min.css">
+    <style>
+      :root {
+        --order-primary: #0f766e;
+        --order-primary-dark: #115e59;
+        --order-surface: #ffffff;
+        --order-surface-muted: #f7faf9;
+        --order-border: #d9e7e3;
+        --order-text: #18342f;
+        --order-text-soft: #5d6f6b;
+        --order-shadow: 0 18px 48px rgba(15, 118, 110, 0.10);
+      }
+
+      body.order-flow {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(15, 118, 110, 0.08), transparent 28%),
+          linear-gradient(180deg, #f6fbfa 0%, #eef5f3 100%);
+        color: var(--order-text);
+        font-family: 'Poppins', 'Roboto', sans-serif;
+      }
+
+      .order-flow .navbar.fixed-top {
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(12px);
+      }
+
+      .order-flow .navbar-order img {
+        height: 38px;
+      }
+
+      .order-page {
+        display: flex;
+        flex-grow: 1;
+        overflow-x: hidden;
+        flex-direction: row;
+        margin-top: 92px;
+        margin-bottom: 56px;
+      }
+
+      .order-flow .fdb-block {
+        padding-top: 0 !important;
+        flex: 1;
+      }
+
+      .order-flow .order-panel,
+      .order-flow .konten .col-12.col-md-8.col-lg-8.col-xl-6 {
+        background: var(--order-surface);
+        border: 1px solid rgba(15, 118, 110, 0.08);
+        border-radius: 20px;
+        padding: 32px 34px;
+        box-shadow: var(--order-shadow);
+      }
+
+      .order-flow .order-hero {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .order-flow .order-step-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 30px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(15, 118, 110, 0.10);
+        color: var(--order-primary-dark);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+
+      .order-flow .order-hero h1,
+      .order-flow h1 {
+        color: var(--order-primary) !important;
+        font-size: clamp(2rem, 2.8vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 8px !important;
+      }
+
+      .order-flow .order-hero p,
+      .order-flow .text-center p,
+      .order-flow .order-subtitle {
+        margin-bottom: 0;
+        color: var(--order-text-soft);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .order-flow .progress {
+        height: 12px;
+        margin-top: 18px !important;
+        margin-bottom: 28px;
+        border-radius: 999px;
+        background: #dbe9e6;
+        overflow: hidden;
+      }
+
+      .order-flow .progress-bar {
+        background: linear-gradient(135deg, var(--order-primary), #14b8a6);
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 12px;
+      }
+
+      .order-flow label {
+        color: var(--order-text);
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .order-flow .form-control,
+      .order-flow .input-group-text,
+      .order-flow select.form-control {
+        border-radius: 10px;
+        min-height: 46px;
+        border-color: var(--order-border);
+        box-shadow: none;
+      }
+
+      .order-flow textarea.form-control {
+        min-height: 120px;
+      }
+
+      .order-flow .form-control:focus,
+      .order-flow .input-group-text:focus {
+        border-color: rgba(15, 118, 110, 0.45);
+        box-shadow: 0 0 0 0.2rem rgba(15, 118, 110, 0.14);
+      }
+
+      .order-flow .input-group-text {
+        background: #f3f8f7;
+        color: var(--order-primary-dark);
+        font-weight: 600;
+      }
+
+      .order-flow .text-muted,
+      .order-flow .form-text {
+        color: var(--order-text-soft) !important;
+        font-size: 13px;
+      }
+
+      .order-flow .btn-order,
+      .order-flow .btn-primary.btn-order,
+      .order-flow .btn-primary {
+        min-height: 46px;
+        border: 0;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--order-primary), #14b8a6) !important;
+        box-shadow: 0 12px 24px rgba(15, 118, 110, 0.18);
+        font-weight: 600;
+      }
+
+      .order-flow .btn-order:hover,
+      .order-flow .btn-primary:hover {
+        background: linear-gradient(135deg, var(--order-primary-dark), #0f9b8e) !important;
+      }
+
+      .order-flow .btn-secondary {
+        min-height: 46px;
+        border-radius: 10px;
+        border: 1px solid var(--order-border);
+        background: #f7faf9;
+        color: var(--order-text);
+        box-shadow: none;
+      }
+
+      .order-flow .btn-secondary:hover {
+        background: #eef5f3;
+        color: var(--order-primary-dark);
+      }
+
+      .order-flow .btn-dark {
+        min-height: 42px;
+        border-radius: 10px;
+        border: 0;
+        background: var(--order-text);
+      }
+
+      .order-flow .upload-area-bg {
+        background: var(--order-surface-muted);
+        border: 1px solid var(--order-border);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .order-flow .upload-area {
+        border-radius: 16px;
+      }
+
+      .order-flow .upload-area-caption span {
+        color: var(--order-text);
+      }
+
+      .order-flow .preview-uploads {
+        border: 1px solid var(--order-border);
+        border-radius: 14px;
+        background: #fff;
+        padding: 10px;
+      }
+
+      .order-flow .btn_remove,
+      .order-flow .btnhehe,
+      .order-flow .delete {
+        border-radius: 8px !important;
+      }
+
+      .order-flow .order-section-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--order-text);
+        margin: 18px 0 12px;
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .order-flow .order-inline-note {
+        margin-top: 14px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: #f7faf9;
+        border: 1px solid var(--order-border);
+        color: var(--order-text-soft);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .order-flow .order-actions {
+        margin-top: 28px;
+      }
+
+      .order-flow .order-link-button {
+        color: var(--order-text-soft);
+        font-weight: 600;
+      }
+
+      .order-flow .order-link-button:hover {
+        color: var(--order-primary-dark);
+        text-decoration: none !important;
+      }
+
+      .order-flow .order-status-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 32px;
+        padding: 0 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .order-flow .order-status-active {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .order-flow .order-status-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .order-flow .order-code-card,
+      .order-flow .order-next-steps {
+        margin-top: 18px;
+        padding: 20px;
+        border: 1px solid var(--order-border);
+        border-radius: 16px;
+        background: var(--order-surface-muted);
+      }
+
+      .order-flow .order-code-card .order-code-label {
+        color: var(--order-text-soft);
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .order-flow .order-code-card .order-code-value {
+        color: var(--order-text);
+        font-size: 15px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .order-flow .footer {
+        background: transparent;
+        padding-top: 0;
+      }
+
+      .order-flow .footer-social,
+      .order-flow .footer .lead {
+        margin-bottom: 8px;
+      }
+
+      .order-flow .footer .text-footer {
+        color: var(--order-text-soft);
+        font-size: 13px;
+      }
+
+      @media (max-width: 767.98px) {
+        .order-page {
+          margin-top: 82px;
+          margin-bottom: 40px;
+        }
+
+        .order-flow .order-panel,
+        .order-flow .konten .col-12.col-md-8.col-lg-8.col-xl-6 {
+          padding: 24px 20px;
+          border-radius: 18px;
+        }
+
+        .order-flow .upload-area-bg {
+          padding: 14px;
+        }
+      }
+    </style>
 
   </head>
 
-  <body oncontextmenu="return false">
+  <body class="order-flow" oncontextmenu="return false">
     <header>
         <div class="container">
           <nav class="navbar navbar-expand-md fixed-top">

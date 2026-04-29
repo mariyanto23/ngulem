@@ -1,11 +1,11 @@
-<div class="konten" style="display: flex;flex-grow: 1;overflow-x: hidden;flex-direction: row;margin-top: 60px;margin-bottom: 40px;">
+<div class="konten order-page">
 <?php
 $isFreePackage = isset($harga) && (int) $harga <= 0;
 $isActive = (int) $status === 2;
 $heading = 'Sukses!';
 $subheading = 'Hai kak! selamat undangan kamu sudah berhasil dibuat';
 $statusLabel = $isActive ? 'Aktif' : 'Belum Lunas';
-$statusClass = $isActive ? 'btn-success' : 'btn-warning';
+$statusClass = $isActive ? 'order-status-active' : 'order-status-pending';
 $dashboardHint = 'Login ke dashboard untuk mulai melengkapi undangan kamu.';
 
 if ($isFreePackage && $isQuickSetup) {
@@ -23,75 +23,63 @@ $format =
 saya mau aktivasi Undangan *".$kode."*. 
 mohon infonya ";
 ?>
-    <section class="fdb-block" style="padding-top: 20px;flex:1; ">
+    <section class="fdb-block">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-            <div class="row">
-              <div class="col text-center">
-                <h1 style="color: #3498db;margin-bottom:0px;"><?= $heading ?></h1>
-                <p tyle="font-size: 15px;font-weight:500; "><?= $subheading ?></p>
-              </div>
+          <div class="col-12 col-md-8 col-lg-8 col-xl-6 order-panel">
+            <div class="order-hero">
+              <div class="order-step-badge">Undangan Siap</div>
+              <h1><?= $heading ?></h1>
+              <p><?= $subheading ?></p>
             </div>
 
-            <div class="row align-items-center">
-              <div class="col mt-5">
-                <label>Kode Pesanan</label>
-                <div class="upload-area-bg" style="margin-top: 5px;text-align: center;">
-                  
-                  <div class="col">
-                  <div class="row">
-                    <div class="col">
-                      <a style="font-size: 14px;text-transform: uppercase;color: #2c3e50;" >#<?= $kode ?></a>
-                    </div>
-                    <div class="col-auto">
-                       <a href="#" class="<?= $statusClass ?> btn-sm" ><?= $statusLabel ?></a>
-                    </div>
-                  </div>   
+            <div class="order-code-card">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="order-code-label">Kode Pesanan</div>
+                  <div class="order-code-value">#<?= $kode ?></div>
                 </div>
+                <div class="col-auto">
+                  <span class="order-status-badge <?= $statusClass ?>"><?= $statusLabel ?></span>
                 </div>
               </div>
             </div>
 
-            <div class="row justify-content-start mt-3" >
+            <div class="row justify-content-start mt-3 order-actions" >
                 <div class="col">
                   <div class="row">
                     <div class="col">
                       <a href="<?= SITE_UNDANGAN?>/<?= $domain ?>" target="_blank" class="btn btn-primary btn-order btn-block" >Lihat Undangan</a>
                     </div>
                     <div class="col">
-				<a href="<?= base_url('user/logout') ?>" target="_blank" class="btn btn-success btn-order btn-block" >Login Dashboard</a>
+				<a href="<?= base_url('user/logout') ?>" target="_blank" class="btn btn-success btn-order btn-block" >Masuk Dashboard</a>
                     </div>
                   </div>   
                 </div>
             </div>
 
-            <div class="form-check mt-4" style="text-align: center;" >
+            <div class="order-inline-note mt-4 text-center" >
               <?php if ($isActive) { ?>
-                <h3 class="form-check-label">
+                <div class="font-weight-bold">
                     <?= $dashboardHint ?>
-                </h3>
+                </div>
               <?php } else { ?>
-                <h3 class="form-check-label">
-                    Untuk melakukan aktifasi silahkan login dengan email dan password yang anda buat atau bisa menghubungi admin via <a href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=<?php echo urlencode($format) ?>" >Whatsapp</a> dengan menyertakan <strong>kode :<h2 style="color:red; size:30px; text:bold;">#<?= $kode ?></h2></strong>
-                </h3>
+                <div>
+                    Untuk melakukan aktifasi silahkan login dengan email dan password yang anda buat atau bisa menghubungi admin via <a href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=<?php echo urlencode($format) ?>" >Whatsapp</a> dengan menyertakan kode <strong style="color:#b91c1c;">#<?= $kode ?></strong>.
+                </div>
               <?php } ?>
             </div>
 
             <?php if ($isQuickSetup) { ?>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="upload-area-bg" style="padding: 18px 20px;">
-                  <div style="text-align: left;">
-                    <h4 style="margin-bottom: 10px;color:#2c3e50;">Langkah berikutnya</h4>
-                    <ul style="margin-bottom: 0;padding-left: 18px;color:#6c757d;">
-                      <li>Lengkapi data mempelai</li>
-                      <li>Atur tanggal dan lokasi acara</li>
-                      <li>Pilih tema undangan</li>
-                      <li>Tambahkan cerita atau gallery jika diperlukan</li>
-                    </ul>
-                  </div>
-                </div>
+            <div class="order-next-steps">
+              <div style="text-align: left;">
+                <h4 style="margin-bottom: 10px;color:#2c3e50;">Langkah berikutnya</h4>
+                <ul style="margin-bottom: 0;padding-left: 18px;color:#6c757d;">
+                  <li>Lengkapi data mempelai</li>
+                  <li>Atur tanggal dan lokasi acara</li>
+                  <li>Pilih tema undangan</li>
+                  <li>Tambahkan cerita atau gallery jika diperlukan</li>
+                </ul>
               </div>
             </div>
             <?php } ?>
