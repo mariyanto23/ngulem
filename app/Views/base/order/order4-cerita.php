@@ -2,22 +2,21 @@
     <section class="fdb-block">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-            <div class="row">
-              <div class="col text-center">
-                <h1 style="color: #3498db;margin-bottom:0px;">Cerita!</h1>
-                <p tyle="font-size: 15px;font-weight:500; ">Hai kak! di isi dulu ya datanya </p>
-              </div>
+          <div class="col-12 col-md-8 col-lg-8 col-xl-6 order-panel">
+            <div class="order-hero">
+              <div class="order-step-badge">Langkah 4 dari 6</div>
+              <h1>Cerita Perjalanan</h1>
+              <p>Kalau mau, tambahkan beberapa momen singkat supaya undangan terasa lebih personal.</p>
             </div>
             
-            <div class="progress" style="margin-top: 10px;">
+            <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
             </div>
 
         <form method="post" action="<?php echo base_url('order/5'); ?>">
          <div id="konten-cerita" >
-            <div id="cerita1">
-                <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;margin-top: 15px;display: flex;">#1</a>
+            <div id="cerita1" class="order-item-card">
+                <div class="order-item-header"><div class="order-item-index">#1</div></div>
 
                 <div class="row align-items-center">
                    <div class="col">
@@ -41,14 +40,10 @@
                 </div>
               </div>
 
-              <div id="cerita2">
-                <div class="row align-items-center mt-3">
-                  <div class="col-auto">
-                     <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#2</a>
-                  </div>
-                  <div class="col">
-                    <a id="2" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a>
-                  </div>
+              <div id="cerita2" class="order-item-card">
+                <div class="order-item-header">
+                  <div class="order-item-index">#2</div>
+                  <a id="2" class="btn btn-sm btn-danger btn_remove">Hapus</a>
                 </div>
 
                 <div class="row align-items-center">
@@ -80,14 +75,10 @@
               
               ?>
 
-              <div id="cerita<?php echo $i+1 ?>">
-                <div class="row align-items-center mt-3">
-                  <div class="col-auto">
-                     <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#<?php echo $i+1 ?></a>
-                  </div>
-                  <div class="col">
-                    <a id="<?php echo $i+1 ?>" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a>
-                  </div>
+              <div id="cerita<?php echo $i+1 ?>" class="order-item-card">
+                <div class="order-item-header">
+                  <div class="order-item-index">#<?php echo $i+1 ?></div>
+                  <a id="<?php echo $i+1 ?>" class="btn btn-sm btn-danger btn_remove">Hapus</a>
                 </div>
 
                 <div class="row align-items-center">
@@ -120,20 +111,18 @@
 
             </div>
 
-            <div class="row mt-2" >
+            <div class="row order-add-button" >
               <div class="col text-center">
-                <a id="addCerita" class="btn btn-primary btn-order btn-order-secondary btn-block"  >Tambah Cerita</a>
+                <a id="addCerita" class="btn btn-primary btn-order btn-block">Tambah Cerita</a>
               </div>
             </div>
 
-            <div class="form-check mt-4">
-                  <label class="form-check-label ">
-                      <input type="checkbox" class="form-check-input" id="skipCerita" name="skipCerita" >
-                      <a style="margin-top: 105px;color: #2c3e50;position: relative;top: 3px;left: 6px;"> Jangan Aktifkan Fitur Ini</a>
-                  </label>
-            </div>
+            <label class="order-toggle">
+              <input type="checkbox" class="form-check-input" id="skipCerita" name="skipCerita">
+              <span class="order-toggle-copy">Lewati bagian cerita untuk sekarang. Kamu masih bisa mengaktifkan dan mengisinya nanti dari dashboard.</span>
+            </label>
 
-            <div class="row justify-content-start mt-3" >
+            <div class="row justify-content-start mt-3 order-actions" >
               <div class="col">
                 <div class="row">
                   

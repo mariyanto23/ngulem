@@ -252,6 +252,102 @@
         line-height: 1.7;
       }
 
+      .order-flow .order-item-card {
+        margin-top: 18px;
+        padding: 20px;
+        border: 1px solid var(--order-border);
+        border-radius: 16px;
+        background: #fff;
+      }
+
+      .order-flow .order-item-card:first-child {
+        margin-top: 0;
+      }
+
+      .order-flow .order-item-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .order-flow .order-item-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        min-height: 40px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(15, 118, 110, 0.10);
+        color: var(--order-primary-dark);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .order-flow .order-item-header .btn_remove,
+      .order-flow .order-item-header .btnhehe {
+        min-height: 36px;
+        padding: 0 14px;
+        border-radius: 10px !important;
+      }
+
+      .order-flow .order-add-button {
+        margin-top: 18px;
+      }
+
+      .order-flow .order-toggle {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 18px;
+        padding: 16px;
+        border-radius: 14px;
+        background: #f7faf9;
+        border: 1px solid var(--order-border);
+      }
+
+      .order-flow .order-toggle input {
+        margin-top: 3px;
+      }
+
+      .order-flow .order-toggle-copy {
+        color: var(--order-text-soft);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .order-flow .order-helper-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        color: #0f766e;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .order-flow .order-helper-link:hover {
+        color: var(--order-primary-dark);
+        text-decoration: none;
+      }
+
+      .order-flow .order-upload-label {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--order-text);
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .order-flow .order-upload-caption {
+        margin-top: 10px;
+        color: var(--order-text-soft);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
       .order-flow .order-actions {
         margin-top: 28px;
       }
@@ -590,7 +686,7 @@ $(function () {
 
       i++;  
 
-      $('#konten-cerita').append('<div id="cerita'+i+'"><div class="row align-items-center mt-3"><div class="col-auto"><a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#'+i+'</a></div><div class="col"><a id="'+i+'" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a></div></div><div class="row align-items-center"><div class="col"><label>Tanggal</label><input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020 " required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Judul</label><input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Isi Cerita</label><textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea></div></div></div>');  
+      $('#konten-cerita').append('<div id="cerita'+i+'" class="order-item-card"><div class="order-item-header"><div class="order-item-index">#'+i+'</div><a id="'+i+'" class="btn btn-danger btn-sm btn_remove">Hapus</a></div><div class="row align-items-center"><div class="col"><label>Tanggal</label><input name="tanggal_cerita[]" type="text" class="form-control" placeholder="Contoh : 14 Januari 2020 " required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Judul</label><input name="judul_cerita[]" type="text" class="form-control" placeholder="Contoh : Pertama Bertemu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Isi Cerita</label><textarea name="isi_cerita[]" type="text" class="form-control" placeholder="Maximal 500 Karakter" maxlength="500" rows="4" required></textarea></div></div></div>');  
         $(".form-control").prop('required',false);
     });
     
@@ -629,7 +725,7 @@ $(function () {
       j++;  
         var d = new Date();
         var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-      $('#konten-acara').append('<div id="acara'+j+'"><div class="row align-items-center mt-3"><div class="col-auto"><a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#'+j+'</a></div><div class="col"><a id="'+j+'" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a></div></div><div class="row align-items-center"><div class="col"><label>Judul Acara</label><input name="nama_acara[]" type="text" class="form-control" placeholder="Contoh : Unduh Mantu"  required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Tanggal </label><input type="text" class="form-control" id="datepicker'+j+'" placeholder="Tanggal" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" value="Jumat, 17 Januari 2020" required><input type="hidden" name="tgl_acara[]" id="tgl_acara'+j+'" value="'+strDate+'"></div></div><div class="row align-items-center mt-3"><div class="col mt-2"><div class="form-row"><div class="col-md-6"><label>Waktu / Jam </label><input name="waktu_mulai[]" type="time" class="form-control" placeholder="Contoh : 10.00 Pagi" required></div><div class="col-md-6"><label>Waktu / Jam </label><input name="waktu_akhir[]" type="time" class="form-control" placeholder="Contoh : 10.00 Pagi" required></div></div></div></div><div class="row align-items-center mt-3"><div class="col"><label>Tempat Acara</label><input name="tempat_acara[]" type="text" class="form-control" placeholder="Contoh : Kediaman Mempelai Wanita" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Alamat Acara</label><textarea name="alamat_acara[]" type="text" class="form-control" required></textarea></div></div><div class="row align-items-center mt-3"><div class="col"><label>Google Maps</label><textarea name="maps[]" type="text" class="form-control"></textarea><div class="mt-1"><label class="form-check-label "><a href="<?php echo base_url('maps'); ?>" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Maps</a></label></div></div></div></div>');
+      $('#konten-acara').append('<div id="acara'+j+'" class="order-item-card"><div class="order-item-header"><div class="order-item-index">#'+j+'</div><a id="'+j+'" class="btn btn-danger btn-sm btn_remove">Hapus</a></div><div class="row align-items-center"><div class="col"><label>Judul Acara</label><input name="nama_acara[]" type="text" class="form-control" placeholder="Contoh : Unduh Mantu" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Tanggal </label><input type="text" class="form-control" id="datepicker'+j+'" placeholder="Tanggal" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" value="Jumat, 17 Januari 2020" required><input type="hidden" name="tgl_acara[]" id="tgl_acara'+j+'" value="'+strDate+'"></div></div><div class="row align-items-center mt-3"><div class="col mt-2"><div class="form-row"><div class="col-md-6"><label>Waktu Mulai</label><input name="waktu_mulai[]" type="time" class="form-control" placeholder="Contoh : 10.00 Pagi" required></div><div class="col-md-6"><label>Waktu Selesai</label><input name="waktu_akhir[]" type="time" class="form-control" placeholder="Contoh : 10.00 Pagi" required></div></div></div></div><div class="row align-items-center mt-3"><div class="col"><label>Tempat Acara</label><input name="tempat_acara[]" type="text" class="form-control" placeholder="Contoh : Kediaman Mempelai Wanita" required></div></div><div class="row align-items-center mt-3"><div class="col"><label>Alamat Acara</label><textarea name="alamat_acara[]" type="text" class="form-control" required></textarea></div></div><div class="row align-items-center mt-3"><div class="col"><label>Google Maps</label><textarea name="maps[]" type="text" class="form-control"></textarea><a href="<?php echo base_url('maps'); ?>" class="order-helper-link"><i class="lni-question-circle"></i><span>Cara menambahkan Google Maps</span></a></div></div></div>');
       var tgl = $('#tgl_acara'+j+'').val();
       moment.locale('id');
       $('#datepicker'+j+'').val(moment(tgl).format('dddd, Do MMMM YYYY'));

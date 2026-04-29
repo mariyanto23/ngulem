@@ -2,15 +2,14 @@
     <section class="fdb-block">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-            <div class="row">
-              <div class="col text-center">
-                <h1 style="color: #3498db;margin-bottom:0px;">Galleri!</h1>
-                <p tyle="font-size: 15px;font-weight:500; ">Hai kak! di isi dulu ya datanya </p>
-              </div>
+          <div class="col-12 col-md-8 col-lg-8 col-xl-6 order-panel">
+            <div class="order-hero">
+              <div class="order-step-badge">Langkah 5 dari 6</div>
+              <h1>Galeri Foto</h1>
+              <p>Upload beberapa foto terbaik. Maksimal 10 foto, dan masing-masing sampai 2MB.</p>
             </div>
             
-            <div class="progress" style="margin-top: 10px;">
+            <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
             </div>
 
@@ -18,7 +17,7 @@
               
               <!-- <form action="" method="post" enctype="multipart/form-data"> -->
                 <div class="row align-items-center mt-4">
-                   <label>Upload Foto Galleri : </label>
+                   <label class="order-upload-label">Upload Foto Galeri</label>
                   <div class="upload-area-bg">
                     
                     <div class="upload-area do-add-btn">
@@ -29,10 +28,11 @@
                         <h3 class="upload-area-caption">
                           <span>Drag and drop files here</span>
                         </h3>
-                        <p>or</p>
+                        <p>atau</p>
                         <button class="upload-area-button btn " style="z-index:9999;">
-                          <span>Browse files</span>
+                          <span>Pilih Foto</span>
                         </button>
+                        <p class="order-upload-caption">Tampilkan momen terbaik kalian di undangan.</p>
                       </div>
                     </div>
 
@@ -76,14 +76,12 @@
           </div>
 
             <form method="post" action="<?= base_url('order/finish'); ?>">
-              <div class="form-check mt-4">
-                    <label class="form-check-label ">
-                        <input type="checkbox" class="form-check-input" id="skipGallery" name="skipGallery">
-                        <a style="margin-top: 105px;color: #2c3e50;position: relative;top: 3px;left: 6px;"> Jangan Aktifkan Fitur Ini</a>
-                    </label>
-              </div>
+              <label class="order-toggle">
+                <input type="checkbox" class="form-check-input" id="skipGallery" name="skipGallery">
+                <span class="order-toggle-copy">Lewati galeri untuk sekarang. Kamu bisa upload foto nanti setelah undangan aktif.</span>
+              </label>
 
-              <div class="row justify-content-start mt-3" >
+              <div class="row justify-content-start mt-3 order-actions" >
                 <div class="col">
                   <div class="row">
                     <div class="col-auto">

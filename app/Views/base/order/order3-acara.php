@@ -2,22 +2,21 @@
     <section class="fdb-block">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-            <div class="row">
-              <div class="col text-center">
-                <h1 style="color: #3498db;margin-bottom:0px;">Acara!</h1>
-                <p tyle="font-size: 15px;font-weight:500; ">Hai kak! di isi dulu ya datanya </p>
-              </div>
+          <div class="col-12 col-md-8 col-lg-8 col-xl-6 order-panel">
+            <div class="order-hero">
+              <div class="order-step-badge">Langkah 3 dari 6</div>
+              <h1>Detail Acara</h1>
+              <p>Susun acara utama dulu. Kamu bisa tambahkan beberapa agenda jika diperlukan.</p>
             </div>
             
-            <div class="progress" style="margin-top: 10px;">
-              <div class="progress-bar" role="progressbar" style="width: 30%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">30%</div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 32%;" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100">32%</div>
             </div>
 
         <form method="post" action="<?php echo base_url('order/4'); ?>">
          <div id="konten-acara" >
-            <div id="acara1">
-                <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;margin-top: 15px;display: flex;">#1</a>
+            <div id="acara1" class="order-item-card">
+                <div class="order-item-header"><div class="order-item-index">#1</div></div>
                 <div class="row align-items-center">
                   <div class="col">
                     <label>Judul Acara</label>
@@ -63,9 +62,7 @@
                     <label>Google Maps</label>
                     <textarea name="maps[]" type="text" class="form-control"><?php if(isset($_SESSION['maps0'])) echo $_SESSION['maps0'] ?></textarea>
                     <div class="mt-1">
-                            <label class="form-check-label ">
-                            <a href="<?php echo base_url('maps'); ?>" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Maps</a>
-                            </label>
+                            <a href="<?php echo base_url('maps'); ?>" class="order-helper-link"><i class="lni-question-circle"></i><span>Cara menambahkan Google Maps</span></a>
                                 
                             </div>
                   </div>
@@ -73,14 +70,10 @@
                 
               </div>
 
-              <div id="acara2">
-                <div class="row align-items-center mt-3">
-                  <div class="col-auto">
-                     <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#2</a>
-                  </div>
-                  <div class="col">
-                    <a id="2" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a>
-                  </div>
+              <div id="acara2" class="order-item-card">
+                <div class="order-item-header">
+                  <div class="order-item-index">#2</div>
+                  <a id="2" class="btn btn-sm btn-danger btn_remove">Hapus</a>
                 </div>
                 <div class="row align-items-center">
                   <div class="col">
@@ -126,9 +119,7 @@
                     <label>Google Maps</label>
                     <textarea name="maps[]" type="text" class="form-control" ><?php if(isset($_SESSION['maps1'])) echo $_SESSION['maps1'] ?></textarea>
                     <div class="mt-1">
-                            <label class="form-check-label ">
-                            <a href="<?php echo base_url('maps'); ?>" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Maps</a>
-                            </label>
+                            <a href="<?php echo base_url('maps'); ?>" class="order-helper-link"><i class="lni-question-circle"></i><span>Cara menambahkan Google Maps</span></a>
                                 
                             </div>
                   </div>
@@ -142,14 +133,10 @@
                   for($i=2;$i < $_SESSION['jml_acara'];$i++){ 
               
               ?>
-                <div id="acara<?php echo $i+1 ?>">
-                <div class="row align-items-center mt-3">
-                  <div class="col-auto">
-                     <a style="color: #2c3e50;margin-bottom:0px;font-size: 20px;font-weight: 600;display: flex;">#<?php echo $i+1 ?></a>
-                  </div>
-                  <div class="col">
-                    <a id="<?php echo $i+1 ?>" class="btn btn-sm btn_remove" style="background-color: #dc3545;padding: 5px;font-size: 12px;border-radius: 5px;">Hapus</a>
-                  </div>
+                <div id="acara<?php echo $i+1 ?>" class="order-item-card">
+                <div class="order-item-header">
+                  <div class="order-item-index">#<?php echo $i+1 ?></div>
+                  <a id="<?php echo $i+1 ?>" class="btn btn-sm btn-danger btn_remove">Hapus</a>
                 </div>
                 
                 <div class="row align-items-center">
@@ -196,9 +183,7 @@
                     <label>Google Maps</label>
                     <textarea name="maps[]" type="text" class="form-control"><?php if(isset($_SESSION['maps'.$i])) echo $_SESSION['maps'.$i] ?></textarea>
                     <div class="mt-1">
-                            <label class="form-check-label ">
-                            <a href="<?php echo base_url('maps'); ?>" style="margin-top: 105px;color: #2c3e50;position: relative;top:3px;color:#17a2b8;"><i class="lni-question-circle" style="color:#17a2b8;"></i>&nbsp Cara Menambahkan Maps</a>
-                            </label>
+                            <a href="<?php echo base_url('maps'); ?>" class="order-helper-link"><i class="lni-question-circle"></i><span>Cara menambahkan Google Maps</span></a>
                                 
                             </div>
                   </div>
@@ -213,13 +198,13 @@
 
             </div>
 
-            <div class="row mt-2" >
+            <div class="row order-add-button" >
               <div class="col text-center">
-                <a id="addAcara" class="btn btn-primary btn-order btn-order-secondary btn-block"  >Tambah acara</a>
+                <a id="addAcara" class="btn btn-primary btn-order btn-block">Tambah Acara</a>
               </div>
             </div>
 
-            <div class="row justify-content-start mt-3" >
+            <div class="row justify-content-start mt-3 order-actions" >
               <div class="col">
                 <div class="row">
                   
