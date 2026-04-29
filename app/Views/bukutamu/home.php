@@ -160,28 +160,23 @@
         }
 
         .bukutamu-media-slide {
-            min-height: 360px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
+            min-height: 0;
+            padding: 0;
         }
 
         .bukutamu-media-card {
             position: relative;
             width: 100%;
-            background: #ffffff;
             border-radius: 18px;
-            padding: 16px;
-            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+            overflow: hidden;
         }
 
         .bukutamu-media-card img {
             width: 100%;
-            height: 240px;
+            height: 300px;
             object-fit: cover;
-            border-radius: 14px;
-            border: 2px solid #facc15;
+            border-radius: 18px;
+            border: 0;
         }
 
         .bukutamu-checkin-grid {
@@ -335,11 +330,11 @@
         }
 
         .bukutamu-selfie-card {
-            max-width: 420px;
+            max-width: none;
         }
 
         .bukutamu-selfie-card img {
-            height: 240px;
+            height: 300px;
         }
 
         .bukutamu-selfie-name-badge {
@@ -386,26 +381,21 @@
             }
 
             .bukutamu-media-slide {
-                min-height: 310px;
-                padding: 6px 8px 12px;
-            }
-
-            .bukutamu-media-card {
-                padding: 12px;
+                min-height: 0;
             }
 
             .bukutamu-selfie-card {
-                max-width: 360px;
+                max-width: none;
             }
 
             .bukutamu-media-card img {
-                height: 205px;
+                height: 300px;
             }
 
             .bukutamu-selfie-name-badge {
-                top: 18px;
-                left: 18px;
-                max-width: calc(100% - 36px);
+                top: 14px;
+                left: 14px;
+                max-width: calc(100% - 28px);
             }
         }
 
@@ -460,18 +450,17 @@
             }
 
             .bukutamu-media-slide {
-                min-height: 300px;
                 padding: 0;
             }
 
             .bukutamu-media-card img {
-                height: 200px;
+                height: 220px;
             }
 
             .bukutamu-selfie-name-badge {
-                top: 18px;
-                left: 18px;
-                max-width: calc(100% - 36px);
+                top: 12px;
+                left: 12px;
+                max-width: calc(100% - 24px);
                 font-size: 12px;
                 padding: 7px 11px;
             }
