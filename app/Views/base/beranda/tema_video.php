@@ -21,11 +21,19 @@
             <div id="particle-container">
             </div>
             <div class="container">
+                <div class="row" style="margin-bottom: 18px;">
+                    <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
+                        <p style="margin:0; color:#64748b; line-height:1.8;">
+                            Jelajahi kategori video, preview dulu hasilnya, lalu lanjut pesan tema video yang paling sesuai dengan konsep acara kamu.
+                        </p>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="isotop-nav text-center">
+                            <div class="isotop-nav text-center" style="margin-bottom: 28px;">
+                                <p style="margin:0 0 12px; color:#64748b; font-size:14px;">Filter kategori video:</p>
                                 <ul>
-                                    <li class="btn sw-button <?php if($link =='all'){ echo 'active'; } ?>"><a href="<?= site_url('tema_video') ?>" >All</a></li>
+                                    <li class="btn sw-button <?php if($link =='all'){ echo 'active'; } ?>"><a href="<?= site_url('tema_video') ?>" >Semua</a></li>
                                     <?php foreach($categories as $category) : ?>
                     				<li class="btn sw-button <?php if($link == $category['slug']) echo 'active'; ?>"><a href="<?= site_url('tema_video?category='.$category['slug']) ?>" ><?= $category['name'] ?></a></li>
                     				<?php endforeach; ?>
@@ -45,14 +53,15 @@
                                 </figure>
                                 <div class="desc">
                                     <h3><?= htmlentities($row->nama_tema) ?></h3>
+                                    <p style="margin:8px 0 14px; color:#64748b; min-height:44px;">Preview dulu videonya, lalu lanjut pesan tema ini lewat WhatsApp.</p>
                                     <span class="price">
                                         <ins>
                                             <span class="amount">Rp. <?= number_format($row->harga) ?></span>
                                         </ins>
                                     </span>
                                     <div class="readmore text-center">
-                                        <a class="btn sw-button btn-shop-2 btn-shop btn-details btn-demo" data-link="<?= htmlentities($row->url_video); ?>" data-nama="<?= $row->nama_tema; ?>" title="Demo Video"><i class="fa fa-eye"></i></a>
-                                      <a target="_blank" href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=Assalamualaikum, Kak saya mau pesan Undangan video <?= $row->nama_tema ?>%0ABagaimana cara pesannya kak?" class="btn sw-button btn-shop-2 btn-shop btn-details" title="Pesan Sekarang"><i class="fa fa-shopping-basket"></i></a>
+                                        <a class="btn sw-button btn-shop-2 btn-shop btn-details btn-demo" data-link="<?= htmlentities($row->url_video); ?>" data-nama="<?= $row->nama_tema; ?>" title="Lihat Demo Video">Lihat Demo</a>
+                                      <a target="_blank" href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=Assalamualaikum, Kak saya mau pesan Undangan video <?= $row->nama_tema ?>%0ABagaimana cara pesannya kak?" class="btn sw-button btn-shop-2 btn-shop btn-details" title="Pesan Sekarang">Pesan via WhatsApp</a>
                                     </div>
                                 </div>
                             </article>
@@ -73,7 +82,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title"> Preview Video <span class="nama_tema" id="nama_tema"></span></h4>
+				<h4 class="modal-title">Lihat Demo Video <span class="nama_tema" id="nama_tema"></span></h4>
 			</div>
 			<div class="modal-body">
 				<div class="demo text-center">
@@ -83,4 +92,3 @@
 		</div>
 	</div>
 </div>
-
