@@ -9,9 +9,6 @@
     <meta name="author" content="">
     <link href="<?= base_url('assets/base'); ?>/img/favicon.ico" rel="icon">
     <title><?= $title ?></title>
-    <link rel="stylesheet" href="<?= base_url('assets/base'); ?>/css/fontawesome.css">
-    <link rel="stylesheet" href="<?= base_url('assets/beranda/themes/assets/css/sw-main.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/beranda/themes/assets/css/sw-responsive.css') ?>">
     <link href="<?= base_url('assets/dashboard'); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assets/dashboard'); ?>/css/diulem-dashboard.css" rel="stylesheet">
@@ -22,11 +19,14 @@
         }
 
         .public-auth-main {
-            padding: 128px 16px 72px;
+            padding: 40px 16px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .public-auth-main .diulem-auth-shell {
-            min-height: calc(100vh - 320px);
+            min-height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -34,8 +34,7 @@
 
         @media (max-width: 767.98px) {
             .public-auth-main {
-                padding-top: 112px;
-                padding-bottom: 56px;
+                padding: 24px 16px;
             }
         }
     </style>
@@ -43,15 +42,11 @@
 </head>
 
 <body class="diulem-auth-page">
-<?= view('base/beranda/components/public_header') ?>
 <main class="public-auth-main">
 <?php echo view($view); ?>
 </main>
-<?= view('base/beranda/components/public_footer') ?>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url('assets/base/js/jquery.easing.min.js') ?>"></script>
-<script src="<?= base_url('assets/beranda/themes/assets/js/sw-main.js') ?>"></script>
 </body>
 <script>
 setTimeout("$('#ikierror').hide();", 2000);

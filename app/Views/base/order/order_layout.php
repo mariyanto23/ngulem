@@ -399,21 +399,6 @@
         text-transform: uppercase;
       }
 
-      .order-flow .footer {
-        background: transparent;
-        padding-top: 0;
-      }
-
-      .order-flow .footer-social,
-      .order-flow .footer .lead {
-        margin-bottom: 8px;
-      }
-
-      .order-flow .footer .text-footer {
-        color: var(--order-text-soft);
-        font-size: 13px;
-      }
-
       @media (max-width: 767.98px) {
         .order-page {
           margin-top: 82px;
@@ -429,6 +414,14 @@
         .order-flow .upload-area-bg {
           padding: 14px;
         }
+      }
+
+      .order-flow .header,
+      .order-flow .navbar-me,
+      .order-flow .navbar-footer,
+      .order-flow footer,
+      .order-flow #show_chat_to_top {
+        font-family: inherit;
       }
     </style>
 
