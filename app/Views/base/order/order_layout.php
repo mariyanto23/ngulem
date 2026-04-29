@@ -20,6 +20,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/pikaday.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/base/css/croppie.min.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>/assets/beranda/themes/assets/css/sw-plugins.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/beranda/themes/assets/css/sw-main.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/beranda/themes/assets/css/sw-responsive.css">
     <style>
@@ -34,7 +35,7 @@
         --order-shadow: 0 18px 48px rgba(15, 118, 110, 0.10);
       }
 
-      body.order-flow {
+      .order-flow-shell {
         min-height: 100vh;
         background:
           radial-gradient(circle at top left, rgba(15, 118, 110, 0.08), transparent 28%),
@@ -416,18 +417,11 @@
         }
       }
 
-      .order-flow .header,
-      .order-flow .navbar-me,
-      .order-flow .navbar-footer,
-      .order-flow footer,
-      .order-flow #show_chat_to_top {
-        font-family: inherit;
-      }
     </style>
 
   </head>
 
-  <body class="order-flow" oncontextmenu="return false">
+  <body oncontextmenu="return false">
     <?= view('base/beranda/components/public_header') ?>
 
     <?php 
@@ -446,11 +440,9 @@
 
     ?>
 
-    <?php 
-
-    echo view($view);
-
-    ?>
+    <div class="order-flow order-flow-shell">
+    <?php echo view($view); ?>
+    </div>
 
     <?= view('base/beranda/components/public_footer') ?>
 
