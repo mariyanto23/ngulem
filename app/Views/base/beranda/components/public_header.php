@@ -8,12 +8,68 @@ if (empty($publicSetting)) {
 }
 ?>
 <style>
-  .diulem-public-header .navbar-nav {
+  .diulem-public-header .navbar {
+    display: block !important;
+    min-height: 60px;
+  }
+
+  .diulem-public-header .navbar-me.navbar-default {
+    background: #fff !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .diulem-public-header .navbar-me > .container {
+    display: block !important;
+  }
+
+  .diulem-public-header .navbar-brand {
+    float: left !important;
+    display: block !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 5px 0 !important;
+  }
+
+  .diulem-public-header .navbar-brand img {
     display: block;
+    height: 50px;
+    width: auto;
+  }
+
+  .diulem-public-header .nav-right {
+    float: right !important;
+  }
+
+  .diulem-public-header .navbar-nav {
+    float: left !important;
+    display: block;
+    margin: 8px 0 !important;
   }
 
   .diulem-public-header .navbar-nav > li {
     float: left;
+  }
+
+  .diulem-public-header .navbar-nav > li > a {
+    display: block !important;
+    color: #333333 !important;
+    background: transparent !important;
+  }
+
+  .diulem-public-header .navbar-nav > li > a:hover,
+  .diulem-public-header .navbar-nav > li > a:focus,
+  .diulem-public-header .navbar-nav > .active > a,
+  .diulem-public-header .navbar-nav > .active > a:hover,
+  .diulem-public-header .navbar-nav > .active > a:focus {
+    color: #4bb9e3 !important;
+    background: transparent !important;
+  }
+
+  .diulem-public-header .navbar-nav a.btn-publish {
+    color: #ffffff !important;
   }
 
   .diulem-public-header .navbar-collapse.collapse {
@@ -28,6 +84,10 @@ if (empty($publicSetting)) {
   }
 
   @media (max-width: 767px) {
+    .diulem-public-header .navbar-brand {
+      float: left !important;
+    }
+
     .diulem-public-header .navbar-toggle {
       display: block;
     }
@@ -50,6 +110,10 @@ if (empty($publicSetting)) {
 
     .diulem-public-header .nav-right {
       float: none !important;
+    }
+
+    .diulem-public-header .navbar-nav > li > a {
+      color: #333333 !important;
     }
   }
 </style>
