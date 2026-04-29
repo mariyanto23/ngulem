@@ -58,6 +58,33 @@ if ($waGatewayProvider === 'nusagateway') {
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
+                        <h3 class="card-title">Branding Aplikasi</h3>
+                    </div>
+                    <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_logo_utama'); ?>">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label d-block">Logo Utama Website</label>
+                                <div class="border rounded p-3 text-center bg-light">
+                                    <img src="<?= base_url() ?>/assets/base/img/logo.png?v=<?= @filemtime(FCPATH . 'assets/base/img/logo.png') ?: time(); ?>" alt="Logo utama" style="max-height:64px;width:auto;max-width:100%;">
+                                </div>
+                                <div class="form-hint mt-2">Logo ini dipakai di halaman utama, order, login user, dan login admin yang menggunakan <code>/assets/base/img/logo.png</code>.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Upload Logo Baru</label>
+                                <input type="file" name="logo_utama" class="form-control" accept=".png,image/png">
+                                <div class="form-hint">Gunakan PNG transparan agar hasilnya rapi. Maksimal 2MB.</div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="ti ti-upload me-2"></i>Perbarui Logo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
                         <h3 class="card-title">Contact Admin</h3>
                     </div>
                     <div class="card-body">
