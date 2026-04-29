@@ -49,6 +49,12 @@ class Order extends Controller
 		$data['email'] = $this->session->email;
 		$data['hp'] = $this->session->hp;
 		$data['password'] = $this->session->password;
+		$data['order_email_verification_pending'] = (bool) $this->session->get('order_email_verification_pending');
+		$data['order_email_verification_email'] = $this->session->get('order_email_verification_email');
+		$data['order_email_verification_expires_at'] = (int) $this->session->get('order_email_verification_expires_at');
+		$data['order_email_notice'] = $this->session->getFlashdata('order_email_notice');
+		$data['order_email_error'] = $this->session->getFlashdata('order_email_error');
+		$data['order_email_verified_notice'] = $this->session->getFlashdata('order_email_verified_notice');
 		$data['view'] = 'base/order/order1-datauser';
 
 		//cek session 
@@ -74,7 +80,7 @@ class Order extends Controller
 			//maka akan dikembalikan ke halaman sebelumnya (awal)
 			$id_paket = $this->request->getPost('id_paket');
 			$domain = $this->request->getPost('domain');
-			$email = $this->request->getPost('email');
+			$email = strtolower(trim((string) $this->request->getPost('email')));
 			$password = $this->request->getPost('password');  
 			$hp = $this->request->getPost('hp'); 
 			$cekEmail = $this->order->cek_email($email);
@@ -100,21 +106,16 @@ class Order extends Controller
 					</script>";
 					exit();
 			}
-			$this->session->set('hp', $hp);
-			//buatkan data dummynya
-			//untuk identitas sementara
-			$c = $this->session->get('checkpoint');
-			if($c <= 2 && $this->session->get('dummy') == ''){
-				$this->session->set('checkpoint', 2);
-				$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-			    $charactersLength = strlen($characters);
-			    $randomString = '';
-			    for ($i = 0; $i < 7; $i++) {
-			        $randomString .= $characters[rand(0, $charactersLength - 1)];
-			    }
-			    $generate = "dummy_".$randomString;
-			    $this->session->set('dummy', $generate);
+
+			$this->queueOrderEmailVerification($id_paket, $domain, $email, $password, $hp);
+			if (! $this->isOrderEmailVerified($email)) {
+				$this->issueOrderEmailVerificationCode($email);
+				$this->session->setFlashdata('order_email_notice', 'Kode verifikasi sudah kami kirim ke email kamu. Masukkan kodenya dulu untuk lanjut ke langkah berikutnya.');
+				return redirect()->to(base_url('order/1'));
 			}
+
+			$this->session->set('hp', $hp);
+			$this->advanceOrderToMempelai();
 
 		}
 		
@@ -129,6 +130,74 @@ class Order extends Controller
 			return redirect()->route('order/any');
 		}
 		
+	}
+
+	public function verify_email()
+	{
+		$inputCode = trim((string) $this->request->getPost('verification_code'));
+		$pendingEmail = (string) $this->session->get('order_email_verification_email');
+		$storedHash = (string) $this->session->get('order_email_verification_code_hash');
+		$expiresAt = (int) $this->session->get('order_email_verification_expires_at');
+
+		if (empty($pendingEmail) || empty($storedHash)) {
+			$this->session->setFlashdata('order_email_error', 'Sesi verifikasi email sudah berakhir. Silakan klik Lanjut lagi untuk meminta kode baru.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		if ($inputCode === '') {
+			$this->session->setFlashdata('order_email_error', 'Masukkan kode verifikasi email terlebih dahulu.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		if ($expiresAt > 0 && time() > $expiresAt) {
+			$this->session->setFlashdata('order_email_error', 'Kode verifikasi sudah kedaluwarsa. Kami kirimkan kode baru ke email kamu.');
+			$this->issueOrderEmailVerificationCode($pendingEmail);
+			return redirect()->to(base_url('order/1'));
+		}
+
+		if (! hash_equals($storedHash, hash('sha256', $inputCode))) {
+			$this->session->setFlashdata('order_email_error', 'Kode verifikasi belum cocok. Coba cek lagi email kamu.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		$pendingData = (array) $this->session->get('order_pending_step1');
+		if (empty($pendingData)) {
+			$this->session->setFlashdata('order_email_error', 'Data pendaftaran tidak ditemukan. Silakan isi ulang data langkah pertama.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		$this->session->set('domain', $pendingData['domain'] ?? '');
+		$this->session->set('email', $pendingData['email'] ?? '');
+		$this->session->set('password', $pendingData['password'] ?? '');
+		$this->session->set('id_paket', $pendingData['id_paket'] ?? '');
+		$this->session->set('hp', $pendingData['hp'] ?? '');
+		$this->session->set('order_email_verified', 1);
+		$this->session->set('order_email_verified_address', $pendingEmail);
+		$this->session->remove([
+			'order_email_verification_pending',
+			'order_email_verification_email',
+			'order_email_verification_code_hash',
+			'order_email_verification_expires_at',
+		]);
+		$this->advanceOrderToMempelai();
+		$this->session->setFlashdata('order_email_verified_notice', 'Email berhasil diverifikasi. Lanjut isi data mempelai ya.');
+
+		return redirect()->to(base_url('order/2'));
+	}
+
+	public function resend_email_code()
+	{
+		$pendingEmail = (string) $this->session->get('order_email_verification_email');
+		$pendingData = (array) $this->session->get('order_pending_step1');
+
+		if (empty($pendingEmail) || empty($pendingData)) {
+			$this->session->setFlashdata('order_email_error', 'Belum ada data email yang siap diverifikasi. Isi data langkah pertama dulu ya.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		$this->issueOrderEmailVerificationCode($pendingEmail);
+		$this->session->setFlashdata('order_email_notice', 'Kode verifikasi baru sudah kami kirim ulang ke email kamu.');
+		return redirect()->to(base_url('order/1'));
 	}
 
 	public function acara(){
@@ -903,6 +972,72 @@ Mohon untuk segera melakukan pembayaran pesanannya #'.$kode.' sejumlah *Rp. '.$b
 			return true;
 		}
 	}
+
+	private function queueOrderEmailVerification($idPaket, $domain, $email, $password, $hp)
+	{
+		$verifiedEmail = (string) $this->session->get('order_email_verified_address');
+		if ($verifiedEmail !== '' && $verifiedEmail !== $email) {
+			$this->session->remove([
+				'order_email_verified',
+				'order_email_verified_address',
+				'order_email_verification_pending',
+				'order_email_verification_email',
+				'order_email_verification_code_hash',
+				'order_email_verification_expires_at',
+			]);
+		}
+
+		$this->session->set('order_pending_step1', [
+			'id_paket' => $idPaket,
+			'domain' => $domain,
+			'email' => $email,
+			'password' => $password,
+			'hp' => $hp,
+		]);
+	}
+
+	private function isOrderEmailVerified($email)
+	{
+		return (int) $this->session->get('order_email_verified') === 1
+			&& (string) $this->session->get('order_email_verified_address') === (string) $email;
+	}
+
+	private function issueOrderEmailVerificationCode($email)
+	{
+		$code = (string) random_int(100000, 999999);
+		$this->session->set('order_email_verification_pending', 1);
+		$this->session->set('order_email_verification_email', $email);
+		$this->session->set('order_email_verification_code_hash', hash('sha256', $code));
+		$this->session->set('order_email_verification_expires_at', time() + (15 * 60));
+
+		$senderEmail = '';
+		foreach ($this->order->get_setting() as $row) {
+			$senderEmail = $row->email;
+		}
+
+		$subject = 'Kode Verifikasi Email Order';
+		$message = nl2br("Halo,\n\nKode verifikasi email order kamu adalah: ".$code."\n\nKode ini berlaku selama 15 menit.\n\nKalau kamu tidak merasa meminta kode ini, abaikan saja email ini.");
+		$this->sendEmail($senderEmail, SITE_NAME, $email, $subject, $message);
+	}
+
+	private function advanceOrderToMempelai()
+	{
+		$c = $this->session->get('checkpoint');
+		if($c <= 2 && $this->session->get('dummy') == ''){
+			$this->session->set('checkpoint', 2);
+			$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$charactersLength = strlen($characters);
+			$randomString = '';
+			for ($i = 0; $i < 7; $i++) {
+				$randomString .= $characters[rand(0, $charactersLength - 1)];
+			}
+			$generate = "dummy_".$randomString;
+			$this->session->set('dummy', $generate);
+		}else if($c <= 2){
+			$this->session->set('checkpoint', 2);
+		}
+	}
+
 	private function cek_wa($hp){
 	    foreach ($this->order->get_setting() as $row){
             $token = $row->token_wa;

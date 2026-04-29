@@ -13,6 +13,24 @@
               <div class="progress-bar" role="progressbar" style="width: 8%;" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100">8%</div>
             </div>
 
+            <?php if (!empty($order_email_notice)) { ?>
+            <div class="order-inline-note" style="margin-bottom:18px;">
+              <?= esc($order_email_notice) ?>
+            </div>
+            <?php } ?>
+
+            <?php if (!empty($order_email_error)) { ?>
+            <div class="order-inline-note" style="margin-bottom:18px;border-color:#fecaca;background:#fff1f2;color:#991b1b;">
+              <?= esc($order_email_error) ?>
+            </div>
+            <?php } ?>
+
+            <?php if (!empty($order_email_verified_notice)) { ?>
+            <div class="order-inline-note" style="margin-bottom:18px;border-color:#bbf7d0;background:#f0fdf4;color:#166534;">
+              <?= esc($order_email_verified_notice) ?>
+            </div>
+            <?php } ?>
+
             <form action="<?php echo base_url('order/2') ?>" method="post">
             <div class="row align-items-center mt-3"> 
               <div class="col">
@@ -81,8 +99,93 @@
             </div>
             </form>
 
+            <?php if (!empty($order_email_verification_pending) && !empty($order_email_verification_email)) { ?>
+            <div class="order-code-card" style="margin-top:22px;">
+              <div class="order-code-label">Verifikasi Email</div>
+              <div class="text-muted" style="margin-bottom:14px;">Kami sudah mengirim kode 6 digit ke <strong><?= esc($order_email_verification_email) ?></strong>. Masukkan kodenya untuk lanjut ke langkah berikutnya.</div>
+              <div id="order-email-countdown"
+                   class="text-muted"
+                   data-expires-at="<?= (int) $order_email_verification_expires_at ?>"
+                   style="margin-bottom:14px;font-size:13px;">
+                Kode verifikasi sedang disiapkan...
+              </div>
+              <form action="<?= base_url('order/verify-email') ?>" method="post">
+                <div class="row align-items-end">
+                  <div class="col-sm-8">
+                    <label>Kode Verifikasi</label>
+                    <input type="text"
+                           id="verification_code"
+                           name="verification_code"
+                           class="form-control"
+                           placeholder="Masukkan 6 digit kode email"
+                           inputmode="numeric"
+                           autocomplete="one-time-code"
+                           maxlength="6"
+                           pattern="[0-9]{6}"
+                           required>
+                  </div>
+                  <div class="col-sm-4" style="margin-top:12px;">
+                    <button type="submit" class="btn btn-primary btn-order btn-block">Verifikasi</button>
+                  </div>
+                </div>
+              </form>
+              <form action="<?= base_url('order/resend-email-code') ?>" method="post" style="margin-top:12px;">
+                <button type="submit" class="btn btn-secondary btn-order btn-block">Kirim Ulang Kode</button>
+              </form>
+            </div>
+            <?php } ?>
+
           </div>
         </div>
       </div>
     </section>
 </div>
+
+<?php if (!empty($order_email_verification_pending) && !empty($order_email_verification_email)) { ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var otpInput = document.getElementById('verification_code');
+  var countdown = document.getElementById('order-email-countdown');
+
+  if (otpInput) {
+    otpInput.focus();
+    otpInput.addEventListener('input', function () {
+      this.value = this.value.replace(/\D/g, '').slice(0, 6);
+    });
+  }
+
+  if (!countdown) {
+    return;
+  }
+
+  var expiresAt = parseInt(countdown.getAttribute('data-expires-at') || '0', 10);
+  if (!expiresAt) {
+    countdown.textContent = 'Kode verifikasi aktif sementara. Silakan cek email kamu.';
+    return;
+  }
+
+  function renderCountdown() {
+    var remaining = expiresAt - Math.floor(Date.now() / 1000);
+
+    if (remaining <= 0) {
+      countdown.textContent = 'Kode verifikasi sudah kedaluwarsa. Klik "Kirim Ulang Kode" untuk meminta kode baru.';
+      countdown.style.color = '#b91c1c';
+      return false;
+    }
+
+    var minutes = Math.floor(remaining / 60);
+    var seconds = remaining % 60;
+    countdown.textContent = 'Kode berlaku ' + minutes + ':' + String(seconds).padStart(2, '0') + ' lagi.';
+    return true;
+  }
+
+  if (renderCountdown()) {
+    var timer = setInterval(function () {
+      if (!renderCountdown()) {
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
+});
+</script>
+<?php } ?>
