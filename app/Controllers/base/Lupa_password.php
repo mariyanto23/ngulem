@@ -196,6 +196,8 @@ Silahkan Klik Tautan berikut untuk ubah password baru
                 $email_kirim = $row->email;
                 $pass_email = $row->pass_email;
                 $host_email = $row->host_email;
+                $smtp_port = isset($row->smtp_port) && (int) $row->smtp_port > 0 ? (int) $row->smtp_port : 587;
+                $smtp_crypto = ! empty($row->smtp_crypto) ? $row->smtp_crypto : 'tls';
         }
         $nama = SITE_NAME;
         $email_smtp = \Config\Services::email();
@@ -207,8 +209,8 @@ Silahkan Klik Tautan berikut untuk ubah password baru
 
         //password email SMTP
         $config["SMTPPass"]  = $pass_email; 
-        $config["SMTPPort"]  = 587;
-        $config["SMTPCrypto"] = "tls";
+        $config["SMTPPort"]  = $smtp_port;
+        $config["SMTPCrypto"] = $smtp_crypto;
 
         $email_smtp->initialize($config);
 

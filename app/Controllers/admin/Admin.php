@@ -242,6 +242,8 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
                 $host_email = $row->host_email;
                 $email_kirim = $row->email;
                 $pass_email = $row->pass_email;
+                $smtp_port = isset($row->smtp_port) && (int) $row->smtp_port > 0 ? (int) $row->smtp_port : 587;
+                $smtp_crypto = ! empty($row->smtp_crypto) ? $row->smtp_crypto : 'tls';
         }
         $nama = SITE_NAME;
         $email_smtp = \Config\Services::email();
@@ -253,8 +255,8 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
 
         //password email SMTP
         $config["SMTPPass"]  = $pass_email; 
-        $config["SMTPPort"]  = 587;
-        $config["SMTPCrypto"] = "tls";
+        $config["SMTPPort"]  = $smtp_port;
+        $config["SMTPCrypto"] = $smtp_crypto;
 
         $email_smtp->initialize($config);
 
@@ -268,6 +270,28 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
 		}else{
 			return true;
 		}
+    }
+
+    private function ensureMailSettingSchema()
+    {
+        try {
+            $db = \Config\Database::connect();
+            $columns = [
+                'smtp_port' => "ALTER TABLE `setting` ADD `smtp_port` INT(11) DEFAULT 587 AFTER `pass_email`",
+                'smtp_crypto' => "ALTER TABLE `setting` ADD `smtp_crypto` VARCHAR(10) DEFAULT 'tls' AFTER `smtp_port`",
+                'incoming_host' => "ALTER TABLE `setting` ADD `incoming_host` VARCHAR(200) DEFAULT NULL AFTER `smtp_crypto`",
+                'incoming_port' => "ALTER TABLE `setting` ADD `incoming_port` INT(11) DEFAULT NULL AFTER `incoming_host`",
+            ];
+
+            foreach ($columns as $column => $query) {
+                $result = $db->query("SHOW COLUMNS FROM `setting` LIKE " . $db->escape($column));
+                if (empty($result->getResultArray())) {
+                    $db->query($query);
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Gagal memastikan schema mail setting: {message}', ['message' => $e->getMessage()]);
+        }
     }
 
     public function profil(){
@@ -508,11 +532,16 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     }
 
     public function do_update_setting_1(){
+        $this->ensureMailSettingSchema();
         $provider = $this->request->getPost('wa_gateway');
         $enabled = $this->request->getPost('wa_gateway_enabled') === '1';
         $data['host_email'] = $this->request->getPost('host_email');
         $data['email'] = $this->request->getPost('email');
         $data['pass_email'] = $this->request->getPost('pass_email');
+        $data['smtp_port'] = (int) ($this->request->getPost('smtp_port') ?: 587);
+        $data['smtp_crypto'] = strtolower((string) ($this->request->getPost('smtp_crypto') ?: 'tls'));
+        $data['incoming_host'] = $this->request->getPost('incoming_host');
+        $data['incoming_port'] = $this->request->getPost('incoming_port') !== '' ? (int) $this->request->getPost('incoming_port') : null;
         $data['wa_gateway'] = $this->normalizeWaProvider($provider);
         $data['token_wa'] = $this->buildWaTokenValue($this->request->getPost('token_wa'), $enabled);
         $data['no_wa'] = $this->request->getPost('no_wa');

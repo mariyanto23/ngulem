@@ -155,6 +155,30 @@ if ($waGatewayProvider === 'nusagateway') {
                             <label class="form-label">Password Email</label>
                             <input id="pass_email" type="text" class="form-control" placeholder="Masukkan password email" value="<?= esc($setting[0]->pass_email) ?>" required>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">SMTP Port</label>
+                                <input id="smtp_port" type="number" class="form-control" placeholder="Contoh: 587" value="<?= esc($setting[0]->smtp_port ?? 587) ?>" min="1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">SMTP Crypto</label>
+                                <select id="smtp_crypto" class="form-control">
+                                    <option value="tls" <?= (($setting[0]->smtp_crypto ?? 'tls') === 'tls') ? 'selected' : '' ?>>TLS</option>
+                                    <option value="ssl" <?= (($setting[0]->smtp_crypto ?? '') === 'ssl') ? 'selected' : '' ?>>SSL</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label">Incoming Server</label>
+                                <input id="incoming_host" type="text" class="form-control" placeholder="Contoh: imap.gmail.com" value="<?= esc($setting[0]->incoming_host ?? '') ?>">
+                                <small class="form-hint">Opsional. Disimpan sebagai referensi konfigurasi inbox/IMAP/POP3.</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Incoming Port</label>
+                                <input id="incoming_port" type="number" class="form-control" placeholder="Contoh: 993" value="<?= esc($setting[0]->incoming_port ?? '') ?>" min="1">
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label mb-2">Status Whatsapp Gateway</label>
                             <label class="form-check form-switch">
@@ -324,6 +348,10 @@ $('#simpanSetting1').on('click', function() {
         host_email: $('#host_email').val(),
         email: $('#email').val(),
         pass_email: $('#pass_email').val(),
+        smtp_port: $('#smtp_port').val(),
+        smtp_crypto: $('#smtp_crypto').val(),
+        incoming_host: $('#incoming_host').val(),
+        incoming_port: $('#incoming_port').val(),
         wa_gateway: $('#wa_gateway').val(),
         wa_gateway_enabled: $('#wa_gateway_enabled').is(':checked') ? 1 : 0,
         token_wa: $('#token_wa').val(),
