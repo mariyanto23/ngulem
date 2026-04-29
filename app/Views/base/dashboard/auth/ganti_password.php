@@ -22,9 +22,11 @@
 
         <form method="post" action="<?= base_url('update_password'); ?>" class="diulem-auth-form">
             <input type="hidden" name="id_user" value="<?= esc($id_user) ?>">
+            <input type="hidden" name="reset_token" value="<?= esc($reset_token ?? '') ?>">
             <div class="form-group">
                 <label class="diulem-auth-label" for="pass">Password Baru</label>
                 <input type="password" class="form-control" id="pass" placeholder="Masukkan password baru" name="pass">
+                <small class="form-text text-muted">Minimal 8 karakter.</small>
             </div>
             <div class="form-group">
                 <label class="diulem-auth-label" for="pass2">Konfirmasi Password</label>

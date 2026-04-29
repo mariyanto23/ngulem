@@ -14,6 +14,7 @@ class Lupa_password extends Controller
        
 	    $this->request = \Config\Services::request(); //memanggil class request
         $this->uri = $this->request->uri; //class request digunakan untuk request uri/url
+        $this->cache = \Config\Services::cache();
     }
 
     public function index()
@@ -25,20 +26,31 @@ class Lupa_password extends Controller
     }
 
     public function do_kirim(){
+        $email = trim((string) $this->request->getPost('email'));
+        $genericMessage = 'Jika email terdaftar, kami sudah mengirim tautan reset password.';
 
-        $email= $this->request->getPost('email');
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->session->setFlashdata('success', [$genericMessage]);
+            return redirect()->to(base_url('/login'));
+        }
+
+        if (! $this->consumeResetAttempt($email)) {
+            $this->session->setFlashdata('success', [$genericMessage]);
+            return redirect()->to(base_url('/login'));
+        }
+
         $hasil = $this->DashboardModel->get_user_by_email($email);
         if(count($hasil) > 0)
         {
             $id = $hasil[0]->id;
             $hp = $hasil[0]->hp;
-            $token = md5(random_string('alnum', 8).$email);
-            $update = $this->DashboardModel->token_reset($token, $id);
-            // $update = $this->DashboardModel->reset_password($password, $id);
+            $plainToken = bin2hex(random_bytes(32));
+            $hashedToken = hash('sha256', $plainToken);
+            $update = $this->DashboardModel->token_reset($hashedToken, $id);
             $pesan = 'Hallo Kak,<br>
             Terimakasih sudah menggunakan layanan <b>'.DOMAIN_UTAMA.'<b><br>
             Silahkan Klik Tautan berikut untuk ubah password baru<br>
-            <a href="'.SITE_UTAMA.'/ganti_password/'.$token.'">KLIK DISINI</a><br><br>
+            <a href="'.SITE_UTAMA.'/ganti_password/'.$plainToken.'">KLIK DISINI</a><br><br>
             <b>Terima Kasih dan Sukses Selalu</b>';
             $kirim = $this->sendEmail($email, 'Reset Password', $pesan);
             $token_wa = $this->DashboardModel->get_token();
@@ -46,7 +58,7 @@ class Lupa_password extends Controller
             
 Reset Password Berhasil,
 Silahkan Klik Tautan berikut untuk ubah password baru
-*'.SITE_UTAMA.'/ganti_password/'.$token.'*
+*'.SITE_UTAMA.'/ganti_password/'.$plainToken.'*
 
 *Terimakasih dan Sukses Selalu*';
         
@@ -55,53 +67,55 @@ Silahkan Klik Tautan berikut untuk ubah password baru
                 if($token_wa !=''){
                     $this->send_wa($token_wa, $hp, $message);
                 }
-            $this->session->setFlashdata('success', ['Email Reset Password Berhasil Dikirim']);
-            return redirect()->to(base_url('/login'));
             }else{
-                $this->session->setFlashdata('errors', ['Gagal Terkirim']);
-            return redirect()->to(base_url('/lupa_password'));
+                log_message('error', 'Reset password email gagal terkirim ke {email}', ['email' => $email]);
             }
-            
+
+            $this->session->setFlashdata('success', [$genericMessage]);
+            return redirect()->to(base_url('/login'));
         }
         else
         {
-            $this->session->setFlashdata('errors', ['Email Salah']);
-            return redirect()->to(base_url('/lupa_password'));
+            $this->session->setFlashdata('success', [$genericMessage]);
+            return redirect()->to(base_url('/login'));
         }
 		
     }
     
     public function ganti_password()
     {
-        $token = $this->uri->getSegment(3);
-        $hasil = $this->DashboardModel->get_user_by_token($token);
-        if(!empty($hasil)){
-        $id = $hasil[0]->id;
-        $hp = $hasil[0]->hp;
-        $created = $hasil[0]->created_token;
-        $durasi = '+1 days';
-        $tglExp = strtotime($durasi, strtotime($created));
-        $today = strtotime('now');
-        if($today >= $tglExp) {
-                $this->session->setFlashdata('errors', ['Token Expired, Ulang Kembali']);
-            return redirect()->to(base_url('/lupa_password'));
-            }else {
-        $data['id_user'] = $id;
-        $data['title'] = 'Ganti Password';
-        $data['view'] = 'base/dashboard/auth/ganti_password';
-        return view('base/dashboard/auth/layout', $data);
-            }
+        $plainToken = (string) $this->uri->getSegment(3);
+        $user = $this->resolveResetUser($plainToken);
+        if($user){
+            $data['id_user'] = $user->id;
+            $data['reset_token'] = $plainToken;
+            $data['title'] = 'Ganti Password';
+            $data['view'] = 'base/dashboard/auth/ganti_password';
+            return view('base/dashboard/auth/layout', $data);
         }else{
             $this->session->setFlashdata('errors', ['Token Tidak Valid, Ulang Kembali']);
             return redirect()->to(base_url('/lupa_password'));
         }
     }
     public function update_password(){
-        $id= $this->request->getPost('id_user');
-        $pass= $this->request->getPost('pass');
-        $pass2= $this->request->getPost('pass2');
+        $id = (int) $this->request->getPost('id_user');
+        $pass = (string) $this->request->getPost('pass');
+        $pass2 = (string) $this->request->getPost('pass2');
+        $plainToken = (string) $this->request->getPost('reset_token');
+        $user = $this->resolveResetUser($plainToken);
+
+        if (! $user || (int) $user->id !== $id) {
+            $this->session->setFlashdata('errors', ['Token tidak valid atau sudah tidak berlaku.']);
+            return redirect()->to(base_url('/lupa_password'));
+        }
+
+        if (strlen($pass) < 8) {
+            $this->session->setFlashdata('errors', ['Password minimal 8 karakter.']);
+            return redirect()->back()->withInput();
+        }
+
         if($pass == $pass2){
-            $password = md5($pass);
+            $password = password_hash($pass, PASSWORD_DEFAULT);
             $update = $this->DashboardModel->update_password($password, $id);
             
             $this->session->setFlashdata('success', ['Password Berhasil Diubah']);
@@ -113,6 +127,69 @@ Silahkan Klik Tautan berikut untuk ubah password baru
         }
 
             
+    }
+
+    private function resolveResetUser($plainToken)
+    {
+        if ($plainToken === '' || strlen($plainToken) < 32) {
+            return null;
+        }
+
+        $hashedToken = hash('sha256', $plainToken);
+        $hasil = $this->DashboardModel->get_user_by_token($hashedToken);
+        if (empty($hasil)) {
+            $hasil = $this->DashboardModel->get_user_by_token($plainToken);
+        }
+        if (empty($hasil)) {
+            return null;
+        }
+
+        $user = $hasil[0];
+        $created = $user->created_token ?? null;
+        if (empty($created)) {
+            return null;
+        }
+
+        $expiresAt = strtotime('+1 day', strtotime($created));
+        if ($expiresAt === false || time() >= $expiresAt) {
+            return null;
+        }
+
+        return $user;
+    }
+
+    private function consumeResetAttempt($email)
+    {
+        $key = 'reset-password:' . sha1(strtolower($email) . '|' . (string) $this->request->getIPAddress());
+        $now = time();
+        $window = 900;
+        $maxAttempts = 3;
+
+        try {
+            $state = $this->cache->get($key);
+            if (! is_array($state) || ! isset($state['count'], $state['first_at'])) {
+                $state = ['count' => 0, 'first_at' => $now];
+            }
+
+            if (($now - (int) $state['first_at']) >= $window) {
+                $state = ['count' => 0, 'first_at' => $now];
+            }
+
+            if ((int) $state['count'] >= $maxAttempts) {
+                log_message('notice', 'Reset password dibatasi untuk email {email} dari IP {ip}', [
+                    'email' => $email,
+                    'ip' => (string) $this->request->getIPAddress(),
+                ]);
+                return false;
+            }
+
+            $state['count'] = (int) $state['count'] + 1;
+            $this->cache->save($key, $state, $window);
+        } catch (\Throwable $th) {
+            log_message('error', 'Throttle reset password gagal: {message}', ['message' => $th->getMessage()]);
+        }
+
+        return true;
     }
     private function sendEmail($to, $title, $pesan){
         foreach ($this->DashboardModel->get_setting() as $row) {

@@ -371,6 +371,13 @@ class DashboardModel extends Model
         return $builder->update($data);
     }
 
+    public function update_user_password_by_id($passwordHash, $id){
+        $builder = $this->users;
+        $builder->set('password', $passwordHash);
+        $builder->where('id', $id);
+        return $builder->update();
+    }
+
     public function get_user($data){
         $builder = $this->users;
         $builder->where($data);
@@ -504,6 +511,8 @@ class DashboardModel extends Model
     public function update_password($password,$id){
         $builder = $this->users;
         $builder->set('password', $password);
+        $builder->set('token', null);
+        $builder->set('created_token', null);
         $builder->where('id', $id);
         return $builder->update();
     }

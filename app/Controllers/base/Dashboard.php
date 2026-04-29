@@ -51,16 +51,31 @@ class Dashboard extends Controller
     }
 
     public function do_auth(){
-
-        $data['email'] = $this->request->getPost('email');
-        $data['password'] = md5($this->request->getPost('password'));
-        $hasil = $this->DashboardModel->get_user($data);
+        $email = trim((string) $this->request->getPost('email'));
+        $plainPassword = (string) $this->request->getPost('password');
+        $hasil = $this->DashboardModel->get_user_by_email($email);
         $setting = $this->DashboardModel->get_setting();
         if(count($hasil) > 0)
         {
+            $user = $hasil[0];
+            $storedPassword = (string) ($user->password ?? '');
+            $isModernHash = password_get_info($storedPassword)['algo'] !== 0;
+            $passwordValid = $isModernHash
+                ? password_verify($plainPassword, $storedPassword)
+                : hash_equals($storedPassword, md5($plainPassword));
+
+            if (! $passwordValid) {
+                $this->session->setFlashdata('errors', ['Email atau password salah.']);
+                return redirect()->to(base_url('/login'));
+            }
+
+            if (! $isModernHash) {
+                $this->DashboardModel->update_user_password_by_id(password_hash($plainPassword, PASSWORD_DEFAULT), $user->id);
+            }
+
             // set session
-            $sess_data = array('masukUser' => TRUE, 'uname' => $hasil[0]->username, 'id' => $hasil[0]->id, 'no_wa' => $setting[0]->no_wa);
-            $fitur = $this->DashboardModel->get_paket_by_login($hasil[0]->id);
+            $sess_data = array('masukUser' => TRUE, 'uname' => $user->username, 'id' => $user->id, 'no_wa' => $setting[0]->no_wa);
+            $fitur = $this->DashboardModel->get_paket_by_login($user->id);
             $sess_fitur = array('kirim_hadiah' => $fitur[0]->kirim_hadiah, 'buku_tamu' => $fitur[0]->buku_tamu);
             $this->session->set($sess_data);
             $this->session->set($sess_fitur);
@@ -69,7 +84,7 @@ class Dashboard extends Controller
         }
         else
         {
-            $this->session->setFlashdata('errors', ['Password Salah']);
+            $this->session->setFlashdata('errors', ['Email atau password salah.']);
             return redirect()->to(base_url('/login'));
         }
 		
@@ -988,7 +1003,7 @@ class Dashboard extends Controller
     public function do_update_user(){
 
         if($this->request->getPost('password') != ''){
-            $data['password'] = md5($this->request->getPost('password'));
+            $data['password'] = password_hash((string) $this->request->getPost('password'), PASSWORD_DEFAULT);
         }
         $data['username'] = $this->request->getPost('username');
         $data['email'] = $this->request->getPost('email');

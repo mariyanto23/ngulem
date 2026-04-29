@@ -610,7 +610,7 @@ class Order extends Controller
 	 		'email' => $email,
 	 		'hp' => $hp,
 	 		'username' => $username,
-	 		'password' => md5($password),
+	 		'password' => password_hash((string) $password, PASSWORD_DEFAULT),
 	 		'id_unik' => '',
 	 	];
 		
