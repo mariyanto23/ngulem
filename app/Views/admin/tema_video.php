@@ -5,6 +5,7 @@
                 <div class="col">
                     <div class="page-pretitle">Undangan Video</div>
                     <h2 class="page-title"><?= esc($title); ?></h2>
+                    <div class="diulem-admin-page-note">Kelola katalog tema video lengkap dengan kategori, harga, dan preview agar tim admin bisa meninjau konten lebih cepat.</div>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
@@ -25,6 +26,10 @@
                         <div class="card-body">
                             <div class="card-title mb-1"><?= esc($row->nama_tema) ?></div>
                             <div class="text-secondary small"><?= rupiah($row->harga) ?></div>
+                            <div class="diulem-admin-feature-list">
+                                <span class="diulem-admin-feature-pill is-on"><i class="ti ti-category"></i><?= esc($row->name) ?></span>
+                                <span class="diulem-admin-feature-pill is-on"><i class="ti ti-wallet"></i><?= rupiah($row->harga) ?></span>
+                            </div>
                         </div>
                         <div class="card-footer bg-transparent">
                             <div class="d-flex gap-2">

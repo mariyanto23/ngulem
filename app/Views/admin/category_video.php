@@ -5,6 +5,7 @@
                 <div class="col">
                     <div class="page-pretitle">Undangan Video</div>
                     <h1 class="page-title"><?= esc($title); ?></h1>
+                    <div class="diulem-admin-page-note">Atur kategori tema video agar koleksi motion invitation tetap mudah dipilah dan lebih enak dikelola tim admin.</div>
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
@@ -14,16 +15,36 @@
             </div>
         </div>
 
+        <div class="row row-cards mb-3">
+            <div class="col-sm-6 col-lg-4">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Total Kategori</div>
+                            <div class="diulem-admin-summary-value"><?= count($categories) ?></div>
+                            <div class="diulem-admin-summary-help">Semua label kategori untuk tema video.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-category-2"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
-            <div class="card-header"><h3 class="card-title">Data Kategori Undangan Video</h3></div>
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Data Kategori Undangan Video</h3>
+                    <div class="diulem-admin-card-note">Slug kategori akan lebih berguna kalau konsisten dan mudah dibaca, jadi admin tidak perlu menebak saat update tema video.</div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-vcenter card-table" id="dataTable">
                     <thead><tr><th>Nama Kategori</th><th>Slug</th><th class="text-end">Aksi</th></tr></thead>
                     <tbody>
                     <?php foreach ($categories as $row) { ?>
                         <tr>
-                            <td><?= esc($row->name) ?></td>
-                            <td><?= esc($row->slug) ?></td>
+                            <td><div class="fw-semibold"><?= esc($row->name) ?></div></td>
+                            <td><span class="diulem-admin-mono"><?= esc($row->slug) ?></span></td>
                             <td class="text-end">
                                 <div class="btn-list justify-content-end flex-nowrap">
                                     <button class="btn btn-warning btn-sm btn-icon btn-update" data-id="<?= esc($row->id) ?>" data-nama="<?= esc($row->name) ?>" data-slug="<?= esc($row->slug) ?>" title="Edit" aria-label="Edit"><i class="ti ti-pencil"></i></button>

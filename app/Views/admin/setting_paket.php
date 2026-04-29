@@ -5,11 +5,60 @@
                 <div class="col">
                     <div class="page-pretitle">Setting</div>
                     <h1 class="page-title"><?= esc($title); ?></h1>
+                    <div class="diulem-admin-page-note">Susun paket gratis dan berbayar, atur masa aktif, lalu tentukan fitur apa saja yang diterima setiap pelanggan.</div>
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modalTambahPaket">
                         <i class="ti ti-plus me-2"></i>Tambah Paket
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <?php
+        $totalPaket = count($setting);
+        $freePaket = 0;
+        foreach ($setting as $summaryPaket) {
+            if ((int) $summaryPaket->harga_paket <= 0) {
+                $freePaket++;
+            }
+        }
+        ?>
+
+        <div class="row row-cards mb-3">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Total Paket</div>
+                            <div class="diulem-admin-summary-value"><?= $totalPaket ?></div>
+                            <div class="diulem-admin-summary-help">Semua paket aktif yang tersedia saat ini.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-package"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Paket Gratis</div>
+                            <div class="diulem-admin-summary-value"><?= $freePaket ?></div>
+                            <div class="diulem-admin-summary-help">Cocok untuk entry package atau trial panjang.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-gift"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Catatan Paket</div>
+                            <div class="diulem-admin-summary-help">Gunakan harga `0` untuk paket gratis. Fitur paket di bawah membantu membedakan value tiap level tanpa harus membuat flow order terpisah.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-bulb"></i></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,6 +93,16 @@
                                 <label class="form-label">Masa Aktif Undangan (hari)</label>
                                 <input name="masa_aktif" type="text" class="form-control" placeholder="Masa aktif undangan" value="<?= esc($paket->masa_aktif) ?>" required>
                             </div>
+                            <div class="diulem-admin-info-grid">
+                                <div class="diulem-admin-info-item">
+                                    <span class="diulem-admin-info-label">Harga</span>
+                                    <div class="diulem-admin-info-value"><?= (int) $paket->harga_paket <= 0 ? 'Gratis' : rupiah($paket->harga_paket) ?></div>
+                                </div>
+                                <div class="diulem-admin-info-item">
+                                    <span class="diulem-admin-info-label">Masa Aktif</span>
+                                    <div class="diulem-admin-info-value"><?= esc($paket->masa_aktif) ?> hari</div>
+                                </div>
+                            </div>
                             <?php
                             $switches = [
                                 ['name' => 'setTamu', 'label' => 'Halaman Bukutamu', 'value' => $paket->buku_tamu],
@@ -60,6 +119,14 @@
                                 <span class="form-check-label"><?= esc($switch['label']) ?></span>
                             </label>
                             <?php } ?>
+                            <div class="diulem-admin-feature-list">
+                                <?php foreach ($switches as $switch) { ?>
+                                    <span class="diulem-admin-feature-pill <?= $switch['value'] == '1' ? 'is-on' : 'is-off' ?>">
+                                        <i class="ti <?= $switch['value'] == '1' ? 'ti-check' : 'ti-minus' ?>"></i>
+                                        <?= esc($switch['label']) ?>
+                                    </span>
+                                <?php } ?>
+                            </div>
                         </div>
                         <div class="card-footer bg-transparent">
                             <div class="d-flex gap-2">
@@ -86,14 +153,18 @@
 </div>
 
 <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/add_paket'); ?>">
-    <div class="modal fade" id="modalTambahPaket" tabindex="-1" aria-labelledby="modalTambahPaketLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+        <div class="modal fade" id="modalTambahPaket" tabindex="-1" aria-labelledby="modalTambahPaketLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTambahPaketLabel">Tambah Paket Undangan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="diulem-admin-soft-panel mb-3">
+                        <div class="diulem-admin-soft-panel-title">Panduan Singkat</div>
+                        <div class="diulem-admin-soft-panel-note">Isi harga `0` untuk paket gratis. Aktifkan fitur sesuai value paket agar perbedaan antar level lebih jelas.</div>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Nama Paket Undangan</label>
                         <input name="nama_paket" type="text" class="form-control" placeholder="Masukkan nama paket" required>

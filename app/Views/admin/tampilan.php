@@ -5,6 +5,7 @@
                 <div class="col">
                     <div class="page-pretitle">Undangan Website</div>
                     <h2 class="page-title"><?= esc($title); ?></h2>
+                    <div class="diulem-admin-page-note">Kelola tema website, aktifkan yang siap dijual, dan atur katalog visual agar mudah discan oleh tim admin.</div>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
@@ -31,6 +32,10 @@
                                     <div class="card-title mb-1"><?= esc($row->nama_theme) ?></div>
                                     <div class="text-secondary small"><?= esc($row->name) ?></div>
                                 </div>
+                            </div>
+                            <div class="diulem-admin-feature-list">
+                                <span class="diulem-admin-feature-pill is-on"><i class="ti ti-layout"></i>Kode <?= esc($row->kode_theme) ?></span>
+                                <span class="diulem-admin-feature-pill <?= $isActive ? 'is-on' : 'is-off' ?>"><i class="ti <?= $isActive ? 'ti-check' : 'ti-ban' ?>"></i><?= $isActive ? 'Siap Digunakan' : 'Disembunyikan' ?></span>
                             </div>
                         </div>
                         <div class="card-footer bg-transparent">
