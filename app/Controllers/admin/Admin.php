@@ -383,6 +383,54 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         return redirect()->back();
     }
 
+    public function upload_logo_dashboard()
+    {
+        if (! $this->validate([
+            'logo_dashboard' => [
+                'rules' => 'uploaded[logo_dashboard]|mime_in[logo_dashboard,image/png]|max_size[logo_dashboard,2048]',
+                'errors' => [
+                    'uploaded' => 'Silakan pilih file logo dashboard terlebih dahulu.',
+                    'mime_in' => 'Logo dashboard harus berformat PNG.',
+                    'max_size' => 'Ukuran logo dashboard maksimal 2 MB.',
+                ],
+            ],
+        ])) {
+            session()->setFlashdata('error', $this->validate->getError('logo_dashboard'));
+            return redirect()->back()->withInput();
+        }
+
+        $logo = $this->request->getFile('logo_dashboard');
+        if (! $logo || ! $logo->isValid() || $logo->hasMoved()) {
+            session()->setFlashdata('error', 'File logo dashboard tidak valid.');
+            return redirect()->back()->withInput();
+        }
+
+        $targetDir = FCPATH . 'assets/base/img/';
+        if (! is_dir($targetDir)) {
+            @mkdir($targetDir, 0775, true);
+        }
+
+        $targetPath = $targetDir . 'logo2.png';
+        if (file_exists($targetPath) && ! is_writable($targetPath)) {
+            session()->setFlashdata('error', 'Logo dashboard tidak dapat diperbarui karena file tidak bisa ditulis.');
+            return redirect()->back();
+        }
+
+        $content = @file_get_contents($logo->getTempName());
+        if ($content === false) {
+            session()->setFlashdata('error', 'Gagal membaca file logo dashboard yang diupload.');
+            return redirect()->back();
+        }
+
+        if (@file_put_contents($targetPath, $content) === false) {
+            session()->setFlashdata('error', 'Gagal menyimpan logo dashboard.');
+            return redirect()->back();
+        }
+
+        session()->setFlashdata('success', 'Logo dashboard berhasil diperbarui.');
+        return redirect()->back();
+    }
+
     public function delete_musik_library()
     {
         $trackKey = (string) $this->request->getPost('track_key');

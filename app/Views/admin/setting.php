@@ -60,25 +60,60 @@ if ($waGatewayProvider === 'nusagateway') {
                     <div class="card-header">
                         <h3 class="card-title">Branding Aplikasi</h3>
                     </div>
-                    <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_logo_utama'); ?>">
-                        <div class="card-body">
+                    <div class="card-body d-flex flex-column gap-4">
+                        <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_logo_utama'); ?>">
                             <div class="mb-3">
                                 <label class="form-label d-block">Logo Utama Website</label>
                                 <div class="border rounded p-3 text-center bg-light">
-                                    <img src="<?= base_url() ?>/assets/base/img/logo.png?v=<?= @filemtime(FCPATH . 'assets/base/img/logo.png') ?: time(); ?>" alt="Logo utama" style="max-height:64px;width:auto;max-width:100%;">
+                                    <img id="logo-utama-preview" src="<?= base_url() ?>/assets/base/img/logo.png?v=<?= @filemtime(FCPATH . 'assets/base/img/logo.png') ?: time(); ?>" alt="Logo utama" style="max-height:64px;width:auto;max-width:100%;">
                                 </div>
-                                <div class="form-hint mt-2">Logo ini dipakai di halaman utama, order, login user, dan login admin yang menggunakan <code>/assets/base/img/logo.png</code>.</div>
+                                <div class="form-hint mt-2">
+                                    Dipakai di:
+                                    <ul class="mb-0 ps-3">
+                                        <li>Halaman utilitas publik seperti `order`, `maps`, `youtube`, dan `import tamu`</li>
+                                        <li>Login user, lupa password user, dan ganti password user</li>
+                                        <li>Login admin</li>
+                                    </ul>
+                                    File: <code>/assets/base/img/logo.png</code>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Upload Logo Baru</label>
-                                <input type="file" name="logo_utama" class="form-control" accept=".png,image/png">
+                                <label class="form-label">Upload Logo Utama</label>
+                                <input type="file" id="logo-utama-input" name="logo_utama" class="form-control" accept=".png,image/png">
                                 <div class="form-hint">Gunakan PNG transparan agar hasilnya rapi. Maksimal 2MB.</div>
                             </div>
                             <button class="btn btn-primary" type="submit">
-                                <i class="ti ti-upload me-2"></i>Perbarui Logo
+                                <i class="ti ti-upload me-2"></i>Perbarui Logo Utama
                             </button>
+                        </form>
+
+                        <div class="border-top pt-4">
+                            <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_logo_dashboard'); ?>">
+                                <div class="mb-3">
+                                    <label class="form-label d-block">Logo Dashboard / Sidebar</label>
+                                    <div class="border rounded p-3 text-center bg-light">
+                                        <img id="logo-dashboard-preview" src="<?= base_url() ?>/assets/base/img/logo2.png?v=<?= @filemtime(FCPATH . 'assets/base/img/logo2.png') ?: time(); ?>" alt="Logo dashboard" style="max-height:64px;width:auto;max-width:100%;">
+                                    </div>
+                                    <div class="form-hint mt-2">
+                                        Dipakai di:
+                                        <ul class="mb-0 ps-3">
+                                            <li>Sidebar dashboard pengguna</li>
+                                            <li>Sidebar dashboard admin</li>
+                                        </ul>
+                                        File: <code>/assets/base/img/logo2.png</code>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Upload Logo Dashboard</label>
+                                    <input type="file" id="logo-dashboard-input" name="logo_dashboard" class="form-control" accept=".png,image/png">
+                                    <div class="form-hint">Gunakan PNG transparan agar tetap tajam di ukuran kecil. Maksimal 2MB.</div>
+                                </div>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="ti ti-upload me-2"></i>Perbarui Logo Dashboard
+                                </button>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
 
@@ -288,4 +323,33 @@ $('#simpanSetting2').on('click', function() {
         errorMessage: 'Setting undangan gagal disimpan.'
     });
 });
+
+function bindLogoPreview(inputSelector, imageSelector) {
+    var input = document.querySelector(inputSelector);
+    var image = document.querySelector(imageSelector);
+
+    if (!input || !image) {
+        return;
+    }
+
+    input.addEventListener('change', function(event) {
+        var file = event.target.files && event.target.files[0] ? event.target.files[0] : null;
+        if (!file) {
+            return;
+        }
+
+        if (file.type !== 'image/png') {
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = function(loadEvent) {
+            image.src = loadEvent.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+bindLogoPreview('#logo-utama-input', '#logo-utama-preview');
+bindLogoPreview('#logo-dashboard-input', '#logo-dashboard-preview');
 </script>
