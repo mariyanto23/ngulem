@@ -131,6 +131,9 @@ if(isset($_SERVER['HTTP_HOST'])){
 	$routes->add('order', 'Order');
 	$routes->add('order/1', 'Order');
 	$routes->add('order/2', 'Order::mempelai');
+	$routes->post('order/request-email-code', 'Order::request_email_code');
+	$routes->post('order/verify-email', 'Order::verify_email');
+	$routes->post('order/resend-email-code', 'Order::resend_email_code');
 	$routes->add('order/3', 'Order::acara');
 	$routes->add('order/4', 'Order::cerita');
 	$routes->add('order/5', 'Order::gallery');

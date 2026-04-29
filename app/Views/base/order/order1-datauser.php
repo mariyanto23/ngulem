@@ -31,7 +31,7 @@
             </div>
             <?php } ?>
 
-            <form action="<?php echo base_url('order/2') ?>" method="post">
+            <form id="order-step1-form" action="<?php echo base_url('order/2') ?>" method="post">
             <div class="row align-items-center mt-3"> 
               <div class="col">
                 <label>Paket Undangan</label>
@@ -65,7 +65,24 @@
             <div class="row align-items-center mt-3"> 
               <div class="col">
                 <label>Email</label>
-                <input name="email" type="email" class="form-control" placeholder="Email" value="<?php echo $email; ?>" required>
+                <div class="input-group">
+                  <input name="email" id="order-email-input" type="email" class="form-control" placeholder="Email" value="<?php echo $email; ?>" required>
+                  <div class="input-group-append">
+                    <button type="submit"
+                            id="order-request-email-button"
+                            class="btn btn-secondary"
+                            formaction="<?= base_url('order/request-email-code') ?>"
+                            formmethod="post">
+                      <span class="order-btn-label">Verifikasi Email</span>
+                    </button>
+                  </div>
+                </div>
+                <small class="form-text text-muted">Kirim kode verifikasi ke email ini dulu sebelum lanjut ke langkah berikutnya.</small>
+                <?php if (!empty($order_email_verified_current)) { ?>
+                <small id="order-email-verified-state" class="form-text" style="color:#166534;font-weight:600;">Email ini sudah terverifikasi.</small>
+                <?php } else { ?>
+                <small id="order-email-verified-state" class="form-text text-muted">Email belum diverifikasi.</small>
+                <?php } ?>
               </div>
             </div>
             <div class="row align-items-center mt-3">
@@ -85,7 +102,12 @@
               <div class="col">
                 <div class="row">
                   <div class="col">
-                    <input class="btn btn-primary btn-order btn-block" type="submit" name="submit" value="Lanjut">
+                    <input id="order-next-button"
+                           class="btn btn-primary btn-order btn-block"
+                           type="submit"
+                           name="submit"
+                           value="Lanjut"
+                           <?= empty($order_email_verified_current) ? 'disabled' : '' ?>>
                   </div>
                 </div>
 
@@ -109,7 +131,7 @@
                    style="margin-bottom:14px;font-size:13px;">
                 Kode verifikasi sedang disiapkan...
               </div>
-              <form action="<?= base_url('order/verify-email') ?>" method="post">
+              <form id="order-verify-email-form" action="<?= base_url('order/verify-email') ?>" method="post">
                 <div class="row align-items-end">
                   <div class="col-sm-8">
                     <label>Kode Verifikasi</label>
@@ -125,12 +147,16 @@
                            required>
                   </div>
                   <div class="col-sm-4" style="margin-top:12px;">
-                    <button type="submit" class="btn btn-primary btn-order btn-block">Verifikasi</button>
+                    <button type="submit" id="order-verify-email-button" class="btn btn-primary btn-order btn-block">
+                      <span class="order-btn-label">Verifikasi</span>
+                    </button>
                   </div>
                 </div>
               </form>
-              <form action="<?= base_url('order/resend-email-code') ?>" method="post" style="margin-top:12px;">
-                <button type="submit" class="btn btn-secondary btn-order btn-block">Kirim Ulang Kode</button>
+              <form id="order-resend-email-form" action="<?= base_url('order/resend-email-code') ?>" method="post" style="margin-top:12px;">
+                <button type="submit" id="order-resend-email-button" class="btn btn-secondary btn-order btn-block">
+                  <span class="order-btn-label">Kirim Ulang Kode</span>
+                </button>
               </form>
             </div>
             <?php } ?>
@@ -141,11 +167,102 @@
     </section>
 </div>
 
-<?php if (!empty($order_email_verification_pending) && !empty($order_email_verification_email)) { ?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  var orderForm = document.getElementById('order-step1-form');
+  var requestEmailButton = document.getElementById('order-request-email-button');
+  var verifyEmailForm = document.getElementById('order-verify-email-form');
+  var verifyEmailButton = document.getElementById('order-verify-email-button');
+  var resendEmailForm = document.getElementById('order-resend-email-form');
+  var resendEmailButton = document.getElementById('order-resend-email-button');
   var otpInput = document.getElementById('verification_code');
   var countdown = document.getElementById('order-email-countdown');
+  var emailInput = document.getElementById('order-email-input');
+  var nextButton = document.getElementById('order-next-button');
+  var verifiedState = document.getElementById('order-email-verified-state');
+  var verifiedEmail = <?= json_encode((string) ($email ?? '')) ?>;
+  var isVerified = <?= !empty($order_email_verified_current) ? 'true' : 'false' ?>;
+
+  function setButtonLoading(button, loadingText) {
+    if (!button || button.disabled) {
+      return;
+    }
+
+    button.disabled = true;
+
+    if (button.tagName === 'INPUT') {
+      button.dataset.originalValue = button.value;
+      button.value = loadingText;
+      return;
+    }
+
+    var label = button.querySelector('.order-btn-label');
+    if (label) {
+      label.dataset.originalText = label.textContent;
+      label.textContent = loadingText;
+    } else {
+      button.dataset.originalText = button.textContent;
+      button.textContent = loadingText;
+    }
+  }
+
+  function syncEmailVerificationState() {
+    if (!emailInput || !nextButton || !verifiedState) {
+      return;
+    }
+
+    var currentEmail = (emailInput.value || '').trim().toLowerCase();
+    var verifiedCurrent = isVerified && currentEmail !== '' && currentEmail === verifiedEmail.toLowerCase();
+
+    nextButton.disabled = !verifiedCurrent;
+    if (verifiedCurrent) {
+      verifiedState.textContent = 'Email ini sudah terverifikasi.';
+      verifiedState.style.color = '#166534';
+      verifiedState.style.fontWeight = '600';
+    } else {
+      verifiedState.textContent = 'Email belum diverifikasi.';
+      verifiedState.style.color = '';
+      verifiedState.style.fontWeight = '';
+    }
+  }
+
+  if (emailInput) {
+    emailInput.addEventListener('input', syncEmailVerificationState);
+    syncEmailVerificationState();
+  }
+
+  if (requestEmailButton) {
+    requestEmailButton.addEventListener('click', function () {
+      setButtonLoading(requestEmailButton, 'Mengirim...');
+    });
+  }
+
+  if (orderForm) {
+    orderForm.addEventListener('submit', function (event) {
+      if (!nextButton || event.submitter !== nextButton) {
+        return;
+      }
+
+      if (nextButton.disabled) {
+        event.preventDefault();
+        return;
+      }
+
+      setButtonLoading(nextButton, 'Memproses...');
+    });
+  }
+
+  if (verifyEmailForm) {
+    verifyEmailForm.addEventListener('submit', function () {
+      setButtonLoading(verifyEmailButton, 'Memverifikasi...');
+    });
+  }
+
+  if (resendEmailForm) {
+    resendEmailForm.addEventListener('submit', function () {
+      setButtonLoading(resendEmailButton, 'Mengirim Ulang...');
+    });
+  }
 
   if (otpInput) {
     otpInput.focus();
@@ -188,4 +305,3 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
-<?php } ?>

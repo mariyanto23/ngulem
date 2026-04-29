@@ -52,6 +52,7 @@ class Order extends Controller
 		$data['order_email_verification_pending'] = (bool) $this->session->get('order_email_verification_pending');
 		$data['order_email_verification_email'] = $this->session->get('order_email_verification_email');
 		$data['order_email_verification_expires_at'] = (int) $this->session->get('order_email_verification_expires_at');
+		$data['order_email_verified_current'] = $this->isOrderEmailVerified((string) $this->session->get('email'));
 		$data['order_email_notice'] = $this->session->getFlashdata('order_email_notice');
 		$data['order_email_error'] = $this->session->getFlashdata('order_email_error');
 		$data['order_email_verified_notice'] = $this->session->getFlashdata('order_email_verified_notice');
@@ -109,8 +110,7 @@ class Order extends Controller
 
 			$this->queueOrderEmailVerification($id_paket, $domain, $email, $password, $hp);
 			if (! $this->isOrderEmailVerified($email)) {
-				$this->issueOrderEmailVerificationCode($email);
-				$this->session->setFlashdata('order_email_notice', 'Kode verifikasi sudah kami kirim ke email kamu. Masukkan kodenya dulu untuk lanjut ke langkah berikutnya.');
+				$this->session->setFlashdata('order_email_error', 'Verifikasi email dulu ya sebelum lanjut ke langkah berikutnya.');
 				return redirect()->to(base_url('order/1'));
 			}
 
@@ -130,6 +130,43 @@ class Order extends Controller
 			return redirect()->route('order/any');
 		}
 		
+	}
+
+	public function request_email_code()
+	{
+		$idPaket = $this->request->getPost('id_paket');
+		$domain = trim((string) $this->request->getPost('domain'));
+		$email = strtolower(trim((string) $this->request->getPost('email')));
+		$password = (string) $this->request->getPost('password');
+		$hp = (string) $this->request->getPost('hp');
+
+		$this->session->set('domain', $domain);
+		$this->session->set('email', $email);
+		$this->session->set('password', $password);
+		$this->session->set('id_paket', $idPaket);
+		$this->session->set('hp', $hp);
+
+		if ($email === '') {
+			$this->session->setFlashdata('order_email_error', 'Isi email dulu ya supaya kami bisa kirim kode verifikasi.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$this->session->setFlashdata('order_email_error', 'Format email belum valid. Coba cek lagi alamat email kamu.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		$cekEmail = $this->order->cek_email($email);
+		if (!empty($cekEmail->getResult())) {
+			$this->session->setFlashdata('order_email_error', 'Email sudah terdaftar. Gunakan email lain ya.');
+			return redirect()->to(base_url('order/1'));
+		}
+
+		$this->queueOrderEmailVerification($idPaket, $domain, $email, $password, $hp);
+		$this->issueOrderEmailVerificationCode($email);
+		$this->session->setFlashdata('order_email_notice', 'Kode verifikasi sudah kami kirim ke email kamu. Masukkan kodenya sebelum klik Lanjut.');
+
+		return redirect()->to(base_url('order/1'));
 	}
 
 	public function verify_email()
@@ -179,10 +216,9 @@ class Order extends Controller
 			'order_email_verification_code_hash',
 			'order_email_verification_expires_at',
 		]);
-		$this->advanceOrderToMempelai();
-		$this->session->setFlashdata('order_email_verified_notice', 'Email berhasil diverifikasi. Lanjut isi data mempelai ya.');
+		$this->session->setFlashdata('order_email_verified_notice', 'Email berhasil diverifikasi. Sekarang kamu bisa klik Lanjut.');
 
-		return redirect()->to(base_url('order/2'));
+		return redirect()->to(base_url('order/1'));
 	}
 
 	public function resend_email_code()
