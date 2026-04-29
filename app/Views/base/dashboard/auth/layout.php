@@ -50,6 +50,8 @@
 <?= view('base/beranda/components/public_footer') ?>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url('assets/base/js/jquery.easing.min.js') ?>"></script>
+<script src="<?= base_url('assets/beranda/themes/assets/js/sw-main.js') ?>"></script>
 </body>
 <script>
 setTimeout("$('#ikierror').hide();", 2000);

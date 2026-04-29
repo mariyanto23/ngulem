@@ -487,6 +487,7 @@
     <script src="<?php echo base_url() ?>/assets/base/js/jquery.nav.js"></script>    
     <script src="<?php echo base_url() ?>/assets/base/js/jquery.easing.min.js"></script>     
     <script src="<?php echo base_url() ?>/assets/base/js/main.js"></script>
+    <script src="<?php echo base_url() ?>/assets/beranda/themes/assets/js/sw-main.js"></script>
     <script src="<?php echo base_url() ?>/assets/base/js/moment-with-locales.js"></script>
     <script src="<?php echo base_url() ?>/assets/base/js/pikaday.js"></script>
     <script src="<?php echo base_url() ?>/assets/base/js/dropzone.js"></script>
