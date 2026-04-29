@@ -59,8 +59,8 @@
             </div>
             <div class="row align-items-center mt-3">
               <div class="col">
-                <label>Nomer HP / WhatsApp</label>
-                <input name="hp" type="text" class="form-control" placeholder="contoh : 628123456789" value="<?php echo $hp; ?>" required>
+                <label>Nomor HP / WhatsApp</label>
+                <input name="hp" type="text" class="form-control" placeholder="Contoh: 628123456789" value="<?php echo $hp; ?>" required>
               </div>
             </div>
             <div class="row justify-content-start mt-4 order-actions">

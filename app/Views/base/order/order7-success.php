@@ -3,7 +3,7 @@
 $isFreePackage = isset($harga) && (int) $harga <= 0;
 $isActive = (int) $status === 2;
 $heading = 'Sukses!';
-$subheading = 'Hai kak! selamat undangan kamu sudah berhasil dibuat';
+$subheading = 'Undangan kamu berhasil dibuat dan siap dilanjutkan.';
 $statusLabel = $isActive ? 'Aktif' : 'Belum Lunas';
 $statusClass = $isActive ? 'order-status-active' : 'order-status-pending';
 $dashboardHint = 'Login ke dashboard untuk mulai melengkapi undangan kamu.';
@@ -20,7 +20,7 @@ if ($isFreePackage && $isQuickSetup) {
 
 $format =
 "Hallo kak,
-saya mau aktivasi Undangan *".$kode."*. 
+saya mau aktivasi undangan *".$kode."*. 
 mohon infonya ";
 ?>
     <section class="fdb-block">
@@ -65,7 +65,7 @@ mohon infonya ";
                 </div>
               <?php } else { ?>
                 <div>
-                    Untuk melakukan aktifasi silahkan login dengan email dan password yang anda buat atau bisa menghubungi admin via <a href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=<?php echo urlencode($format) ?>" >Whatsapp</a> dengan menyertakan kode <strong style="color:#b91c1c;">#<?= $kode ?></strong>.
+                    Untuk melakukan aktivasi, silakan login dengan email dan password yang sudah kamu buat atau hubungi admin via <a href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=<?php echo urlencode($format) ?>">WhatsApp</a> dengan menyertakan kode <strong style="color:#b91c1c;">#<?= $kode ?></strong>.
                 </div>
               <?php } ?>
             </div>
@@ -78,7 +78,7 @@ mohon infonya ";
                   <li>Lengkapi data mempelai</li>
                   <li>Atur tanggal dan lokasi acara</li>
                   <li>Pilih tema undangan</li>
-                  <li>Tambahkan cerita atau gallery jika diperlukan</li>
+                  <li>Tambahkan cerita atau galeri jika diperlukan</li>
                 </ul>
               </div>
             </div>

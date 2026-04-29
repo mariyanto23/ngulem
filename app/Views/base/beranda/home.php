@@ -164,7 +164,122 @@
         line-height: 1.8;
       }
 
+      .diulem-testimonial-card {
+        padding: 18px 18px 10px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+      }
+
+      .diulem-testimonial-avatar {
+        width: 84px !important;
+        height: 84px !important;
+        object-fit: cover;
+        margin: 0 auto 16px;
+        border: 4px solid rgba(15, 118, 110, 0.12);
+      }
+
+      .diulem-testimonial-card h3 {
+        margin-bottom: 10px;
+      }
+
+      .diulem-testimonial-quote {
+        color: #435560;
+        line-height: 1.8;
+        min-height: 96px;
+      }
+
+      .diulem-testimonial-location {
+        color: #6b7a85;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .diulem-partner-shell {
+        margin-top: 12px;
+        padding: 26px 22px;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+      }
+
+      .diulem-partner-shell h2 {
+        margin-bottom: 8px;
+      }
+
+      .diulem-partner-note {
+        max-width: 640px;
+        margin: 0 auto 18px;
+        color: #6b7a85;
+        line-height: 1.8;
+      }
+
+      .media-partner-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 110px;
+        padding: 16px;
+        border-radius: 16px;
+        background: #f8fbfd;
+        border: 1px solid #edf2f2;
+      }
+
+      .media-partner-img img {
+        max-width: 160px;
+        max-height: 52px;
+        width: auto !important;
+      }
+
+      .diulem-public-cta {
+        padding: 0 0 56px;
+      }
+
+      .diulem-public-cta-card {
+        padding: 28px 26px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #0f766e, #14b8a6);
+        box-shadow: 0 24px 56px rgba(15, 118, 110, 0.22);
+        color: #fff;
+        text-align: center;
+      }
+
+      .diulem-public-cta-card h2 {
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .diulem-public-cta-card p {
+        max-width: 620px;
+        margin: 0 auto 18px;
+        line-height: 1.8;
+        opacity: .92;
+      }
+
+      .diulem-public-cta-card .btn {
+        min-width: 180px;
+      }
+
       @media (max-width: 767px) {
+        .slider-1 .content-slider {
+          padding-top: 78px;
+          padding-bottom: 70px;
+        }
+
+        .slider-1 .content-slider .col-xs-8 {
+          width: 100%;
+        }
+
+        .slider-1 .content-slider h3 {
+          font-size: 30px;
+          line-height: 1.2;
+        }
+
+        .slider-1 .content-slider p {
+          font-size: 15px;
+          line-height: 1.7;
+        }
+
         .diulem-hero-stats {
           gap: 10px;
         }
@@ -177,6 +292,40 @@
         .pricing-body {
           padding-left: 22px;
           padding-right: 22px;
+        }
+
+        .pricing .col-12.col-lg-4 {
+          margin-bottom: 20px;
+        }
+
+        .diulem-testimonial-card {
+          padding: 16px 16px 8px;
+        }
+
+        .diulem-testimonial-quote {
+          min-height: 0;
+          font-size: 14px;
+        }
+
+        .diulem-partner-shell {
+          padding: 22px 18px;
+        }
+
+        .media-partner-img {
+          min-height: 92px;
+        }
+
+        .diulem-public-cta {
+          padding-bottom: 40px;
+        }
+
+        .diulem-public-cta-card {
+          padding: 24px 18px;
+          border-radius: 20px;
+        }
+
+        .diulem-public-cta-card .btn {
+          width: 100%;
         }
       }
     </style>
@@ -326,7 +475,7 @@
               <div class="services-title">
                 <i class="flaticon-web-design">
                 </i>
-                <h4>Tema Yang Menarik & Ekslusif
+                <h4>Tema yang Menarik & Eksklusif
                 </h4>
               </div>
               <p>Kau dapat menyeseuaikan tema pernikahan kamu dengan pilihan tema yang unik dan exlusif yang kami sediakan
@@ -389,7 +538,7 @@
                 <h4>Buku Tamu
                 </h4>
               </div>
-              <p>Di fitur ini bisa kamu gunakan sebagai pengganti buku untuk mencatat kehadiran tamu serta foto selfi tamu yang hadir 
+              <p>Di fitur ini bisa kamu gunakan sebagai pengganti buku untuk mencatat kehadiran tamu serta foto selfie tamu yang hadir 
               </p>             
             </div>
           </div>
@@ -469,7 +618,7 @@
             <h2>Pilihan Tema Undangan
             </h2>
             <div class="title_border"></div>
-            <p>Kaka penasaran bagaimana jadinya? pilih salah satu untuk melihat demonya
+            <p>Kamu penasaran bagaimana jadinya? Pilih salah satu untuk melihat demonya
               <br>selain itu <?= SITE_NAME ?> banyak pilihan tema undangan digital yang menarik dan eksklusif
             </p>
             <p class="diulem-theme-note">Mulai dari demo dulu, lalu pilih paket yang paling sesuai. Semua tema tetap bisa dilanjutkan ke proses order yang sama.</p>
@@ -615,7 +764,7 @@
               </div>
               <div class="step-content-text">
                   <h3>Mendaftar</h3>
-                  <p>Mendaftar dengan Email, Isi data Pernikahan kamu, dan log in ke halaman dashboard untuk mengedit dan pembayaran</p>
+                  <p>Daftar dengan email, isi data pernikahan kamu, lalu masuk ke dashboard untuk mengedit dan menyelesaikan pembayaran.</p>
               </div>
           </li>
           </div>
@@ -630,7 +779,7 @@
               </div>
               <div class="step-content-text">
                   <h3>Aktivasi Undangan kamu</h3>
-                  <p>Pilih menu tagihan / invoice, lakukan aktivasi paket untuk mengaktifkan fitur undangan kamu</p>
+                  <p>Pilih menu tagihan atau invoice, lalu lakukan aktivasi paket untuk mengaktifkan fitur undangan kamu.</p>
               </div>
           </li>
 
@@ -640,7 +789,7 @@
               </div>
               <div class="step-content-text">
                   <h3>Undangan Aktif</h3>
-                  <p>Kamu sudah bisa mengubah dan melengkapi undangan pernikahanmu kemudian kamu dapat menyebarkan undangan pernikahanmu</p>
+                  <p>Kamu sudah bisa mengubah, melengkapi, lalu menyebarkan undangan pernikahanmu kapan saja.</p>
               </div>
           </li>
 
@@ -710,15 +859,15 @@
                         $i = 1;
                         foreach ($testimoni->getResult() as $row) { ?>
               <div class="item">  
-                <div class="sw-content-desc">
+                <div class="sw-content-desc diulem-testimonial-card">
                   <div class="sw-person text-center">
-                    <img src="<?php echo base_url() ?>/assets/users/<?= $row->kunci ?>/kita.png" class="img-responsive img-circle"/>
+                    <img src="<?php echo base_url() ?>/assets/users/<?= $row->kunci ?>/kita.png" class="img-responsive img-circle diulem-testimonial-avatar"/>
                   </div>
                   <h3><?= htmlentities($row->nama_lengkap) ?>
                   </h3>
-                  <p><?= htmlentities($row->ulasan) ?>
+                  <p class="diulem-testimonial-quote"><?= htmlentities($row->ulasan) ?>
                   </p>
-                  <p><?= htmlentities($row->kota) ?>,<?= htmlentities($row->provinsi) ?>
+                  <p class="diulem-testimonial-location"><?= htmlentities($row->kota) ?>, <?= htmlentities($row->provinsi) ?>
                   </p>
                 </div>
               </div>
@@ -733,10 +882,11 @@
   </section>
   <section class="sw-container">
     <div class="container">
-      <div class="media-partner">
+      <div class="media-partner diulem-partner-shell text-center">
         <div class="row">
           <h2>Media  Partner
           </h2>
+          <p class="diulem-partner-note">Mendukung proses pembayaran dan operasional undangan digital agar tetap praktis, aman, dan mudah dipakai.</p>
           <div class="powered-slider owl-carousel text-center">
             <div class="media-partner-img">
               <img src="<?php echo base_url() ?>/assets/beranda/themes/powered/nusagateway.png" alt="Nusagateway"/>
@@ -752,6 +902,15 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+  <section class="sw-container diulem-public-cta">
+    <div class="container">
+      <div class="diulem-public-cta-card">
+        <h2>Siap Mulai Buat Undangan?</h2>
+        <p>Mulai dari paket gratis dulu, pilih tema yang paling cocok, lalu lengkapi detailnya dari dashboard kapan saja.</p>
+        <a href="<?= base_url() ?>/order" class="btn sw-button btn-slider">Buat Undangan Sekarang</a>
       </div>
     </div>
   </section>
