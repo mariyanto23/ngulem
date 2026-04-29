@@ -195,12 +195,17 @@ document.addEventListener('DOMContentLoaded', function () {
   var verifiedEmail = <?= json_encode((string) ($email ?? '')) ?>;
   var isVerified = <?= !empty($order_email_verified_current) ? 'true' : 'false' ?>;
 
-  function setButtonLoading(button, loadingText) {
+  function setButtonLoading(button, loadingText, shouldDisable) {
     if (!button || button.disabled) {
       return;
     }
 
-    button.disabled = true;
+    if (shouldDisable !== false) {
+      button.disabled = true;
+    } else {
+      button.style.pointerEvents = 'none';
+      button.style.opacity = '0.85';
+    }
 
     if (button.tagName === 'INPUT') {
       button.dataset.originalValue = button.value;
@@ -243,14 +248,13 @@ document.addEventListener('DOMContentLoaded', function () {
     syncEmailVerificationState();
   }
 
-  if (requestEmailButton) {
-    requestEmailButton.addEventListener('click', function () {
-      setButtonLoading(requestEmailButton, 'Mengirim...');
-    });
-  }
-
   if (orderForm) {
     orderForm.addEventListener('submit', function (event) {
+      if (requestEmailButton && event.submitter === requestEmailButton) {
+        setButtonLoading(requestEmailButton, 'Mengirim...', false);
+        return;
+      }
+
       if (!nextButton || event.submitter !== nextButton) {
         return;
       }
