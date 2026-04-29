@@ -7,6 +7,59 @@ if (empty($publicSetting)) {
 }
 $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publicSetting[0] : null;
 ?>
+<style>
+  .diulem-public-footer .navbar-footer,
+  .diulem-public-footer footer,
+  .diulem-public-footer .copyright,
+  .diulem-public-footer #show_chat_to_top {
+    font-family: inherit;
+  }
+
+  .diulem-public-footer .navbar-footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .diulem-public-footer .navbar-footer li {
+    list-style: none;
+  }
+
+  .diulem-public-footer .footer-widget,
+  .diulem-public-footer .footer_content,
+  .diulem-public-footer .about-us,
+  .diulem-public-footer .footer-media,
+  .diulem-public-footer .title_widget,
+  .diulem-public-footer .category,
+  .diulem-public-footer .address {
+    float: none;
+  }
+
+  .diulem-public-footer .footer-media ul,
+  .diulem-public-footer .category ul,
+  .diulem-public-footer .address {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .diulem-public-footer .footer-media li,
+  .diulem-public-footer .category li,
+  .diulem-public-footer .address li {
+    list-style: none;
+  }
+
+  .diulem-public-footer .address li span,
+  .diulem-public-footer .category li a,
+  .diulem-public-footer .footer-media li a {
+    display: inline-block;
+  }
+
+  .diulem-public-footer .copyright p {
+    margin-bottom: 0;
+  }
+</style>
+<div class="diulem-public-footer">
 <div class="navbar-footer text-center">
   <ul>
     <li><a href="<?= base_url() ?>"><i class="fa fa-home"></i><p>Home</p></a></li>
@@ -91,3 +144,4 @@ $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publ
   <a href="#" id="back-to-top" data-toggle="tooltip" data-placement="top" title="Back to top">↑</a>
 </div>
 <?php } ?>
+</div>

@@ -7,7 +7,53 @@ if (empty($publicSetting)) {
     $publicSetting = (new BerandaModel())->get_setting();
 }
 ?>
-<header class="header">
+<style>
+  .diulem-public-header .navbar-nav {
+    display: block;
+  }
+
+  .diulem-public-header .navbar-nav > li {
+    float: left;
+  }
+
+  .diulem-public-header .navbar-collapse.collapse {
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+  }
+
+  .diulem-public-header .navbar-toggle {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .diulem-public-header .navbar-toggle {
+      display: block;
+    }
+
+    .diulem-public-header .navbar-collapse.collapse {
+      display: none !important;
+    }
+
+    .diulem-public-header .navbar-collapse.collapse.in {
+      display: block !important;
+    }
+
+    .diulem-public-header .navbar-nav {
+      float: none;
+    }
+
+    .diulem-public-header .navbar-nav > li {
+      float: none;
+    }
+
+    .diulem-public-header .nav-right {
+      float: none !important;
+    }
+  }
+</style>
+<header class="header diulem-public-header">
   <nav class="navbar-me navbar navbar-default" id="mainNav">
     <div class="container">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
