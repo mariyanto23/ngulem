@@ -207,7 +207,7 @@
         }
 
         .bukutamu-section-title {
-            margin: 0 0 6px;
+            margin: 0 0 10px;
             font-size: 18px;
             font-weight: 700;
             color: #0f172a;
@@ -400,7 +400,7 @@
         }
 
         .bukutamu-media-carousel .carousel-indicators {
-            bottom: -6px;
+            bottom: -2px;
         }
 
         .bukutamu-media-carousel .carousel-indicators li {
@@ -408,7 +408,7 @@
             height: 10px;
             border: 0;
             background: #cbd5e1;
-            margin: 0 4px;
+            margin: 0 5px;
         }
 
         .bukutamu-media-carousel .carousel-indicators .active {
@@ -572,7 +572,7 @@
                 <div class="bukutamu-pair-layout">
                     <section class="bukutamu-pair-main">
                         <div class="bukutamu-section-card bukutamu-slider-card">
-                            <div style="padding:0 0 14px;">
+                            <div style="padding:0 0 12px;">
                                 <h3 class="bukutamu-section-title">Galeri Acara</h3>
                             </div>
                             <div id="myCarousel" class="carousel slide bukutamu-media-carousel" data-ride="carousel">
@@ -605,7 +605,9 @@
                     <aside class="bukutamu-pair-side">
                         <div class="bukutamu-selfie-slider">
                             <div class="bukutamu-section-card">
-                                <h4 class="bukutamu-section-title">Galeri Selfie</h4>
+                                <div style="padding:0 0 12px;">
+                                    <h4 class="bukutamu-section-title">Galeri Selfie</h4>
+                                </div>
                                 <?php if (!empty($hadir)) { ?>
                                     <div id="selfieCarousel" class="carousel slide bukutamu-media-carousel" data-ride="carousel" data-interval="4000">
                                         <ol class="carousel-indicators" id="selfie-carousel-indicators">
