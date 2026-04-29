@@ -5,6 +5,7 @@
                 <div class="col">
                     <div class="page-pretitle">Admin</div>
                     <h1 class="page-title"><?= esc($title); ?></h1>
+                    <div class="diulem-admin-page-note">Kelola akun undangan, pantau masa aktif, dan masuk cepat ke data pengguna yang perlu dibantu.</div>
                 </div>
             </div>
         </div>
@@ -13,9 +14,83 @@
             $trial = $set->trial;
         } ?>
 
+        <?php
+        $totalPengguna = count($join);
+        $aktifCount = 0;
+        $trialCount = 0;
+        $nonaktifCount = 0;
+        $today = strtotime('now');
+        foreach ($join as $summaryRow) {
+            $masaAktif = $summaryRow->masa_aktif;
+            $tglExpSummary = strtotime('+' . $trial . ' days', strtotime($summaryRow->tgl_daftar));
+            $tglNonaktifSummary = strtotime('+' . $masaAktif . ' days', strtotime($summaryRow->tgl_bayar));
+            if ($summaryRow->statusPembayaran == 2 && $today < $tglNonaktifSummary) {
+                $aktifCount++;
+            } elseif ($summaryRow->statusPembayaran != 2 && $today < $tglExpSummary) {
+                $trialCount++;
+            } else {
+                $nonaktifCount++;
+            }
+        }
+        ?>
+
+        <div class="row row-cards mb-3">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Total Pengguna</div>
+                            <div class="diulem-admin-summary-value"><?= $totalPengguna ?></div>
+                            <div class="diulem-admin-summary-help">Semua akun undangan terdaftar.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-users"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Aktif</div>
+                            <div class="diulem-admin-summary-value"><?= $aktifCount ?></div>
+                            <div class="diulem-admin-summary-help">Pembayaran lunas dan masa aktif berjalan.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-badge-check"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Trial</div>
+                            <div class="diulem-admin-summary-value"><?= $trialCount ?></div>
+                            <div class="diulem-admin-summary-help">Masih dalam masa coba undangan.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-hourglass"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card diulem-admin-summary-card">
+                    <div class="card-body">
+                        <div>
+                            <div class="diulem-admin-summary-label">Tidak Aktif</div>
+                            <div class="diulem-admin-summary-value"><?= $nonaktifCount ?></div>
+                            <div class="diulem-admin-summary-help">Perlu follow up atau aktivasi ulang.</div>
+                        </div>
+                        <span class="diulem-admin-stat-icon"><i class="ti ti-user-off"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Data Pengguna</h3>
+                <div>
+                    <h3 class="card-title">Data Pengguna</h3>
+                    <div class="diulem-admin-card-note">Daftar akun pengguna berikut domain undangan dan status masa aktifnya.</div>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-vcenter card-table" id="dataTable">
@@ -32,16 +107,25 @@
                     <?php foreach ($join as $row) {
                         $masa_aktif = $row->masa_aktif;
                         $tglExp = strtotime('+'.$trial.' days', strtotime($row->tgl_daftar));
-                        $today = strtotime('now');
                         $tglNonaktif = strtotime('+'.$masa_aktif.' days', strtotime($row->tgl_bayar));
                         $tglSelesai = $row->statusPembayaran == 2
                             ? date('d-m-Y H:i', $tglNonaktif) . ' WIB'
                             : date('d-m-Y H:i', $tglExp) . ' WIB';
                     ?>
                         <tr>
-                            <td><?= esc($row->email) ?></td>
-                            <td><a target="_blank" href="<?= rtrim(SITE_UNDANGAN, '/') . '/' . esc($row->domain) ?>"><?= esc($row->domain) ?></a></td>
-                            <td><?= esc($tglSelesai) ?></td>
+                            <td>
+                                <div class="fw-semibold"><?= esc($row->username ?: $row->email) ?></div>
+                                <span class="diulem-admin-meta"><?= esc($row->email) ?></span>
+                            </td>
+                            <td>
+                                <a class="diulem-admin-table-link" target="_blank" href="<?= rtrim(SITE_UNDANGAN, '/') . '/' . esc($row->domain) ?>">
+                                    <i class="ti ti-world"></i>
+                                    <span><?= esc($row->domain) ?></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span class="diulem-admin-mono"><?= esc($tglSelesai) ?></span>
+                            </td>
                             <?php if ($row->statusPembayaran == 2 && $today < $tglNonaktif) { ?>
                                 <td><span class="badge bg-success text-success-fg">Aktif</span></td>
                             <?php } elseif ($row->statusPembayaran != 2 && $today < $tglExp) { ?>

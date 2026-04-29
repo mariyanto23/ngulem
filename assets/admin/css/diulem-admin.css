@@ -156,6 +156,22 @@ body,
   line-height: 1.25;
 }
 
+.diulem-admin-wrapper .page-pretitle {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.diulem-admin-page-note {
+  color: #64748b;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  margin-top: 0.35rem;
+  max-width: 42rem;
+}
+
 .diulem-admin-stat-icon {
   align-items: center;
   background: #e8f5f3;
@@ -181,6 +197,106 @@ body,
 .diulem-admin-wrapper .card-title {
   color: var(--diulem-admin-ink);
   font-weight: 750;
+}
+
+.diulem-admin-card-note {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.2rem;
+}
+
+.diulem-admin-summary-card .card-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.diulem-admin-summary-label {
+  color: #64748b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.diulem-admin-summary-value {
+  color: var(--diulem-admin-ink);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.diulem-admin-summary-help {
+  color: #64748b;
+  font-size: 0.88rem;
+  margin-top: 0.35rem;
+}
+
+.diulem-admin-table-link {
+  color: var(--diulem-admin-ink);
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.diulem-admin-table-link:hover {
+  color: var(--tblr-primary);
+}
+
+.diulem-admin-meta {
+  color: #64748b;
+  display: block;
+  font-size: 0.82rem;
+  margin-top: 0.2rem;
+}
+
+.diulem-admin-mono {
+  font-family: var(--tblr-font-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.diulem-admin-card-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.diulem-admin-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.diulem-admin-soft-panel {
+  background: #f8fafc;
+  border: 1px solid var(--diulem-admin-line);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.diulem-admin-soft-panel + .diulem-admin-soft-panel {
+  margin-top: 1rem;
+}
+
+.diulem-admin-soft-panel-title {
+  color: var(--diulem-admin-ink);
+  font-size: 0.96rem;
+  font-weight: 750;
+  margin-bottom: 0.3rem;
+}
+
+.diulem-admin-soft-panel-note {
+  color: #64748b;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  margin-bottom: 0.9rem;
 }
 
 .diulem-admin-wrapper .btn-primary,
@@ -314,6 +430,15 @@ body,
   width: 100%;
 }
 
+.diulem-admin-table-search .input-group-text {
+  background: #ffffff;
+  border-right: 0;
+}
+
+.diulem-admin-table-search .form-control {
+  border-left: 0;
+}
+
 .diulem-admin-proof {
   border: 1px solid var(--diulem-admin-line);
   border-radius: 8px;
@@ -419,6 +544,19 @@ body,
   inset: 0;
   opacity: 0;
   position: absolute;
+}
+
+@media (max-width: 767.98px) {
+  .diulem-admin-summary-card .card-body {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .diulem-admin-card-actions {
+    align-items: stretch;
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 .diulem-admin-wrapper .form-row {

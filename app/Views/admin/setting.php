@@ -21,6 +21,7 @@ if ($waGatewayProvider === 'nusagateway') {
                 <div class="col">
                     <div class="page-pretitle">Setting</div>
                     <h1 class="page-title"><?= esc($title); ?></h1>
+                    <div class="diulem-admin-page-note">Kelola identitas aplikasi, masa trial, notifikasi, branding, dan library konten bawaan dari panel yang lebih rapi.</div>
                 </div>
             </div>
         </div>
@@ -29,24 +30,36 @@ if ($waGatewayProvider === 'nusagateway') {
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Setting Undangan</h3>
+                        <div>
+                            <h3 class="card-title">Setting Undangan</h3>
+                            <div class="diulem-admin-card-note">Kontrol default umum yang dipakai saat akun baru dibuat atau saat pengguna belum mengubah pengaturannya sendiri.</div>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Waktu Trial Undangan (hari)</label>
-                            <input id="trial" type="number" class="form-control" value="<?= esc($setting[0]->trial) ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Salam Pembuka Default</label>
-                            <textarea rows="4" id="salam_pembuka" class="form-control" required><?= esc($setting[0]->salam_pembuka) ?></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Salam Pembuka Whatsapp Atas</label>
-                            <textarea rows="4" id="salam_wa_atas" class="form-control" required><?= esc($setting[0]->salam_wa_atas) ?></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Salam Pembuka Whatsapp Bawah</label>
-                            <textarea rows="4" id="salam_wa_bawah" class="form-control" required><?= esc($setting[0]->salam_wa_bawah) ?></textarea>
+                        <div class="diulem-admin-form-stack">
+                            <div class="diulem-admin-soft-panel">
+                                <div class="diulem-admin-soft-panel-title">Durasi Trial</div>
+                                <div class="diulem-admin-soft-panel-note">Atur berapa hari undangan trial tetap aktif sebelum pengguna perlu upgrade atau melakukan pembayaran.</div>
+                                <label class="form-label">Waktu Trial Undangan (hari)</label>
+                                <input id="trial" type="number" class="form-control" value="<?= esc($setting[0]->trial) ?>" required>
+                            </div>
+
+                            <div class="diulem-admin-soft-panel">
+                                <div class="diulem-admin-soft-panel-title">Template Salam Default</div>
+                                <div class="diulem-admin-soft-panel-note">Copy ini akan dipakai sebagai isi awal agar pengguna tidak mulai dari keadaan kosong.</div>
+                                <div class="mb-3">
+                                    <label class="form-label">Salam Pembuka Default</label>
+                                    <textarea rows="4" id="salam_pembuka" class="form-control" required><?= esc($setting[0]->salam_pembuka) ?></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Salam Pembuka Whatsapp Atas</label>
+                                    <textarea rows="4" id="salam_wa_atas" class="form-control" required><?= esc($setting[0]->salam_wa_atas) ?></textarea>
+                                </div>
+                                <div>
+                                    <label class="form-label">Salam Pembuka Whatsapp Bawah</label>
+                                    <textarea rows="4" id="salam_wa_bawah" class="form-control" required><?= esc($setting[0]->salam_wa_bawah) ?></textarea>
+                                </div>
+                            </div>
                         </div>
                         <button class="btn btn-primary" id="simpanSetting2">
                             <i class="ti ti-device-floppy me-2"></i>Simpan
@@ -58,7 +71,10 @@ if ($waGatewayProvider === 'nusagateway') {
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Branding Aplikasi</h3>
+                        <div>
+                            <h3 class="card-title">Branding Aplikasi</h3>
+                            <div class="diulem-admin-card-note">Dua logo ini membedakan kebutuhan publik dan dashboard, jadi admin bisa mengganti keduanya secara terpisah.</div>
+                        </div>
                     </div>
                     <div class="card-body d-flex flex-column gap-4">
                         <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_logo_utama'); ?>">
@@ -120,7 +136,10 @@ if ($waGatewayProvider === 'nusagateway') {
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Contact Admin</h3>
+                        <div>
+                            <h3 class="card-title">Contact Admin</h3>
+                            <div class="diulem-admin-card-note">Digunakan untuk email sistem, notifikasi WhatsApp, dan kontak utama yang muncul ke pengguna.</div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
@@ -180,7 +199,10 @@ if ($waGatewayProvider === 'nusagateway') {
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Musik Latar Bawaan</h3>
+                        <div>
+                            <h3 class="card-title">Musik Latar Bawaan</h3>
+                            <div class="diulem-admin-card-note">Koleksi ini muncul sebagai opsi cepat di dashboard pengguna selain upload musik sendiri.</div>
+                        </div>
                     </div>
                     <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_musik_library'); ?>">
                         <div class="card-body">
@@ -242,7 +264,10 @@ if ($waGatewayProvider === 'nusagateway') {
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Quote Pernikahan Bawaan</h3>
+                        <div>
+                            <h3 class="card-title">Quote Pernikahan Bawaan</h3>
+                            <div class="diulem-admin-card-note">Bantu pengguna mulai lebih cepat dengan pilihan quote yang sudah disiapkan admin.</div>
+                        </div>
                     </div>
                     <form method="post" action="<?= base_url('admin/add_quote_library'); ?>">
                         <div class="card-body">
