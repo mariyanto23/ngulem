@@ -11,18 +11,16 @@
     <title><?= $title ?></title>
     <link href="<?= base_url('assets/dashboard'); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url('assets/dashboard'); ?>/css/ruang-admin.css" rel="stylesheet">
+    <link href="<?= base_url('assets/dashboard'); ?>/css/diulem-dashboard.css" rel="stylesheet">
 
 </head>
 
-<body class="bg-gradient-login">
+<body class="diulem-auth-page">
 <?php 
  echo view($view);
 ?>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="<?= base_url('assets/dashboard'); ?>/js/ruang-admin.min.js"></script>
 </body>
 <script>
 setTimeout("$('#ikierror').hide();", 2000);

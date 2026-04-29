@@ -7,6 +7,125 @@
   --diulem-sidebar-width: 15rem;
 }
 
+.diulem-auth-page {
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.10), transparent 30%),
+    radial-gradient(circle at top right, rgba(245, 158, 11, 0.10), transparent 28%),
+    #f6f8fb;
+  color: var(--diulem-ink);
+  min-height: 100vh;
+}
+
+.diulem-auth-shell {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.diulem-auth-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--diulem-line);
+  border-radius: 12px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.10);
+  padding: 28px 24px 22px;
+  width: 100%;
+  max-width: 430px;
+}
+
+.diulem-auth-brand {
+  margin-bottom: 22px;
+}
+
+.diulem-auth-logo {
+  display: inline-flex;
+  margin-bottom: 18px;
+}
+
+.diulem-auth-logo img {
+  height: 52px;
+  width: auto;
+}
+
+.diulem-auth-title {
+  color: var(--diulem-ink);
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+.diulem-auth-subtitle {
+  color: #5b6877;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.diulem-auth-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.diulem-auth-label {
+  color: var(--diulem-ink);
+  display: inline-block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.diulem-auth-form .form-control {
+  background: #ffffff;
+  border: 1px solid #d7dee7;
+  border-radius: 8px;
+  color: var(--diulem-ink);
+  min-height: 46px;
+  padding: 0.7rem 0.9rem;
+}
+
+.diulem-auth-form .form-control:focus {
+  border-color: rgba(15, 118, 110, 0.55);
+  box-shadow: 0 0 0 0.18rem rgba(15, 118, 110, 0.12);
+}
+
+.diulem-auth-form .btn {
+  border-radius: 8px;
+  font-weight: 700;
+  min-height: 46px;
+}
+
+.diulem-auth-check {
+  line-height: 1.5rem;
+}
+
+.diulem-auth-check .custom-control-label {
+  color: #5b6877;
+  font-size: 0.9rem;
+}
+
+.diulem-auth-links {
+  border-top: 1px solid var(--diulem-line);
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+}
+
+.diulem-auth-links a {
+  color: var(--tblr-primary);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.diulem-auth-links a:hover {
+  color: #0b5f59;
+  text-decoration: none;
+}
+
+.diulem-auth-page .alert {
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
 body,
 .page {
   background: var(--diulem-soft);
