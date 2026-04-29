@@ -1,4 +1,186 @@
 
+    <style>
+      .diulem-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 34px;
+        padding: 0 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+
+      .diulem-hero-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .diulem-hero-stat {
+        min-width: 128px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(10, 16, 27, 0.34);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: #fff;
+      }
+
+      .diulem-hero-stat strong {
+        display: block;
+        font-size: 18px;
+        line-height: 1.2;
+        margin-bottom: 4px;
+      }
+
+      .diulem-hero-stat span {
+        display: block;
+        font-size: 12px;
+        line-height: 1.5;
+        opacity: .82;
+      }
+
+      .pricing .area-title p {
+        max-width: 680px;
+        margin: 12px auto 0;
+        color: #6b7a85;
+        line-height: 1.8;
+      }
+
+      .pricing-panel {
+        border-radius: 18px;
+        border: 1px solid #e9efee;
+        box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+        background: #fff;
+        transition: transform .25s ease, box-shadow .25s ease;
+      }
+
+      .pricing-panel:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 22px 54px rgba(15, 23, 42, 0.12);
+      }
+
+      .pricing-panel.diulem-pricing-featured {
+        border-color: rgba(15, 118, 110, 0.24);
+        box-shadow: 0 24px 60px rgba(15, 118, 110, 0.14);
+      }
+
+      .diulem-pricing-ribbon {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(15, 118, 110, 0.1);
+        color: #0f766e;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+
+      .pricing-head {
+        padding: 28px 28px 18px;
+      }
+
+      .pricing-name {
+        font-size: 24px;
+        letter-spacing: 0;
+      }
+
+      .pricing-type .price {
+        font-size: 34px;
+        line-height: 1.2;
+      }
+
+      .pricing-type .per {
+        margin-top: 6px;
+        color: #6b7a85;
+      }
+
+      .diulem-pricing-note {
+        margin-top: 10px;
+        color: #6b7a85;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .pricing-body {
+        padding: 0 28px 28px;
+      }
+
+      .pricing-list > li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        border-top: 1px solid #f0f4f3;
+        color: #22343b;
+      }
+
+      .pricing-list > li:before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: #14b8a6;
+        flex: 0 0 auto;
+      }
+
+      .pricing-list > li.diulem-feature-off {
+        color: #94a3b8;
+        text-decoration: line-through;
+        text-decoration-thickness: 2px;
+      }
+
+      .pricing-list > li.diulem-feature-off:before {
+        background: #cbd5e1;
+      }
+
+      .pricing-body .btn {
+        margin-top: 18px;
+      }
+
+      .diulem-pricing-cta-note {
+        margin-top: 12px;
+        color: #6b7a85;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .diulem-theme-note {
+        max-width: 720px;
+        margin: 14px auto 0;
+        color: #6b7a85;
+        line-height: 1.8;
+      }
+
+      @media (max-width: 767px) {
+        .diulem-hero-stats {
+          gap: 10px;
+        }
+
+        .diulem-hero-stat {
+          min-width: calc(50% - 5px);
+        }
+
+        .pricing-head,
+        .pricing-body {
+          padding-left: 22px;
+          padding-right: 22px;
+        }
+      }
+    </style>
+
     <section class="slider-1">
       <div id="carousel-id-slider" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -14,12 +196,27 @@
               <div class="content-slider">
                 <div class="row">
                   <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6">
+                    <div class="diulem-hero-badge">Undangan Website Praktis</div>
                     <h3>Berbagi undangan menjadi lebih mudah
                     </h3>
                     <p>Buat dan bagikan undangan pernikahan kamu dengan berbagai pilihan tampilan undangan yang elegan dan menarik, buat pernikahan kamu berkesan.
                     </p>
                     <a href="<?= base_url() ?>/order" class="btn sw-button btn-slider">Registrasi Gratis
                     </a>
+                    <div class="diulem-hero-stats">
+                      <div class="diulem-hero-stat">
+                        <strong>Gratis</strong>
+                        <span>Mulai tanpa bayar dulu</span>
+                      </div>
+                      <div class="diulem-hero-stat">
+                        <strong>Siap Cepat</strong>
+                        <span>Undangan dasar langsung aktif</span>
+                      </div>
+                      <div class="diulem-hero-stat">
+                        <strong>Fleksibel</strong>
+                        <span>Edit kapan saja dari dashboard</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -31,6 +228,7 @@
               <div class="content-slider">
                 <div class="row">
                   <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6">
+                    <div class="diulem-hero-badge">Tema Elegan & Modern</div>
                     <h3><?= strtoupper(DOMAIN_UTAMA) ?> - Digital Invitation Indonesia
                     </h3>
                     <p>Solusi pernikahan lebih hemat, praktis, dan kekinian dengan e-invitation yang disebar otomatis untuk memberikan kesan terbaik
@@ -208,6 +406,7 @@
             <div class="area-title text-center">
                 <h2>Harga<span>Undangan</span> Online?</h2>
                 <div class="title_border"></div>
+                <p>Pilih paket yang paling pas untuk kebutuhan acara kamu. Semua paket bisa dikelola dari dashboard yang sama, dan paket gratis bisa langsung dicoba tanpa pembayaran.</p>
             </div>
             <!-- End .col-lg-6  -->
           </div>
@@ -216,9 +415,12 @@
                 <?php foreach($paket as $data){ ?>
               <!-- Start Pricing Packge #1 -->
               <div class="col-12 col-lg-4">
-                <div class="pricing-panel">
+                <div class="pricing-panel <?= (int) $data->harga_paket <= 0 ? 'diulem-pricing-featured' : '' ?>">
                   <!--  Pricing heading   -->
                   <div class="pricing-head">
+                    <?php if ((int) $data->harga_paket <= 0) { ?>
+                      <div class="diulem-pricing-ribbon">Mulai Gratis</div>
+                    <?php } ?>
                     <h6 class="pricing-name">
                       <?= strtoupper($data->nama_paket) ?>
                       <?php if ((int) $data->harga_paket <= 0) { ?>
@@ -229,6 +431,9 @@
                       <p class="price"><?= (int) $data->harga_paket <= 0 ? 'Gratis' : 'Rp. ' . number_format($data->harga_paket) ?></p>
                       <p class="per">Aktif <?= $data->masa_aktif ?> Hari</p>
                     </div>
+                    <p class="diulem-pricing-note">
+                      <?= (int) $data->harga_paket <= 0 ? 'Cocok untuk mulai dulu, lalu upgrade saat sudah siap.' : 'Paket siap pakai untuk undangan yang lebih lengkap dan fleksibel.' ?>
+                    </p>
                   </div>
                   <!--  Pricing body-->
                   <div class="pricing-body">
@@ -236,14 +441,15 @@
                       <?php if($data->tema_bebas == 0) { ?><li>Hanya 1 Tema</li> <?php } else { ?>
                       <li>Bebas Pilih Tema</li> <?php } ?>
                       <li>Edit Tanpa Batas</li>
-                      <li <?php if($data->kirim_whatsapp != 1) { echo "style=text-decoration:line-through;text-decoration-thickness:3px"; } ?>>Kirim Undangan</li>
-                      <li <?php if($data->import_datatamu != 1) { echo "style=text-decoration:line-through;text-decoration-thickness:3px"; } ?>>Import Data Tamu</li>
-                      <li <?php if($data->buku_tamu != 1) { echo "style=text-decoration:line-through;text-decoration-thickness:3px"; } ?>>Buku Tamu</li>
-                      <li <?php if($data->kirim_hadiah != 1) { echo "style=text-decoration:line-through;text-decoration-thickness:3px"; } ?>>Amplop Digital</li>
+                      <li class="<?= $data->kirim_whatsapp != 1 ? 'diulem-feature-off' : '' ?>">Kirim Undangan</li>
+                      <li class="<?= $data->import_datatamu != 1 ? 'diulem-feature-off' : '' ?>">Import Data Tamu</li>
+                      <li class="<?= $data->buku_tamu != 1 ? 'diulem-feature-off' : '' ?>">Buku Tamu</li>
+                      <li class="<?= $data->kirim_hadiah != 1 ? 'diulem-feature-off' : '' ?>">Amplop Digital</li>
                       <li>Galeri Foto</li>
                       <li>Background Music</li>
                       
                     </ul><a class="btn btn--bordered btn--primary" href="<?= base_url() ?>/order"><?= (int) $data->harga_paket <= 0 ? 'Coba Gratis' : 'Buat Undangan' ?></a>
+                    <p class="diulem-pricing-cta-note"><?= (int) $data->harga_paket <= 0 ? 'Langsung aktif tanpa pembayaran.' : 'Bisa lanjut pilih tema dan isi data setelah daftar.' ?></p>
                   </div>
                 </div>
               </div>
@@ -259,13 +465,14 @@
     <section class="sw-container" id="themes" style="background:#F8FBFD">
       <div class="container">
         <div class="row text-center">
-        <div class="area-title text-center">
+          <div class="area-title text-center">
             <h2>Pilihan Tema Undangan
             </h2>
             <div class="title_border"></div>
             <p>Kaka penasaran bagaimana jadinya? pilih salah satu untuk melihat demonya
               <br>selain itu <?= SITE_NAME ?> banyak pilihan tema undangan digital yang menarik dan eksklusif
             </p>
+            <p class="diulem-theme-note">Mulai dari demo dulu, lalu pilih paket yang paling sesuai. Semua tema tetap bisa dilanjutkan ke proses order yang sama.</p>
           </div>
           <?php
             $no = 1;
