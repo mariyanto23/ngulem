@@ -95,6 +95,22 @@
   min-height: 46px;
 }
 
+.diulem-auth-form .btn-primary {
+  background: #0f766e;
+  border-color: #0f766e;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.diulem-auth-form .btn-primary:hover,
+.diulem-auth-form .btn-primary:focus,
+.diulem-auth-form .btn-primary:active {
+  background: #0b5f59;
+  border-color: #0b5f59;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.18);
+  color: #ffffff;
+}
+
 .diulem-auth-check {
   line-height: 1.5rem;
 }
