@@ -23,7 +23,7 @@
                         <div class="mb-3">
                             <label class="form-label">Password Baru</label>
                             <input id="password" type="password" class="form-control" placeholder="Kosongkan jika tidak ingin mengganti password">
-                            <small class="form-hint">Password hanya diubah jika kolom ini diisi.</small>
+                            <small class="form-hint">Password hanya diubah jika kolom ini diisi. Minimal 8 karakter.</small>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>

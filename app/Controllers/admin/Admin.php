@@ -25,22 +25,37 @@ class Admin extends Controller
     }
 
     public function do_auth(){
-
-        $data['email'] = $this->request->getPost('email');
-        $data['password'] = md5($this->request->getPost('password'));
-        $hasil = $this->AdminModel->get_admin($data);
+        $email = trim((string) $this->request->getPost('email'));
+        $plainPassword = (string) $this->request->getPost('password');
+        $hasil = $this->AdminModel->get_admin_by_email($email);
         
         if(count($hasil) > 0)
         {
+            $admin = $hasil[0];
+            $storedPassword = (string) ($admin->password ?? '');
+            $isModernHash = password_get_info($storedPassword)['algo'] !== 0;
+            $passwordValid = $isModernHash
+                ? password_verify($plainPassword, $storedPassword)
+                : hash_equals($storedPassword, md5($plainPassword));
+
+            if (! $passwordValid) {
+                $this->session->setFlashdata('errors', ['Email atau password salah.']);
+                return redirect()->to(base_url('/login'));
+            }
+
+            if (! $isModernHash) {
+                $this->AdminModel->update_admin_password_by_id(password_hash($plainPassword, PASSWORD_DEFAULT), $admin->id);
+            }
+
             // set session
-            $sess_data = array('masukAdmin' => TRUE, 'uname_admin' => $hasil[0]->username, 'id_admin' => $hasil[0]->id);
+            $sess_data = array('masukAdmin' => TRUE, 'uname_admin' => $admin->username, 'id_admin' => $admin->id);
             $this->session->set($sess_data);
             return redirect()->to(base_url('admin/dashboard'));
             exit();
         }
         else
         {
-            $this->session->setFlashdata('errors', ['Password Salah']);
+            $this->session->setFlashdata('errors', ['Email atau password salah.']);
             return redirect()->to(base_url('/login'));
         }
 		
@@ -265,7 +280,12 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     public function do_update_admin(){
 
         if($this->request->getPost('password') != ''){
-            $data['password'] = md5($this->request->getPost('password'));
+            $newPassword = (string) $this->request->getPost('password');
+            if (strlen($newPassword) < 8) {
+                echo 'gagal';
+                return;
+            }
+            $data['password'] = password_hash($newPassword, PASSWORD_DEFAULT);
         }
 
         $data['username'] = $this->request->getPost('username');
@@ -728,8 +748,14 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
 
     public function do_update_user(){
 
-        if($this->request->getPost('password') != ''){
-            $data['password'] = md5($this->request->getPost('password'));
+        $password = trim((string) $this->request->getPost('password'));
+        if($password !== ''){
+            if(strlen($password) < 8){
+                echo 'password_min';
+                return;
+            }
+
+            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
         }
 
         $data['username'] = $this->request->getPost('username');

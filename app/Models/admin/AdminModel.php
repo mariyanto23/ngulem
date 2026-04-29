@@ -412,6 +412,13 @@ class AdminModel extends Model
         return $builder->update($data);
     }
 
+    public function update_admin_password_by_id($passwordHash, $id){
+        $builder = $this->admin;
+        $builder->set('password', $passwordHash);
+        $builder->where('id', $id);
+        return $builder->update();
+    }
+
     public function get_setting(){
         $builder = $this->setting;
         $builder->select('*');
@@ -483,6 +490,13 @@ class AdminModel extends Model
     public function get_admin($data){
         $builder = $this->admin;
         $builder->where($data);
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function get_admin_by_email($email){
+        $builder = $this->admin;
+        $builder->where('email', $email);
         $query = $builder->get();
         return $query->getResult();
     }

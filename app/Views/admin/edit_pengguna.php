@@ -518,7 +518,8 @@
 
                     <div class="mb-3">
                         <label>Password</label>
-                        <input id="password" type="password" class="form-control" placeholder="********" value="" required>
+                        <input id="password" type="password" class="form-control" placeholder="Kosongkan jika tidak ingin mengganti password" value="">
+                        <small class="form-hint">Password hanya diubah jika diisi. Minimal 8 karakter.</small>
                     </div>
 
                     <div class="mb-3">
@@ -1114,6 +1115,10 @@
             success: function($hasil){
                 if($hasil == 'sukses'){
                     DiulemAdmin.reload();
+                }else if($hasil == 'password_min'){
+                    DiulemAdmin.notify('warning', 'Password pengguna minimal 8 karakter.');
+                }else{
+                    DiulemAdmin.notify('error', 'Perubahan pengguna belum berhasil disimpan.');
                 }
             }
         });
