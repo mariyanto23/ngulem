@@ -262,30 +262,57 @@
 
       @media (max-width: 767px) {
         .slider-1 .content-slider {
-          padding-top: 78px;
-          padding-bottom: 70px;
+          top: 8% !important;
+          margin-left: 0 !important;
+          padding-top: 18px;
+          padding-bottom: 44px;
         }
 
         .slider-1 .content-slider .col-xs-8 {
           width: 100%;
         }
 
+        .diulem-hero-badge {
+          min-height: 28px;
+          padding: 0 10px;
+          font-size: 10px;
+          margin-bottom: 8px;
+        }
+
         .slider-1 .content-slider h3 {
-          font-size: 30px;
-          line-height: 1.2;
+          font-size: 22px !important;
+          line-height: 1.2 !important;
+          margin-bottom: 8px !important;
+          letter-spacing: 0 !important;
         }
 
         .slider-1 .content-slider p {
-          font-size: 15px;
-          line-height: 1.7;
+          display: block !important;
+          font-size: 13px;
+          line-height: 1.5;
+          margin-bottom: 0;
+          max-width: 94%;
         }
 
         .diulem-hero-stats {
-          gap: 10px;
+          gap: 8px;
+          margin-top: 12px;
         }
 
         .diulem-hero-stat {
-          min-width: calc(50% - 5px);
+          min-width: calc(33.333% - 6px);
+          padding: 8px 9px;
+          border-radius: 10px;
+        }
+
+        .diulem-hero-stat strong {
+          font-size: 13px;
+          margin-bottom: 2px;
+        }
+
+        .diulem-hero-stat span {
+          font-size: 10px;
+          line-height: 1.35;
         }
 
         .pricing-head,
