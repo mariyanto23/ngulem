@@ -13,10 +13,6 @@ if ($waGatewayProvider === 'nusagateway') {
 } elseif ($waGatewayProvider === 'starsender') {
     $waGatewayLink = 'https://starsender.online';
 }
-$homeContent = $home_content ?? [];
-$homeText = static function (string $group, string $key) use ($homeContent): string {
-    return (string) ($homeContent[$group][$key] ?? '');
-};
 ?>
 <div class="page-body">
     <div class="container-xl">
@@ -133,179 +129,6 @@ $homeText = static function (string $group, string $key) use ($homeContent): str
                                 </button>
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <h3 class="card-title">Konten Beranda</h3>
-                            <div class="diulem-admin-card-note">Atur teks utama halaman depan tanpa perlu mengubah file view. Gambar, daftar tema, paket, testimoni, dan partner tetap mengikuti data masing-masing.</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <form id="homeContentForm">
-                            <div class="row g-4">
-                                <div class="col-lg-6">
-                                    <div class="diulem-admin-soft-panel h-100">
-                                        <div class="diulem-admin-soft-panel-title">Hero Slide 1</div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Badge</label>
-                                            <input name="home_content[hero][slide1_badge]" type="text" class="form-control" value="<?= esc($homeText('hero', 'slide1_badge')) ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Judul</label>
-                                            <input name="home_content[hero][slide1_title]" type="text" class="form-control" value="<?= esc($homeText('hero', 'slide1_title')) ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Deskripsi</label>
-                                            <textarea name="home_content[hero][slide1_description]" rows="3" class="form-control"><?= esc($homeText('hero', 'slide1_description')) ?></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Tombol</label>
-                                            <input name="home_content[hero][slide1_button]" type="text" class="form-control" value="<?= esc($homeText('hero', 'slide1_button')) ?>">
-                                        </div>
-                                        <div class="row">
-                                            <?php for ($i = 1; $i <= 3; $i++) { ?>
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label">Stat <?= $i ?></label>
-                                                    <input name="home_content[hero][stat<?= $i ?>_title]" type="text" class="form-control mb-2" value="<?= esc($homeText('hero', 'stat' . $i . '_title')) ?>">
-                                                    <input name="home_content[hero][stat<?= $i ?>_description]" type="text" class="form-control" value="<?= esc($homeText('hero', 'stat' . $i . '_description')) ?>">
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="diulem-admin-soft-panel h-100">
-                                        <div class="diulem-admin-soft-panel-title">Hero Slide 2</div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Badge</label>
-                                            <input name="home_content[hero][slide2_badge]" type="text" class="form-control" value="<?= esc($homeText('hero', 'slide2_badge')) ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Judul</label>
-                                            <input name="home_content[hero][slide2_title]" type="text" class="form-control" value="<?= esc($homeText('hero', 'slide2_title')) ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Deskripsi</label>
-                                            <textarea name="home_content[hero][slide2_description]" rows="3" class="form-control"><?= esc($homeText('hero', 'slide2_description')) ?></textarea>
-                                        </div>
-                                        <div>
-                                            <label class="form-label">Tombol</label>
-                                            <input name="home_content[hero][slide2_button]" type="text" class="form-control" value="<?= esc($homeText('hero', 'slide2_button')) ?>">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="diulem-admin-soft-panel h-100">
-                                        <div class="diulem-admin-soft-panel-title">Alasan Menggunakan Undangan Digital</div>
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3"><input name="home_content[benefits][title_prefix]" type="text" class="form-control" value="<?= esc($homeText('benefits', 'title_prefix')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[benefits][title_highlight]" type="text" class="form-control" value="<?= esc($homeText('benefits', 'title_highlight')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[benefits][title_suffix]" type="text" class="form-control" value="<?= esc($homeText('benefits', 'title_suffix')) ?>"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Deskripsi Section</label>
-                                            <textarea name="home_content[benefits][description]" rows="2" class="form-control"><?= esc($homeText('benefits', 'description')) ?></textarea>
-                                        </div>
-                                        <?php for ($i = 1; $i <= 3; $i++) { ?>
-                                            <div class="mb-3">
-                                                <label class="form-label">Item <?= $i ?></label>
-                                                <input name="home_content[benefits][item<?= $i ?>_title]" type="text" class="form-control mb-2" value="<?= esc($homeText('benefits', 'item' . $i . '_title')) ?>">
-                                                <textarea name="home_content[benefits][item<?= $i ?>_description]" rows="2" class="form-control"><?= esc($homeText('benefits', 'item' . $i . '_description')) ?></textarea>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="diulem-admin-soft-panel h-100">
-                                        <div class="diulem-admin-soft-panel-title">Fitur Beranda</div>
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3"><input name="home_content[features][title_prefix]" type="text" class="form-control" value="<?= esc($homeText('features', 'title_prefix')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[features][title_highlight]" type="text" class="form-control" value="<?= esc($homeText('features', 'title_highlight')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[features][title_suffix]" type="text" class="form-control" value="<?= esc($homeText('features', 'title_suffix')) ?>"></div>
-                                        </div>
-                                        <?php for ($i = 1; $i <= 6; $i++) { ?>
-                                            <div class="mb-3">
-                                                <label class="form-label">Fitur <?= $i ?></label>
-                                                <input name="home_content[features][item<?= $i ?>_title]" type="text" class="form-control mb-2" value="<?= esc($homeText('features', 'item' . $i . '_title')) ?>">
-                                                <textarea name="home_content[features][item<?= $i ?>_description]" rows="2" class="form-control"><?= esc($homeText('features', 'item' . $i . '_description')) ?></textarea>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="diulem-admin-soft-panel h-100">
-                                        <div class="diulem-admin-soft-panel-title">Section dan CTA</div>
-                                        <?php
-                                            $sectionFields = [
-                                                'pricing_description' => 'Deskripsi Harga',
-                                                'theme_title' => 'Judul Tema',
-                                                'theme_description' => 'Deskripsi Tema 1',
-                                                'theme_description_second' => 'Deskripsi Tema 2',
-                                                'theme_note' => 'Catatan Tema',
-                                                'partner_title' => 'Judul Partner',
-                                                'partner_note' => 'Catatan Partner',
-                                                'final_cta_title' => 'Judul CTA Akhir',
-                                                'final_cta_description' => 'Deskripsi CTA Akhir',
-                                                'final_cta_button' => 'Tombol CTA Akhir',
-                                            ];
-                                        ?>
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][pricing_title_prefix]" type="text" class="form-control" value="<?= esc($homeText('sections', 'pricing_title_prefix')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][pricing_title_highlight]" type="text" class="form-control" value="<?= esc($homeText('sections', 'pricing_title_highlight')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][pricing_title_suffix]" type="text" class="form-control" value="<?= esc($homeText('sections', 'pricing_title_suffix')) ?>"></div>
-                                        </div>
-                                        <?php foreach ($sectionFields as $field => $label) { ?>
-                                            <div class="mb-3">
-                                                <label class="form-label"><?= esc($label) ?></label>
-                                                <textarea name="home_content[sections][<?= esc($field) ?>]" rows="2" class="form-control"><?= esc($homeText('sections', $field)) ?></textarea>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="diulem-admin-soft-panel h-100">
-                                        <div class="diulem-admin-soft-panel-title">Cara Mendaftar dan Testimoni</div>
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][process_title_prefix]" type="text" class="form-control" value="<?= esc($homeText('sections', 'process_title_prefix')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][process_title_highlight]" type="text" class="form-control" value="<?= esc($homeText('sections', 'process_title_highlight')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][process_title_suffix]" type="text" class="form-control" value="<?= esc($homeText('sections', 'process_title_suffix')) ?>"></div>
-                                        </div>
-                                        <?php for ($i = 1; $i <= 4; $i++) { ?>
-                                            <div class="mb-3">
-                                                <label class="form-label">Langkah <?= $i ?></label>
-                                                <input name="home_content[process][step<?= $i ?>_title]" type="text" class="form-control mb-2" value="<?= esc($homeText('process', 'step' . $i . '_title')) ?>">
-                                                <?php if ($i === 3) { ?>
-                                                    <input name="home_content[process][step3_detail_title]" type="text" class="form-control mb-2" value="<?= esc($homeText('process', 'step3_detail_title')) ?>">
-                                                <?php } ?>
-                                                <textarea name="home_content[process][step<?= $i ?>_description]" rows="2" class="form-control"><?= esc($homeText('process', 'step' . $i . '_description')) ?></textarea>
-                                            </div>
-                                        <?php } ?>
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][testimonial_title_prefix]" type="text" class="form-control" value="<?= esc($homeText('sections', 'testimonial_title_prefix')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][testimonial_title_highlight]" type="text" class="form-control" value="<?= esc($homeText('sections', 'testimonial_title_highlight')) ?>"></div>
-                                            <div class="col-md-4 mb-3"><input name="home_content[sections][testimonial_title_suffix]" type="text" class="form-control" value="<?= esc($homeText('sections', 'testimonial_title_suffix')) ?>"></div>
-                                        </div>
-                                        <div>
-                                            <label class="form-label">Deskripsi Testimoni</label>
-                                            <textarea name="home_content[sections][testimonial_description]" rows="2" class="form-control"><?= esc($homeText('sections', 'testimonial_description')) ?></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <button class="btn btn-primary mt-4" id="simpanHomeContent">
-                            <i class="ti ti-device-floppy me-2"></i>Simpan Konten Beranda
-                        </button>
                     </div>
                 </div>
             </div>
@@ -551,14 +374,6 @@ $('#simpanSetting2').on('click', function() {
         button: $(this),
         successMessage: 'Setting undangan berhasil disimpan.',
         errorMessage: 'Setting undangan gagal disimpan.'
-    });
-});
-
-$('#simpanHomeContent').on('click', function() {
-    DiulemAdmin.post("<?= base_url('admin/update_home_content') ?>", $('#homeContentForm').serialize(), {
-        button: $(this),
-        successMessage: 'Konten beranda berhasil disimpan.',
-        errorMessage: 'Konten beranda gagal disimpan.'
     });
 });
 
