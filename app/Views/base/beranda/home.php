@@ -261,11 +261,23 @@
       }
 
       @media (max-width: 767px) {
+        .slider-1,
+        .slider-1 .carousel-inner,
+        .slider-1 .item {
+          min-height: 520px;
+        }
+
+        .slider-1 .item > img {
+          min-height: 520px;
+          object-fit: cover;
+          width: 100%;
+        }
+
         .slider-1 .content-slider {
-          top: 8% !important;
+          top: 12% !important;
           margin-left: 0 !important;
-          padding-top: 18px;
-          padding-bottom: 44px;
+          padding-top: 0;
+          padding-bottom: 28px;
         }
 
         .slider-1 .content-slider .col-xs-8 {
@@ -280,10 +292,11 @@
         }
 
         .slider-1 .content-slider h3 {
-          font-size: 22px !important;
-          line-height: 1.2 !important;
+          font-size: 24px !important;
+          line-height: 1.18 !important;
           margin-bottom: 8px !important;
           letter-spacing: 0 !important;
+          max-width: 92%;
         }
 
         .slider-1 .content-slider p {
@@ -296,11 +309,12 @@
 
         .diulem-hero-stats {
           gap: 8px;
-          margin-top: 12px;
+          margin-top: 14px;
+          max-width: 94%;
         }
 
         .diulem-hero-stat {
-          min-width: calc(33.333% - 6px);
+          min-width: calc(50% - 4px);
           padding: 8px 9px;
           border-radius: 10px;
         }
@@ -313,6 +327,10 @@
         .diulem-hero-stat span {
           font-size: 10px;
           line-height: 1.35;
+        }
+
+        .diulem-hero-stat:nth-child(3) {
+          display: none;
         }
 
         .pricing-head,
@@ -353,6 +371,34 @@
 
         .diulem-public-cta-card .btn {
           width: 100%;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .slider-1,
+        .slider-1 .carousel-inner,
+        .slider-1 .item,
+        .slider-1 .item > img {
+          min-height: 500px;
+        }
+
+        .slider-1 .content-slider {
+          top: 10% !important;
+        }
+
+        .slider-1 .content-slider h3 {
+          font-size: 21px !important;
+          max-width: 96%;
+        }
+
+        .slider-1 .content-slider p {
+          font-size: 12px;
+          line-height: 1.45;
+          max-width: 96%;
+        }
+
+        .diulem-hero-stats {
+          display: none;
         }
       }
     </style>
