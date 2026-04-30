@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/beranda/themes/assets/css/sw-responsive.css') ?>">
   </head>
   <body oncontextmenu="return false">
+    <?= view('base/beranda/components/public_header', ['title' => $title ?? 'Beranda', 'setting' => $setting ?? null]) ?>
+
     <?php echo view($view); ?>
 
     <?= view('base/beranda/components/public_footer', ['setting' => $setting ?? null]) ?>
