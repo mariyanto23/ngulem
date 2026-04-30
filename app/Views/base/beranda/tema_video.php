@@ -1,3 +1,47 @@
+        <style>
+            .tema-video-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .tema-video-actions .btn {
+                border-radius: 999px !important;
+                margin: 0 !important;
+                min-width: 112px;
+                padding: 9px 18px !important;
+                font-weight: 700;
+            }
+
+            .tema-video-actions .btn-video-demo {
+                background: #ffffff !important;
+                border: 1px solid #4bb9e3 !important;
+                color: #238ab2 !important;
+                box-shadow: 0 8px 20px rgba(75, 185, 227, 0.12);
+            }
+
+            .tema-video-actions .btn-video-demo:hover,
+            .tema-video-actions .btn-video-demo:focus {
+                background: #eefaff !important;
+                color: #147391 !important;
+            }
+
+            .tema-video-actions .btn-video-order {
+                background: #0f766e !important;
+                background-image: linear-gradient(45deg, #0f766e 0%, #14b8a6 100%) !important;
+                border: 1px solid #0f766e !important;
+                color: #ffffff !important;
+                box-shadow: 0 10px 24px rgba(15, 118, 110, 0.22);
+            }
+
+            .tema-video-actions .btn-video-order:hover,
+            .tema-video-actions .btn-video-order:focus {
+                background: #0d665f !important;
+                background-image: linear-gradient(45deg, #0d665f 0%, #0f9f8f 100%) !important;
+                color: #ffffff !important;
+            }
+        </style>
         <section class="sw-breadcrumbs">
             <div class="container">
                 <div class="row">
@@ -53,15 +97,14 @@
                                 </figure>
                                 <div class="desc">
                                     <h3><?= htmlentities($row->nama_tema) ?></h3>
-                                    <p style="margin:8px 0 14px; color:#64748b; min-height:44px;">Preview dulu videonya, lalu lanjut pesan tema ini lewat WhatsApp.</p>
                                     <span class="price">
                                         <ins>
                                             <span class="amount">Rp. <?= number_format($row->harga) ?></span>
                                         </ins>
                                     </span>
-                                    <div class="readmore text-center">
-                                        <a class="btn sw-button btn-shop-2 btn-shop btn-details btn-demo" data-link="<?= htmlentities($row->url_video); ?>" data-nama="<?= $row->nama_tema; ?>" title="Lihat Demo Video">Lihat Demo</a>
-                                      <a target="_blank" href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=Assalamualaikum, Kak saya mau pesan Undangan video <?= $row->nama_tema ?>%0ABagaimana cara pesannya kak?" class="btn sw-button btn-shop-2 btn-shop btn-details" title="Pesan Sekarang">Pesan via WhatsApp</a>
+                                    <div class="readmore text-center tema-video-actions">
+                                        <a class="btn sw-button btn-shop-2 btn-shop btn-details btn-demo btn-video-demo" data-link="<?= htmlentities($row->url_video); ?>" data-nama="<?= $row->nama_tema; ?>" title="Lihat Demo Video">Lihat Demo</a>
+                                      <a target="_blank" href="https://api.whatsapp.com/send?phone=<?= $setting[0]->no_wa; ?>&text=Assalamualaikum, Kak saya mau pesan Undangan video <?= $row->nama_tema ?>%0ABagaimana cara pesannya kak?" class="btn sw-button btn-shop-2 btn-shop btn-details btn-video-order" title="Pesan Sekarang">Pesan</a>
                                     </div>
                                 </div>
                             </article>
