@@ -431,7 +431,8 @@ CREATE TABLE `setting` (
   `wa_gateway` enum('nusagateway','starsender','onesender') NOT NULL DEFAULT 'nusagateway',
   `token_wa` varchar(255) DEFAULT NULL,
   `salam_wa_atas` text NOT NULL,
-  `salam_wa_bawah` text NOT NULL
+  `salam_wa_bawah` text NOT NULL,
+  `home_content` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --

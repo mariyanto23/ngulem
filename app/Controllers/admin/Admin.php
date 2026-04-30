@@ -327,7 +327,9 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     }
 
     public function setting(){
+        $this->ensureHomeContentSettingSchema();
         $data['setting'] = $this->AdminModel->get_setting();
+        $data['home_content'] = $this->getHomeContentSetting($data['setting'][0]->home_content ?? null);
         $data['music_library'] = $this->getMusicLibraryTracks();
         $data['quote_library'] = $this->getQuoteLibraryItems();
         $data['title'] = 'Setting Web';
@@ -557,6 +559,154 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
             echo 'gagal';
         }
 
+    }
+
+    public function do_update_home_content()
+    {
+        $this->ensureHomeContentSettingSchema();
+        $content = (array) $this->request->getPost('home_content');
+        $content = $this->sanitizeHomeContent($content);
+
+        $update = $this->AdminModel->update_setting([
+            'home_content' => json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+        ]);
+
+        if ($update) {
+            session()->setFlashdata("success", "Konten beranda berhasil diupdate");
+            echo 'sukses';
+            return;
+        }
+
+        session()->setFlashdata("error", "Konten beranda gagal diupdate");
+        echo 'gagal';
+    }
+
+    private function ensureHomeContentSettingSchema()
+    {
+        try {
+            $db = \Config\Database::connect();
+            $result = $db->query("SHOW COLUMNS FROM `setting` LIKE 'home_content'");
+            if (empty($result->getResultArray())) {
+                $db->query("ALTER TABLE `setting` ADD `home_content` LONGTEXT DEFAULT NULL AFTER `salam_wa_bawah`");
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Gagal memastikan schema konten beranda: {message}', ['message' => $e->getMessage()]);
+        }
+    }
+
+    private function getHomeContentSetting($rawContent = null)
+    {
+        $decoded = [];
+        if (! empty($rawContent)) {
+            $decoded = json_decode((string) $rawContent, true);
+            if (! is_array($decoded)) {
+                $decoded = [];
+            }
+        }
+
+        return array_replace_recursive($this->getDefaultHomeContent(), $decoded);
+    }
+
+    private function sanitizeHomeContent(array $content)
+    {
+        $defaults = $this->getDefaultHomeContent();
+        $merged = array_replace_recursive($defaults, $content);
+
+        $walk = static function ($value) use (&$walk) {
+            if (is_array($value)) {
+                return array_map($walk, $value);
+            }
+
+            return trim((string) $value);
+        };
+
+        return $walk($merged);
+    }
+
+    private function getDefaultHomeContent()
+    {
+        return [
+            'hero' => [
+                'slide1_badge' => 'Undangan Website Praktis',
+                'slide1_title' => 'Berbagi undangan menjadi lebih mudah',
+                'slide1_description' => 'Buat dan bagikan undangan pernikahan kamu dengan berbagai pilihan tampilan undangan yang elegan dan menarik, buat pernikahan kamu berkesan.',
+                'slide1_button' => 'Pilih Tema Gratis',
+                'stat1_title' => 'Gratis',
+                'stat1_description' => 'Mulai tanpa bayar dulu',
+                'stat2_title' => 'Siap Cepat',
+                'stat2_description' => 'Undangan dasar langsung aktif',
+                'stat3_title' => 'Fleksibel',
+                'stat3_description' => 'Edit kapan saja dari dashboard',
+                'slide2_badge' => 'Tema Elegan & Modern',
+                'slide2_title' => DOMAIN_UTAMA . ' - Digital Invitation Indonesia',
+                'slide2_description' => 'Solusi pernikahan lebih hemat, praktis, dan kekinian dengan e-invitation yang disebar otomatis untuk memberikan kesan terbaik',
+                'slide2_button' => 'Pilih Tema Sekarang',
+            ],
+            'benefits' => [
+                'title_prefix' => 'Mengapa',
+                'title_highlight' => 'Undangan',
+                'title_suffix' => 'Digital?',
+                'description' => 'Apa saja keuntungan menggunakan undangan digital berbasis website',
+                'item1_title' => 'Mudah, Cepat & Murah',
+                'item1_description' => 'Gak perlu nunggu lama membuat undangan, dan kamu juga sudah bisa bikin undangan online dengan harga termurah.',
+                'item2_title' => 'Mudah Menentukan Domain',
+                'item2_description' => 'Mudah membuat URL unik untuk website undangan kamu, dengan menggunakan kata-kata sesuai dengan keinginan kamu',
+                'item3_title' => 'Sebarkan Undangan kamu',
+                'item3_description' => 'Jangkau tamu undangan lebih banyak, kamu dapat membagikan di mana dan kapan saja dengan mudahnya kamu share di social media',
+            ],
+            'features' => [
+                'title_prefix' => 'Apa Yang',
+                'title_highlight' => 'Kamu',
+                'title_suffix' => 'Dapat?',
+                'item1_title' => 'Tema yang Menarik & Eksklusif',
+                'item1_description' => 'Kau dapat menyeseuaikan tema pernikahan kamu dengan pilihan tema yang unik dan exlusif yang kami sediakan',
+                'item2_title' => 'Story',
+                'item2_description' => 'Kamu bisa cerita bagaimana cerita kalian bisa bertemu hingga melanjutkan ke jenjang pernikahan',
+                'item3_title' => 'Waktu Akad dan Resepsi',
+                'item3_description' => 'Kamu dapat memberikan Informasi yang pastinya penting dalam pesta pernikahan, yaitu waktu dan lokasi resepsi',
+                'item4_title' => 'Informasi Kedua Pasangan',
+                'item4_description' => 'Kamu dapat menginformasikan tentang diri kamu dan pasangan yang kamu cintai disertai dengan foto kamu dan pasangan kamu.',
+                'item5_title' => 'Gallery Pra Wedding',
+                'item5_description' => 'Dengan fitur gallery tentunya pra wedding kalian bisa diupload foto-foto kenangan kalian dan ditampilkan di website undangan kalian.',
+                'item6_title' => 'Buku Tamu',
+                'item6_description' => 'Di fitur ini bisa kamu gunakan sebagai pengganti buku untuk mencatat kehadiran tamu serta foto selfie tamu yang hadir',
+            ],
+            'sections' => [
+                'pricing_title_prefix' => 'Harga',
+                'pricing_title_highlight' => 'Undangan',
+                'pricing_title_suffix' => 'Online?',
+                'pricing_description' => 'Pilih paket yang paling pas untuk kebutuhan acara kamu. Semua paket bisa dikelola dari dashboard yang sama, dan paket gratis bisa langsung dicoba tanpa pembayaran.',
+                'theme_title' => 'Pilihan Tema Undangan',
+                'theme_description' => 'Kamu penasaran bagaimana jadinya? Pilih salah satu untuk melihat demonya',
+                'theme_description_second' => 'selain itu ' . SITE_NAME . ' banyak pilihan tema undangan digital yang menarik dan eksklusif',
+                'theme_note' => 'Mulai dari demo dulu, lalu pilih paket yang paling sesuai. Semua tema tetap bisa dilanjutkan ke proses order yang sama.',
+                'video_title_prefix' => 'Undangan',
+                'video_title_highlight' => 'Video',
+                'process_title_prefix' => 'Bagaimana',
+                'process_title_highlight' => 'Cara',
+                'process_title_suffix' => 'Mendaftar?',
+                'testimonial_title_prefix' => 'Apa',
+                'testimonial_title_highlight' => 'Kata',
+                'testimonial_title_suffix' => 'Mereka?',
+                'testimonial_description' => 'Telah membantu pengantin untuk menjadikan undangan pernikahan mereka menjadi lebih berkesan',
+                'partner_title' => 'Media Partner',
+                'partner_note' => 'Mendukung proses pembayaran dan operasional undangan digital agar tetap praktis, aman, dan mudah dipakai.',
+                'final_cta_title' => 'Siap Mulai Buat Undangan?',
+                'final_cta_description' => 'Mulai dari paket gratis dulu, pilih tema yang paling cocok, lalu lengkapi detailnya dari dashboard kapan saja.',
+                'final_cta_button' => 'Pilih Tema Sekarang',
+            ],
+            'process' => [
+                'step1_title' => 'Pilih Tema',
+                'step1_description' => 'Kamu bebas memilih tema yang sesuai dengan tema pernikahan kamu',
+                'step2_title' => 'Mendaftar',
+                'step2_description' => 'Daftar dengan email, isi data pernikahan kamu, lalu masuk ke dashboard untuk mengedit dan menyelesaikan pembayaran.',
+                'step3_title' => 'Aktivasi',
+                'step3_detail_title' => 'Aktivasi Undangan kamu',
+                'step3_description' => 'Pilih menu tagihan atau invoice, lalu lakukan aktivasi paket untuk mengaktifkan fitur undangan kamu.',
+                'step4_title' => 'Undangan Aktif',
+                'step4_description' => 'Kamu sudah bisa mengubah, melengkapi, lalu menyebarkan undangan pernikahanmu kapan saja.',
+            ],
+        ];
     }
         public function do_update_setting_2(){
         $data['trial'] = $this->request->getPost('trial');
