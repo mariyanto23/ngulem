@@ -47,6 +47,10 @@
         opacity: .82;
       }
 
+      .diulem-mobile-hero {
+        display: none;
+      }
+
       .pricing .area-title p {
         max-width: 680px;
         margin: 12px auto 0;
@@ -261,6 +265,101 @@
       }
 
       @media (max-width: 767px) {
+        .slider-1 {
+          display: none;
+        }
+
+        .diulem-mobile-hero {
+          display: block;
+          background:
+            linear-gradient(180deg, rgba(6, 16, 25, 0.45), rgba(6, 16, 25, 0.70)),
+            url("<?= base_url('assets/beranda/themes/slider/sw-kalaujodoh-slider-1.jpg') ?>") center / cover no-repeat;
+          color: #ffffff;
+          padding: 72px 0 28px;
+        }
+
+        .diulem-mobile-hero .container {
+          width: 100%;
+        }
+
+        .diulem-mobile-hero-content {
+          max-width: 420px;
+        }
+
+        .diulem-mobile-hero h1 {
+          color: #ffffff;
+          font-size: 30px;
+          font-weight: 800;
+          line-height: 1.14;
+          margin: 0 0 12px;
+        }
+
+        .diulem-mobile-hero p {
+          color: rgba(255, 255, 255, 0.92);
+          font-size: 14px;
+          line-height: 1.65;
+          margin: 0 0 18px;
+        }
+
+        .diulem-mobile-hero-actions {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 18px;
+        }
+
+        .diulem-mobile-hero-actions .btn {
+          align-items: center;
+          border-radius: 30px;
+          display: inline-flex;
+          font-size: 13px;
+          font-weight: 700;
+          justify-content: center;
+          min-height: 42px;
+          padding: 0 16px;
+        }
+
+        .diulem-mobile-hero-actions .btn-primary-mobile {
+          background: linear-gradient(45deg, #599fe6 0%, #52ecf0 70%);
+          color: #ffffff;
+        }
+
+        .diulem-mobile-hero-actions .btn-secondary-mobile {
+          background: rgba(255, 255, 255, 0.14);
+          border: 1px solid rgba(255, 255, 255, 0.34);
+          color: #ffffff;
+        }
+
+        .diulem-mobile-hero-benefits {
+          display: grid;
+          gap: 8px;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .diulem-mobile-hero-benefit {
+          background: rgba(255, 255, 255, 0.13);
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          border-radius: 10px;
+          padding: 9px 8px;
+        }
+
+        .diulem-mobile-hero-benefit strong,
+        .diulem-mobile-hero-benefit span {
+          display: block;
+        }
+
+        .diulem-mobile-hero-benefit strong {
+          color: #ffffff;
+          font-size: 13px;
+          line-height: 1.2;
+          margin-bottom: 3px;
+        }
+
+        .diulem-mobile-hero-benefit span {
+          color: rgba(255, 255, 255, 0.78);
+          font-size: 10px;
+          line-height: 1.35;
+        }
+
         .slider-1 .content-slider {
           top: 12% !important;
           margin-left: 0 !important;
@@ -363,6 +462,22 @@
       }
 
       @media (max-width: 380px) {
+        .diulem-mobile-hero {
+          padding-top: 62px;
+        }
+
+        .diulem-mobile-hero h1 {
+          font-size: 26px;
+        }
+
+        .diulem-mobile-hero-actions {
+          flex-direction: column;
+        }
+
+        .diulem-mobile-hero-benefits {
+          grid-template-columns: 1fr;
+        }
+
         .slider-1 .content-slider {
           top: 10% !important;
         }
@@ -383,6 +498,34 @@
         }
       }
     </style>
+
+    <section class="diulem-mobile-hero">
+      <div class="container">
+        <div class="diulem-mobile-hero-content">
+          <div class="diulem-hero-badge">Undangan Digital</div>
+          <h1>Buat Undangan Online Lebih Praktis</h1>
+          <p>Pilih tema, lengkapi data acara, lalu bagikan undangan digital kamu dengan mudah dari dashboard.</p>
+          <div class="diulem-mobile-hero-actions">
+            <a href="<?= base_url('tema') ?>" class="btn btn-primary-mobile">Pilih Tema</a>
+            <a href="#themes" class="btn btn-secondary-mobile">Lihat Demo</a>
+          </div>
+          <div class="diulem-mobile-hero-benefits">
+            <div class="diulem-mobile-hero-benefit">
+              <strong>Gratis</strong>
+              <span>Mulai tanpa bayar dulu</span>
+            </div>
+            <div class="diulem-mobile-hero-benefit">
+              <strong>Siap Cepat</strong>
+              <span>Undangan dasar langsung aktif</span>
+            </div>
+            <div class="diulem-mobile-hero-benefit">
+              <strong>Fleksibel</strong>
+              <span>Edit kapan saja</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="slider-1">
       <div id="carousel-id-slider" class="carousel slide" data-ride="carousel">
@@ -672,10 +815,7 @@
             <h2>Pilihan Tema Undangan
             </h2>
             <div class="title_border"></div>
-            <p>Kamu penasaran bagaimana jadinya? Pilih salah satu untuk melihat demonya
-              <br>selain itu <?= SITE_NAME ?> banyak pilihan tema undangan digital yang menarik dan eksklusif
-            </p>
-            <p class="diulem-theme-note">Mulai dari demo dulu, lalu pilih paket yang paling sesuai. Semua tema tetap bisa dilanjutkan ke proses order yang sama.</p>
+            <p>Pilih tema undangan digital yang sesuai dengan konsep acara kamu, lihat demonya, lalu lanjutkan ke proses order.</p>
           </div>
 <?php
             $no = 1;
