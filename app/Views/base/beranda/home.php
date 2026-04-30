@@ -7,14 +7,37 @@
         min-height: 34px;
         padding: 0 14px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.14);
-        border: 1px solid rgba(255, 255, 255, 0.26);
+        background: rgba(8, 21, 32, 0.58);
+        border: 1px solid rgba(255, 255, 255, 0.34);
         color: #fff;
         font-size: 12px;
         font-weight: 700;
         letter-spacing: .04em;
         text-transform: uppercase;
         margin-bottom: 14px;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
+      }
+
+      .slider-1 .item {
+        position: relative;
+      }
+
+      .slider-1 .item::after {
+        background: linear-gradient(90deg, rgba(5, 15, 24, 0.54), rgba(5, 15, 24, 0.24) 52%, rgba(5, 15, 24, 0.10));
+        content: "";
+        inset: 0;
+        pointer-events: none;
+        position: absolute;
+        z-index: 1;
+      }
+
+      .slider-1 .content-slider {
+        z-index: 2;
+      }
+
+      .slider-1 .content-slider h3,
+      .slider-1 .content-slider p {
+        text-shadow: 0 2px 16px rgba(0, 0, 0, 0.36);
       }
 
       .diulem-hero-stats {
