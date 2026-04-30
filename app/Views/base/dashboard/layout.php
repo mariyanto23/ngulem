@@ -69,12 +69,6 @@ $isGuestMenu = in_array($activeMenu, $guestMenus, true);
                     <a class="dropdown-item text-danger" href="<?= base_url('user/logout') ?>"><i class="ti ti-logout me-2"></i>Logout</a>
                 </div>
             </div>
-            <div class="diulem-sidebar-tools d-none d-lg-block">
-                <button id="diulemSidebarMinimize" class="btn btn-outline-primary btn-sm w-100" type="button" aria-label="Minimize sidebar">
-                    <i class="ti ti-layout-sidebar-left-collapse me-2"></i>
-                    <span>Ringkas sidebar</span>
-                </button>
-            </div>
             <div class="collapse navbar-collapse" id="sidebar-menu">
                 <ul class="navbar-nav pt-lg-3">
                     <li class="nav-item">
@@ -300,12 +294,6 @@ function copyToClipboard(element) {
     $temp.remove();
 }
 
-$('#diulemSidebarMinimize').on('click', function() {
-    $('body').toggleClass('diulem-sidebar-collapsed');
-    $(this).find('.ti')
-        .toggleClass('ti-layout-sidebar-left-collapse')
-        .toggleClass('ti-layout-sidebar-left-expand');
-});
 </script>
 <script>
 $(function() {

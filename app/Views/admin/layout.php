@@ -47,7 +47,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
             </h1>
             <div class="nav-item dropdown d-lg-none diulem-admin-mobile-profile">
                 <a href="#" class="nav-link d-flex align-items-center p-0" data-bs-toggle="dropdown" aria-label="Open admin menu">
-                    <span class="avatar avatar-sm">
+                    <span class="avatar avatar-sm diulem-admin-profile-avatar">
                         <img src="<?= base_url('assets/dashboard'); ?>/img/boy.png" alt="Foto profil">
                     </span>
                     <span class="ms-2 fw-bold"><?= esc($_SESSION['uname_admin']) ?></span>
@@ -128,7 +128,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
                 <div class="navbar-nav flex-row ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open admin menu">
-                            <span class="avatar avatar-sm">
+                            <span class="avatar avatar-sm diulem-admin-profile-avatar">
                                 <img src="<?= base_url('assets/dashboard'); ?>/img/boy.png" alt="Foto profil">
                             </span>
                             <div class="d-none d-xl-block ps-2">
