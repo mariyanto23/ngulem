@@ -350,7 +350,7 @@
                     </h3>
                     <p>Buat dan bagikan undangan pernikahan kamu dengan berbagai pilihan tampilan undangan yang elegan dan menarik, buat pernikahan kamu berkesan.
                     </p>
-                    <a href="<?= base_url() ?>/order" class="btn sw-button btn-slider">Registrasi Gratis
+                    <a href="<?= base_url() ?>/tema" class="btn sw-button btn-slider">Pilih Tema Gratis
                     </a>
                     <div class="diulem-hero-stats">
                       <div class="diulem-hero-stat">
@@ -382,7 +382,7 @@
                     </h3>
                     <p>Solusi pernikahan lebih hemat, praktis, dan kekinian dengan e-invitation yang disebar otomatis untuk memberikan kesan terbaik
                     </p>
-                    <a href="<?= base_url() ?>/order" class="btn sw-button btn-slider">Buat Undangan Sekarang
+                    <a href="<?= base_url() ?>/tema" class="btn sw-button btn-slider">Pilih Tema Sekarang
                     </a>
                   </div>
                 </div>
@@ -597,8 +597,8 @@
                       <li>Galeri Foto</li>
                       <li>Background Music</li>
                       
-                    </ul><a class="btn btn--bordered btn--primary" href="<?= base_url() ?>/order"><?= (int) $data->harga_paket <= 0 ? 'Coba Gratis' : 'Buat Undangan' ?></a>
-                    <p class="diulem-pricing-cta-note"><?= (int) $data->harga_paket <= 0 ? 'Langsung aktif tanpa pembayaran.' : 'Bisa lanjut pilih tema dan isi data setelah daftar.' ?></p>
+                    </ul><a class="btn btn--bordered btn--primary" href="<?= base_url() ?>/tema"><?= (int) $data->harga_paket <= 0 ? 'Pilih Tema Gratis' : 'Pilih Tema' ?></a>
+                    <p class="diulem-pricing-cta-note"><?= (int) $data->harga_paket <= 0 ? 'Pilih tema dulu, lalu lanjut daftar tanpa pembayaran.' : 'Pilih tema dulu, lalu lanjut isi data order.' ?></p>
                   </div>
                 </div>
               </div>
@@ -910,7 +910,7 @@
       <div class="diulem-public-cta-card">
         <h2>Siap Mulai Buat Undangan?</h2>
         <p>Mulai dari paket gratis dulu, pilih tema yang paling cocok, lalu lengkapi detailnya dari dashboard kapan saja.</p>
-        <a href="<?= base_url() ?>/order" class="btn sw-button btn-slider">Buat Undangan Sekarang</a>
+        <a href="<?= base_url() ?>/tema" class="btn sw-button btn-slider">Pilih Tema Sekarang</a>
       </div>
     </div>
   </section>

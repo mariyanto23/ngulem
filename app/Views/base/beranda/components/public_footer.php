@@ -97,7 +97,7 @@ $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publ
             <div class="footer_content">
               <div class="category">
                 <ul>
-                  <li><a href="<?= base_url('order') ?>"><i class="fa fa-angle-right"></i> Mendaftar</a></li>
+                  <li><a href="<?= base_url('tema') ?>"><i class="fa fa-angle-right"></i> Pilih Tema</a></li>
                   <li><a href="<?= base_url('tema') ?>"><i class="fa fa-angle-right"></i> Undangan Website</a></li>
                   <li><a href="<?= base_url('tema_video') ?>"><i class="fa fa-angle-right"></i> Undangan Video</a></li>
                   <li><a href="<?= base_url('syarat-ketentuan') ?>"><i class="fa fa-angle-right"></i> Syarat & Ketentuan</a></li>
