@@ -7,15 +7,15 @@
         min-height: 34px;
         padding: 0 14px;
         border-radius: 999px;
-        background: rgba(8, 21, 32, 0.58);
-        border: 1px solid rgba(255, 255, 255, 0.34);
-        color: #fff;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.42);
+        color: #0f766e;
         font-size: 12px;
         font-weight: 700;
         letter-spacing: .04em;
         text-transform: uppercase;
         margin-bottom: 14px;
-        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
       }
 
       .slider-1 .item {
@@ -23,7 +23,7 @@
       }
 
       .slider-1 .item::after {
-        background: linear-gradient(90deg, rgba(5, 15, 24, 0.54), rgba(5, 15, 24, 0.24) 52%, rgba(5, 15, 24, 0.10));
+        background: linear-gradient(90deg, rgba(5, 15, 24, 0.24), rgba(5, 15, 24, 0.10) 52%, rgba(5, 15, 24, 0.02));
         content: "";
         inset: 0;
         pointer-events: none;
@@ -37,7 +37,7 @@
 
       .slider-1 .content-slider h3,
       .slider-1 .content-slider p {
-        text-shadow: 0 2px 16px rgba(0, 0, 0, 0.36);
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
       }
 
       .diulem-hero-stats {
