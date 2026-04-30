@@ -204,42 +204,6 @@
     font-weight: 600;
   }
 
-  .diulem-partner-shell {
-    margin-top: 12px;
-    padding: 26px 22px;
-    border-radius: 20px;
-    background: #fff;
-    box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
-  }
-
-  .diulem-partner-shell h2 {
-    margin-bottom: 8px;
-  }
-
-  .diulem-partner-note {
-    max-width: 640px;
-    margin: 0 auto 18px;
-    color: #6b7a85;
-    line-height: 1.8;
-  }
-
-  .media-partner-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 110px;
-    padding: 16px;
-    border-radius: 16px;
-    background: #f8fbfd;
-    border: 1px solid #edf2f2;
-  }
-
-  .media-partner-img img {
-    max-width: 160px;
-    max-height: 52px;
-    width: auto !important;
-  }
-
   .diulem-public-cta {
     padding: 0 0 56px;
   }
@@ -442,14 +406,6 @@
     .diulem-testimonial-quote {
       min-height: 0;
       font-size: 14px;
-    }
-
-    .diulem-partner-shell {
-      padding: 22px 18px;
-    }
-
-    .media-partner-img {
-      min-height: 92px;
     }
 
     .diulem-public-cta {
@@ -1075,31 +1031,6 @@
             <?php
             }
             ?>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="sw-container">
-  <div class="container">
-    <div class="media-partner diulem-partner-shell text-center">
-      <div class="row">
-        <h2>Media Partner
-        </h2>
-        <p class="diulem-partner-note">Mendukung proses pembayaran dan operasional undangan digital agar tetap praktis, aman, dan mudah dipakai.</p>
-        <div class="powered-slider owl-carousel text-center">
-          <div class="media-partner-img">
-            <img src="<?php echo base_url() ?>/assets/beranda/themes/powered/nusagateway.png" alt="Nusagateway" />
-          </div>
-          <div class="media-partner-img">
-            <img src="<?php echo base_url() ?>/assets/beranda/themes/powered/midtrans-logo.png" alt="Midtrans Payment Gateway" />
-          </div>
-          <div class="media-partner-img">
-            <img src="<?php echo base_url() ?>/assets/beranda/themes/powered/tripay-logo.png" alt="Tripay Payment Gateway" />
-          </div>
-          <div class="media-partner-img">
-            <img src="<?php echo base_url() ?>/assets/beranda/themes/powered/umkm.png" alt="UMKM Indonesia" />
           </div>
         </div>
       </div>
