@@ -97,19 +97,65 @@ if (empty($publicSetting)) {
 
   .diulem-public-header .navbar-toggle {
     display: none;
+    border: 0;
+    border-radius: 10px;
+    margin: 13px 12px 0 0;
+    padding: 9px 8px;
+    background: rgba(75, 185, 227, 0.10);
+    transition: background .2s ease, box-shadow .2s ease;
+  }
+
+  .diulem-public-header .navbar-toggle:hover,
+  .diulem-public-header .navbar-toggle:focus {
+    background: rgba(75, 185, 227, 0.16);
+    box-shadow: none;
+  }
+
+  .diulem-public-header .diulem-burger-line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    margin: 4px 0;
+    border-radius: 999px;
+    background: #0f766e;
+    transform-origin: center;
+    transition: transform .24s ease, opacity .18s ease, background .2s ease;
+  }
+
+  .diulem-public-header .navbar-toggle:not(.collapsed) .diulem-burger-line:nth-child(2) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .diulem-public-header .navbar-toggle:not(.collapsed) .diulem-burger-line:nth-child(3) {
+    opacity: 0;
+  }
+
+  .diulem-public-header .navbar-toggle:not(.collapsed) .diulem-burger-line:nth-child(4) {
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   @media (max-width: 767px) {
+    .diulem-public-header .navbar-me > .container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
     .diulem-public-header .navbar-brand {
       float: left !important;
     }
 
     .diulem-public-header .navbar-toggle {
       display: block;
+      float: left !important;
     }
 
     .diulem-public-header .navbar-collapse.collapse {
       display: none !important;
+      clear: both;
+      width: 100%;
+      margin: 0;
+      padding-left: 0;
+      padding-right: 0;
     }
 
     .diulem-public-header .navbar-collapse.collapse.in {
@@ -117,7 +163,9 @@ if (empty($publicSetting)) {
     }
 
     .diulem-public-header .navbar-nav {
-      float: none;
+      float: none !important;
+      text-align: left;
+      margin: 10px 0 14px !important;
     }
 
     .diulem-public-header .navbar-nav > li {
@@ -130,6 +178,7 @@ if (empty($publicSetting)) {
 
     .diulem-public-header .navbar-nav > li > a {
       color: #333333 !important;
+      text-align: left;
     }
   }
 </style>
@@ -138,7 +187,9 @@ if (empty($publicSetting)) {
     <div class="container">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#diulemPublicNav" aria-controls="diulemPublicNav" aria-expanded="false">
         <span class="sr-only">Toggle Navigation</span>
-        <i class="fa fa-bars"></i>
+        <span class="diulem-burger-line"></span>
+        <span class="diulem-burger-line"></span>
+        <span class="diulem-burger-line"></span>
       </button>
       <a class="navbar-brand pull-left" href="<?= base_url() ?>" title="<?= SITE_NAME ?>">
         <img class="img-responsive" src="<?= base_url('assets/base/img/logo4.png') ?>" alt="<?= SITE_NAME ?>">

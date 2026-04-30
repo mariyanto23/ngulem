@@ -54,7 +54,6 @@
                                 </figure>
                                 <div class="desc">
                                     <h3><?= htmlentities($row->nama_theme) ?></h3>
-                                    <p style="margin:8px 0 18px; color:#64748b; min-height:44px;">Lihat tampilannya dulu, lalu langsung lanjut buat undangan dari tema ini.</p>
                                     <!--<span class="price">-->
                                     <!--    <ins>-->
                                     <!--        <span class="amount">Rp1.500</span>-->
