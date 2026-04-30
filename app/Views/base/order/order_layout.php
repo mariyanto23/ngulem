@@ -36,7 +36,7 @@
       }
 
       .order-flow-shell {
-        min-height: 100vh;
+        min-height: auto;
         background:
           radial-gradient(circle at top left, rgba(15, 118, 110, 0.08), transparent 28%),
           linear-gradient(180deg, #f6fbfa 0%, #eef5f3 100%);
@@ -49,12 +49,13 @@
         flex-grow: 1;
         overflow-x: hidden;
         flex-direction: row;
-        margin-top: 92px;
-        margin-bottom: 56px;
+        margin: 0;
+        padding: 48px 0 56px;
       }
 
       .order-flow .fdb-block {
-        padding-top: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
         flex: 1;
       }
 
@@ -153,6 +154,10 @@
         font-weight: 600;
       }
 
+      .order-flow .input-group {
+        width: 100%;
+      }
+
       .order-flow .text-muted,
       .order-flow .form-text {
         color: var(--order-text-soft) !important;
@@ -193,7 +198,16 @@
         min-height: 42px;
         border-radius: 10px;
         border: 0;
-        background: var(--order-text);
+        background: var(--order-primary);
+        box-shadow: 0 10px 22px rgba(15, 118, 110, 0.18);
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .order-flow .btn-dark:hover,
+      .order-flow .btn-dark:focus {
+        background: var(--order-primary-dark);
+        color: #fff;
       }
 
       .order-flow .upload-area-bg {
@@ -205,6 +219,15 @@
 
       .order-flow .upload-area {
         border-radius: 16px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .order-flow .upload-area img,
+      .order-flow img[id^="profile-pic"] {
+        border-radius: 14px !important;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        object-fit: cover;
       }
 
       .order-flow .upload-area-caption span {
@@ -346,6 +369,10 @@
         margin-top: 28px;
       }
 
+      .order-flow .order-actions .row {
+        align-items: stretch;
+      }
+
       .order-flow .order-link-button {
         color: var(--order-text-soft);
         font-weight: 600;
@@ -402,8 +429,12 @@
 
       @media (max-width: 767.98px) {
         .order-page {
-          margin-top: 82px;
-          margin-bottom: 40px;
+          padding: 28px 0 40px;
+        }
+
+        .order-flow .container {
+          padding-left: 14px;
+          padding-right: 14px;
         }
 
         .order-flow .order-panel,
@@ -412,8 +443,50 @@
           border-radius: 18px;
         }
 
+        .order-flow .order-hero h1,
+        .order-flow h1 {
+          font-size: 1.72rem;
+          line-height: 1.25;
+        }
+
+        .order-flow .order-hero p,
+        .order-flow .text-center p,
+        .order-flow .order-subtitle {
+          font-size: 14px;
+        }
+
+        .order-flow .input-group {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .order-flow .input-group .form-control,
+        .order-flow .input-group .input-group-text,
+        .order-flow .input-group .btn {
+          width: 100%;
+          border-radius: 10px !important;
+        }
+
+        .order-flow .input-group-prepend,
+        .order-flow .input-group-append {
+          width: 100%;
+        }
+
         .order-flow .upload-area-bg {
           padding: 14px;
+        }
+
+        .order-flow .order-actions .col,
+        .order-flow .order-actions .col-auto {
+          flex: 0 0 100%;
+          max-width: 100%;
+          margin-bottom: 10px;
+        }
+
+        .order-flow .order-actions .btn,
+        .order-flow .order-actions input[type="submit"] {
+          width: 100%;
         }
       }
 
