@@ -264,11 +264,14 @@
         .slider-1,
         .slider-1 .carousel-inner,
         .slider-1 .item {
-          min-height: 520px;
+          min-height: 430px;
+          max-height: 470px;
         }
 
         .slider-1 .item > img {
-          min-height: 520px;
+          height: 430px;
+          min-height: 430px;
+          max-height: 470px;
           object-fit: cover;
           width: 100%;
         }
@@ -379,7 +382,12 @@
         .slider-1 .carousel-inner,
         .slider-1 .item,
         .slider-1 .item > img {
-          min-height: 500px;
+          min-height: 410px;
+          max-height: 440px;
+        }
+
+        .slider-1 .item > img {
+          height: 410px;
         }
 
         .slider-1 .content-slider {
