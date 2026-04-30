@@ -68,8 +68,24 @@ if (empty($publicSetting)) {
     background: transparent !important;
   }
 
-  .diulem-public-header .navbar-nav a.btn-publish {
+  .diulem-public-header .navbar-nav > li > a.btn-publish,
+  .diulem-public-header .navbar-nav > li > a.btn-login {
     color: #ffffff !important;
+    background: #4bb9e3 !important;
+    background-image: linear-gradient(45deg, #599fe6 0%, #52ecf0 70%) !important;
+    border: 0 !important;
+    border-radius: 30px !important;
+    padding: 8px 20px !important;
+    margin-top: 8px !important;
+  }
+
+  .diulem-public-header .navbar-nav > li > a.btn-publish:hover,
+  .diulem-public-header .navbar-nav > li > a.btn-publish:focus,
+  .diulem-public-header .navbar-nav > li > a.btn-login:hover,
+  .diulem-public-header .navbar-nav > li > a.btn-login:focus {
+    color: #ffffff !important;
+    background: #4bb9e3 !important;
+    background-image: linear-gradient(45deg, #9ae7ff 0%, #a5caf2 99%, #c4dafa 100%) !important;
   }
 
   .diulem-public-header .navbar-collapse.collapse {
@@ -120,14 +136,14 @@ if (empty($publicSetting)) {
 <header class="header diulem-public-header">
   <nav class="navbar-me navbar navbar-default" id="mainNav">
     <div class="container">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#diulemPublicNav" aria-controls="diulemPublicNav" aria-expanded="false">
         <span class="sr-only">Toggle Navigation</span>
         <i class="fa fa-bars"></i>
       </button>
       <a class="navbar-brand pull-left" href="<?= base_url() ?>" title="<?= SITE_NAME ?>">
         <img class="img-responsive" src="<?= base_url('assets/base/img/logo4.png') ?>" alt="<?= SITE_NAME ?>">
       </a>
-      <div class="collapse navbar-collapse navbar-ex1-collapse nav-right">
+      <div class="collapse navbar-collapse navbar-ex1-collapse nav-right" id="diulemPublicNav">
         <ul class="nav navbar-nav main-navbar-nav">
           <li><a href="<?= base_url() ?>">Beranda</a></li>
           <li><a class="nav-link js-scroll-trigger" href="<?= base_url('/#fitur') ?>">Fitur</a></li>
@@ -143,3 +159,23 @@ if (empty($publicSetting)) {
     </div>
   </nav>
 </header>
+<script>
+  document.addEventListener('click', function (event) {
+    var toggle = event.target.closest('.diulem-public-header .navbar-toggle');
+    if (!toggle) {
+      return;
+    }
+
+    var target = document.querySelector(toggle.getAttribute('data-target'));
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    var isOpen = target.classList.toggle('in');
+    toggle.classList.toggle('collapsed', !isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }, true);
+</script>
