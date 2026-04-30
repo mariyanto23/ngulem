@@ -18,23 +18,6 @@
         box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
       }
 
-      .slider-1 .item {
-        position: relative;
-      }
-
-      .slider-1 .item::after {
-        background: linear-gradient(90deg, rgba(5, 15, 24, 0.24), rgba(5, 15, 24, 0.10) 52%, rgba(5, 15, 24, 0.02));
-        content: "";
-        inset: 0;
-        pointer-events: none;
-        position: absolute;
-        z-index: 1;
-      }
-
-      .slider-1 .content-slider {
-        z-index: 2;
-      }
-
       .slider-1 .content-slider h3,
       .slider-1 .content-slider p {
         text-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
