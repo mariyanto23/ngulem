@@ -1,3 +1,10 @@
+<?php
+$siteFaviconFile = 'assets/base/img/favicon.ico';
+if (is_file(FCPATH . 'assets/base/img/favicon.png')) {
+    $siteFaviconFile = 'assets/base/img/favicon.png';
+}
+$siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $siteFaviconFile) ?: time());
+?>
 <!DOCTYPE html>
 <html lang="id">
   <head>
@@ -7,10 +14,10 @@
     <meta name="theme-color" content="#7ed9fc">
     <meta name="msapplication-navbutton-color" content="#7ed9fc">
     <meta name="apple-mobile-web-app-status-bar-style" content="#7ed9fc">
-    <link rel="shortcut icon" href="<?= base_url('assets/base/img/favicon.ico') ?>">
-    <link rel="apple-touch-icon" href="<?= base_url('assets/base/img/favicon.ico') ?>">
-    <link rel="apple-touch-icon" sizes="72x72" href="<?= base_url('assets/base/img/favicon.ico') ?>">
-    <link rel="apple-touch-icon" sizes="114x114" href="<?= base_url('assets/base/img/favicon.ico') ?>">
+    <link rel="shortcut icon" href="<?= $siteFaviconUrl ?>">
+    <link rel="apple-touch-icon" href="<?= $siteFaviconUrl ?>">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?= $siteFaviconUrl ?>">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?= $siteFaviconUrl ?>">
     <meta name="robots" content="index, follow"/>
     <meta name="description" content="<?= SITE_NAME ?> adalah layanan undangan online. Yaitu undangan yang dikemas dalam bentuk web yang praktis dan mudah untuk digunakan maupun dibagikan. Selain itu kami juga menerima jasa pembuatan undangan cetak maupun Video.">
     <meta name="keywords" content="undangan digital,undangan online,undangan pernikahan,undangan murah, undangan praktis,undangan nikah,undangan website,creative digital,digital marketing lampung, undangan cetak, udangan kartu,undangan lampung murah,undangan online lampung">
@@ -24,7 +31,7 @@
     <meta property="og:title" content="Undangan Online | Unik, Murah, Modern"/>
     <meta property="og:type" content="blog">
     <meta property="og:description" content="<?= SITE_NAME ?> adalah layanan undangan online. Yaitu undangan yang dikemas dalam bentuk web yang praktis dan mudah untuk digunakan maupun dibagikan. Selain itu kami juga menerima jasa pembuatan undangan cetak maupun Video."/>
-    <meta property="og:image" content="<?= base_url('assets/base/img/favicon.ico') ?>"/>
+    <meta property="og:image" content="<?= $siteFaviconUrl ?>"/>
     <meta property="og:url" content="<?= base_url() ?>"/>
     <meta property="og:site_name" content="Undangan Online | Unik, Murah, Modern"/>
     <meta itemprop="name" content="Undangan Online | Unik, Murah, Modern"/>

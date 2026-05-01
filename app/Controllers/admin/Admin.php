@@ -475,6 +475,66 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         return redirect()->back();
     }
 
+    public function upload_favicon_situs()
+    {
+        if (! $this->validate([
+            'favicon_situs' => [
+                'rules' => 'uploaded[favicon_situs]|ext_in[favicon_situs,png,ico]|max_size[favicon_situs,1024]',
+                'errors' => [
+                    'uploaded' => 'Silakan pilih file favicon terlebih dahulu.',
+                    'mime_in' => 'Favicon situs harus berformat PNG atau ICO.',
+                    'max_size' => 'Ukuran favicon situs maksimal 1 MB.',
+                ],
+            ],
+        ])) {
+            session()->setFlashdata('error', $this->validate->getError('favicon_situs'));
+            return redirect()->back()->withInput();
+        }
+
+        $favicon = $this->request->getFile('favicon_situs');
+        if (! $favicon || ! $favicon->isValid() || $favicon->hasMoved()) {
+            session()->setFlashdata('error', 'File favicon tidak valid.');
+            return redirect()->back()->withInput();
+        }
+
+        $extension = strtolower($favicon->getClientExtension());
+        if (! in_array($extension, ['ico', 'png'], true)) {
+            session()->setFlashdata('error', 'Favicon situs harus berformat PNG atau ICO.');
+            return redirect()->back()->withInput();
+        }
+
+        $targetDir = FCPATH . 'assets/base/img/';
+        if (! is_dir($targetDir)) {
+            @mkdir($targetDir, 0775, true);
+        }
+
+        $targetPath = $targetDir . 'favicon.' . $extension;
+        if (file_exists($targetPath) && ! is_writable($targetPath)) {
+            session()->setFlashdata('error', 'Favicon situs tidak dapat diperbarui karena file tidak bisa ditulis.');
+            return redirect()->back();
+        }
+
+        $content = @file_get_contents($favicon->getTempName());
+        if ($content === false) {
+            session()->setFlashdata('error', 'Gagal membaca file favicon yang diupload.');
+            return redirect()->back();
+        }
+
+        if (@file_put_contents($targetPath, $content) === false) {
+            session()->setFlashdata('error', 'Gagal menyimpan favicon situs.');
+            return redirect()->back();
+        }
+
+        $alternateExtension = $extension === 'png' ? 'ico' : 'png';
+        $alternatePath = $targetDir . 'favicon.' . $alternateExtension;
+        if (file_exists($alternatePath) && is_writable($alternatePath)) {
+            @unlink($alternatePath);
+        }
+
+        session()->setFlashdata('success', 'Favicon situs berhasil diperbarui.');
+        return redirect()->back();
+    }
+
     public function delete_musik_library()
     {
         $trackKey = (string) $this->request->getPost('track_key');

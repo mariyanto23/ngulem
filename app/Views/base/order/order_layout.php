@@ -1,8 +1,15 @@
+<?php
+$siteFaviconFile = 'assets/base/img/favicon.ico';
+if (is_file(FCPATH . 'assets/base/img/favicon.png')) {
+    $siteFaviconFile = 'assets/base/img/favicon.png';
+}
+$siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $siteFaviconFile) ?: time());
+?>
 <!DOCTYPE html>
 <html>
   <head>
     <title><?= SITE_NAME ?> - Digital Invitation Indonesia</title>
-    <link rel="icon" href="<?php echo base_url() ?>/assets/base/img/favicon.ico">
+    <link rel="icon" href="<?= $siteFaviconUrl ?>">
 
     <!-- Required meta tags -->
     <meta charset="utf-8">

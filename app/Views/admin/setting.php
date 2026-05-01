@@ -13,6 +13,11 @@ if ($waGatewayProvider === 'nusagateway') {
 } elseif ($waGatewayProvider === 'starsender') {
     $waGatewayLink = 'https://starsender.online';
 }
+$siteFaviconFile = 'assets/base/img/favicon.ico';
+if (is_file(FCPATH . 'assets/base/img/favicon.png')) {
+    $siteFaviconFile = 'assets/base/img/favicon.png';
+}
+$siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $siteFaviconFile) ?: time());
 ?>
 <div class="page-body">
     <div class="container-xl">
@@ -126,6 +131,28 @@ if ($waGatewayProvider === 'nusagateway') {
                                 </div>
                                 <button class="btn btn-primary" type="submit">
                                     <i class="ti ti-upload me-2"></i>Perbarui Logo Dashboard
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="border-top pt-4">
+                            <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/upload_favicon_situs'); ?>">
+                                <div class="mb-3">
+                                    <label class="form-label d-block">Favicon Situs</label>
+                                    <div class="border rounded p-3 text-center bg-light">
+                                        <img id="favicon-situs-preview" src="<?= $siteFaviconUrl ?>" alt="Favicon situs" style="height:48px;width:48px;object-fit:contain;">
+                                    </div>
+                                    <div class="form-hint mt-2">
+                                        Dipakai untuk situs utama, order, login, dashboard, dan admin. Favicon undangan user tetap memakai favicon masing-masing dan tidak ikut berubah.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Upload Favicon Situs</label>
+                                    <input type="file" id="favicon-situs-input" name="favicon_situs" class="form-control" accept=".ico,.png,image/x-icon,image/png">
+                                    <div class="form-hint">Gunakan PNG atau ICO. Maksimal 1MB.</div>
+                                </div>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="ti ti-upload me-2"></i>Perbarui Favicon Situs
                                 </button>
                             </form>
                         </div>
@@ -415,7 +442,7 @@ function bindLogoPreview(inputSelector, imageSelector) {
             return;
         }
 
-        if (file.type !== 'image/png') {
+        if (!['image/png', 'image/x-icon', 'image/vnd.microsoft.icon'].includes(file.type)) {
             return;
         }
 
@@ -429,4 +456,5 @@ function bindLogoPreview(inputSelector, imageSelector) {
 
 bindLogoPreview('#logo-utama-input', '#logo-utama-preview');
 bindLogoPreview('#logo-dashboard-input', '#logo-dashboard-preview');
+bindLogoPreview('#favicon-situs-input', '#favicon-situs-preview');
 </script>

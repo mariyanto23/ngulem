@@ -55,6 +55,7 @@ if(isset($_SERVER['HTTP_HOST'])){
 	$routes->post('admin/upload_musik_library', 'Admin::upload_musik_library');
 	$routes->post('admin/upload_logo_utama', 'Admin::upload_logo_utama');
 	$routes->post('admin/upload_logo_dashboard', 'Admin::upload_logo_dashboard');
+	$routes->post('admin/upload_favicon_situs', 'Admin::upload_favicon_situs');
 	$routes->post('admin/delete_musik_library', 'Admin::delete_musik_library');
 	$routes->post('admin/add_quote_library', 'Admin::add_quote_library');
 	$routes->post('admin/delete_quote_library', 'Admin::delete_quote_library');

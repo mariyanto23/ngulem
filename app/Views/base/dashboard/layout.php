@@ -1,3 +1,10 @@
+<?php
+$siteFaviconFile = 'assets/base/img/favicon.ico';
+if (is_file(FCPATH . 'assets/base/img/favicon.png')) {
+    $siteFaviconFile = 'assets/base/img/favicon.png';
+}
+$siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $siteFaviconFile) ?: time());
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +15,7 @@
     <meta name="description" content="">
     <meta name="theme-color" content="#0f766e">
     <meta name="author" content="">
-    <link href="<?= base_url('assets/base'); ?>/img/favicon.ico" rel="icon">
+    <link href="<?= $siteFaviconUrl ?>" rel="icon">
     <title><?= SITE_NAME; ?> - <?= $title; ?></title>
 
     <link href="<?= base_url('assets/dashboard/'); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
