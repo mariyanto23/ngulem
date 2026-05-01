@@ -4,6 +4,8 @@ if (is_file(FCPATH . 'assets/base/img/favicon.png')) {
     $siteFaviconFile = 'assets/base/img/favicon.png';
 }
 $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $siteFaviconFile) ?: time());
+$siteLogoFile = 'assets/base/img/logo.png';
+$siteLogoUrl = base_url($siteLogoFile) . '?v=' . (@filemtime(FCPATH . $siteLogoFile) ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +28,7 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
         }
 
         .public-auth-main {
-            padding: 40px 16px;
+            padding: 48px 16px;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -50,7 +52,7 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
 
 <body class="diulem-auth-page">
 <main class="public-auth-main">
-<?php echo view($view); ?>
+<?php echo view($view, ['siteLogoUrl' => $siteLogoUrl, 'siteFaviconUrl' => $siteFaviconUrl]); ?>
 </main>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url('assets/dashboard'); ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

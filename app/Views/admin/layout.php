@@ -193,6 +193,7 @@ $isSettingMenu = in_array($activeMenu, $settingMenus, true);
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+<script src="<?= base_url() ?>/assets/base/js/croppie.min.js"></script>
 <script src="<?= base_url('assets/admin'); ?>/js/diulem-admin.js?v=<?= filemtime(FCPATH . 'assets/admin/js/diulem-admin.js') ?>"></script>
 
 <script>

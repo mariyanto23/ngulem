@@ -6,6 +6,8 @@ if (empty($publicSetting)) {
     $publicSetting = (new BerandaModel())->get_setting();
 }
 $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publicSetting[0] : null;
+$publicLogoFile = 'assets/base/img/logo.png';
+$publicLogoUrl = base_url($publicLogoFile) . '?v=' . (@filemtime(FCPATH . $publicLogoFile) ?: time());
 $publicSocialLinks = [];
 if ($publicSettingRow) {
     $socialCandidates = [
@@ -135,7 +137,7 @@ if ($publicSettingRow) {
           <div class="footer-widget">
             <div class="footer_content">
               <div class="about-us">
-                <img class="img-responsive" src="<?= base_url('assets/base/img/logo4.png') ?>" style="max-height:80px" alt="<?= SITE_NAME ?>">
+                <img class="img-responsive" src="<?= $publicLogoUrl ?>" style="max-height:80px" alt="<?= SITE_NAME ?>">
                 <p><?= SITE_NAME ?> adalah layanan undangan pernikahan online. Yaitu undangan yang dikemas dalam bentuk web yang praktis dan mudah untuk digunakan maupun dibagikan.</p>
               </div>
               <?php if (!empty($publicSocialLinks)) { ?>

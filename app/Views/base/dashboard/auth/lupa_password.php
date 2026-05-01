@@ -2,7 +2,7 @@
     <div class="diulem-auth-card">
         <div class="diulem-auth-brand text-center">
             <a href="<?= SITE_UTAMA ?>" class="diulem-auth-logo">
-                <img src="<?= base_url() ?>/assets/base/img/logo.png" alt="Diulem">
+                <img src="<?= esc($siteLogoUrl ?? base_url('assets/base/img/logo.png')) ?>" alt="<?= SITE_NAME ?>">
             </a>
             <h1 class="diulem-auth-title">Lupa Password</h1>
             <p class="diulem-auth-subtitle">Masukkan email akunmu. Kami akan kirim langkah untuk membuat password baru.</p>
@@ -23,7 +23,7 @@
         <form method="post" action="<?= base_url('do_kirim'); ?>" class="diulem-auth-form">
             <div class="form-group">
                 <label class="diulem-auth-label" for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="nama@email.com" name="email">
+                <input type="email" class="form-control" id="email" placeholder="nama@email.com" name="email" autocomplete="email" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset</button>
         </form>

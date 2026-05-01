@@ -2,7 +2,7 @@
     <div class="diulem-auth-card">
         <div class="diulem-auth-brand text-center">
             <a href="<?= SITE_UTAMA ?>" class="diulem-auth-logo">
-                <img src="<?= base_url() ?>/assets/base/img/logo.png" alt="Diulem">
+                <img src="<?= esc($siteLogoUrl ?? base_url('assets/base/img/logo.png')) ?>" alt="<?= SITE_NAME ?>">
             </a>
             <h1 class="diulem-auth-title">Ganti Password</h1>
             <p class="diulem-auth-subtitle">Buat password baru untuk mengamankan akun dashboard pengguna.</p>
@@ -25,12 +25,12 @@
             <input type="hidden" name="reset_token" value="<?= esc($reset_token ?? '') ?>">
             <div class="form-group">
                 <label class="diulem-auth-label" for="pass">Password Baru</label>
-                <input type="password" class="form-control" id="pass" placeholder="Masukkan password baru" name="pass">
+                <input type="password" class="form-control" id="pass" placeholder="Masukkan password baru" name="pass" autocomplete="new-password" minlength="8" required>
                 <small class="form-text text-muted">Minimal 8 karakter.</small>
             </div>
             <div class="form-group">
                 <label class="diulem-auth-label" for="pass2">Konfirmasi Password</label>
-                <input type="password" class="form-control" id="pass2" placeholder="Ulangi password baru" name="pass2">
+                <input type="password" class="form-control" id="pass2" placeholder="Ulangi password baru" name="pass2" autocomplete="new-password" minlength="8" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Ganti Password</button>
         </form>

@@ -479,10 +479,10 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     {
         if (! $this->validate([
             'favicon_situs' => [
-                'rules' => 'uploaded[favicon_situs]|ext_in[favicon_situs,png,ico]|max_size[favicon_situs,1024]',
+                'rules' => 'uploaded[favicon_situs]|ext_in[favicon_situs,png]|max_size[favicon_situs,1024]',
                 'errors' => [
                     'uploaded' => 'Silakan pilih file favicon terlebih dahulu.',
-                    'mime_in' => 'Favicon situs harus berformat PNG atau ICO.',
+                    'ext_in' => 'Favicon situs harus berformat PNG.',
                     'max_size' => 'Ukuran favicon situs maksimal 1 MB.',
                 ],
             ],
@@ -498,8 +498,8 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         }
 
         $extension = strtolower($favicon->getClientExtension());
-        if (! in_array($extension, ['ico', 'png'], true)) {
-            session()->setFlashdata('error', 'Favicon situs harus berformat PNG atau ICO.');
+        if ($extension !== 'png') {
+            session()->setFlashdata('error', 'Favicon situs harus berformat PNG.');
             return redirect()->back()->withInput();
         }
 

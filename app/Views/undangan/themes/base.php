@@ -1,3 +1,10 @@
+<?php
+$siteIconFile = 'assets/base/img/favicon.ico';
+if (is_file(FCPATH . 'assets/base/img/favicon.png')) {
+    $siteIconFile = 'assets/base/img/favicon.png';
+}
+$siteIconUrl = base_url($siteIconFile) . '?v=' . (@filemtime(FCPATH . $siteIconFile) ?: time());
+?>
 <!DOCTYPE html>
 <html lang="id" >
 <head>
@@ -96,7 +103,7 @@ if($setting[0]->aktif <= 0 || $today >= $tglNonaktif ){
 <!-- ============== HALAMAN AWAL =============== -->
 <div class="thebegining">
 	<div class="content-thebegining">
-		<img src="<?php echo base_url() ?>/assets/base/img/logo3.png" style="width:100px;height: 100px;"> <br>		
+		<img src="<?= $siteIconUrl ?>" style="width:100px;height: 100px;object-fit:contain;"> <br>
 	</div>
 
 	<div class="salam">

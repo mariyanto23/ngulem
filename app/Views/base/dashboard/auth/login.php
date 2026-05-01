@@ -2,7 +2,7 @@
     <div class="diulem-auth-card">
         <div class="diulem-auth-brand text-center">
             <a href="<?= SITE_UTAMA ?>" class="diulem-auth-logo">
-                <img src="<?= base_url() ?>/assets/base/img/logo.png" alt="Diulem">
+                <img src="<?= esc($siteLogoUrl ?? base_url('assets/base/img/logo.png')) ?>" alt="<?= SITE_NAME ?>">
             </a>
             <h1 class="diulem-auth-title">Login</h1>
             <p class="diulem-auth-subtitle">Masuk ke dashboard pengguna untuk melanjutkan pengaturan undangan.</p>
@@ -33,11 +33,11 @@
         <form method="post" action="<?= base_url('do_auth'); ?>" class="diulem-auth-form">
             <div class="form-group">
                 <label class="diulem-auth-label" for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="nama@email.com" name="email">
+                <input type="email" class="form-control" id="email" placeholder="nama@email.com" name="email" autocomplete="email" required>
             </div>
             <div class="form-group">
                 <label class="diulem-auth-label" for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Masukkan password" name="password">
+                <input type="password" class="form-control" id="password" placeholder="Masukkan password" name="password" autocomplete="current-password" required>
             </div>
             <div class="form-group mb-4">
                 <div class="custom-control custom-checkbox diulem-auth-check">

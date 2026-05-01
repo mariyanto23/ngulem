@@ -29,9 +29,9 @@
   border: 1px solid var(--diulem-line);
   border-radius: 12px;
   box-shadow: 0 24px 70px rgba(15, 23, 42, 0.10);
-  padding: 28px 24px 22px;
+  padding: 30px 26px 24px;
   width: 100%;
-  max-width: 430px;
+  max-width: 450px;
 }
 
 .diulem-auth-brand {
@@ -40,11 +40,15 @@
 
 .diulem-auth-logo {
   display: inline-flex;
+  justify-content: center;
   margin-bottom: 18px;
+  max-width: 100%;
 }
 
 .diulem-auth-logo img {
-  height: 52px;
+  max-height: 58px;
+  max-width: 220px;
+  object-fit: contain;
   width: auto;
 }
 
@@ -112,12 +116,30 @@
 }
 
 .diulem-auth-check {
-  line-height: 1.5rem;
+  align-items: flex-start;
+  display: flex;
+  gap: 10px;
+  line-height: 1.45;
+  min-height: 24px;
+  padding-left: 0;
+}
+
+.diulem-auth-check .custom-control-input {
+  flex: 0 0 auto;
+  margin: 3px 0 0;
+  position: static;
 }
 
 .diulem-auth-check .custom-control-label {
   color: #5b6877;
   font-size: 0.9rem;
+  margin: 0;
+  padding-left: 0;
+}
+
+.diulem-auth-check .custom-control-label::before,
+.diulem-auth-check .custom-control-label::after {
+  display: none;
 }
 
 .diulem-auth-links {
@@ -140,6 +162,22 @@
 .diulem-auth-page .alert {
   border-radius: 8px;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 575.98px) {
+  .diulem-auth-card {
+    border-radius: 10px;
+    padding: 24px 18px 20px;
+  }
+
+  .diulem-auth-logo img {
+    max-height: 50px;
+    max-width: 190px;
+  }
+
+  .diulem-auth-title {
+    font-size: 1.35rem;
+  }
 }
 
 body,

@@ -100,7 +100,7 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Upload Logo Utama</label>
-                                <input type="file" id="logo-utama-input" name="logo_utama" class="form-control" accept=".png,image/png">
+                                <input type="file" id="logo-utama-input" name="logo_utama" class="form-control js-brand-crop-input" accept=".png,image/png" data-crop-title="Crop Logo Utama" data-crop-result="png">
                                 <div class="form-hint">Gunakan PNG transparan agar hasilnya rapi. Maksimal 5MB.</div>
                             </div>
                             <button class="btn btn-primary" type="submit">
@@ -148,8 +148,8 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Upload Favicon Situs</label>
-                                    <input type="file" id="favicon-situs-input" name="favicon_situs" class="form-control" accept=".ico,.png,image/x-icon,image/png">
-                                    <div class="form-hint">Gunakan PNG atau ICO. Maksimal 1MB.</div>
+                                    <input type="file" id="favicon-situs-input" name="favicon_situs" class="form-control js-brand-crop-input" accept=".png,image/png" data-crop-title="Crop Logo Icon" data-crop-result="png">
+                                    <div class="form-hint">Gunakan PNG. Maksimal 1MB.</div>
                                 </div>
                                 <button class="btn btn-primary" type="submit">
                                     <i class="ti ti-upload me-2"></i>Perbarui Favicon Situs
@@ -389,6 +389,27 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
     </div>
 </div>
 
+<div class="modal fade" id="brandCropModal" tabindex="-1" aria-labelledby="brandCropModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="brandCropModalLabel">Crop Gambar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="brand-crop-area" style="width:100%;min-height:360px;"></div>
+                <div class="form-hint mt-3">Area crop bebas. Geser gambar dan zoom sesuai kebutuhan, tanpa patokan resolusi tetap.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary" id="brand-crop-apply">
+                    <i class="ti ti-crop me-2"></i>Gunakan Hasil Crop
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 $('#simpanSetting1').on('click', function() {
     DiulemAdmin.post("<?= base_url('admin/update_setting1') ?>", {
@@ -428,6 +449,112 @@ $('#simpanSetting2').on('click', function() {
     });
 });
 
+var brandCrop = {
+    croppie: null,
+    input: null,
+    image: null,
+    modal: null,
+    fileName: 'brand.png',
+    resultType: 'png'
+};
+
+function dataUrlToFile(dataUrl, fileName) {
+    var parts = dataUrl.split(',');
+    var mime = parts[0].match(/:(.*?);/)[1];
+    var binary = atob(parts[1]);
+    var length = binary.length;
+    var bytes = new Uint8Array(length);
+
+    for (var i = 0; i < length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+    }
+
+    return new File([bytes], fileName, { type: mime });
+}
+
+function assignFileToInput(input, file) {
+    var transfer = new DataTransfer();
+    transfer.items.add(file);
+    input.files = transfer.files;
+}
+
+function previewPlainFile(input, image) {
+    var file = input.files && input.files[0] ? input.files[0] : null;
+    if (!file || !image || !file.type.match(/^image\//)) {
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(loadEvent) {
+        image.src = loadEvent.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function destroyBrandCrop() {
+    if (brandCrop.croppie) {
+        brandCrop.croppie.destroy();
+        brandCrop.croppie = null;
+    }
+
+    var cropArea = document.getElementById('brand-crop-area');
+    if (cropArea) {
+        cropArea.innerHTML = '';
+    }
+}
+
+function openBrandCrop(input, image, file) {
+    if (typeof Croppie === 'undefined') {
+        previewPlainFile(input, image);
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(loadEvent) {
+        var source = loadEvent.target.result;
+        var probe = new Image();
+
+        probe.onload = function() {
+            destroyBrandCrop();
+
+            brandCrop.input = input;
+            brandCrop.image = image;
+            brandCrop.fileName = file.name.replace(/\.[^.]+$/, '') + '.png';
+            brandCrop.resultType = input.getAttribute('data-crop-result') || 'png';
+
+            var cropArea = document.getElementById('brand-crop-area');
+            var maxWidth = Math.min(cropArea.clientWidth || 640, 640);
+            var maxHeight = 340;
+            var scale = Math.min(maxWidth / probe.width, maxHeight / probe.height, 1);
+            var viewportWidth = Math.max(120, Math.round(probe.width * scale));
+            var viewportHeight = Math.max(120, Math.round(probe.height * scale));
+            var boundaryWidth = Math.max(viewportWidth + 40, Math.min(maxWidth, viewportWidth + 120));
+            var boundaryHeight = Math.max(viewportHeight + 40, Math.min(420, viewportHeight + 120));
+
+            document.getElementById('brandCropModalLabel').textContent = input.getAttribute('data-crop-title') || 'Crop Gambar';
+
+            brandCrop.croppie = new Croppie(cropArea, {
+                viewport: {
+                    width: viewportWidth,
+                    height: viewportHeight
+                },
+                boundary: {
+                    width: boundaryWidth,
+                    height: boundaryHeight
+                },
+                enableExif: true,
+                enableOrientation: true
+            });
+
+            brandCrop.croppie.bind({ url: source });
+            brandCrop.modal.show();
+        };
+
+        probe.src = source;
+    };
+    reader.readAsDataURL(file);
+}
+
 function bindLogoPreview(inputSelector, imageSelector) {
     var input = document.querySelector(inputSelector);
     var image = document.querySelector(imageSelector);
@@ -442,17 +569,53 @@ function bindLogoPreview(inputSelector, imageSelector) {
             return;
         }
 
-        if (!['image/png', 'image/x-icon', 'image/vnd.microsoft.icon'].includes(file.type)) {
+        if (input.classList.contains('js-brand-crop-input')) {
+            if (file.type !== 'image/png') {
+                DiulemAdmin.notify('error', 'Format tidak sesuai', 'Crop logo hanya mendukung file PNG.');
+                input.value = '';
+                return;
+            }
+
+            openBrandCrop(input, image, file);
             return;
         }
 
-        var reader = new FileReader();
-        reader.onload = function(loadEvent) {
-            image.src = loadEvent.target.result;
-        };
-        reader.readAsDataURL(file);
+        previewPlainFile(input, image);
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var modalElement = document.getElementById('brandCropModal');
+    if (modalElement && window.bootstrap) {
+        brandCrop.modal = new bootstrap.Modal(modalElement);
+
+        modalElement.addEventListener('hidden.bs.modal', destroyBrandCrop);
+    }
+
+    var applyButton = document.getElementById('brand-crop-apply');
+    if (applyButton) {
+        applyButton.addEventListener('click', function() {
+            if (!brandCrop.croppie || !brandCrop.input) {
+                return;
+            }
+
+            brandCrop.croppie.result({
+                type: 'base64',
+                format: brandCrop.resultType,
+                size: 'original'
+            }).then(function(base64) {
+                var croppedFile = dataUrlToFile(base64, brandCrop.fileName);
+                assignFileToInput(brandCrop.input, croppedFile);
+
+                if (brandCrop.image) {
+                    brandCrop.image.src = base64;
+                }
+
+                brandCrop.modal.hide();
+            });
+        });
+    }
+});
 
 bindLogoPreview('#logo-utama-input', '#logo-utama-preview');
 bindLogoPreview('#logo-dashboard-input', '#logo-dashboard-preview');

@@ -6,6 +6,8 @@ $publicSetting = $setting ?? null;
 if (empty($publicSetting)) {
     $publicSetting = (new BerandaModel())->get_setting();
 }
+$publicLogoFile = 'assets/base/img/logo.png';
+$publicLogoUrl = base_url($publicLogoFile) . '?v=' . (@filemtime(FCPATH . $publicLogoFile) ?: time());
 ?>
 <style>
   .diulem-public-header .navbar {
@@ -192,7 +194,7 @@ if (empty($publicSetting)) {
         <span class="diulem-burger-line"></span>
       </button>
       <a class="navbar-brand pull-left" href="<?= base_url() ?>" title="<?= SITE_NAME ?>">
-        <img class="img-responsive" src="<?= base_url('assets/base/img/logo4.png') ?>" alt="<?= SITE_NAME ?>">
+        <img class="img-responsive" src="<?= $publicLogoUrl ?>" alt="<?= SITE_NAME ?>">
       </a>
       <div class="collapse navbar-collapse navbar-ex1-collapse nav-right" id="diulemPublicNav">
         <ul class="nav navbar-nav main-navbar-nav">

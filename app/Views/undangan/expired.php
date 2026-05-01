@@ -1,3 +1,10 @@
+<?php
+$siteIconFile = 'assets/base/img/favicon.ico';
+if (is_file(FCPATH . 'assets/base/img/favicon.png')) {
+    $siteIconFile = 'assets/base/img/favicon.png';
+}
+$siteIconUrl = base_url($siteIconFile) . '?v=' . (@filemtime(FCPATH . $siteIconFile) ?: time());
+?>
 <!DOCTYPE html>
 <html lang="id" >
 <head>
@@ -38,7 +45,7 @@
 <div class="blocked" style="z-index:99999999;background:#f5f6fa;position:absolute;left:0;right:0;top:0;bottom:0;">
 
 <div class="content-thebegining">
-	<img src="<?php echo base_url() ?>/assets/base/img/logo3.png" style="width:100px;height: 100px;"> <br>		
+	<img src="<?= $siteIconUrl ?>" style="width:100px;height: 100px;object-fit:contain;"> <br>
 </div>
 
 <div class="blocked_message" style="display: flex;justify-content: center;align-items: center;height: 100vh;flex-direction: column;position:absolute;top:0;bottom:0;left:0;right:0;">
