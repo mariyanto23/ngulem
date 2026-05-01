@@ -200,26 +200,45 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
       .order-flow .btn-order,
       .order-flow .btn-primary.btn-order,
       .order-flow .btn-primary {
+        align-items: center;
         min-height: 46px;
         border: 0;
         border-radius: 10px;
         background: linear-gradient(135deg, var(--order-primary), #14b8a6) !important;
         box-shadow: 0 12px 24px rgba(15, 118, 110, 0.18);
+        color: #ffffff !important;
+        display: inline-flex;
+        justify-content: center;
         font-weight: 600;
+        line-height: 1.25;
+        padding: 10px 18px;
+        text-align: center;
+        text-decoration: none !important;
       }
 
       .order-flow .btn-order:hover,
-      .order-flow .btn-primary:hover {
+      .order-flow .btn-order:focus,
+      .order-flow .btn-primary:hover,
+      .order-flow .btn-primary:focus {
         background: linear-gradient(135deg, var(--order-primary-dark), #0f9b8e) !important;
+        color: #ffffff !important;
       }
 
       .order-flow .btn-secondary {
+        align-items: center;
         min-height: 46px;
         border-radius: 10px;
         border: 1px solid var(--order-border);
         background: #f7faf9;
         color: var(--order-text);
+        display: inline-flex;
+        justify-content: center;
+        font-weight: 600;
+        line-height: 1.25;
+        padding: 10px 18px;
         box-shadow: none;
+        text-align: center;
+        text-decoration: none !important;
       }
 
       .order-flow .btn-secondary:hover {
@@ -227,20 +246,82 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
         color: var(--order-primary-dark);
       }
 
+      .order-flow .btn-success,
+      .order-flow .btn-danger {
+        align-items: center;
+        border: 0;
+        border-radius: 10px;
+        color: #ffffff !important;
+        display: inline-flex;
+        justify-content: center;
+        font-weight: 600;
+        line-height: 1.25;
+        min-height: 42px;
+        padding: 9px 16px;
+        text-align: center;
+        text-decoration: none !important;
+      }
+
+      .order-flow .btn-success {
+        background: #16a34a !important;
+        box-shadow: 0 10px 22px rgba(22, 163, 74, 0.16);
+      }
+
+      .order-flow .btn-danger {
+        background: #dc2626 !important;
+        box-shadow: 0 10px 22px rgba(220, 38, 38, 0.14);
+      }
+
+      .order-flow .btn-success:hover,
+      .order-flow .btn-success:focus {
+        background: #15803d !important;
+        color: #ffffff !important;
+      }
+
+      .order-flow .btn-danger:hover,
+      .order-flow .btn-danger:focus {
+        background: #b91c1c !important;
+        color: #ffffff !important;
+      }
+
       .order-flow .btn-dark {
+        align-items: center;
         min-height: 42px;
         border-radius: 10px;
         border: 0;
         background: var(--order-primary);
         box-shadow: 0 10px 22px rgba(15, 118, 110, 0.18);
-        color: #fff;
+        color: #fff !important;
+        display: inline-flex;
+        justify-content: center;
         font-weight: 600;
+        padding: 9px 16px;
+        text-align: center;
       }
 
       .order-flow .btn-dark:hover,
       .order-flow .btn-dark:focus {
         background: var(--order-primary-dark);
         color: #fff;
+      }
+
+      .order-flow .upload-area-button {
+        align-items: center;
+        background: #ffffff !important;
+        border: 1px solid var(--order-border) !important;
+        border-radius: 10px !important;
+        color: var(--order-primary-dark) !important;
+        display: inline-flex;
+        font-weight: 700;
+        justify-content: center;
+        min-height: 42px;
+        padding: 9px 16px;
+      }
+
+      .order-flow .upload-area-button:hover,
+      .order-flow .upload-area-button:focus {
+        background: #eefaf8 !important;
+        color: var(--order-primary-dark) !important;
       }
 
       .order-flow .upload-area-bg {
@@ -268,9 +349,11 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
       }
 
       .order-flow .preview-uploads {
+        align-items: center;
         border: 1px solid var(--order-border);
         border-radius: 14px;
         background: #fff;
+        gap: 12px;
         padding: 10px;
       }
 
@@ -404,11 +487,20 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
 
       .order-flow .order-actions .row {
         align-items: stretch;
+        row-gap: 12px;
+      }
+
+      .order-flow .order-actions .btn,
+      .order-flow .order-actions input[type="submit"],
+      .order-flow .order-actions a {
+        margin-bottom: 0;
+        width: 100%;
       }
 
       .order-flow .order-link-button {
-        color: var(--order-text-soft);
+        color: var(--order-primary-dark) !important;
         font-weight: 600;
+        margin-top: 6px;
       }
 
       .order-flow .order-link-button:hover {
@@ -565,7 +657,7 @@ $siteFaviconUrl = base_url($siteFaviconFile) . '?v=' . (@filemtime(FCPATH . $sit
         .order-flow .order-actions .col-auto {
           flex: 0 0 100%;
           max-width: 100%;
-          margin-bottom: 10px;
+          margin-bottom: 0;
         }
 
         .order-flow .order-actions .btn,

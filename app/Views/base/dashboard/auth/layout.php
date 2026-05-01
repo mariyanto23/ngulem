@@ -28,10 +28,12 @@ $siteLogoUrl = base_url($siteLogoFile) . '?v=' . (@filemtime(FCPATH . $siteLogoF
         }
 
         .public-auth-main {
+            justify-content: center;
             padding: 48px 16px;
             min-height: 100vh;
             display: flex;
             align-items: center;
+            width: 100%;
         }
 
         .public-auth-main .diulem-auth-shell {
@@ -39,6 +41,8 @@ $siteLogoUrl = base_url($siteLogoFile) . '?v=' . (@filemtime(FCPATH . $siteLogoF
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
+            width: 100%;
         }
 
         @media (max-width: 767.98px) {
