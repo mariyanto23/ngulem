@@ -59,7 +59,7 @@
             <div class="row align-items-center">
               <div class="col mt-4">
                 <label>Nama Domain / URL Undangan</label>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 order-domain-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon3"><?= DOMAIN_UNDANGAN ?>/</span>
                   </div>
@@ -89,6 +89,47 @@
                 <?php } else { ?>
                 <small id="order-email-verified-state" class="form-text text-muted">Email belum diverifikasi.</small>
                 <?php } ?>
+
+                <?php if (!empty($order_email_verification_pending) && !empty($order_email_verification_email)) { ?>
+                <div class="order-code-card order-email-verification">
+                  <div class="order-code-label">Kode Verifikasi</div>
+                  <div class="text-muted" style="margin-bottom:14px;">Kami sudah mengirim kode 6 digit ke <strong><?= esc($order_email_verification_email) ?></strong>.</div>
+                  <div id="order-email-countdown"
+                       class="text-muted"
+                       data-expires-at="<?= (int) $order_email_verification_expires_at ?>"
+                       style="margin-bottom:14px;font-size:13px;">
+                    Kode verifikasi sedang disiapkan...
+                  </div>
+                  <div class="order-verification-row">
+                    <div class="order-verification-input">
+                      <label>Kode Verifikasi</label>
+                      <input type="text"
+                             id="verification_code"
+                             name="verification_code"
+                             form="order-verify-email-form"
+                             class="form-control"
+                             placeholder="6 digit kode"
+                             inputmode="numeric"
+                             autocomplete="one-time-code"
+                             maxlength="6"
+                             pattern="[0-9]{6}"
+                             required>
+                    </div>
+                    <button type="submit"
+                            id="order-verify-email-button"
+                            form="order-verify-email-form"
+                            class="btn btn-primary btn-order">
+                      <span class="order-btn-label">Verifikasi</span>
+                    </button>
+                  </div>
+                  <button type="submit"
+                          id="order-resend-email-button"
+                          form="order-resend-email-form"
+                          class="btn btn-secondary order-resend-button">
+                    <span class="order-btn-label">Kirim Ulang Kode</span>
+                  </button>
+                </div>
+                <?php } ?>
               </div>
             </div>
             <div class="row align-items-center mt-3">
@@ -117,7 +158,7 @@
                   </div>
                 </div>
 
-                <div class="form-check mt-4 text-center">
+                <div class="form-check mt-4 order-terms">
                   <input class="form-check-input"
                          type="checkbox"
                          value="1"
@@ -131,46 +172,8 @@
               </div>
             </div>
             </form>
-
-            <?php if (!empty($order_email_verification_pending) && !empty($order_email_verification_email)) { ?>
-            <div class="order-code-card" style="margin-top:22px;">
-              <div class="order-code-label">Verifikasi Email</div>
-              <div class="text-muted" style="margin-bottom:14px;">Kami sudah mengirim kode 6 digit ke <strong><?= esc($order_email_verification_email) ?></strong>. Masukkan kodenya untuk lanjut ke langkah berikutnya.</div>
-              <div id="order-email-countdown"
-                   class="text-muted"
-                   data-expires-at="<?= (int) $order_email_verification_expires_at ?>"
-                   style="margin-bottom:14px;font-size:13px;">
-                Kode verifikasi sedang disiapkan...
-              </div>
-              <form id="order-verify-email-form" action="<?= base_url('order/verify-email') ?>" method="post">
-                <div class="row align-items-end">
-                  <div class="col-sm-8">
-                    <label>Kode Verifikasi</label>
-                    <input type="text"
-                           id="verification_code"
-                           name="verification_code"
-                           class="form-control"
-                           placeholder="Masukkan 6 digit kode email"
-                           inputmode="numeric"
-                           autocomplete="one-time-code"
-                           maxlength="6"
-                           pattern="[0-9]{6}"
-                           required>
-                  </div>
-                  <div class="col-sm-4" style="margin-top:12px;">
-                    <button type="submit" id="order-verify-email-button" class="btn btn-primary btn-order btn-block">
-                      <span class="order-btn-label">Verifikasi</span>
-                    </button>
-                  </div>
-                </div>
-              </form>
-              <form id="order-resend-email-form" action="<?= base_url('order/resend-email-code') ?>" method="post" style="margin-top:12px;">
-                <button type="submit" id="order-resend-email-button" class="btn btn-secondary btn-order btn-block">
-                  <span class="order-btn-label">Kirim Ulang Kode</span>
-                </button>
-              </form>
-            </div>
-            <?php } ?>
+            <form id="order-verify-email-form" action="<?= base_url('order/verify-email') ?>" method="post"></form>
+            <form id="order-resend-email-form" action="<?= base_url('order/resend-email-code') ?>" method="post"></form>
 
           </div>
         </div>

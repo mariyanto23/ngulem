@@ -427,6 +427,49 @@
         text-transform: uppercase;
       }
 
+      .order-flow .order-email-verification {
+        margin-top: 14px;
+        padding: 16px;
+      }
+
+      .order-flow .order-verification-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: end;
+      }
+
+      .order-flow .order-verification-row .btn {
+        min-width: 126px;
+      }
+
+      .order-flow .order-resend-button {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .order-flow .order-terms {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+
+      .order-flow .order-terms .form-check-input {
+        position: static;
+        margin: 3px 0 0;
+        flex: 0 0 auto;
+      }
+
+      .order-flow .order-terms .form-check-label {
+        margin: 0;
+        color: var(--order-text-soft);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
       @media (max-width: 767.98px) {
         .order-page {
           padding: 28px 0 40px;
@@ -470,6 +513,39 @@
 
         .order-flow .input-group-prepend,
         .order-flow .input-group-append {
+          width: 100%;
+        }
+
+        .order-flow .order-domain-group {
+          flex-direction: row;
+          gap: 0;
+        }
+
+        .order-flow .order-domain-group .input-group-prepend {
+          flex: 0 0 auto;
+          width: auto;
+        }
+
+        .order-flow .order-domain-group .input-group-text {
+          width: auto;
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+          white-space: nowrap;
+        }
+
+        .order-flow .order-domain-group .form-control {
+          flex: 1 1 auto;
+          width: 1%;
+          min-width: 0;
+          border-top-left-radius: 0 !important;
+          border-bottom-left-radius: 0 !important;
+        }
+
+        .order-flow .order-verification-row {
+          grid-template-columns: 1fr;
+        }
+
+        .order-flow .order-verification-row .btn {
           width: 100%;
         }
 
