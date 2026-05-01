@@ -383,11 +383,11 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     {
         if (! $this->validate([
             'logo_utama' => [
-                'rules' => 'uploaded[logo_utama]|mime_in[logo_utama,image/png]|max_size[logo_utama,2048]',
+                'rules' => 'uploaded[logo_utama]|mime_in[logo_utama,image/png]|max_size[logo_utama,5120]',
                 'errors' => [
                     'uploaded' => 'Silakan pilih file logo terlebih dahulu.',
                     'mime_in' => 'Logo utama harus berformat PNG.',
-                    'max_size' => 'Ukuran logo utama maksimal 2 MB.',
+                    'max_size' => 'Ukuran logo utama maksimal 5 MB.',
                 ],
             ],
         ])) {
@@ -431,11 +431,11 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
     {
         if (! $this->validate([
             'logo_dashboard' => [
-                'rules' => 'uploaded[logo_dashboard]|mime_in[logo_dashboard,image/png]|max_size[logo_dashboard,2048]',
+                'rules' => 'uploaded[logo_dashboard]|mime_in[logo_dashboard,image/png]|max_size[logo_dashboard,5120]',
                 'errors' => [
                     'uploaded' => 'Silakan pilih file logo dashboard terlebih dahulu.',
                     'mime_in' => 'Logo dashboard harus berformat PNG.',
-                    'max_size' => 'Ukuran logo dashboard maksimal 2 MB.',
+                    'max_size' => 'Ukuran logo dashboard maksimal 5 MB.',
                 ],
             ],
         ])) {

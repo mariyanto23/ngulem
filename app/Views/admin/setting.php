@@ -96,7 +96,7 @@ if ($waGatewayProvider === 'nusagateway') {
                             <div class="mb-3">
                                 <label class="form-label">Upload Logo Utama</label>
                                 <input type="file" id="logo-utama-input" name="logo_utama" class="form-control" accept=".png,image/png">
-                                <div class="form-hint">Gunakan PNG transparan agar hasilnya rapi. Maksimal 2MB.</div>
+                                <div class="form-hint">Gunakan PNG transparan agar hasilnya rapi. Maksimal 5MB.</div>
                             </div>
                             <button class="btn btn-primary" type="submit">
                                 <i class="ti ti-upload me-2"></i>Perbarui Logo Utama
@@ -122,7 +122,7 @@ if ($waGatewayProvider === 'nusagateway') {
                                 <div class="mb-3">
                                     <label class="form-label">Upload Logo Dashboard</label>
                                     <input type="file" id="logo-dashboard-input" name="logo_dashboard" class="form-control" accept=".png,image/png">
-                                    <div class="form-hint">Gunakan PNG transparan agar tetap tajam di ukuran kecil. Maksimal 2MB.</div>
+                                    <div class="form-hint">Gunakan PNG transparan agar tetap tajam di ukuran kecil. Maksimal 5MB.</div>
                                 </div>
                                 <button class="btn btn-primary" type="submit">
                                     <i class="ti ti-upload me-2"></i>Perbarui Logo Dashboard

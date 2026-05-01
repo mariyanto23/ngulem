@@ -37,7 +37,8 @@
             </div>
           <?php } ?>
 
-          <form id="order-step1-form" action="<?php echo base_url('order/2') ?>" method="post">
+            <form id="order-step1-form" action="<?php echo base_url('order/2') ?>" method="post">
+              <input type="hidden" name="submit" value="1">
             <div class="row align-items-center mt-3">
               <div class="col">
                 <label>Paket Undangan</label>
@@ -148,11 +149,10 @@
                 <div class="row">
                   <div class="col">
                     <input id="order-next-button"
-                      class="btn btn-primary btn-order btn-block"
-                      type="submit"
-                      name="submit"
-                      value="Lanjut"
-                      <?= empty($order_email_verified_current) ? 'disabled' : '' ?>>
+                           class="btn btn-primary btn-order btn-block"
+                           type="submit"
+                           value="Lanjut"
+                           <?= empty($order_email_verified_current) ? 'disabled' : '' ?>>
                   </div>
                 </div>
 
@@ -224,30 +224,47 @@
       }
     }
 
-    function syncEmailVerificationState() {
+    function isCurrentEmailVerified() {
       if (!emailInput || !nextButton || !verifiedState) {
-        return;
+        return false;
       }
 
       var currentEmail = (emailInput.value || '').trim().toLowerCase();
-      var verifiedCurrent = isVerified && currentEmail !== '' && currentEmail === verifiedEmail.toLowerCase();
+      return isVerified && currentEmail !== '' && currentEmail === verifiedEmail.toLowerCase();
+    }
 
-      nextButton.disabled = !verifiedCurrent;
-      if (verifiedCurrent) {
-        verifiedState.textContent = 'Email ini sudah terverifikasi.';
-        verifiedState.style.color = '#166534';
-        verifiedState.style.fontWeight = '600';
-      } else {
-        verifiedState.textContent = 'Email belum diverifikasi.';
-        verifiedState.style.color = '';
-        verifiedState.style.fontWeight = '';
+    function syncStep1State() {
+      if (!nextButton) {
+        return;
+      }
+
+      var verifiedCurrent = isCurrentEmailVerified();
+      var termsAccepted = !agreeTerms || agreeTerms.checked;
+
+      nextButton.disabled = !verifiedCurrent || !termsAccepted;
+
+      if (verifiedState) {
+        if (verifiedCurrent) {
+          verifiedState.textContent = 'Email ini sudah terverifikasi.';
+          verifiedState.style.color = '#166534';
+          verifiedState.style.fontWeight = '600';
+        } else {
+          verifiedState.textContent = 'Email belum diverifikasi.';
+          verifiedState.style.color = '';
+          verifiedState.style.fontWeight = '';
+        }
       }
     }
 
     if (emailInput) {
-      emailInput.addEventListener('input', syncEmailVerificationState);
-      syncEmailVerificationState();
+      emailInput.addEventListener('input', syncStep1State);
     }
+
+    if (agreeTerms) {
+      agreeTerms.addEventListener('change', syncStep1State);
+    }
+
+    syncStep1State();
 
     if (orderForm) {
       orderForm.addEventListener('submit', function(event) {

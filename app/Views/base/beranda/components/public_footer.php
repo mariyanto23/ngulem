@@ -56,7 +56,15 @@ $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publ
   }
 
   .diulem-public-footer .copyright p {
+    display: block;
+    width: 100%;
     margin-bottom: 0;
+    text-align: center;
+  }
+
+  .diulem-public-footer .copyright .row {
+    display: block;
+    text-align: center;
   }
 </style>
 <div class="diulem-public-footer">
