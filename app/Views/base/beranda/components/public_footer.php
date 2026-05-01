@@ -6,6 +6,21 @@ if (empty($publicSetting)) {
     $publicSetting = (new BerandaModel())->get_setting();
 }
 $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publicSetting[0] : null;
+$publicSocialLinks = [];
+if ($publicSettingRow) {
+    $socialCandidates = [
+        'Facebook' => ['url' => $publicSettingRow->social_facebook ?? '', 'icon' => 'fa-facebook'],
+        'Instagram' => ['url' => $publicSettingRow->social_instagram ?? '', 'icon' => 'fa-instagram'],
+        'YouTube' => ['url' => $publicSettingRow->social_youtube ?? '', 'icon' => 'fa-youtube-play'],
+        'TikTok' => ['url' => $publicSettingRow->social_tiktok ?? '', 'icon' => 'fa-music'],
+    ];
+
+    foreach ($socialCandidates as $label => $item) {
+        if (trim((string) $item['url']) !== '') {
+            $publicSocialLinks[$label] = $item;
+        }
+    }
+}
 ?>
 <style>
   .diulem-public-footer .navbar-footer,
@@ -55,6 +70,40 @@ $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publ
     display: inline-block;
   }
 
+  .diulem-public-footer .diulem-social-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px !important;
+  }
+
+  .diulem-public-footer .diulem-social-list li {
+    margin: 0;
+  }
+
+  .diulem-public-footer .diulem-social-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff !important;
+    font-size: 16px;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+
+  .diulem-public-footer .diulem-social-link:hover,
+  .diulem-public-footer .diulem-social-link:focus {
+    transform: translateY(-2px);
+    background: #14b8a6;
+    border-color: #14b8a6;
+    color: #ffffff !important;
+    text-decoration: none;
+  }
+
   .diulem-public-footer .copyright p {
     display: block;
     width: 100%;
@@ -89,13 +138,20 @@ $publicSettingRow = is_array($publicSetting) && isset($publicSetting[0]) ? $publ
                 <img class="img-responsive" src="<?= base_url('assets/base/img/logo4.png') ?>" style="max-height:80px" alt="<?= SITE_NAME ?>">
                 <p><?= SITE_NAME ?> adalah layanan undangan pernikahan online. Yaitu undangan yang dikemas dalam bentuk web yang praktis dan mudah untuk digunakan maupun dibagikan.</p>
               </div>
+              <?php if (!empty($publicSocialLinks)) { ?>
               <div class="footer-media">
                 <h3>Follow Us</h3>
-                <ul>
-                  <li><a href="https://fb.me/ngulemind.online" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                  <li><a href="https://www.instagram.com/ngulemind.online" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                <ul class="diulem-social-list">
+                  <?php foreach ($publicSocialLinks as $socialLabel => $socialItem) { ?>
+                  <li>
+                    <a class="diulem-social-link" href="<?= esc($socialItem['url']) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= esc($socialLabel) ?>" title="<?= esc($socialLabel) ?>">
+                      <i class="fa <?= esc($socialItem['icon']) ?>" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                  <?php } ?>
                 </ul>
               </div>
+              <?php } ?>
             </div>
           </div>
         </div>

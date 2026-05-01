@@ -546,6 +546,10 @@ Pembayaran Anda #'.$invoice.' dengan domain *'.$domain.'* Berhasil dikonfirmasi 
         $data['token_wa'] = $this->buildWaTokenValue($this->request->getPost('token_wa'), $enabled);
         $data['no_wa'] = $this->request->getPost('no_wa');
         $data['pesan_wa'] = $this->request->getPost('pesan_wa'); 
+        $data['social_facebook'] = trim((string) $this->request->getPost('social_facebook'));
+        $data['social_instagram'] = trim((string) $this->request->getPost('social_instagram'));
+        $data['social_youtube'] = trim((string) $this->request->getPost('social_youtube'));
+        $data['social_tiktok'] = trim((string) $this->request->getPost('social_tiktok'));
         $update = $this->AdminModel->update_setting($data);
         if($update){
             $session = session();

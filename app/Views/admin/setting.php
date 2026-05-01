@@ -213,6 +213,26 @@ if ($waGatewayProvider === 'nusagateway') {
                             <label class="form-label">Pesan Whatsapp</label>
                             <textarea rows="4" id="pesan_wa" class="form-control" required><?= esc($setting[0]->pesan_wa) ?></textarea>
                         </div>
+                        <div class="diulem-admin-soft-panel mb-3">
+                            <div class="diulem-admin-soft-panel-title">Sosial Media Footer</div>
+                            <div class="diulem-admin-soft-panel-note">Isi URL untuk menampilkan ikon sosial media di footer. Kosongkan jika tidak ingin ditampilkan.</div>
+                            <div class="mb-3">
+                                <label class="form-label">Facebook</label>
+                                <input id="social_facebook" type="url" class="form-control" placeholder="https://facebook.com/username" value="<?= esc($setting[0]->social_facebook ?? '') ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Instagram</label>
+                                <input id="social_instagram" type="url" class="form-control" placeholder="https://instagram.com/username" value="<?= esc($setting[0]->social_instagram ?? '') ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">YouTube</label>
+                                <input id="social_youtube" type="url" class="form-control" placeholder="https://youtube.com/@channel" value="<?= esc($setting[0]->social_youtube ?? '') ?>">
+                            </div>
+                            <div>
+                                <label class="form-label">TikTok</label>
+                                <input id="social_tiktok" type="url" class="form-control" placeholder="https://tiktok.com/@username" value="<?= esc($setting[0]->social_tiktok ?? '') ?>">
+                            </div>
+                        </div>
                         <button class="btn btn-primary" id="simpanSetting1">
                             <i class="ti ti-device-floppy me-2"></i>Simpan
                         </button>
@@ -356,11 +376,15 @@ $('#simpanSetting1').on('click', function() {
         wa_gateway_enabled: $('#wa_gateway_enabled').is(':checked') ? 1 : 0,
         token_wa: $('#token_wa').val(),
         no_wa: $('#no_wa').val(),
-        pesan_wa: $('#pesan_wa').val()
+        pesan_wa: $('#pesan_wa').val(),
+        social_facebook: $('#social_facebook').val(),
+        social_instagram: $('#social_instagram').val(),
+        social_youtube: $('#social_youtube').val(),
+        social_tiktok: $('#social_tiktok').val()
     }, {
         button: $(this),
-        successMessage: 'Kontak admin dan Whatsapp Gateway berhasil disimpan.',
-        errorMessage: 'Kontak admin dan Whatsapp Gateway gagal disimpan.'
+        successMessage: 'Kontak admin, Whatsapp Gateway, dan sosial media berhasil disimpan.',
+        errorMessage: 'Kontak admin, Whatsapp Gateway, dan sosial media gagal disimpan.'
     });
 });
 

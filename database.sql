@@ -427,6 +427,10 @@ CREATE TABLE `setting` (
   `incoming_port` int(11) DEFAULT NULL,
   `no_wa` varchar(15) DEFAULT NULL,
   `pesan_wa` text DEFAULT NULL,
+  `social_facebook` varchar(255) DEFAULT NULL,
+  `social_instagram` varchar(255) DEFAULT NULL,
+  `social_youtube` varchar(255) DEFAULT NULL,
+  `social_tiktok` varchar(255) DEFAULT NULL,
   `salam_pembuka` longtext DEFAULT NULL,
   `wa_gateway` enum('nusagateway','starsender','onesender') NOT NULL DEFAULT 'nusagateway',
   `token_wa` varchar(255) DEFAULT NULL,
@@ -438,8 +442,8 @@ CREATE TABLE `setting` (
 -- Dumping data for table `setting`
 --
 
-INSERT INTO `setting` (`id`, `harga`, `img`, `created_at`, `trial`, `aktif`, `host_email`, `email`, `pass_email`, `smtp_port`, `smtp_crypto`, `incoming_host`, `incoming_port`, `no_wa`, `pesan_wa`, `salam_pembuka`, `wa_gateway`, `token_wa`, `salam_wa_atas`, `salam_wa_bawah`) VALUES
- (1, 100000, 'bank.png', '2022-05-15 04:26:26', 2, 60, '', '', '', 587, 'tls', NULL, NULL, '6282311168586', 'Hello Admin NikahKuy, Saya Mau bertanya.', 'Assalamu\'alaikum Warahmatullahi Wabarakatuh.\n\nDengan memohon Rahmat dan Ridho Allah SWT, Kami akan menyelenggarakan resepsi pernikahan Putra-Putri kami :', 'starsender', '2f6a625e06edf217a6a6527150f70c532e604770', 'Assalamualaikum Wr Wb.\nDengan segala kerendahan hati dan syukur atas Karunia Allah SWT.\nKami bermaksud mengundang Bapak/Ibu/Saudara(i) pada acara pernikahan kami.', 'Merupakan suatu kebahagiaan bagi Kami apabila Bapak/Ibu/Saudara(i) berkenan hadir untuk memberikan doa restu kepada kami.\nAtas kehadiran dan doa restunya kami ucapkan terimakasih.\n\nWassalamualaikum Wr Wb');
+INSERT INTO `setting` (`id`, `harga`, `img`, `created_at`, `trial`, `aktif`, `host_email`, `email`, `pass_email`, `smtp_port`, `smtp_crypto`, `incoming_host`, `incoming_port`, `no_wa`, `pesan_wa`, `social_facebook`, `social_instagram`, `social_youtube`, `social_tiktok`, `salam_pembuka`, `wa_gateway`, `token_wa`, `salam_wa_atas`, `salam_wa_bawah`) VALUES
+ (1, 100000, 'bank.png', '2022-05-15 04:26:26', 2, 60, '', '', '', 587, 'tls', NULL, NULL, '6282311168586', 'Hello Admin NikahKuy, Saya Mau bertanya.', 'https://fb.me/ngulemind.online', 'https://www.instagram.com/ngulemind.online', '', '', 'Assalamu\'alaikum Warahmatullahi Wabarakatuh.\n\nDengan memohon Rahmat dan Ridho Allah SWT, Kami akan menyelenggarakan resepsi pernikahan Putra-Putri kami :', 'starsender', '2f6a625e06edf217a6a6527150f70c532e604770', 'Assalamualaikum Wr Wb.\nDengan segala kerendahan hati dan syukur atas Karunia Allah SWT.\nKami bermaksud mengundang Bapak/Ibu/Saudara(i) pada acara pernikahan kami.', 'Merupakan suatu kebahagiaan bagi Kami apabila Bapak/Ibu/Saudara(i) berkenan hadir untuk memberikan doa restu kepada kami.\nAtas kehadiran dan doa restunya kami ucapkan terimakasih.\n\nWassalamualaikum Wr Wb');
 
 -- --------------------------------------------------------
 
